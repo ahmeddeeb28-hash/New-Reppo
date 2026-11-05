@@ -33,3 +33,11 @@ tabs.forEach((t) => {
     showStep(next.dataset.step);
   });
 });
+
+// Hero: switch between product stages
+const stageTabs = document.querySelectorAll('.stage-tabs [role="tab"]');
+const stagePanels = document.querySelectorAll('[data-stage-panel]');
+stageTabs.forEach((t) => t.addEventListener('click', () => {
+  stageTabs.forEach((x) => x.setAttribute('aria-selected', String(x === t)));
+  stagePanels.forEach((p) => { p.hidden = p.dataset.stagePanel !== t.dataset.stage; });
+}));
