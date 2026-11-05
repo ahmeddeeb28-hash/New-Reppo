@@ -636,6 +636,35 @@ mark.bad { background: var(--bad-bg); color: var(--bad); border-radius: 4px; pad
 @media (max-width: 1100px) { .row.flip.wide-vis { grid-template-columns: 1fr; } .row.flip.wide-vis .row-copy { order: 0; } }
 @media (max-width: 640px) { .keep-grid { grid-template-columns: 1fr; } .keep-grid .phone { width: 220px; margin: 0 auto; } }
 
+
+/* Definition panel tabs */
+.dtabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 4px; position: sticky; top: -18px; z-index: 2; }
+.dtabs button { border: 0; background: none; border-radius: 10px; padding: 7px 4px; font-size: 0.76rem; font-weight: 600; color: var(--muted); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.dtabs button b { font-family: var(--mono); font-size: 0.68rem; font-weight: 500; }
+.dtabs button[aria-selected="true"] { background: #fff; color: var(--ink); box-shadow: 0 6px 16px -10px rgba(0,0,0,.4); }
+.dt-dot { width: 7px; height: 7px; border-radius: 50%; }
+.dt-dot.empty { border: 1.5px solid var(--muted); } .dt-dot.proposed { background: var(--as); } .dt-dot.agreed { background: var(--ev); }
+.dgroup { display: flex; flex-direction: column; gap: 10px; }
+.dsec.empty { padding-top: 10px; }
+.dsec.empty h3 { color: var(--muted); }
+
+
+.qexit { display: flex; gap: 14px; flex-wrap: wrap; border-top: 1px dashed var(--line); padding-top: 8px; }
+.flagbtn { border: 1px solid var(--bad); background: #fff; color: var(--bad); border-radius: 999px; padding: 2px 10px; font-size: 0.74rem; font-weight: 600; cursor: pointer; margin-left: 6px; }
+.flagbtn:hover { background: var(--bad-bg); }
+.wrapcard { border: 1.5px solid var(--ev-line); background: var(--ev-bg); border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.wrapcard b { font-family: var(--serif); font-weight: 500; font-size: 1.3rem; color: var(--ev); }
+.wrapcard p { font-size: 0.9rem; color: var(--ink); }
+.wrapacts { display: flex; gap: 8px; flex-wrap: wrap; }
+.app-bar .btn[aria-pressed="false"] { color: var(--muted); }
+
+
+@media (max-width: 700px) {
+  .app-bar { flex-wrap: wrap; row-gap: 8px; }
+  .app-bar .title { flex: 1 1 60%; }
+  .app-bar .btn.sm { height: 30px; padding: 0 10px; font-size: 0.76rem; }
+}
+
 @media (max-width: 1100px) { .moments { grid-template-columns: 1fr 1fr; } .hand { display: none; } }
 @media (max-width: 900px) {
   .ws { grid-template-columns: minmax(0, 1fr); }
@@ -704,7 +733,8 @@ function knownNumbers(f) {
   const t = [...f.doc.filter((x) => x.kind === "evidence").map((x) => x.text), ...f.chat.flatMap((m) => (m.proposals || []).filter((p) => p.kind === "evidence").map((p) => p.text))].join(" ");
   return new Set((t.match(NUM_RE) || []).map((n) => n.replace(/\s/g, "")));
 }
-const unsourced = (f, text) => (String(text).match(NUM_RE) || []).map((n) => n.replace(/\s/g, "")).filter((n) => !knownNumbers(f).has(n));
+const unsourced = (f, text) => (String(text).match(NUM_RE) || []).map((n) => n.replace(/\s/g, "")).filter((n) => !knownNumbers(f).has(n) && !(f.keptNumbers || []).includes(n));
+function knownKeep(f, text) { f.keptNumbers = [...new Set([...(f.keptNumbers || []), ...(String(text).match(NUM_RE) || []).map((n) => n.replace(/\s/g, ""))])]; }
 
 
 // =================== Charts (drawn from the definition or your numbers, never invented) ===================
@@ -962,16 +992,21 @@ function guidedReply(f, userText) {
   } else if (userText && intentOf(userText) && !(asked && asked.questions && asked.questions.some((q) => q.answer === userText))) {
     const r = intentReply(f, intentOf(userText), userText);
     msg.text = r.text; msg.proposals = r.proposals || [];
-    if (asked) { const pending = GUIDE.find((g) => g.key === asked.guideKey); if (pending && !items(f, pending.key).length) { msg.guideKey = pending.key; msg.questions = [{ id: uid(), text: `Back to this: ${pending.q}`, role: pending.role, options: pending.options || [] }]; } }
+    if (asked && !f.guideOff) { const pending = GUIDE.find((g) => g.key === asked.guideKey); if (pending && !items(f, pending.key).length) { msg.guideKey = pending.key; msg.questions = [{ id: uid(), text: `Back to this: ${pending.q}`, role: pending.role, options: pending.options || [] }]; } }
     msg.proposals = msg.proposals.map((p) => ({ id: uid(), status: "open", ...p, visual: p.visual ? { title: p.text, ...p.visual } : undefined }));
     return msg;
+  } else if (f.guideOff && userText) {
+    // Questions are off: label what was said on its own merits, not as an answer to an old question.
+    msg.proposals = sentences(userText).map((x) => ({ kind: classifySentence(x, false), text: x }));
+    msg.text = msg.proposals.length ? "Here's how I'd label that. Accept what's useful." : "Noted.";
   } else if (asked && userText) {
     const props = guidedProposals(f, userText, asked.guideKey);
     msg.proposals = props;
     msg.text = props.length ? "Here's how I'd record that. Accept what's right." : "Noted. We'll leave that section open for now.";
     if (!props.length) f.skipped = [...(f.skipped || []), asked.guideKey];
   }
-  const g = nextGuide({ ...f, doc: [...f.doc, ...msg.proposals.map((p) => ({ kind: p.kind }))] });
+  const g = f.guideOff ? null : nextGuide({ ...f, doc: [...f.doc, ...msg.proposals.map((p) => ({ kind: p.kind }))] });
+  if (f.guideOff) { msg.proposals = msg.proposals.map((p) => ({ id: uid(), status: "open", role: p.kind === "question" ? "pm" : undefined, ...p })); if (!msg.text) msg.text = "Noted."; return msg; }
   if (g) { msg.guideKey = g.key; msg.questions = [{ id: uid(), text: g.q, role: g.role, options: g.options || [] }]; }
   else { const gl = gaps(f); msg.text += `\n\nThat covers every step. ${gl.length ? `${gl.length} gaps are left in the definition panel. Mark sections agreed as your team signs off.` : "Nothing is missing. Mark sections agreed as your team signs off."}\n\n${nextStepsText(f)}`; }
   msg.proposals = msg.proposals.map((p) => ({ id: uid(), status: "open", role: p.kind === "question" ? "pm" : undefined, ...p }));
@@ -985,7 +1020,7 @@ Rules:
 2. Never invent numbers, percentages, dates, baselines, targets or audience sizes. Use placeholders like [baseline] and ask the right role.
 3. Use kind "evidence" ONLY to restate something from the user's own messages or pasted notes that names its source; put the source in "source". Anything else is an "assumption".
 4. Never repeat items already in the definition.
-5. Ask exactly one follow-up question for the next missing step, for one role, with 2 to 4 short answer options when sensible.
+5. Ask exactly one follow-up question for the next missing step, for one role, with 2 to 4 short answer options when sensible. If "questionsOff" is true in the definition JSON, ask no follow-up questions at all: only answer and propose. The user can skip anything; never insist or repeat a skipped question.
 6. At most 5 proposals. Kinds: problem, audience, outcome, evidence, assumption, question, scope_in, scope_out, criterion, measure, decision.
 7. Never state that the feature will cause an outcome; expected impact is an assumption.
 9. If the user asks what happens after agreeing, or how to make results effective, give owner-by-owner next steps from the definition: baseline and tracking before launch (Growth), build behind a flag with the agreed test (Engineering), check designs against acceptance criteria (Design), owners and a review date for assumptions (PM); then keep the agreed test, watch guardrails, decide scale/iterate/stop with a reason.
@@ -993,7 +1028,7 @@ Rules:
 Return ONLY JSON: {"reply": string, "questions": [{"text": string, "role": "pm"|"design"|"growth"|"engineering", "options": [string]}], "proposals": [{"kind": string, "text": string, "source": string, "role": string, "why": string, "visual": object}]}`;
 function snapshot(f) {
   const by = (k) => items(f, k).map((x) => x.text);
-  return JSON.stringify({ request: f.request, problem: by("problem"), audience: by("audience"), outcome: by("outcome"), evidence: items(f, "evidence").map((x) => ({ text: x.text, source: x.source })), assumptions: items(f, "assumption").map((x) => ({ text: x.text, owner: x.owner || null })), openQuestions: items(f, "question").map((x) => ({ text: x.text, role: x.role, answer: x.answer || null })), inScope: by("scope_in"), outOfScope: by("scope_out"), criteria: by("criterion"), measures: items(f, "measure").map((x) => ({ text: x.text, baseline: x.baseline || null })), decisions: by("decision"), emptySections: SECTIONS.filter(([k]) => !items(f, k).length).map(([, l]) => l) });
+  return JSON.stringify({ questionsOff: !!f.guideOff, skipped: f.skipped || [], request: f.request, problem: by("problem"), audience: by("audience"), outcome: by("outcome"), evidence: items(f, "evidence").map((x) => ({ text: x.text, source: x.source })), assumptions: items(f, "assumption").map((x) => ({ text: x.text, owner: x.owner || null })), openQuestions: items(f, "question").map((x) => ({ text: x.text, role: x.role, answer: x.answer || null })), inScope: by("scope_in"), outOfScope: by("scope_out"), criteria: by("criterion"), measures: items(f, "measure").map((x) => ({ text: x.text, baseline: x.baseline || null })), decisions: by("decision"), emptySections: SECTIONS.filter(([k]) => !items(f, k).length).map(([, l]) => l) });
 }
 async function aiReply(f) {
   const transcript = f.chat.slice(-12).map((m) => m.role === "user" ? `User: ${m.text}` : `Assistant: ${m.text}${(m.questions || []).map((q) => `\n  asked ${q.role}: ${q.text}${q.answer ? ` -> ${q.answer}` : ""}`).join("")}`).join("\n");
@@ -1036,6 +1071,7 @@ function accept(f, p) {
   const item = { id: uid(), kind: p.kind, text: p.text.trim(), source: p.source || "", role: p.role || "pm", answer: "", owner: "", baseline: "", visual: p.visual ? JSON.parse(JSON.stringify({ ...p.visual, editing: false })) : undefined };
   f.doc.push(item);
   if (f.agreed[p.kind]) { f.agreed[p.kind] = false; toast(`${SEC_LABEL[p.kind]} reopened: content changed`); }
+  state.docTab = groupForKind(p.kind);
   p.status = "accepted";
 }
 
@@ -1463,7 +1499,9 @@ function appView(f) {
       <span class="title">${esc(f.title)}</span>
       <span class="mode">${aiState === "ready" ? "Claude" : aiState === "loading" ? "Connecting…" : "Guided mode"}</span>
       ${stageBar(f)}
+      <button class="btn ghost sm" data-act="guidetoggle" aria-pressed="${!f.guideOff}" title="Turn the assistant's follow-up questions on or off">Questions: ${f.guideOff ? "Off" : "On"}</button>
       <button class="btn ghost sm" data-act="copy">Copy summary</button>
+      <button class="btn sm" data-act="finish">Finish for now</button>
     </div>
     <div class="mobile-tabs"><button aria-pressed="${mobileTab === "chat"}" data-tab="chat">Chat</button><button aria-pressed="${mobileTab === "doc"}" data-tab="doc">Definition · ${f.doc.length}</button></div>
     <div class="ws" data-tab="${mobileTab}">
@@ -1480,9 +1518,12 @@ function appView(f) {
   </div>`;
 }
 
+const lastAssistant = (f) => f.chat.slice().reverse().find((x) => x.role === "assistant");
 function aiMsg(f, m) {
+  if (m.wrap) return wrapMsg(f, m);
   const qs = (m.questions || []).map((q) => `<div class="qcard"><span><span class="tag t-qu">Question · ${ROLES[q.role] || "PM"}</span></span><b>${esc(q.text)}</b>
-    ${q.options && q.options.length ? `<div class="opts">${q.options.map((o, i) => `<button class="opt ${q.answer === o ? "on" : ""}" data-ans="${m.id}|${q.id}|${i}" ${q.answer ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>` : `<span class="muted" style="font-size:.82rem">Answer in the message box.</span>`}</div>`).join("");
+    ${q.options && q.options.length ? `<div class="opts">${q.options.map((o, i) => `<button class="opt ${q.answer === o ? "on" : ""}" data-ans="${m.id}|${q.id}|${i}" ${q.answer ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>` : q.answer ? "" : `<span class="muted" style="font-size:.82rem">${m === lastAssistant(f) ? "Answer in the message box, or:" : "Not answered"}</span>`}
+    ${!q.answer && m === lastAssistant(f) ? `<div class="qexit"><button class="link" data-skip="${m.id}|${q.id}">Skip this question</button><button class="link" data-act="guideoff">Stop asking questions</button></div>` : q.answer === "(skipped)" ? `<span class="muted" style="font-size:.8rem">Skipped</span>` : ""}</div>`).join("");
   const open = (m.proposals || []).filter((p) => p.status === "open");
   const ps = (m.proposals || []).map((p) => {
     const [label, co] = KIND[p.kind];
@@ -1496,13 +1537,40 @@ function aiMsg(f, m) {
     return `<div class="pcard callout ${co}"><div class="txt"><span class="co-tag">${label}${p.source ? ` · ${esc(p.source)}` : ""}${p.kind === "question" ? ` · ${ROLES[p.role] || "PM"}` : ""}</span>
       ${p.editing ? `<textarea id="ed-${p.id}" rows="2">${esc(p.text)}</textarea>` : body}${p.why ? `<span class="why">${esc(p.why)}</span>` : ""}</div>
       <span class="acts">${p.editing ? `<button class="yes" data-p="${m.id}|${p.id}|save">Save</button>` : `<button class="yes" data-p="${m.id}|${p.id}|yes">Accept</button><button data-p="${m.id}|${p.id}|edit">Edit</button>`}<button data-p="${m.id}|${p.id}|no" aria-label="Dismiss">✕</button></span>
-      ${bad.length ? `<span class="flag">${bad.map(esc).join(", ")} isn't in anything you've shared. Edit it to a placeholder like [target], or paste the source.</span>` : ""}</div>`;
+      ${bad.length ? `<span class="flag">${bad.map(esc).join(", ")} isn't in anything you've shared. Your call: <button class="flagbtn" data-p="${m.id}|${p.id}|ph">Use a placeholder</button><button class="flagbtn" data-p="${m.id}|${p.id}|keep">Keep my number</button></span>` : ""}</div>`;
   }).join("");
   const applied = (m.proposals || []).filter((p) => p.status === "accepted").length;
   return `<div class="m-ai"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span>
     ${m.text ? `<p class="reply">${esc(m.text)}</p>` : ""}
     ${ps ? `<div class="props"><div class="props-head"><span>${applied} of ${m.proposals.length} added</span>${open.length > 1 ? `<button class="link" data-acceptall="${m.id}">Accept all ${open.length}</button>` : ""}</div>${ps}</div>` : ""}
     ${qs}</div>`;
+}
+
+
+// Definition panel groups: one tab per stage, so the panel never needs a long scroll.
+const DOC_GROUPS = [
+  { id: "problem", label: "Problem", keys: ["problem", "audience", "outcome"] },
+  { id: "claims", label: "Claims", keys: ["evidence", "assumption", "question"] },
+  { id: "scope", label: "Scope", keys: ["scope_in", "scope_out", "criterion"] },
+  { id: "measures", label: "Measures", keys: ["measure", "visual"] },
+  { id: "decisions", label: "Decisions", keys: ["decision"] },
+];
+const groupOf = (id) => DOC_GROUPS.find((g) => g.id === id) || DOC_GROUPS[0];
+const groupForKind = (k) => (DOC_GROUPS.find((g) => g.keys.includes(k)) || DOC_GROUPS[0]).id;
+function wrapMsg(f, m) {
+  const filledN = SECTIONS.filter(([k]) => items(f, k).length).length, agreed = SECTIONS.filter(([k]) => f.agreed[k]).length;
+  return `<div class="m-ai"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span>
+    <div class="wrapcard"><b>Saved. You can stop here.</b>
+      <p>${filledN} of ${SECTIONS.length} sections have content and ${agreed} are agreed. Nothing else is required. The open parts stay in the definition as unknowns, and you can come back any time.</p>
+      <div class="wrapacts"><button class="btn sm" data-act="copy">Copy summary</button><button class="btn ghost sm" data-act="keepgoing">Keep going</button><button class="btn ghost sm" data-act="home">Back to home</button></div></div></div>`;
+}
+function docTabs(f) {
+  const active = groupOf(state.docTab).id;
+  return `<div class="dtabs" role="tablist" aria-label="Definition sections">${DOC_GROUPS.map((g) => {
+    const n = g.keys.reduce((a, k) => a + items(f, k).length, 0);
+    const st = g.keys.every((k) => !items(f, k).length) ? "empty" : g.keys.filter((k) => items(f, k).length).every((k) => f.agreed[k]) ? "agreed" : "proposed";
+    return `<button role="tab" aria-selected="${g.id === active}" data-doctab="${g.id}"><span class="dt-dot ${st}"></span>${g.label}<b>${n}</b></button>`;
+  }).join("")}</div>`;
 }
 
 function docPane(f) {
@@ -1512,13 +1580,15 @@ function docPane(f) {
     <div class="doc-top"><h2>Definition</h2><span class="mono">${filledN} of ${total} filled · ${agreed} agreed</span></div>
     <div class="ready"><div class="meter"><span style="width:${Math.round(filledN / total * 100)}%"></span></div>
       <div class="gapline"><span>${g.length ? `${g.length} gap${g.length === 1 ? "" : "s"} counted from the definition` : "No gaps Scopeline can count"}</span>${g.length ? `<button class="link" data-say="What's missing from the definition? Ask me about the most important gap.">Ask about gaps</button>` : ""}</div></div>
-    ${SECTIONS.filter(([k]) => items(f, k).length).map(([k, label]) => {
+    ${docTabs(f)}
+    <div class="dgroup">${groupOf(state.docTab).keys.map((k) => {
+      const label = SEC_LABEL[k];
+      if (!items(f, k).length) return `<div class="dsec empty"><div class="dsec-h"><h3>${label} <span class="st empty">empty</span></h3><button class="link" data-say="Let's cover ${label.toLowerCase()} next. Ask me what you need.">Ask about it</button></div></div>`;
       const list = items(f, k), st = secStatus(f, k), co = KIND[k][1];
       return `<div class="dsec"><div class="dsec-h"><h3>${label} <span class="st ${st}">${st}</span></h3>${list.length ? `<button class="agree ${st === "agreed" ? "on" : ""}" data-agree="${k}">${st === "agreed" ? "✓ Agreed" : "Agree"}</button>` : ""}</div>
         ${k === "visual" ? list.map((x) => `<div class="ditem vitem">${visualBlock(x.visual, `doc|${x.id}`)}<button class="x" data-del="${x.id}" aria-label="Remove">✕</button></div>`).join("") : list.length ? list.map((x) => { const nums = ["assumption", "measure", "outcome", "problem", "scope_in", "decision"].includes(k) ? unsourced(f, x.text) : []; let t = esc(x.text); nums.forEach((n) => { t = t.replace(esc(n), `<mark class="bad" title="No source">${esc(n)}</mark>`); }); return `<div class="ditem callout ${co}"><span>${t}${x.source ? `<span class="co-src">${esc(x.source)}</span>` : ""}${k === "question" ? `<span class="co-src">${ROLES[x.role] || "PM"}${x.answer ? ` · answered: ${esc(x.answer)}` : " · unanswered"}</span>` : ""}${k === "measure" ? `<span class="co-src">Baseline ${x.baseline ? esc(x.baseline) : '<span class="ph">unknown</span>'}</span>` : ""}${k === "assumption" ? `<span class="co-src">${x.owner ? "Owner: " + esc(x.owner) : "No owner or test yet"}</span>` : ""}</span>${nums.length ? `<span class="co-src" style="color:var(--bad)">${nums.map(esc).join(", ")} has no source</span>` : ""}</span><button class="x" data-del="${x.id}" aria-label="Remove">✕</button></div>`; }).join("") : `<p class="dempty">Empty</p>`}
       </div>`;
-    }).join("") || `<p class="dempty">Accepted items appear here, grouped by section.</p>`}
-    ${SECTIONS.some(([k]) => !items(f, k).length) ? `<div class="dsec"><h3 style="font-size:.86rem">Still to cover</h3><div class="chips">${SECTIONS.filter(([k]) => !items(f, k).length).map(([k, l]) => `<button class="chip" data-say="Let's cover ${l.toLowerCase()} next. Ask me what you need.">${l}</button>`).join("")}</div></div>` : ""}
+    }).join("")}</div>
   </aside>`;
 }
 
@@ -1736,11 +1806,30 @@ document.addEventListener("click", (e) => {
     const [mid, pid, act] = el.dataset.p.split("|"); const m = f.chat.find((x) => x.id === mid); const p = m.proposals.find((x) => x.id === pid);
     if (act === "edit") { p.editing = true; render(); document.getElementById("ed-" + p.id)?.focus(); return; }
     if (act === "save") { const v = document.getElementById("ed-" + p.id)?.value.trim(); if (v) p.text = v; p.editing = false; accept(f, p); }
+    if (act === "ph") { unsourced(f, p.text).forEach((n) => { p.text = p.text.replace(n, "[target]"); }); save(); render(); return toast("Replaced with a placeholder"); }
+    if (act === "keep") { p.source = (p.source ? p.source + " · " : "") + "number kept by you, unverified"; knownKeep(f, p.text); accept(f, p); }
     if (act === "yes") accept(f, p);
     if (act === "no") p.status = "dismissed";
     save(); render(); if (act !== "no") { toast(`Added to ${SEC_LABEL[p.kind].toLowerCase()}`); if (mobileTab === "chat") {} } return;
   }
   if (el.dataset.vtoggle) { const v = findVisual(f, el.dataset.vtoggle); if (v) { v.editing = !v.editing; if (!v.editing) save(); render(); } return; }
+  if (el.dataset.skip) {
+    const [mid, qid] = el.dataset.skip.split("|"); const m = f.chat.find((x) => x.id === mid); const q = m.questions.find((x) => x.id === qid);
+    q.answer = "(skipped)"; if (m.guideKey) f.skipped = [...new Set([...(f.skipped || []), m.guideKey])];
+    if (aiState === "ready") { save(); return respond(f, "Skip that question."); }
+    const g = f.guideOff ? null : nextGuide(f);
+    f.chat.push(g ? { id: uid(), role: "assistant", text: "Skipped. Next one, or skip again:", guideKey: g.key, questions: [{ id: uid(), text: g.q, role: g.role, options: g.options || [] }], proposals: [] } : { id: uid(), role: "assistant", text: "Skipped. That was the last question. Ask me anything, or press Finish for now.", questions: [], proposals: [] });
+    save(); render(); scrollThread(); return;
+  }
+  if (el.dataset.act === "guideoff" || el.dataset.act === "guidetoggle") {
+    f.guideOff = el.dataset.act === "guideoff" ? true : !f.guideOff;
+    f.chat.push({ id: uid(), role: "assistant", text: f.guideOff ? "OK, no more questions from me. Ask whatever you like, accept what's useful, and press Finish for now whenever you want." : "Questions are back on. I'll pick up where we left off.", questions: [], proposals: [] });
+    if (!f.guideOff && aiState !== "ready") { const g = nextGuide(f); if (g) { const last = f.chat[f.chat.length - 1]; last.guideKey = g.key; last.questions = [{ id: uid(), text: g.q, role: g.role, options: g.options || [] }]; } }
+    save(); render(); scrollThread(); return;
+  }
+  if (el.dataset.act === "finish") { f.chat.push({ id: uid(), role: "assistant", wrap: true }); save(); render(); scrollThread(); return; }
+  if (el.dataset.act === "keepgoing") { f.guideOff = false; const g = nextGuide(f); f.chat.push(g && aiState !== "ready" ? { id: uid(), role: "assistant", text: "Picking up again.", guideKey: g.key, questions: [{ id: uid(), text: g.q, role: g.role, options: g.options || [] }], proposals: [] } : { id: uid(), role: "assistant", text: "Ready when you are. Ask anything.", questions: [], proposals: [] }); save(); render(); scrollThread(); return; }
+  if (el.dataset.doctab) { state.docTab = el.dataset.doctab; save(); render(); return; }
   if (el.dataset.agree) { const k = el.dataset.agree; f.agreed[k] = !f.agreed[k]; save(); render(); return toast(f.agreed[k] ? `${SEC_LABEL[k]} agreed` : `${SEC_LABEL[k]} reopened`); }
   if (el.dataset.del) { f.doc = f.doc.filter((x) => x.id !== el.dataset.del); save(); render(); return; }
   if (el.dataset.act === "copy") {
