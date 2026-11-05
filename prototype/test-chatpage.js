@@ -38,7 +38,7 @@ const q=await b.newPage({viewport:{width:1440,height:900}});q.on('pageerror',x=>
 await q.addInitScript(()=>{const out={reply:"Two claims so far. One number has no source.",questions:[{text:"Do we have a repeat-order baseline?",role:"growth",options:["Yes, in analytics","No, needs instrumentation"]}],proposals:[{kind:"assumption",text:"One-tap reorder increases repeat purchases.",source:"",why:""},{kind:"measure",text:"Repeat purchases up 40% in 90 days",source:"",why:""},{kind:"evidence",text:"Most customers reorder monthly.",source:"Made up",why:""}]};
   window.claude={use:async n=>{if(n!=="sample")return null;const f=async()=>({text:""});f.json=async()=>{await new Promise(r=>setTimeout(r,300));return out;};return f;}};});
 await q.goto(F);await q.evaluate(()=>localStorage.clear());await q.reload();await q.waitForTimeout(400);
-await q.click('[data-try="pitch"]');await q.waitForSelector('.m-ai .pcard');
+await q.click('main [data-try="pitch"]');await q.waitForSelector('.m-ai .pcard');
 ok(await q.getByText('Claude',{exact:true}).count()===1,'Claude mode shown');
 ok(await q.locator('.pcard .flag').count()===1,'invented 90 days flag'.replace('90 days','numbers')+' (40%/90 flagged)');
 ok(await q.getByText('Relabelled: not found in what you shared.').count()===1,'made-up evidence relabelled');

@@ -20,7 +20,7 @@ await p.screenshot({path:S+'/v2-new.png'});
 await p.click('form[data-form="start"] [data-fill="reorder"]');await p.click('form[data-form="start"] .send');await p.waitForSelector('.m-ai .pcard',{timeout:15000});
 ok(await p.locator('.m-user').count()===1,'sending starts the chat');
 await p.click('[data-act="home"]');await p.waitForTimeout(300);ok(await p.locator('.lp-hero').count()===1,'logo returns to the landing page');
-await p.click('.lp-hero ~ section [data-try="carts"], [data-try="carts"]');await p.waitForSelector('.m-ai .pcard');
+await p.click('main [data-try="carts"]');await p.waitForSelector('.m-ai .pcard');
 ok((await p.textContent('.m-user')).includes('save a cart'),'"See it in the chat" starts the matching example');
 const m=await b.newPage({viewport:{width:390,height:844}});await m.goto(F);await m.waitForTimeout(500);
 ok(!(await m.evaluate(()=>document.documentElement.scrollWidth>innerWidth)),'landing fits a phone');
