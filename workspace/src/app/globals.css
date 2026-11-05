@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/* Same palette as the landing page. Four claim colours carry meaning. */
+:root {
+  --bg: #f5f7f6;
+  --surface: #ffffff;
+  --ink: #142320;
+  --muted: #55625f;
+  --line: #dbe1df;
+  --accent: #0d6b62;
+  --accent-ink: #ffffff;
+  --accent-soft: #e1efec;
+  --evidence: #1e7a4c;   --evidence-bg: #e2f2e8;
+  --assumption: #8a5800; --assumption-bg: #fbefd6;
+  --question: #3a55b4;   --question-bg: #e5eafb;
+  --decision: #142320;   --decision-bg: #e6eae9;
+  --danger: #a33a2b;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1615;
+    --surface: #172120;
+    --ink: #e5ecea;
+    --muted: #9aa8a5;
+    --line: #293533;
+    --accent: #5cc4b6;
+    --accent-ink: #0b1514;
+    --accent-soft: #15302c;
+    --evidence: #79d6a0;   --evidence-bg: #163222;
+    --assumption: #e9bb5e; --assumption-bg: #35290f;
+    --question: #9db0f5;   --question-bg: #1d2647;
+    --decision: #e5ecea;   --decision-bg: #26302f;
+    --danger: #f09a8a;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-evidence: var(--evidence);
+  --color-evidence-bg: var(--evidence-bg);
+  --color-assumption: var(--assumption);
+  --color-assumption-bg: var(--assumption-bg);
+  --color-question: var(--question);
+  --color-question-bg: var(--question-bg);
+  --color-decision: var(--decision);
+  --color-decision-bg: var(--decision-bg);
+  --color-danger: var(--danger);
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-sans: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; }
+
+@layer components {
+  .field { @apply w-full rounded-md border border-line bg-surface px-3 py-2 text-sm text-ink placeholder:text-muted/70 focus:outline-2 focus:outline-accent; }
+  .label { @apply mb-1 block font-mono text-[0.7rem] uppercase tracking-wider text-muted; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-md border border-accent bg-accent px-3.5 py-2 text-sm font-semibold text-accent-ink transition hover:opacity-90 disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent; }
+  .btn-ghost { @apply border-line bg-transparent text-ink hover:border-ink; }
+  .btn-quiet { @apply inline-flex items-center rounded px-1.5 py-1 text-xs text-muted underline-offset-2 hover:text-ink hover:underline focus-visible:outline-2 focus-visible:outline-accent; }
+  .card { @apply rounded-lg border border-line bg-surface; }
+  .eyebrow { @apply font-mono text-[0.7rem] uppercase tracking-wider text-accent; }
+}
