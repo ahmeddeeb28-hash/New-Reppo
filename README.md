@@ -16,7 +16,7 @@ assets/         Images, icons, fonts
 ## Before launch
 
 - "Scopeline" is a working name. Check availability before using it publicly.
-- Replace `hello@example.com` in `index.html` with a real pilot contact.
+- "Start free" buttons link to the try-it workspace; point them at the hosted app once it is deployed.
 - Hero mock content is illustrative example data, not research.
 
 ## Run locally
