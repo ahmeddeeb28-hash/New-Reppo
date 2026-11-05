@@ -2,7 +2,7 @@
 <title>Scopeline</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,500;1,6..72,600&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@600&display=swap">
 <style>
 /* One page: the landing view opens with a chat box; starting it turns the page into the chat workspace.
    Light mode only. Warm paper, near-black ink, four claim colours (evidence, assumption, question, decision). */
@@ -27,7 +27,7 @@ p { margin: 0; } h1, h2, h3 { margin: 0; text-wrap: balance; }
 button, input, textarea { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--qu); outline-offset: 2px; border-radius: 6px; }
 .wrap { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-.serif { font-family: var(--serif); font-weight: 300; letter-spacing: -0.03em; line-height: 1; }
+.serif { font-family: var(--serif); font-weight: 500; letter-spacing: -0.035em; line-height: 0.98; }
 .muted { color: var(--muted); }
 .mono { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
@@ -584,6 +584,41 @@ mark.bad { background: var(--bad-bg); color: var(--bad); border-radius: 4px; pad
   .bar.open .mcols { grid-template-columns: 1fr; padding: 6px; }
   .bar.open .mfeature { border-radius: 16px; }
 }
+
+
+.keep-lede { font-size: 0.84rem; color: var(--muted); }
+.crit { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.crit li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.86rem; border-radius: 12px; padding: 8px 10px; }
+.crit li.ok { color: var(--muted); }
+.crit .mk { width: 20px; height: 20px; border-radius: 50%; background: var(--ev-bg); color: var(--ev); display: grid; place-items: center; font-size: 0.7rem; flex-shrink: 0; }
+.crit li.no { border: 1px solid var(--line); background: var(--bg); font-weight: 600; }
+.crit .fix { display: block; font-weight: 400; color: var(--muted); font-size: 0.8rem; margin-top: 4px; line-height: 1.45; }
+.crit .fix em { font-style: normal; font-weight: 600; color: var(--ink); }
+
+
+/* ---------- Bolder type ---------- */
+.lp-hero h1 { font-weight: 500; letter-spacing: -0.045em; }
+.lp-hero h1 em { font-weight: 500; }
+.row-copy h2, .intro h2, .ps h2, .effect h2, .faq h2, .sec-head h2 { font-weight: 500; letter-spacing: -0.035em; }
+.row-copy > p, .lp-hero .lede { color: #4f4a42; }
+.moment h3, .tip h3, .mfeature b, .free-title, .ready-state b, .readybox b { font-weight: 500; }
+/* ---------- Distinct last sections ---------- */
+.faq-band { background: var(--tint); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: clamp(40px, 6vw, 80px); }
+.faq-band .faq { padding-block: clamp(64px, 8vw, 104px); }
+.faq-band .faq details { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin-bottom: 10px; }
+.faq-band .faq details:last-child { border-bottom: 1px solid var(--line); }
+.closing-wrap { padding-block: clamp(64px, 8vw, 104px) 24px; }
+.closing-panel { position: relative; overflow: hidden; isolation: isolate; border-radius: 32px; background: #15130f; color: #fff; padding: clamp(40px, 7vw, 88px) clamp(20px, 5vw, 64px); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px; }
+.cp-glow { position: absolute; inset: -40% -10% auto; height: 120%; z-index: -1; background: radial-gradient(40% 50% at 25% 40%, rgba(140,107,255,.55), transparent 70%), radial-gradient(40% 50% at 75% 35%, rgba(92,196,255,.45), transparent 70%), radial-gradient(35% 40% at 50% 85%, rgba(69,211,155,.35), transparent 70%); filter: blur(30px); animation: floatA 18s ease-in-out infinite alternate; }
+.closing-panel h2 { font-size: clamp(2.4rem, 5.4vw, 4.6rem); max-width: 12em; color: #fff; }
+.closing-panel h2 em { font-style: italic; color: #9ff0c8; }
+.closing-panel p { color: rgba(255,255,255,.72); font-size: 1.1rem; max-width: 30em; }
+.cp-avatars { display: flex; }
+.cp-avatars .avi { margin: 0 -6px; border-radius: 50%; box-shadow: 0 0 0 3px #15130f; }
+.btn.light { background: #fff; color: #15130f; border-color: #fff; }
+.btn.light .knob { background: #e9e5dc; color: #15130f; }
+.btn.outline-light { background: transparent; color: #fff; border-color: rgba(255,255,255,.4); }
+.btn.outline-light:hover { border-color: #fff; }
 
 @media (max-width: 1100px) { .moments { grid-template-columns: 1fr 1fr; } .hand { display: none; } }
 @media (max-width: 900px) {
@@ -1276,14 +1311,18 @@ function homeView() {
               <div class="ph-item"><i style="background:#f3d9b1"></i><span><b>Oat milk 1L</b><em>£1.80</em></span></div>
               <div class="ph-item flagged"><i style="background:#cfe3d4"></i><span><b>Spinach 200g</b><em>£1.20</em></span><b class="pin">1</b></div>
               <div class="ph-item"><i style="background:#e6d7f2"></i><span><b>Rye bread</b><em>£2.40</em></span></div>
-              <div class="ph-total"><span>Total</span><b>£5.40</b></div>
+              <div class="ph-total"><span>Total</span><b>£4.20</b></div>
               <div class="ph-btns"><span class="ghost">Edit basket</span><span class="solid">Reorder<b class="pin blue">2</b></span></div>
             </div>
             <div class="keep-side">
-              <div class="keep-head"><b>Design review · v2</b><span class="badge">2 findings</span></div>
-              <div class="meter"><span style="width:75%"></span></div><span class="mono">3 of 4 acceptance criteria met</span>
-              <div class="finding"><b class="pin">1</b><div><span class="co-tag" style="color:var(--as)">Edge case</span>The out-of-stock item looks like the others.<span class="chip-link">Decision: show it, excluded from total</span></div></div>
-              <div class="finding"><b class="pin blue">2</b><div><span class="co-tag" style="color:var(--qu)">Hierarchy</span>“Reorder” outweighs “Edit basket”.<span class="chip-link">Criterion: customer reviews first</span></div></div>
+              <div class="keep-head"><b>Checked against your agreed definition</b><span class="badge">2 of 4 met</span></div>
+              <p class="keep-lede">Design shared v2 of the reorder screen. Scopeline compares it with the acceptance criteria the team agreed.</p>
+              <ul class="crit">
+                <li class="ok"><span class="mk">✓</span>Prices are re-checked when the basket is rebuilt</li>
+                <li class="ok"><span class="mk">✓</span>The total excludes unavailable items</li>
+                <li class="no"><b class="pin">1</b><div>Unavailable items are clearly marked<span class="fix"><em>Now:</em> Spinach is out of stock but looks available.<br><em>Fix:</em> grey it out and label it “Out of stock”.</span></div></li>
+                <li class="no"><b class="pin blue">2</b><div>The customer can review the basket before paying<span class="fix"><em>Now:</em> “Reorder” is the only strong action.<br><em>Fix:</em> give “Edit basket” equal weight.</span></div></li>
+              </ul>
             </div>
           </div>
         </div>
@@ -1360,19 +1399,23 @@ function homeView() {
       <div class="cta-row" style="justify-content:flex-start;margin-top:22px"><button class="btn ghost" data-try="next">Ask the chat for your next steps →</button></div>
     </section>
 
-    <section class="wrap faq" id="faq">
+    <section class="faq-band" id="faq"><div class="wrap faq">
       <h2 class="serif">Questions</h2>
       <details><summary>Is it really free?</summary><p>Yes. Start a chat without signing up. Your chats are saved in this browser.</p></details>
       <details><summary>Does it make up numbers?</summary><p>No. Numbers that aren't in something you shared are flagged and replaced with placeholders like [target]. Expected impact is always recorded as an assumption.</p></details>
       <details><summary>Which AI does it use?</summary><p>When you open it on claude.ai it uses Claude, after you allow it. Anywhere else, guided mode asks the same questions and labels your answers with built-in rules.</p></details>
       <details><summary>Can my team work on the same definition?</summary><p>Not yet. Today each person's chats stay in their own browser. Copy the summary to share it. Shared workspaces are planned.</p></details>
       <details><summary>How is this different from a PRD writer?</summary><p>PRD writers produce a document fast. Scopeline is for agreeing the scope: it keeps evidence and assumptions apart, counts what's missing and records who agreed.</p></details>
-    </section>
+    </div></section>
 
-    <section class="wrap closing">
-      <h2 class="serif">Scope your next feature with the whole team</h2>
-      <button class="btn big" data-act="new">Start free <span class="knob" aria-hidden="true">›</span></button>
-      <p class="fineprint">Free · No sign-up</p>
+    <section class="wrap closing-wrap">
+      <div class="closing-panel">
+        <div class="cp-glow" aria-hidden="true"></div>
+        <div class="cp-avatars" aria-hidden="true">${avatar("pm", 52)}${avatar("design", 52)}${avatar("growth", 52)}${avatar("engineering", 52)}</div>
+        <h2 class="serif">Scope your next feature with the <em>whole team</em></h2>
+        <p>One chat, one definition, every role signed off. Free, in your browser.</p>
+        <div class="cta-row"><button class="btn big light" data-act="new">Start free <span class="knob" aria-hidden="true">›</span></button><a class="btn big outline-light" href="#product">Watch the video</a></div>
+      </div>
     </section>
     <div class="wrap foot"><span>© ${new Date().getFullYear()} Scopeline</span><span>Example content contains no real research or results.</span></div>
   </main>`;
