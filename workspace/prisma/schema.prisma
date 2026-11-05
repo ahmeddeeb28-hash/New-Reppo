@@ -1,0 +1,209 @@
+// Data model for the feature-definition workspace.
+// One Feature owns every other record. Enum-like fields are strings validated in
+// src/lib/domain.ts so the same schema works on SQLite (local) and Postgres (hosted).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Feature {
+  id               String   @id @default(cuid())
+  title            String
+  request          String   // the original idea, as pasted
+  problem          String   @default("")
+  constraints      String   @default("")
+  audience         String   @default("")
+  currentBehaviour String   @default("")
+  outcome          String   @default("")
+  isExample        Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  sections     SectionState[]
+  sources      Source[]
+  scopeItems   ScopeItem[]
+  alternatives Alternative[]
+  assumptions  Assumption[]
+  questions    Question[]
+  decisions    Decision[]
+  measures     Measure[]
+  criteria     AcceptanceCriterion[]
+  comments     Comment[]
+  history      HistoryEntry[]
+}
+
+// Stored review status per section: "proposed" or "agreed".
+// "empty" is never stored; it is derived when a section has no content.
+model SectionState {
+  id        String   @id @default(cuid())
+  featureId String
+  section   String
+  status    String   @default("proposed")
+  updatedAt DateTime @updatedAt
+  feature   Feature  @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  @@unique([featureId, section])
+}
+
+// Pasted text, uploaded file or link. Referenced, never rewritten.
+model Source {
+  id        String   @id @default(cuid())
+  featureId String
+  title     String
+  origin    String   @default("") // where it came from: a person, tool, URL
+  kind      String   @default("text") // text | file | link
+  content   String   @default("")
+  createdAt DateTime @default(now())
+  feature   Feature  @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  assumptions AssumptionSource[]
+  decisions   DecisionSource[]
+}
+
+model ScopeItem {
+  id        String   @id @default(cuid())
+  featureId String
+  text      String
+  inScope   Boolean  @default(true)
+  state     String   @default("accepted") // proposed | accepted
+  createdAt DateTime @default(now())
+  feature   Feature  @relation(fields: [featureId], references: [id], onDelete: Cascade)
+}
+
+model Alternative {
+  id           String   @id @default(cuid())
+  featureId    String
+  description  String
+  whyNotChosen String   @default("")
+  state        String   @default("accepted")
+  createdAt    DateTime @default(now())
+  feature      Feature  @relation(fields: [featureId], references: [id], onDelete: Cascade)
+}
+
+model Assumption {
+  id             String   @id @default(cuid())
+  featureId      String
+  statement      String
+  whyItMatters   String   @default("")
+  owner          String   @default("")
+  proposedTest   String   @default("")
+  evidenceNeeded String   @default("")
+  status         String   @default("untested") // untested | testing | supported | refuted
+  state          String   @default("accepted")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  feature        Feature  @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  sources   AssumptionSource[]
+  decisions DecisionAssumption[]
+}
+
+model AssumptionSource {
+  assumptionId String
+  sourceId     String
+  assumption   Assumption @relation(fields: [assumptionId], references: [id], onDelete: Cascade)
+  source       Source     @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@id([assumptionId, sourceId])
+}
+
+model Question {
+  id           String   @id @default(cuid())
+  featureId    String
+  text         String
+  assignedRole String   @default("pm") // pm | design | growth | engineering
+  assignee     String   @default("")
+  answer       String   @default("")
+  resolved     Boolean  @default(false)
+  state        String   @default("accepted")
+  createdAt    DateTime @default(now())
+  feature      Feature  @relation(fields: [featureId], references: [id], onDelete: Cascade)
+}
+
+model Decision {
+  id        String   @id @default(cuid())
+  featureId String
+  what      String
+  reason    String
+  decidedBy String
+  decidedAt DateTime @default(now())
+  feature   Feature  @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  assumptions DecisionAssumption[]
+  sources     DecisionSource[]
+}
+
+model DecisionAssumption {
+  decisionId   String
+  assumptionId String
+  decision     Decision   @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+  assumption   Assumption @relation(fields: [assumptionId], references: [id], onDelete: Cascade)
+
+  @@id([decisionId, assumptionId])
+}
+
+model DecisionSource {
+  decisionId String
+  sourceId   String
+  decision   Decision @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+  source     Source   @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@id([decisionId, sourceId])
+}
+
+// Values are free text so units and dates stay exactly as entered.
+// An empty baseline or target means unknown; the app never fills one in.
+model Measure {
+  id                     String   @id @default(cuid())
+  featureId              String
+  kind                   String   @default("success") // success | guardrail
+  metric                 String
+  baseline               String   @default("")
+  target                 String   @default("")
+  cohort                 String   @default("")
+  window                 String   @default("")
+  missingInstrumentation String   @default("")
+  state                  String   @default("accepted")
+  createdAt              DateTime @default(now())
+  feature                Feature  @relation(fields: [featureId], references: [id], onDelete: Cascade)
+}
+
+model AcceptanceCriterion {
+  id        String   @id @default(cuid())
+  featureId String
+  text      String
+  state     String   @default("accepted")
+  createdAt DateTime @default(now())
+  feature   Feature  @relation(fields: [featureId], references: [id], onDelete: Cascade)
+}
+
+// UI arrives in milestone 5; the model exists now so records can be targeted.
+model Comment {
+  id         String   @id @default(cuid())
+  featureId  String
+  author     String
+  targetType String // section | assumption | decision | ...
+  targetId   String
+  body       String
+  resolved   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  feature    Feature  @relation(fields: [featureId], references: [id], onDelete: Cascade)
+}
+
+// Append-only. Written only through src/lib/history.ts.
+model HistoryEntry {
+  id        String   @id @default(cuid())
+  featureId String
+  entity    String // scope | decision | assumption | section | feature
+  entityId  String
+  action    String
+  detail    String   @default("")
+  actor     String   @default("")
+  createdAt DateTime @default(now())
+  feature   Feature  @relation(fields: [featureId], references: [id], onDelete: Cascade)
+}
