@@ -21,73 +21,37 @@
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav id="site-nav" class="site-nav" aria-label="Main">
+        <a href="#top">Product</a>
         <a href="#how">How it works</a>
-        <a href="#gaps">Gaps</a>
-        <a href="#team">For teams</a>
-        <a href="#fit">Where it fits</a>
         <a class="pill pill-dark pill-small" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao">Start free <span class="knob" aria-hidden="true">›</span></a>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <!-- Hero -->
     <section class="hero" id="top">
-      <div class="container hero-copy">
-        <a class="announce" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao"><span class="announce-tag">Free</span> Free for product teams. No sign-up to try it <span aria-hidden="true">→</span></a>
-        <h1>Agree what to build <em class="grad">before anyone builds&nbsp;it</em></h1>
-        <p class="lede">Product, design, growth and engineering define one feature together. Every claim is labelled, every number is sourced or marked unknown, and every decision keeps its reason.</p>
-        <div class="hero-actions">
-          <span class="cta-wrap">
-            <a class="pill pill-dark pill-big" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao">Start free <span class="knob" aria-hidden="true">›</span></a>
-            <span class="hand-note" aria-hidden="true">
-              <svg width="78" height="34" viewBox="0 0 78 34" fill="none"><path d="M76 20c-14 6-30 7-40-1-6-5 4-11 9-6 5 6-9 12-22 10-7-1-13-4-19-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M9 6 3 14l10 1" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              It's free!
-            </span>
-          </span>
-          <a class="pill pill-outline" href="#how">See how a session works</a>
+      <div class="container hero-grid2">
+        <div class="hero-left">
+          <h1>Agree what to build <em class="grad">before anyone builds&nbsp;it</em></h1>
+          <p class="lede">One shared definition for product, design, growth and engineering. Every claim labelled, every number sourced or marked unknown.</p>
         </div>
-        <p class="fineprint">Free to use · No sign-up · Paste one feature and see its gaps in minutes</p>
-        <ul class="facts" aria-label="What one session produces">
-          <li><strong class="c-ev">4</strong> roles review</li>
-          <li><strong class="c-qu">1</strong> shared definition</li>
-          <li><strong class="c-as">0</strong> invented numbers</li>
-          <li><strong class="c-dc">7</strong> guided steps</li>
-        </ul>
-      </div>
-
-      <div class="marquee" aria-label="Problems Scopeline helps with">
-        <div class="marquee-track">
-          <span>Scope changes after engineering review</span><span>Success metric agreed after launch</span><span>Assumptions written as facts</span><span>Design starts without the edge cases</span><span>Baselines nobody can find</span><span>Decisions lost in Slack threads</span>
-          <span aria-hidden="true">Scope changes after engineering review</span><span aria-hidden="true">Success metric agreed after launch</span><span aria-hidden="true">Assumptions written as facts</span><span aria-hidden="true">Design starts without the edge cases</span><span aria-hidden="true">Baselines nobody can find</span><span aria-hidden="true">Decisions lost in Slack threads</span>
+        <div class="free-card">
+          <p class="free-title">Free for product teams</p>
+          <ul class="ticks-sm"><li>No sign-up to try</li><li>Gaps counted as you write</li><li>Works in your browser</li></ul>
+          <a class="pill pill-dark" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao">Start free <span class="knob" aria-hidden="true">›</span></a>
         </div>
       </div>
 
       <div class="container">
-        <ul class="promises">
-          <li><span class="check" aria-hidden="true"></span>One definition every role reviews, not four separate docs</li>
-          <li><span class="check" aria-hidden="true"></span>Evidence and assumptions kept apart, so nobody mistakes a hope for a fact</li>
-          <li><span class="check" aria-hidden="true"></span>Decisions recorded with their reason, ready for the next feature</li>
-        </ul>
-      </div>
-
-      <!-- Product mock on a colour field -->
-      <div class="container">
-        <div class="stage stage-hero">
-          <div class="stage-tabs" role="tablist" aria-label="Product stages">
-            <button type="button" role="tab" aria-selected="true" data-stage="define">Define &amp; agree</button>
-            <button type="button" role="tab" aria-selected="false" data-stage="design">Review the design <span class="soon">Next</span></button>
-            <button type="button" role="tab" aria-selected="false" data-stage="learn">Learn after launch <span class="soon">Later</span></button>
-          </div>
-          <div class="window" aria-label="Example: a feature definition being reviewed">
-            <div class="win-bar">
-              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="win-title">Scopeline · Checkout squad</span>
-              <span class="avatars" aria-label="Reviewers">
-                <span class="av av-pm" title="PM">PM</span><span class="av av-ds" title="Design">DS</span><span class="av av-gr" title="Growth">GR</span><span class="av av-en" title="Engineering">EN</span>
-              </span>
-            </div>
-            <div class="win-body" data-stage-panel="define">
+        <div class="product">
+          <div class="tabbar" role="tablist" aria-label="What Scopeline does"><button type="button" role="tab" id="tab-claims" aria-controls="panel-claims" aria-selected="true" data-tab="claims">Labelled claims </button><button type="button" role="tab" id="tab-gaps" aria-controls="panel-gaps" aria-selected="false" data-tab="gaps">Definition gaps </button><button type="button" role="tab" id="tab-team" aria-controls="panel-team" aria-selected="false" data-tab="team">Team review </button><button type="button" role="tab" id="tab-design" aria-controls="panel-design" aria-selected="false" data-tab="design">Design review <span class="soon">Next</span></button><button type="button" role="tab" id="tab-learn" aria-controls="panel-learn" aria-selected="false" data-tab="learn">After launch <span class="soon">Later</span></button></div>
+          <div class="stage stage-hero product-stage">
+          <div class="tab-panel" role="tabpanel" id="panel-claims" aria-labelledby="tab-claims" data-panel="claims">
+            <div class="tab-copy"><h3>Every claim is labelled</h3><p>Evidence, assumption, question or decision. A claim with no source stays an assumption.</p></div>
+            <div class="window">
+            <div class="win-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win-title">Scopeline · One-tap reorder</span>
+              <span class="avatars" aria-label="Reviewers"><span class="av av-pm">PM</span><span class="av av-ds">DS</span><span class="av av-gr">GR</span><span class="av av-en">EN</span></span></div>
+            <div class="win-body">
               <aside class="pane-left">
                 <p class="pane-label">Review session</p>
                 <div class="event">
@@ -121,8 +85,46 @@
                 <div class="callout co-qu"><span class="co-tag">Open question · Design</span>What happens when an item is unavailable or its price changed?</div>
               </article>
             </div>
-
-            <div class="win-body" data-stage-panel="design" hidden>
+          </div>
+          </div>
+          <div class="tab-panel" role="tabpanel" id="panel-gaps" aria-labelledby="tab-gaps" data-panel="gaps" hidden>
+            <div class="tab-copy"><h3>See what's missing</h3><p>Untested assumptions, unknown baselines and unanswered questions, counted from your records.</p></div>
+            <div class="tab-solo"><div class="card-mock">
+            <div class="cm-head"><span>Definition gaps</span><span class="badge-warn">3 open</span></div>
+            <ul class="gap-list">
+              <li><span class="dot d-as"></span><div><b>Assumption has no test</b><span>“Easier reordering increases repeat purchases”</span></div><span class="fix">Propose test</span></li>
+              <li><span class="dot d-qu"></span><div><b>Baseline unknown</b><span>Completed repeat orders · eligible cohort</span></div><span class="fix">Ask Growth</span></li>
+              <li><span class="dot d-qu"></span><div><b>Design hasn't answered</b><span>Unavailable items in a rebuilt basket</span></div><span class="fix">Remind</span></li>
+            </ul>
+            <div class="meter" aria-label="7 of 11 sections agreed"><span style="width:64%"></span></div>
+            <p class="meter-label">7 of 11 sections agreed · 2 proposed · 2 empty</p>
+          </div></div>
+          </div>
+          <div class="tab-panel" role="tabpanel" id="panel-team" aria-labelledby="tab-team" data-panel="team" hidden>
+            <div class="tab-copy"><h3>Every role, one definition</h3><p>Design, growth and engineering resolve their own questions. Decisions keep their reason.</p></div>
+            <div class="tab-solo"><div class="card-mock doc-mock">
+            <p class="dm-meta">One-tap reorder · v3 · reviewed by Design and Engineering</p>
+            <h3>Scope</h3>
+            <ul class="doc-list"><li>Rebuild a previous basket with current prices</li><li><mark>Customer reviews the basket before checkout</mark><span class="cursor" aria-hidden="true">Design</span></li></ul>
+            <div class="resolver">
+              <div class="res-head"><span>Resolving open questions</span><span class="mono-line">2 / 4</span></div>
+              <p class="res-q"><span class="av av-ds">DS</span> If two items are out of stock, what does the customer see?</p>
+              <ul class="res-opts">
+                <li>Hide them from the basket</li>
+                <li class="on">Show them, excluded from the total</li>
+                <li>Block reorder until all items are back</li>
+              </ul>
+              <p class="res-by"><span class="av av-en">EN</span> Availability is checked when the basket is rebuilt.</p>
+            </div>
+            <div class="callout co-dc"><span class="co-tag">Decision recorded · PM, Eng</span>Show unavailable items, excluded from the total. <span class="co-src">Rests on: support export</span></div>
+          </div></div>
+          </div>
+          <div class="tab-panel" role="tabpanel" id="panel-design" aria-labelledby="tab-design" data-panel="design" hidden>
+            <div class="tab-copy"><h3>Check designs against what you agreed</h3><p>Findings point to the criterion or decision they affect.</p></div>
+            <div class="window">
+            <div class="win-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win-title">Scopeline · One-tap reorder</span>
+              <span class="avatars" aria-label="Reviewers"><span class="av av-pm">PM</span><span class="av av-ds">DS</span><span class="av av-gr">GR</span><span class="av av-en">EN</span></span></div>
+            <div class="win-body">
               <aside class="pane-left">
                 <p class="pane-label">Design review</p>
                 <div class="event">
@@ -148,8 +150,14 @@
                 <div class="callout co-qu"><span class="co-tag">Proposed finding 2 · Hierarchy</span>“Reorder” competes with “Edit basket”. The agreed scope says customers review before checkout. <span class="co-src">Affects criterion 2</span></div>
               </article>
             </div>
-
-            <div class="win-body" data-stage-panel="learn" hidden>
+          </div>
+          </div>
+          <div class="tab-panel" role="tabpanel" id="panel-learn" aria-labelledby="tab-learn" data-panel="learn" hidden>
+            <div class="tab-copy"><h3>Learn from what shipped</h3><p>Results are compared with the original assumption, not a target picked afterwards.</p></div>
+            <div class="window">
+            <div class="win-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win-title">Scopeline · One-tap reorder</span>
+              <span class="avatars" aria-label="Reviewers"><span class="av av-pm">PM</span><span class="av av-ds">DS</span><span class="av av-gr">GR</span><span class="av av-en">EN</span></span></div>
+            <div class="win-body">
               <aside class="pane-left">
                 <p class="pane-label">After launch</p>
                 <div class="event">
@@ -175,42 +183,14 @@
               </article>
             </div>
           </div>
+          </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Stages -->
-    <section class="section stages">
-      <div class="container">
-        <p class="eyebrow typed">one workspace</p>
-        <h2 class="display">From the first request to what you learned after launch</h2>
-        <div class="stage-grid">
-          <article class="st st-now">
-            <span class="st-status">Available now</span>
-            <span class="st-n">1</span>
-            <h3>Define &amp; agree</h3>
-            <p>Problem, evidence, assumptions, scope and measures, reviewed by every role. Gaps counted as you go.</p>
-          </article>
-          <article class="st">
-            <span class="st-status soon">Coming next</span>
-            <span class="st-n">2</span>
-            <h3>Review the design</h3>
-            <p>Check designs against the agreed definition before release: hierarchy, edge cases and the criteria you signed off.</p>
-          </article>
-          <article class="st">
-            <span class="st-status soon">Later</span>
-            <span class="st-n">3</span>
-            <h3>Learn after launch</h3>
-            <p>Compare results with the original assumptions and tests, so the next feature starts from what you actually learned.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Same sentence, two ways -->
     <section class="section contrast">
       <div class="container">
-        <p class="eyebrow typed">Why it's different</p>
         <h2 class="display">The same sentence, written two ways</h2>
         <div class="compare">
           <div class="cmp cmp-plain">
@@ -227,53 +207,12 @@
         </div>
       </div>
     </section>
-
-    <!-- Start where you are -->
-    <section class="section paths">
-      <div class="container">
-        <h2 class="display center">Start where you are. We'll take you to the right next step.</h2>
-        <div class="path-grid">
-          <article class="path">
-            <h3>“Our features keep getting re-scoped”</h3>
-            <p>Design and engineering find the gaps after work has started, and success gets defined after launch.</p>
-            <a class="pill pill-outline pill-small" href="#gaps">See what gets caught</a>
-            <div class="path-art art-chaos" aria-hidden="true">
-              <span style="--r:-6deg;--x:44%;--y:8%">Late eng pushback<i>×</i></span>
-              <span style="--r:5deg;--x:6%;--y:32%">No baseline<i>×</i></span>
-              <span style="--r:-3deg;--x:36%;--y:56%">Untested assumption<i>×</i></span>
-              <span style="--r:4deg;--x:10%;--y:78%">Scope creep<i>×</i></span>
-            </div>
-          </article>
-          <article class="path">
-            <h3>“Show me how a session works”</h3>
-            <p>Seven guided steps take a pasted request to a definition all four roles agree on.</p>
-            <a class="pill pill-outline pill-small" href="#how">Walk through the steps</a>
-            <div class="path-art art-steps" aria-hidden="true">
-              <div><b>3</b>Review evidence<span>Claims labelled</span></div>
-              <div><b>4</b>Compare scope<span>Boundary + reason</span></div>
-              <div><b>6</b>Review together<span>Every role answers</span></div>
-            </div>
-          </article>
-          <article class="path">
-            <h3>“I want to try it on a real feature”</h3>
-            <p>Paste a spec or request into a new feature. The gaps panel shows what's missing as you work.</p>
-            <a class="pill pill-dark pill-small" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao">Start free <span class="knob" aria-hidden="true">›</span></a>
-            <div class="path-art art-report" aria-hidden="true">
-              <div class="rep"><b>Definition gaps</b><span>Saved carts</span>
-                <p><i class="d-as"></i>4 claims with no source</p>
-                <p><i class="d-qu"></i>2 metrics with no baseline</p>
-                <p><i class="d-dc"></i>1 decision with no reason</p>
-              </div>
-            </div>
-          </article>
-        </div>
       </div>
     </section>
 
-    <!-- How it works: interactive steps -->
     <section class="section" id="how">
       <div class="container">
-        <h2 class="display center">Seven steps from request to agreed definition</h2>
+        <h2 class="display">Seven steps to an agreed definition</h2>
         <div class="walk">
           <div class="walk-visual">
             <div class="wv" data-panel="1">
@@ -314,156 +253,22 @@
             </div>
           </div>
           <ol class="walk-steps" role="tablist" aria-label="Session steps">
-            <li><button type="button" role="tab" aria-selected="true" data-step="1"><span class="n">1</span><span><b>Add context</b><em>Paste the idea, notes and research. Every source stays linked.</em></span></button></li>
-            <li><button type="button" role="tab" aria-selected="false" data-step="2"><span class="n">2</span><span><b>Clarify the problem</b><em>Target user, current behaviour, intended outcome. Gaps stay marked unknown.</em></span></button></li>
-            <li><button type="button" role="tab" aria-selected="false" data-step="3"><span class="n">3</span><span><b>Review evidence</b><em>Every claim labelled as evidence, assumption, question or decision.</em></span></button></li>
-            <li><button type="button" role="tab" aria-selected="false" data-step="4"><span class="n">4</span><span><b>Compare scope</b><em>Options side by side. The chosen boundary keeps its reason.</em></span></button></li>
-            <li><button type="button" role="tab" aria-selected="false" data-step="5"><span class="n">5</span><span><b>Define learning</b><em>Success measure and guardrails. Missing values stay blank.</em></span></button></li>
-            <li><button type="button" role="tab" aria-selected="false" data-step="6"><span class="n">6</span><span><b>Review together</b><em>Design, growth and engineering answer their own questions.</em></span></button></li>
-            <li><button type="button" role="tab" aria-selected="false" data-step="7"><span class="n">7</span><span><b>Share the result</b><em>A summary and a brief from the same agreed records.</em></span></button></li>
+            <li><button type="button" role="tab" aria-selected="true" data-step="1"><span class="n">1</span><span><b>Add context</b><em>Paste the idea and your research.</em></span></button></li>
+            <li><button type="button" role="tab" aria-selected="false" data-step="2"><span class="n">2</span><span><b>Clarify the problem</b><em>Who it's for and what should change.</em></span></button></li>
+            <li><button type="button" role="tab" aria-selected="false" data-step="3"><span class="n">3</span><span><b>Review evidence</b><em>Every claim gets a label.</em></span></button></li>
+            <li><button type="button" role="tab" aria-selected="false" data-step="4"><span class="n">4</span><span><b>Compare scope</b><em>Pick a boundary, keep the reason.</em></span></button></li>
+            <li><button type="button" role="tab" aria-selected="false" data-step="5"><span class="n">5</span><span><b>Define learning</b><em>Metrics and guardrails. Blanks stay blank.</em></span></button></li>
+            <li><button type="button" role="tab" aria-selected="false" data-step="6"><span class="n">6</span><span><b>Review together</b><em>Each role answers its own questions.</em></span></button></li>
+            <li><button type="button" role="tab" aria-selected="false" data-step="7"><span class="n">7</span><span><b>Share the result</b><em>One summary, one brief, same records.</em></span></button></li>
           </ol>
         </div>
       </div>
     </section>
 
-    <!-- Feature: gaps -->
-    <section class="section feature" id="gaps">
-      <div class="container feature-row">
-        <div class="feature-copy">
-          <h2 class="display">Find the gaps before the review meeting</h2>
-          <p>Scopeline counts what's missing from the definition itself. You see unsupported claims, untested assumptions and unknown baselines before anyone commits a sprint.</p>
-          <ul class="ticks">
-            <li>Readiness is counted from your records, never scored by AI</li>
-            <li>Each gap links straight to the section that needs it</li>
-            <li>AI can propose a fix. A person accepts it.</li>
-          </ul>
-        </div>
-        <div class="stage stage-amber">
-          <div class="card-mock">
-            <div class="cm-head"><span>Definition gaps</span><span class="badge-warn">3 open</span></div>
-            <ul class="gap-list">
-              <li><span class="dot d-as"></span><div><b>Assumption has no test</b><span>“Easier reordering increases repeat purchases”</span></div><span class="fix">Propose test</span></li>
-              <li><span class="dot d-qu"></span><div><b>Baseline unknown</b><span>Completed repeat orders · eligible cohort</span></div><span class="fix">Ask Growth</span></li>
-              <li><span class="dot d-qu"></span><div><b>Design hasn't answered</b><span>Unavailable items in a rebuilt basket</span></div><span class="fix">Remind</span></li>
-            </ul>
-            <div class="meter" aria-label="7 of 11 sections agreed"><span style="width:64%"></span></div>
-            <p class="meter-label">7 of 11 sections agreed · 2 proposed · 2 empty</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Feature: team -->
-    <section class="section feature" id="team">
-      <div class="container feature-row reverse">
-        <div class="feature-copy">
-          <h2 class="display">Every role reviews the same definition</h2>
-          <p>Nobody rebuilds context in a separate doc. Each discipline gets the questions that matter to it, on the same records.</p>
-          <ul class="role-list">
-            <li><span class="av av-ds">DS</span><div><b>Design</b> Journeys, edge cases and states</div></li>
-            <li><span class="av av-gr">GR</span><div><b>Growth</b> Behavioural hypothesis and measurement</div></li>
-            <li><span class="av av-en">EN</span><div><b>Engineering</b> Feasibility, dependencies, acceptance criteria</div></li>
-            <li><span class="av av-pm">PM</span><div><b>Product</b> Value, scope and open decisions</div></li>
-          </ul>
-        </div>
-        <div class="stage stage-blue">
-          <div class="card-mock doc-mock">
-            <p class="dm-meta">One-tap reorder · v3 · reviewed by Design and Engineering</p>
-            <h3>Scope</h3>
-            <ul class="doc-list"><li>Rebuild a previous basket with current prices</li><li><mark>Customer reviews the basket before checkout</mark><span class="cursor" aria-hidden="true">Design</span></li></ul>
-            <div class="resolver">
-              <div class="res-head"><span>Resolving open questions</span><span class="mono-line">2 / 4</span></div>
-              <p class="res-q"><span class="av av-ds">DS</span> If two items are out of stock, what does the customer see?</p>
-              <ul class="res-opts">
-                <li>Hide them from the basket</li>
-                <li class="on">Show them, excluded from the total</li>
-                <li>Block reorder until all items are back</li>
-              </ul>
-              <p class="res-by"><span class="av av-en">EN</span> Availability is checked when the basket is rebuilt.</p>
-            </div>
-            <div class="callout co-dc"><span class="co-tag">Decision recorded · PM, Eng</span>Show unavailable items, excluded from the total. <span class="co-src">Rests on: support export</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Feature: measures -->
-    <section class="section feature">
-      <div class="container feature-row">
-        <div class="feature-copy">
-          <h2 class="display">Measure what you can. Mark what you can't.</h2>
-          <p>The success plan names the metric, guardrails, cohort and window. If a baseline doesn't exist yet, it stays blank and becomes a question for Growth.</p>
-          <ul class="ticks">
-            <li>No target or baseline appears unless someone entered it</li>
-            <li>Missing instrumentation is listed before launch</li>
-            <li>Expected impact is never stated as fact</li>
-          </ul>
-        </div>
-        <div class="stage stage-green">
-          <div class="card-mock">
-            <div class="cm-head"><span>Success measure</span><span class="badge-ok">Proposed</span></div>
-            <p class="metric">Completed repeat orders, eligible cohort</p>
-            <dl class="mgrid">
-              <div><dt>Baseline</dt><dd><span class="unknown">Unknown</span></dd></div>
-              <div><dt>Target</dt><dd><span class="unknown">Unknown</span></dd></div>
-              <div><dt>Window</dt><dd>28 days</dd></div>
-              <div><dt>Cohort</dt><dd>2+ past orders</dd></div>
-            </dl>
-            <p class="guard-label">Guardrails</p>
-            <div class="chips"><span>Cancellations</span><span>Refunds</span><span>Support contacts</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Principles -->
-    <section class="section principles">
-      <div class="container">
-        <p class="eyebrow typed">How the AI behaves</p>
-        <h2 class="display">It asks and proposes. Your team decides.</h2>
-        <div class="principle-grid">
-          <div class="principle"><b>Proposals, not edits</b><p>Suggestions stay marked as proposed until someone accepts, edits or rejects them.</p></div>
-          <div class="principle"><b>Unknown stays unknown</b><p>It never fills a baseline, target or audience size you didn't give it.</p></div>
-          <div class="principle"><b>Every claim labelled</b><p>A statement with no linked source counts as an assumption, never a fact.</p></div>
-          <div class="principle"><b>Decisions aren't overwritten</b><p>New sources flag the decisions they may affect instead of rewriting them.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Fit -->
-    <section class="section" id="fit">
-      <div class="container">
-        <p class="eyebrow typed">Where it fits</p>
-        <h2 class="display">Built for agreement, not for faster documents</h2>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr><th scope="col"></th><th scope="col">AI PRD writers</th><th scope="col">Product management suites</th><th scope="col">Chat assistant + docs</th><th scope="col">Scopeline</th></tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row">Main output</th><td>A drafted document</td><td>Specs inside a wider system</td><td>Text you copy elsewhere</td><td>An agreed, reviewable definition</td></tr>
-              <tr><th scope="row">Claims</th><td>Written as prose</td><td>Varies by product</td><td>Mixed into the prose</td><td>Labelled evidence, assumption, question or decision</td></tr>
-              <tr><th scope="row">Readiness</th><td>AI review score</td><td>Varies by product</td><td>Your judgement</td><td>Counted from agreed sections and open gaps</td></tr>
-              <tr><th scope="row">Best when</th><td>You need a first draft fast</td><td>Your roadmap already lives there</td><td>The feature is small</td><td>Several roles must agree before work starts</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- Start free -->
     <section class="section final" id="start">
-      <div class="container">
-        <div class="stage stage-final">
-          <div class="final-card">
-            <h2 class="display">Start with one real feature</h2>
-            <p>Paste a spec or request you're about to commit to. Scopeline shows its gaps as you work through the seven steps, and your PM, designer, growth lead and engineer agree the rest.</p>
-            <div class="hero-actions">
-              <a class="pill pill-dark" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao">Start free <span class="knob" aria-hidden="true">›</span></a>
-            </div>
-            <p class="fineprint">Free · Works in your browser · No sign-up</p>
-          </div>
-        </div>
+      <div class="container final-row">
+        <h2 class="display">Start with one real feature</h2>
+        <a class="pill pill-dark pill-big" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao">Start free <span class="knob" aria-hidden="true">›</span></a>
       </div>
     </section>
   </main>

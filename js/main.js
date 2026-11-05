@@ -41,3 +41,19 @@ stageTabs.forEach((t) => t.addEventListener('click', () => {
   stageTabs.forEach((x) => x.setAttribute('aria-selected', String(x === t)));
   stagePanels.forEach((p) => { p.hidden = p.dataset.stagePanel !== t.dataset.stage; });
 }));
+
+// Product window tabs
+const ptabs = document.querySelectorAll('.tabbar [role="tab"]');
+const ppanels = document.querySelectorAll('.tab-panel');
+function selectTab(t) {
+  ptabs.forEach((x) => x.setAttribute('aria-selected', String(x === t)));
+  ppanels.forEach((p) => { p.hidden = p.dataset.panel !== t.dataset.tab; });
+}
+ptabs.forEach((t, i) => {
+  t.addEventListener('click', () => selectTab(t));
+  t.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    const next = ptabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + ptabs.length) % ptabs.length];
+    next.focus(); selectTab(next);
+  });
+});
