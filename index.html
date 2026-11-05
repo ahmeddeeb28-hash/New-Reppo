@@ -312,6 +312,117 @@ mark.bad { background: var(--bad-bg); color: var(--bad); border-radius: 4px; pad
   .chapters { grid-template-columns: 1fr 1fr; }
 }
 
+
+/* ---------- Header light (Spark-style glow) ---------- */
+.glow-top { position: absolute; inset: 0 0 auto 0; height: 980px; overflow: hidden; pointer-events: none; z-index: 0; }
+.glow-top::before, .glow-top::after { content: ""; position: absolute; border-radius: 50%; filter: blur(80px); opacity: .75; }
+.glow-top::before { width: 820px; height: 620px; left: -160px; top: -220px; background: radial-gradient(circle at 40% 50%, #c9b8ff 0%, #e6dcff 45%, transparent 70%); animation: floatA 18s ease-in-out infinite alternate; }
+.glow-top::after { width: 900px; height: 680px; right: -220px; top: -160px; background: radial-gradient(circle at 60% 50%, #a9d4ff 0%, #d9ecff 45%, transparent 70%); animation: floatB 22s ease-in-out infinite alternate; }
+.glow-top i { position: absolute; left: 50%; top: 380px; width: 1100px; height: 520px; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(closest-side, rgba(170,240,205,.55), transparent); filter: blur(40px); }
+@keyframes floatA { to { transform: translate(120px, 60px) scale(1.08); } }
+@keyframes floatB { to { transform: translate(-140px, 80px) scale(1.05); } }
+.lp-hero, .walk { position: relative; z-index: 1; }
+.top { z-index: 40; }
+
+/* ---------- Product video ---------- */
+.pool { position: relative; padding: clamp(14px, 3.5vw, 44px) clamp(10px, 3vw, 44px) 18px; border-radius: 32px; background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.2)); border: 1px solid rgba(255,255,255,.8); box-shadow: 0 60px 120px -60px rgba(90,70,200,.45); isolation: isolate; }
+.pool::before { content: ""; position: absolute; inset: 8% 6% -6%; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, rgba(150,120,255,.35), rgba(120,190,255,.2) 60%, transparent); filter: blur(30px); }
+.player { position: relative; max-width: 1080px; margin: 0 auto; aspect-ratio: 16 / 9.4; border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 40px 80px -36px rgba(20,20,60,.5), 0 0 0 1px rgba(0,0,0,.05); }
+.cam { position: absolute; inset: 0; transform-origin: 0 0; transition: transform 1.3s cubic-bezier(.65,0,.25,1); }
+.pwin { position: absolute; inset: 0; display: flex; flex-direction: column; font-size: 14px; }
+.pwin .wb { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-bottom: 1px solid var(--line); background: #f8f6f2; font-size: 12px; color: var(--muted); }
+.pbody { flex: 1; display: grid; grid-template-columns: 1fr 1fr; min-height: 0; position: relative; }
+.zone { transition: filter .9s ease, opacity .9s ease; min-width: 0; overflow: hidden; }
+.cam.zoom .zone:not(.focus) { filter: blur(3px); opacity: .55; }
+.pchat { padding: 16px; display: flex; flex-direction: column; gap: 9px; border-right: 1px solid var(--line); background: #faf9f6; }
+.pdoc { padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+.pdoc .callout, .pchat .qcard, .pchat .m-ai p, .pchat .m-user { font-size: 13px; }
+.v [data-s] { transition: opacity .5s ease, transform .5s ease; }
+.v [data-s].hide { opacity: 0; transform: translateY(8px); }
+.pstart { position: absolute; inset: 0; background: linear-gradient(180deg, #fbfaff, #fff); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 24px; transition: opacity .7s ease; z-index: 2; }
+.pstart.gone { opacity: 0 !important; pointer-events: none; }
+.pstart h3 { font-family: var(--serif); font-weight: 300; font-size: 32px; letter-spacing: -0.02em; }
+.pstart h3 em { font-style: italic; color: #6b4fd8; }
+.pcomp { width: min(560px, 92%); background: #fff; border: 1.5px solid #d9d0ff; border-radius: 16px; padding: 12px 14px; box-shadow: 0 16px 40px -24px rgba(107,79,216,.6); min-height: 82px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
+.pcomp .typed { font-size: 14px; min-height: 22px; } .pcomp .typed::after { content: ""; display: inline-block; width: 2px; height: 1em; background: #6b4fd8; vertical-align: -2px; margin-left: 1px; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.pcomp .row2 { display: flex; justify-content: space-between; align-items: center; }
+.pcomp .row2 span { font-size: 11px; color: var(--muted); }
+.pcomp .sendb { width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font-size: 13px; }
+.skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: min(560px, 92%); }
+.skills div { border: 1px solid var(--line); border-radius: 12px; padding: 9px; background: #fff; font-size: 12px; font-weight: 600; display: flex; flex-direction: column; gap: 2px; }
+.skills span { font-weight: 400; color: var(--muted); font-family: var(--mono); font-size: 10px; }
+.glowb { position: relative; }
+.glowb::after { content: ""; position: absolute; inset: -2px; border-radius: inherit; padding: 2px; background: conic-gradient(from var(--a, 0deg), transparent 0 60%, #8c6bff 75%, #5cc4ff 85%, transparent 95%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; animation: spin 2.4s linear infinite; pointer-events: none; }
+@property --a { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+@keyframes spin { to { --a: 360deg; } }
+.vcursor { position: absolute; z-index: 5; left: 70%; top: 80%; width: 22px; height: 22px; pointer-events: none; transition: left 1s cubic-bezier(.5,0,.2,1), top 1s cubic-bezier(.5,0,.2,1), opacity .3s; filter: drop-shadow(0 3px 4px rgba(0,0,0,.3)); }
+.vcursor::after { content: ""; position: absolute; left: -10px; top: -10px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #6b4fd8; opacity: 0; }
+.vcursor.click::after { animation: ripple .5s ease-out; }
+@keyframes ripple { from { opacity: .9; transform: scale(.3); } to { opacity: 0; transform: scale(1.8); } }
+.v .opt.on, .v .pfix.fixed { transition: all .3s; }
+.v .agreed-strip span { transition: all .5s; }
+.v.agreed .agreed-strip span { background: var(--ev-bg); color: var(--ev); }
+.controls { display: flex; align-items: center; gap: 12px; max-width: 1080px; margin: 14px auto 0; }
+.playbtn { width: 38px; height: 38px; border-radius: 50%; border: 0; background: var(--ink); color: #fff; cursor: pointer; display: grid; place-items: center; flex-shrink: 0; font-size: 13px; }
+.segs { flex: 1; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.seg2 { border: 0; background: none; padding: 0; cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 6px; }
+.seg2 .tr { height: 4px; border-radius: 4px; background: rgba(0,0,0,.1); overflow: hidden; }
+.seg2 .tr i { display: block; height: 100%; width: 0; background: var(--ink); }
+.seg2.done .tr i { width: 100%; }
+.seg2 b { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+.seg2.on b { color: var(--ink); }
+
+/* ---------- Problem / Solution (incident.io-style toggle) ---------- */
+.ps { padding-block: clamp(72px, 9vw, 120px); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.ps h2 { font-size: clamp(2.3rem, 5vw, 4rem); max-width: 13em; }
+.ps > p { color: var(--muted); max-width: 34em; font-size: 1.08rem; }
+.psboard { width: 100%; max-width: 1060px; margin-top: 26px; border-radius: 28px; background: var(--tint); padding: clamp(20px, 4vw, 44px); min-height: 380px; position: relative; overflow: hidden; }
+.pspanel[hidden] { display: none; }
+.scatter { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; text-align: left; }
+.scard { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 14px 30px -24px rgba(0,0,0,.4); font-size: 0.88rem; }
+.scard:nth-child(1) { transform: rotate(-2deg); } .scard:nth-child(2) { transform: rotate(1.5deg) translateY(16px); } .scard:nth-child(3) { transform: rotate(-1deg) translateY(-6px); } .scard:nth-child(4) { transform: rotate(2deg) translateY(10px); }
+.scard .src { font-family: var(--mono); font-size: 0.66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.conflict { font-size: 0.72rem; font-weight: 600; color: var(--bad); background: var(--bad-bg); border-radius: 999px; padding: 2px 8px; align-self: flex-start; }
+.verdict { margin-top: 42px; display: inline-flex; align-items: center; gap: 10px; background: #fff; border: 1px solid var(--bad-bg); color: var(--bad); border-radius: 999px; padding: 8px 16px; font-weight: 600; font-size: 0.92rem; }
+.tree { display: flex; flex-direction: column; align-items: center; }
+.root-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--ev); color: #fff; border-radius: 999px; padding: 9px 18px; font-weight: 600; font-size: 0.92rem; }
+.branches { position: relative; width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 44px; }
+.branches::before { content: ""; position: absolute; left: 12.5%; right: 12.5%; top: -22px; height: 22px; border: 1.5px solid #d9d2c4; border-bottom: 0; border-radius: 14px 14px 0 0; }
+.branches::after { content: ""; position: absolute; left: 50%; top: -44px; height: 22px; border-left: 1.5px solid #d9d2c4; }
+.bcard { position: relative; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 12px; text-align: left; display: flex; gap: 10px; align-items: flex-start; box-shadow: 0 14px 30px -24px rgba(0,0,0,.4); font-size: 0.86rem; opacity: 0; transform: translateY(10px); transition: all .5s ease; }
+.bcard::before { content: ""; position: absolute; left: 50%; top: -23px; height: 22px; border-left: 1.5px solid #d9d2c4; }
+.bcard.in { opacity: 1; transform: none; }
+.bcard .ck { width: 26px; height: 26px; border-radius: 8px; background: var(--ev-bg); color: var(--ev); display: grid; place-items: center; flex-shrink: 0; font-size: 0.8rem; }
+.bcard small { display: block; font-size: 0.7rem; color: var(--ev); font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+.nametag { position: absolute; bottom: -30px; left: 30%; display: inline-flex; align-items: center; gap: 6px; color: #fff; border-radius: 999px; padding: 3px 10px 3px 4px; font-size: 0.74rem; font-weight: 600; }
+.nametag::before { content: ""; position: absolute; left: -2px; top: -12px; border: 6px solid transparent; border-bottom-color: currentColor; transform: rotate(-35deg); opacity: .0; }
+.nametag .av { width: 18px; height: 18px; font-size: 0.5rem; }
+@media (max-width: 960px) { .scatter, .branches { grid-template-columns: 1fr 1fr; } .branches::before, .branches::after, .bcard::before { display: none; } .segs b { display: none; } .player { aspect-ratio: 4 / 5; } .pbody { grid-template-columns: 1fr; } .pchat { border-right: 0; border-bottom: 1px solid var(--line); } .skills { grid-template-columns: 1fr 1fr; } }
+@media (prefers-reduced-motion: reduce) { .glow-top::before, .glow-top::after { animation: none; } .cam { transition: none; } }
+
+
+/* ---------- Charts ---------- */
+.co-vis { background: var(--surface); border-color: var(--line); }
+.vcard { grid-template-columns: minmax(0, 1fr); background: var(--surface); border-color: var(--qu-line); }
+.vcard .acts { justify-content: flex-start; }
+.viz { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.viz-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.viz-head b { font-size: 0.9rem; }
+.viz-body svg { width: 100%; height: auto; display: block; overflow: visible; }
+.basis { font-size: 0.7rem; font-weight: 600; border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+.b-user { background: var(--ev-bg); color: var(--ev); } .b-ph { background: var(--dc-bg); color: var(--muted); } .b-est { background: var(--bad-bg); color: var(--bad); }
+.viz-src { font-size: 0.76rem; color: var(--muted); }
+.legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 0.74rem; color: var(--muted); margin-top: 2px; }
+.legend span { display: inline-flex; align-items: center; gap: 5px; } .legend i { width: 10px; height: 3px; border-radius: 2px; display: inline-block; }
+.vedit { display: flex; flex-wrap: wrap; gap: 8px; background: var(--bg); border-radius: 10px; padding: 8px; }
+.vedit.grid { flex-direction: column; }
+.vrow { display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-end; }
+.vrow b { font-size: 0.74rem; width: 100%; }
+.vedit label { display: flex; flex-direction: column; font-size: 0.68rem; color: var(--muted); gap: 2px; }
+.vedit input { width: 72px; border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; font-size: 0.82rem; }
+.vitem { grid-template-columns: minmax(0, 1fr) auto; border-color: var(--line); background: var(--surface); }
+
 @media (max-width: 1100px) { .moments { grid-template-columns: 1fr 1fr; } .hand { display: none; } }
 @media (max-width: 900px) {
   .ws { grid-template-columns: minmax(0, 1fr); }
@@ -341,14 +452,14 @@ const ROLES = { pm: "PM", design: "Design", growth: "Growth", engineering: "Engi
 const SECTIONS = [
   ["problem", "Problem"], ["audience", "Audience"], ["outcome", "Intended outcome"], ["evidence", "Evidence"],
   ["assumption", "Assumptions"], ["question", "Open questions"], ["scope_in", "In scope"], ["scope_out", "Out of scope"],
-  ["criterion", "Acceptance criteria"], ["measure", "Measures"], ["decision", "Decisions"],
+  ["criterion", "Acceptance criteria"], ["measure", "Measures"], ["decision", "Decisions"], ["visual", "Visuals"],
 ];
 const SEC_LABEL = Object.fromEntries(SECTIONS);
 const KIND = {
   problem: ["Problem", "co-dc", "t-dc"], audience: ["Audience", "co-dc", "t-dc"], outcome: ["Outcome", "co-dc", "t-dc"],
   evidence: ["Evidence", "co-ev", "t-ev"], assumption: ["Assumption", "co-as", "t-as"], question: ["Open question", "co-qu", "t-qu"],
   scope_in: ["In scope", "co-dc", "t-dc"], scope_out: ["Out of scope", "co-dc", "t-dc"], criterion: ["Acceptance criterion", "co-dc", "t-dc"],
-  measure: ["Measure", "co-dc", "t-dc"], decision: ["Decision", "co-dc", "t-dc"],
+  measure: ["Measure", "co-dc", "t-dc"], decision: ["Decision", "co-dc", "t-dc"], visual: ["Visual", "co-vis", "t-dc"],
 };
 const STAGES = [["Context", ["problem", "evidence"]], ["Audience", ["audience", "outcome"]], ["Claims", ["assumption", "question"]], ["Scope", ["scope_in", "scope_out"]], ["Measures", ["measure"]], ["Review", ["decision"]]];
 const filled = (s) => (s || "").trim().length > 0;
@@ -356,7 +467,7 @@ const items = (f, k) => f.doc.filter((x) => x.kind === k);
 const secStatus = (f, k) => !items(f, k).length ? "empty" : (f.agreed[k] ? "agreed" : "proposed");
 function gaps(f) {
   const g = [];
-  for (const [k, label] of SECTIONS) if (!items(f, k).length && k !== "decision" && k !== "criterion") g.push({ text: `${label} is empty`, ask: k });
+  for (const [k, label] of SECTIONS) if (!items(f, k).length && k !== "decision" && k !== "criterion" && k !== "visual") g.push({ text: `${label} is empty`, ask: k });
   items(f, "assumption").forEach((a) => { if (!a.owner) g.push({ text: `Assumption needs an owner and a test: “${a.text}”`, ask: "assumption" }); });
   items(f, "measure").forEach((m) => { if (!m.baseline) g.push({ text: `Baseline unknown for “${m.text}”`, ask: "measure" }); });
   items(f, "question").forEach((q) => { if (!q.answer) g.push({ text: `${ROLES[q.role] || "PM"} hasn't answered: “${q.text}”`, ask: "question" }); });
@@ -381,6 +492,166 @@ function knownNumbers(f) {
   return new Set((t.match(NUM_RE) || []).map((n) => n.replace(/\s/g, "")));
 }
 const unsourced = (f, text) => (String(text).match(NUM_RE) || []).map((n) => n.replace(/\s/g, "")).filter((n) => !knownNumbers(f).has(n));
+
+
+// =================== Charts (drawn from the definition or your numbers, never invented) ===================
+const SERIES_COL = ["#15130f", "#11805a", "#3a4fc6", "#a35a00"];
+const BASIS = {
+  user: ["From your numbers", "b-user"], placeholder: ["Placeholders · add numbers", "b-ph"],
+  estimate: ["Unverified estimate · check before use", "b-est"], definition: ["From your definition", "b-user"],
+};
+const num = (v) => (v === null || v === undefined || v === "" || isNaN(Number(v))) ? null : Number(v);
+const fmtN = (v) => Math.abs(v) >= 1000 ? (v / 1000).toFixed(v >= 10000 ? 0 : 1) + "k" : (Math.round(v * 10) / 10).toString();
+const trunc = (t, n) => (t.length > n ? t.slice(0, n - 1) + "…" : t);
+function chartSVG(v, W = 460, H = 220) {
+  const t = v.type;
+  if (t === "matrix") {
+    const L = 70, T = 12, cw = (W - L - 10) / 3, ch = (H - T - 34) / 3;
+    let g = `<rect x="${L}" y="${T}" width="${cw}" height="${ch}" fill="var(--as-bg)"/>`;
+    for (let i = 0; i <= 3; i++) g += `<line x1="${L + i * cw}" y1="${T}" x2="${L + i * cw}" y2="${T + 3 * ch}" stroke="var(--line)"/><line x1="${L}" y1="${T + i * ch}" x2="${L + 3 * cw}" y2="${T + i * ch}" stroke="var(--line)"/>`;
+    g += `<text x="${L + 6}" y="${T + ch - 6}" font-size="10" fill="var(--as)" font-weight="600">Test first</text>`;
+    g += `<text x="${L + 1.5 * cw}" y="${H - 6}" font-size="10" text-anchor="middle" fill="var(--muted)">Evidence →</text><text x="12" y="${T + 1.5 * ch}" font-size="10" fill="var(--muted)" transform="rotate(-90 12 ${T + 1.5 * ch})" text-anchor="middle">Impact →</text>`;
+    (v.items || []).slice(0, 8).forEach((it, i) => {
+      const ev = Math.min(3, Math.max(1, Number(it.evidence) || 1)), im = Math.min(3, Math.max(1, Number(it.impact) || 3));
+      const cx = L + (ev - 0.5) * cw + ((i % 3) - 1) * 12, cy = T + (3 - im + 0.5) * ch + (Math.floor(i / 3) - 0.5) * 12;
+      g += `<circle cx="${cx}" cy="${cy}" r="6" fill="${SERIES_COL[i % 4]}"/><text x="${cx + 9}" y="${cy + 4}" font-size="10" fill="var(--ink)">${esc(trunc(it.label || "", 26))}</text>`;
+    });
+    return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(v.title || "Assumption matrix")}">${g}</svg>`;
+  }
+  if (t === "funnel") {
+    const steps = (v.steps || []).slice(0, 6), rowH = Math.min(34, (H - 10) / Math.max(1, steps.length)), max = Math.max(1, ...steps.map((s) => num(s.value) || 0));
+    let g = "";
+    steps.forEach((s, i) => {
+      const val = num(s.value), w = val === null ? (W - 150) * (1 - i * 0.14) : Math.max(8, (W - 150) * val / max), y = 4 + i * rowH;
+      g += `<text x="0" y="${y + rowH / 2 + 4}" font-size="11" fill="var(--ink)">${esc(trunc(s.label || "", 18))}</text>`;
+      g += `<rect x="130" y="${y + 4}" width="${w}" height="${rowH - 10}" rx="5" fill="${val === null ? "none" : "var(--qu)"}" stroke="${val === null ? "var(--muted)" : "none"}" stroke-dasharray="${val === null ? "4 3" : "0"}" opacity="${val === null ? 1 : 0.85 - i * 0.08}"/>`;
+      g += `<text x="${130 + w + 6}" y="${y + rowH / 2 + 4}" font-size="11" fill="var(--muted)">${val === null ? "?" : fmtN(val) + (v.unit ? " " + esc(v.unit) : "")}</text>`;
+    });
+    return `<svg viewBox="0 0 ${W} ${Math.max(H, steps.length * rowH + 8)}" role="img" aria-label="${esc(v.title || "Funnel")}">${g}</svg>`;
+  }
+  // line or bar
+  const series = (v.series || []).slice(0, 4), xs = series[0] ? series[0].points.map((p) => p.x) : [];
+  const vals = series.flatMap((s) => s.points.map((p) => num(p.y))).filter((x) => x !== null);
+  const L = 40, R = 10, T = 12, B = 26, pw = W - L - R, ph = H - T - B;
+  const max = vals.length ? Math.max(...vals) * 1.12 : 1, min = 0;
+  const X = (i) => L + (xs.length <= 1 ? pw / 2 : (t === "bar" ? (i + 0.5) * pw / xs.length : i * pw / (xs.length - 1)));
+  const Y = (y) => T + ph - (y - min) / (max - min) * ph;
+  let g = "";
+  for (let k = 0; k <= 3; k++) { const yy = T + ph * k / 3; g += `<line x1="${L}" y1="${yy}" x2="${W - R}" y2="${yy}" stroke="var(--line)"/>`; if (vals.length) g += `<text x="${L - 6}" y="${yy + 4}" font-size="10" text-anchor="end" fill="var(--muted)">${fmtN(max - (max - min) * k / 3)}</text>`; }
+  xs.forEach((x, i) => { g += `<text x="${X(i)}" y="${H - 8}" font-size="10" text-anchor="middle" fill="var(--muted)">${esc(trunc(String(x), 10))}</text>`; });
+  if (t === "bar") {
+    const bw = Math.min(46, pw / Math.max(1, xs.length) / Math.max(1, series.length) * 0.7);
+    series.forEach((sr, si) => sr.points.forEach((pt, i) => {
+      const y = num(pt.y), x = X(i) - (series.length * bw) / 2 + si * bw;
+      if (y === null) g += `<rect x="${x}" y="${T + ph * 0.35}" width="${bw - 3}" height="${ph * 0.65}" rx="4" fill="none" stroke="var(--muted)" stroke-dasharray="4 3"/><text x="${x + (bw - 3) / 2}" y="${T + ph * 0.7}" font-size="12" text-anchor="middle" fill="var(--muted)">?</text>`;
+      else g += `<rect x="${x}" y="${Y(y)}" width="${bw - 3}" height="${T + ph - Y(y)}" rx="4" fill="${SERIES_COL[si]}" opacity=".85"/><text x="${x + (bw - 3) / 2}" y="${Y(y) - 4}" font-size="10" text-anchor="middle" fill="var(--ink)">${fmtN(y)}</text>`;
+    }));
+  } else {
+    series.forEach((sr, si) => {
+      const pts = sr.points.map((pt, i) => [X(i), num(pt.y)]);
+      if (pts.every(([, y]) => y === null)) {
+        const yb = T + ph * (0.55 - si * 0.18);
+        g += `<line x1="${L}" y1="${yb + 18}" x2="${W - R}" y2="${yb - 10}" stroke="${SERIES_COL[si]}" stroke-dasharray="5 4" opacity=".55"/>`;
+        pts.forEach(([x], i) => { const yy = yb + 18 - (28 * i / Math.max(1, pts.length - 1)); g += `<circle cx="${x}" cy="${yy}" r="7" fill="var(--surface)" stroke="${SERIES_COL[si]}" stroke-dasharray="2 2"/><text x="${x}" y="${yy + 4}" font-size="9" text-anchor="middle" fill="${SERIES_COL[si]}">?</text>`; });
+      } else {
+        let d = ""; pts.forEach(([x, y]) => { if (y !== null) d += (d ? "L" : "M") + x + " " + Y(y); });
+        g += `<path d="${d}" fill="none" stroke="${SERIES_COL[si]}" stroke-width="2.2"${sr.name && /low|high/i.test(sr.name) ? ' stroke-dasharray="5 4"' : ""}/>`;
+        pts.forEach(([x, y]) => { g += y === null ? `<text x="${x}" y="${T + ph / 2}" font-size="12" text-anchor="middle" fill="var(--muted)">?</text>` : `<circle cx="${x}" cy="${Y(y)}" r="3.5" fill="${SERIES_COL[si]}"/>`; });
+      }
+    });
+  }
+  const legend = series.length > 1 ? `<div class="legend">${series.map((sr, i) => `<span><i style="background:${SERIES_COL[i]}"></i>${esc(sr.name || "Series " + (i + 1))}</span>`).join("")}</div>` : "";
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(v.title || "Chart")}">${g}</svg>${legend}`;
+}
+function visualBlock(v, editId) {
+  const [bl, bc] = BASIS[v.basis] || BASIS.placeholder;
+  const editable = editId && (v.type === "line" || v.type === "bar" || v.type === "funnel");
+  let editor = "";
+  if (editable && v.editing) {
+    if (v.type === "funnel") editor = `<div class="vedit">${(v.steps || []).map((st, i) => `<label>${esc(st.label)}<input inputmode="decimal" data-vedit="${editId}|s|${i}" value="${num(st.value) ?? ""}" placeholder="?"></label>`).join("")}</div>`;
+    else editor = `<div class="vedit grid">${(v.series || []).map((sr, si) => `<div class="vrow"><b>${esc(sr.name || "Value")}</b>${sr.points.map((pt, pi) => `<label>${esc(pt.x)}<input inputmode="decimal" data-vedit="${editId}|${si}|${pi}" value="${num(pt.y) ?? ""}" placeholder="?"></label>`).join("")}</div>`).join("")}</div>`;
+  }
+  return `<div class="viz"><div class="viz-head"><b>${esc(v.title || "Chart")}</b><span class="basis ${bc}">${bl}</span></div>
+    <div class="viz-body">${chartSVG(v)}</div>
+    ${v.source ? `<p class="viz-src">Source: ${esc(v.source)}</p>` : ""}${v.note ? `<p class="viz-src">${esc(v.note)}</p>` : ""}
+    ${editor}${editable ? `<button class="link" data-vtoggle="${editId}">${v.editing ? "Done" : "Add numbers"}</button>` : ""}</div>`;
+}
+function sanitizeVisual(raw, title) {
+  if (!raw || typeof raw !== "object") return null;
+  const type = ["line", "bar", "matrix", "funnel"].includes(raw.type) ? raw.type : "bar";
+  const v = { type, title: String(title || raw.title || "Chart"), unit: String(raw.unit || ""), basis: ["user", "placeholder", "estimate", "definition"].includes(raw.basis) ? raw.basis : "placeholder", source: String(raw.source || ""), note: String(raw.note || "") };
+  if (type === "matrix") v.items = (Array.isArray(raw.items) ? raw.items : []).slice(0, 8).map((it) => ({ label: String(it.label || ""), impact: num(it.impact) || 3, evidence: num(it.evidence) || 1 }));
+  else if (type === "funnel") v.steps = (Array.isArray(raw.steps) ? raw.steps : []).slice(0, 6).map((st) => ({ label: String(st.label || ""), value: num(st.value) }));
+  else v.series = (Array.isArray(raw.series) ? raw.series : []).slice(0, 4).map((sr) => ({ name: String(sr.name || ""), points: (Array.isArray(sr.points) ? sr.points : []).slice(0, 12).map((pt) => ({ x: String(pt.x ?? ""), y: num(pt.y) })) })).filter((sr) => sr.points.length);
+  if ((type === "line" || type === "bar") && !v.series.length) return null;
+  return v;
+}
+
+// =================== Guided mode: answer what was asked ===================
+const NUM_PAIR_RE = /([A-Za-z0-9][A-Za-z0-9 .'&\/-]{0,28}?)\s*(?::|=|-|–|—|\bis\b|\bwas\b)\s*\$?\s*(\d+(?:[.,]\d+)?)\s*(%|k|m|bn|b|million|billion)?/gi;
+function parseFigures(text) {
+  const out = []; let m;
+  while ((m = NUM_PAIR_RE.exec(text))) {
+    const x = m[1].trim().replace(/^(and|in|for|of)\s+/i, ""), y = Number(m[2].replace(",", "."));
+    const isYearLabel = /^(19|20)\d\d$/.test(m[2]) && !m[3] && text.slice(NUM_PAIR_RE.lastIndex).trim().startsWith(":");
+    if (isYearLabel) { NUM_PAIR_RE.lastIndex -= m[2].length + 1; continue; } // "report: 2025: 12" — 2025 is the next label
+    if (x && (!/^\d+$/.test(x) || /^(19|20)\d\d$/.test(x))) out.push({ x, y, unit: m[3] || "" });
+  }
+  return out.slice(0, 10);
+}
+function intentOf(t) {
+  t = t.toLowerCase();
+  if (/\b(market|forecast|projection|predict|tam|sam|som|market size|trend|growth rate|chart|graph|visual|visuali[sz]e|plot|competitor|share|funnel|matrix)\b/.test(t)) return "visual";
+  if (/\b(what'?s missing|missing|gaps?|review)\b/.test(t)) return "gaps";
+  if (/\b(pitch|vp|present|presentation|stakeholder|exec|leadership|sell (it|this))\b/.test(t)) return "pitch";
+  if (/\b(risks?|could go wrong|trade-?offs?|downside|worry)\b/.test(t)) return "risks";
+  if (/\b(summari[sz]e|summary|where are we|status)\b/.test(t)) return "summary";
+  if (/\?\s*$/.test(t) || /^(how|what|why|which|should|can|could|do|does|is|are)\b/.test(t)) return "help";
+  return null;
+}
+const first = (f, k) => (items(f, k)[0] || {}).text;
+function visualReply(f, text) {
+  const props = [], low = text.toLowerCase();
+  const figs = parseFigures(text);
+  const year = new Date().getFullYear();
+  let reply;
+  if (figs.length >= 2) {
+    const timey = figs.every((p) => /^((19|20)\d\d|q[1-4]|h[12]|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|month|week)/i.test(p.x));
+    const named = SOURCE_RE.test(text) || /\bsource\b/i.test(text);
+    props.push({ kind: "visual", text: timey ? "Your figures over time" : "Your figures compared", visual: { type: timey ? "line" : "bar", unit: figs[0].unit, basis: "user", source: named ? "Named in your message" : "Your message (no source named yet)", series: [{ name: "Value", points: figs.map((p) => ({ x: p.x, y: p.y })) }] } });
+    reply = `I charted the ${figs.length} figures you gave.${named ? "" : " Add where they come from, so they can count as evidence."}`;
+  } else {
+    reply = "I can't look up market data in guided mode, so I won't guess figures. Here are charts with placeholders: fill in numbers from a report, or paste figures like “2025: 12, 2026: 15” with their source and I'll chart them.";
+    if (/forecast|projection|predict|trend|growth/.test(low) || !/market|tam|size|competitor|share|matrix|funnel/.test(low))
+      props.push({ kind: "visual", text: "Forecast: low, base and high scenarios", visual: { type: "line", basis: "placeholder", note: "Agree the scenario assumptions before anyone fills in numbers.", series: ["Low", "Base", "High"].map((n) => ({ name: n, points: [0, 1, 2, 3].map((i) => ({ x: String(year + i), y: null })) })) } });
+    if (/market|tam|sam|som|size/.test(low))
+      props.push({ kind: "visual", text: "Market size: total, serviceable, obtainable", visual: { type: "bar", basis: "placeholder", series: [{ name: "Size", points: [{ x: "TAM", y: null }, { x: "SAM", y: null }, { x: "SOM", y: null }] }] } });
+    if (/competitor|share/.test(low))
+      props.push({ kind: "visual", text: "Competitor comparison", visual: { type: "bar", basis: "placeholder", series: [{ name: "Share", points: [{ x: "Us", y: null }, { x: "Competitor A", y: null }, { x: "Competitor B", y: null }] }] } });
+  }
+  const as = items(f, "assumption");
+  if (as.length && !/funnel/.test(low)) props.push({ kind: "visual", text: "Assumptions to test first", visual: { type: "matrix", basis: "definition", note: "Impact defaults to high until your team rates it. Evidence is low when no source is linked.", items: as.map((a) => ({ label: a.text, impact: 3, evidence: a.source ? 2 : 1 })) } });
+  if (/funnel/.test(low) || items(f, "measure").length) {
+    const steps = ["Eligible", ...items(f, "scope_in").slice(0, 2).map((x) => trunc(x.text, 18)), trunc(first(f, "measure") || "Completed", 18)];
+    props.push({ kind: "visual", text: "Measurement funnel", visual: { type: "funnel", basis: "placeholder", steps: steps.map((l) => ({ label: l, value: null })) } });
+  }
+  return { text: reply, proposals: props };
+}
+function intentReply(f, intent, text) {
+  if (intent === "visual") return visualReply(f, text);
+  if (intent === "gaps") { const g = gaps(f).slice(0, 5); return { text: g.length ? "Here's what's missing, most important first:\n" + g.map((x, i) => `${i + 1}. ${x.text}`).join("\n") : "Nothing is missing that I can count. Ask each role to agree their sections." }; }
+  if (intent === "pitch") return { text: `A pitch from what's in the definition:\n1. Problem: ${first(f, "problem") || "[unknown]"}\n2. Evidence: ${first(f, "evidence") || "[unknown]"}\n3. The bet (untested): ${first(f, "assumption") || "[unknown]"}\n4. The ask: agree v1 = ${first(f, "scope_in") || "[unknown]"}, measured by ${first(f, "measure") || "[unknown]"} with baseline [unknown].\nLead with the problem, not the feature.` };
+  if (intent === "risks") {
+    const r = [];
+    items(f, "assumption").filter((a) => !a.owner).slice(0, 2).forEach((a) => r.push(`If “${trunc(a.text, 60)}” is wrong, the feature won't move the outcome. No owner or test yet.`));
+    items(f, "question").filter((q) => !q.answer).slice(0, 2).forEach((q) => r.push(`${ROLES[q.role] || "PM"} hasn't answered: “${trunc(q.text, 60)}”`));
+    if (!items(f, "scope_out").length) r.push("Nothing is marked out of scope, so v1 can grow during build.");
+    if (items(f, "measure").some((m) => !m.baseline)) r.push("No baseline, so nobody can tell later whether it worked.");
+    return { text: r.length ? "Risks from the definition:\n" + r.map((x, i) => `${i + 1}. ${x}`).join("\n") : "No obvious risks from what's recorded. Ask Engineering about dependencies." };
+  }
+  if (intent === "summary") { const filledN = SECTIONS.filter(([k]) => items(f, k).length).length; return { text: `${filledN} of ${SECTIONS.length} sections have content, ${SECTIONS.filter(([k]) => f.agreed[k]).length} agreed, ${gaps(f).length} gaps. Use Copy summary at the top to share it.` }; }
+  return { text: "In guided mode I can help with: what's missing, risks, a pitch, a summary, or charts (forecast, market size, competitors, assumption matrix, funnel). Ask for any of those, or answer the question below." };
+}
 
 // =================== Storage ===================
 const KEY = "scopeline-chat-v1";
@@ -437,6 +708,12 @@ function guidedReply(f, userText) {
     msg.text = `I split your request into ${props.length} claim${props.length === 1 ? "" : "s"}. ${ev ? `${ev} name${ev === 1 ? "s" : ""} a source, so I've marked ${ev === 1 ? "it" : "them"} as evidence. The rest stay assumptions until someone finds a source.` : "None of them names a source yet, so they stay assumptions until someone finds one."}`;
     props.forEach((x) => { if (x.kind === "evidence") x.source = "Named in your request"; });
     msg.proposals = props;
+  } else if (userText && intentOf(userText) && !(asked && asked.questions && asked.questions.some((q) => q.answer === userText))) {
+    const r = intentReply(f, intentOf(userText), userText);
+    msg.text = r.text; msg.proposals = r.proposals || [];
+    if (asked) { const pending = GUIDE.find((g) => g.key === asked.guideKey); if (pending && !items(f, pending.key).length) { msg.guideKey = pending.key; msg.questions = [{ id: uid(), text: `Back to this: ${pending.q}`, role: pending.role, options: pending.options || [] }]; } }
+    msg.proposals = msg.proposals.map((p) => ({ id: uid(), status: "open", ...p, visual: p.visual ? { title: p.text, ...p.visual } : undefined }));
+    return msg;
   } else if (asked && userText) {
     const props = guidedProposals(f, userText, asked.guideKey);
     msg.proposals = props;
@@ -452,6 +729,7 @@ function guidedReply(f, userText) {
 
 const RULES = `You are the assistant inside Scopeline, a chat where a product team (PM, design, growth, engineering) agrees one feature's definition before building it. You lead the conversation one step at a time: context and problem, audience and outcome, claims (evidence vs assumptions), scope in and out, measures, then review.
 Rules:
+0. First respond to what the user actually said. If they asked a question, answer it directly before anything else; do not ignore it to follow the script.
 1. You ask and propose; people decide. "reply" is at most two plain sentences, unless the user asks for advice (framing, pitching, risks, trade-offs): then coach in up to six short lines using only facts in the definition, writing [unknown] where a fact is missing.
 2. Never invent numbers, percentages, dates, baselines, targets or audience sizes. Use placeholders like [baseline] and ask the right role.
 3. Use kind "evidence" ONLY to restate something from the user's own messages or pasted notes that names its source; put the source in "source". Anything else is an "assumption".
@@ -459,7 +737,8 @@ Rules:
 5. Ask exactly one follow-up question for the next missing step, for one role, with 2 to 4 short answer options when sensible.
 6. At most 5 proposals. Kinds: problem, audience, outcome, evidence, assumption, question, scope_in, scope_out, criterion, measure, decision.
 7. Never state that the feature will cause an outcome; expected impact is an assumption.
-Return ONLY JSON: {"reply": string, "questions": [{"text": string, "role": "pm"|"design"|"growth"|"engineering", "options": [string]}], "proposals": [{"kind": string, "text": string, "source": string, "role": string, "why": string}]}`;
+8. Visuals: when the user asks for market research, a forecast, sizing, a comparison or a chart, or when a chart would make a decision clearer, add a proposal with kind "visual", a short title in "text", and a "visual" object: {"type": "line"|"bar"|"matrix"|"funnel", "unit": string, "series": [{"name": string, "points": [{"x": string, "y": number|null}]}], "items": [{"label": string, "impact": 1|2|3, "evidence": 1|2|3}], "steps": [{"label": string, "value": number|null}], "basis": "user"|"placeholder"|"estimate"|"definition", "source": string, "note": string}. Use "series" for line and bar, "items" for matrix (assumptions by impact and evidence), "steps" for funnel. Numbers the user gave: basis "user". No data: null values with basis "placeholder" (forecasts as Low/Base/High series). You cannot browse the web. Only if the user explicitly asks for market estimates may you give rough figures from your training knowledge, with basis "estimate", what they are based on in "source", and a reply that says they must be verified before use.
+Return ONLY JSON: {"reply": string, "questions": [{"text": string, "role": "pm"|"design"|"growth"|"engineering", "options": [string]}], "proposals": [{"kind": string, "text": string, "source": string, "role": string, "why": string, "visual": object}]}`;
 function snapshot(f) {
   const by = (k) => items(f, k).map((x) => x.text);
   return JSON.stringify({ request: f.request, problem: by("problem"), audience: by("audience"), outcome: by("outcome"), evidence: items(f, "evidence").map((x) => ({ text: x.text, source: x.source })), assumptions: items(f, "assumption").map((x) => ({ text: x.text, owner: x.owner || null })), openQuestions: items(f, "question").map((x) => ({ text: x.text, role: x.role, answer: x.answer || null })), inScope: by("scope_in"), outOfScope: by("scope_out"), criteria: by("criterion"), measures: items(f, "measure").map((x) => ({ text: x.text, baseline: x.baseline || null })), decisions: by("decision"), emptySections: SECTIONS.filter(([k]) => !items(f, k).length).map(([, l]) => l) });
@@ -472,7 +751,7 @@ async function aiReply(f) {
   const kinds = Object.keys(KIND);
   const msg = { id: uid(), role: "assistant", text: String(out.reply || ""),
     questions: (Array.isArray(out.questions) ? out.questions : []).slice(0, 2).filter((q) => q && q.text).map((q) => ({ id: uid(), text: String(q.text), role: ROLES[q.role] ? q.role : "pm", options: (Array.isArray(q.options) ? q.options : []).slice(0, 4).map(String) })),
-    proposals: (Array.isArray(out.proposals) ? out.proposals : []).slice(0, 5).filter((p) => p && kinds.includes(p.kind) && p.text).map((p) => ({ id: uid(), status: "open", kind: p.kind, text: String(p.text), source: String(p.source || ""), role: ROLES[p.role] ? p.role : "pm", why: String(p.why || "") })) };
+    proposals: (Array.isArray(out.proposals) ? out.proposals : []).slice(0, 6).filter((p) => p && kinds.includes(p.kind) && p.text).map((p) => ({ id: uid(), status: "open", kind: p.kind, text: String(p.text), source: String(p.source || ""), role: ROLES[p.role] ? p.role : "pm", why: String(p.why || ""), visual: p.kind === "visual" ? sanitizeVisual(p.visual, p.text) : undefined })).filter((p) => p.kind !== "visual" || p.visual) };
   // Evidence must quote something the user gave; otherwise it becomes an assumption.
   const userText = f.chat.filter((m) => m.role === "user").map((m) => m.text.toLowerCase()).join(" ");
   msg.proposals.forEach((p) => { if (p.kind === "evidence" && !(p.source && userText.includes(p.text.toLowerCase().slice(0, 24)))) { p.kind = "assumption"; p.source = ""; p.why = (p.why ? p.why + " " : "") + "Relabelled: not found in what you shared."; } });
@@ -502,7 +781,7 @@ async function respond(f, userText) {
   finally { busy = false; ctl = null; f.updated = Date.now(); save(); render(); scrollThread(); }
 }
 function accept(f, p) {
-  const item = { id: uid(), kind: p.kind, text: p.text.trim(), source: p.source || "", role: p.role || "pm", answer: "", owner: "", baseline: "" };
+  const item = { id: uid(), kind: p.kind, text: p.text.trim(), source: p.source || "", role: p.role || "pm", answer: "", owner: "", baseline: "", visual: p.visual ? JSON.parse(JSON.stringify({ ...p.visual, editing: false })) : undefined };
   f.doc.push(item);
   if (f.agreed[p.kind]) { f.agreed[p.kind] = false; toast(`${SEC_LABEL[p.kind]} reopened: content changed`); }
   p.status = "accepted";
@@ -533,7 +812,7 @@ function composer(id, placeholder, big) {
     <div class="composer-row">
       <div class="chips">${big
         ? `<button type="button" class="chip" data-fill="reorder">One-tap reorder</button><button type="button" class="chip" data-fill="carts">Saved carts</button><button type="button" class="chip" data-fill="invites">Team invites</button>`
-        : `<button type="button" class="chip" data-say="What's missing from the definition?">What's missing?</button><button type="button" class="chip" data-say="Review the definition and propose the top 3 fixes.">Review</button><button type="button" class="chip" data-say="How should I pitch this to my VP? What risks will they ask about?">Pitch it</button>`}</div>
+        : `<button type="button" class="chip" data-say="What's missing from the definition?">What's missing?</button><button type="button" class="chip" data-say="What are the biggest risks?">Risks</button><button type="button" class="chip" data-say="Show me a forecast chart for this feature.">Forecast</button><button type="button" class="chip" data-say="Show me the market size and competitors as a chart.">Market</button><button type="button" class="chip" data-say="How should I pitch this to my VP?">Pitch it</button>`}</div>
       ${busy && !big ? `<button type="button" class="btn ghost sm" data-act="stop">Stop</button>` : `<button type="submit" class="send" aria-label="${big ? "Start" : "Send"}">↑</button>`}
     </div>
   </form>`;
@@ -550,7 +829,8 @@ function homeView() {
     <button class="btn sm" data-act="new">Start free <span class="knob" aria-hidden="true">›</span></button>
   </div></div></header>
 
-  <main>
+  <main style="position:relative">
+    <div class="glow-top" aria-hidden="true"><i></i></div>
     <section class="wrap lp-hero">
       <p class="kicker"><span class="dot-live" aria-hidden="true"></span>Free for product teams · no sign-up</p>
       <h1 class="serif">Agree what to build <em>before anyone builds&nbsp;it</em></h1>
@@ -562,44 +842,79 @@ function homeView() {
       <p class="fineprint">Free · Works in your browser · Your chats stay in this browser</p>
     </section>
 
-    <section class="wrap walk" id="product" aria-label="Product walkthrough">
-      <div class="field">
-        <div class="demo demo2 anim" id="demo2">
-          <div class="win-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="t">Scopeline · One-tap reorder</span><span class="r"><button class="btn ghost sm" data-act="replay">↺ Replay</button></span></div>
-          <div class="demo-body">
-            <div class="demo-chat">
-              <div class="m-user" data-c="1" style="max-width:92%">We want one-tap reorder to increase repeat purchases by 40%. Support tickets show customers rebuild baskets by hand.</div>
-              <div class="m-ai" data-c="1"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span><p>Before I write anything: who is this for, and do we have a baseline?</p></div>
-              <div class="qcard" data-c="1"><span><span class="tag t-qu">Question · Growth</span></span><b>Do we have a repeat-order baseline?</b>
-                <div class="opts"><span class="opt">Yes, in analytics</span><span class="opt on">No, needs instrumentation</span></div></div>
-              <div class="m-ai" data-c="3"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span><p>“40%” isn't in anything you shared, so I've left the target blank and sent Growth a question.</p></div>
-              <div class="m-ai" data-c="4"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span><p>Design, Growth and Engineering have answered. Every section is ready to agree.</p></div>
-            </div>
-            <div class="demo-doc">
-              <div class="doc-top"><h2 style="font-family:var(--serif);font-weight:400;font-size:1.4rem">Definition</h2><span class="mono" id="d2-count">0 of 11 agreed</span></div>
-              <div class="meter"><span id="d2-meter" style="width:0%"></span></div>
-              <div class="callout co-ev" data-c="2"><span class="co-tag">Evidence · Support tickets</span>Customers rebuild baskets by hand.</div>
-              <div class="callout co-as" data-c="2"><span class="co-tag">Assumption · Owner: Growth</span>One-tap reorder increases repeat purchases.</div>
-              <div class="callout co-qu" data-c="2"><span class="co-tag">Open question · Design</span>What if an item is out of stock?</div>
-              <div class="callout co-dc pfix" data-c="3" id="d2-fix"><span class="co-tag">Measure</span><span class="p-old">Repeat purchases up <mark class="bad">40%</mark></span><span class="p-old-flag">No source for “40%”.</span><span class="p-new">Repeat purchases from <span class="ph">[baseline]</span> to <span class="ph">[target]</span></span></div>
-              <div class="agreed-strip" data-c="4"><span>Problem</span><span>Audience</span><span>Evidence</span><span>Assumptions</span><span>Scope</span><span>Measures</span><span>+5 more</span></div>
+    <section class="wrap walk" id="product" aria-label="Product video">
+      <div class="pool">
+        <div class="player v" id="player" aria-label="Product video: a feature request becomes an agreed definition">
+          <div class="cam" id="cam">
+            <div class="pwin">
+              <div class="wb"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>Scopeline · One-tap reorder<span style="margin-left:auto" class="mono" id="v-count">0 of 11 agreed</span></div>
+              <div class="pbody">
+                <div class="pstart zone" id="v-start">
+                  <h3>What are you about to <em>build?</em></h3>
+                  <div class="pcomp glowb" style="border-radius:16px"><div class="typed" id="v-typed"></div><div class="row2"><span>@ Add context · Paste notes</span><span class="sendb" id="v-send">↑</span></div></div>
+                  <div class="skills"><div>Break down<span>/request</span></div><div>Find gaps<span>/gaps</span></div><div>Review<span>/review</span></div><div>Pitch it<span>/pitch</span></div></div>
+                </div>
+                <div class="pchat zone" id="v-chat">
+                  <div class="m-user" data-s="1">We want one-tap reorder to increase repeat purchases by 40%. Support tickets show customers rebuild baskets by hand.</div>
+                  <div class="m-ai" data-s="1"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span><p>Before I write anything: do we have a baseline?</p></div>
+                  <div class="qcard" id="v-q" data-s="1" style="border-radius:16px"><span><span class="tag t-qu">Question · Growth</span></span><b style="font-size:13px">Do we have a repeat-order baseline?</b>
+                    <div class="opts"><span class="opt">Yes, in analytics</span><span class="opt" id="v-opt">No, needs instrumentation</span></div></div>
+                  <div class="m-ai" data-s="3"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span><p>“40%” isn't in anything you shared, so the target stays blank.</p></div>
+                </div>
+                <div class="pdoc zone" id="v-doc">
+                  <div class="doc-top"><b style="font-family:var(--serif);font-weight:400;font-size:20px">Definition</b></div>
+                  <div class="meter"><span id="v-meter" style="width:0%"></span></div>
+                  <div class="callout co-ev" data-s="2"><span class="co-tag">Evidence · Support tickets</span>Customers rebuild baskets by hand.</div>
+                  <div class="callout co-as" data-s="2"><span class="co-tag">Assumption · Owner: Growth</span>One-tap reorder increases repeat purchases.</div>
+                  <div class="callout co-qu" data-s="2"><span class="co-tag">Open question · Design</span>What if an item is out of stock?</div>
+                  <div class="callout co-dc pfix" id="v-fix" data-s="3" style="border-radius:12px"><span class="co-tag">Measure</span><span class="p-old">Repeat purchases up <mark class="bad">40%</mark></span><span class="p-old-flag">No source for “40%”.</span><span class="p-new">Repeat purchases from <span class="ph">[baseline]</span> to <span class="ph">[target]</span></span><span class="cta-row" style="justify-content:flex-start;margin-top:6px"><span class="btn sm" id="v-use" style="height:26px;font-size:11px">Use placeholders</span></span></div>
+                  <div class="agreed-strip" data-s="4"><span>Problem</span><span>Audience</span><span>Evidence</span><span>Assumptions</span><span>Scope</span><span>Measures</span><span>+5 more</span></div>
+                </div>
+              </div>
             </div>
           </div>
+          <svg class="vcursor" id="v-cursor" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 2l14 8-6 1.6L8 18z" fill="#15130f" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
         </div>
-        <div class="chapters" role="tablist" aria-label="Walkthrough chapters">
-          <button class="chapter" role="tab" data-ch="1"><div class="bar2"><i></i></div><b>1 · It asks first</b><span>Follow-up questions to the right role</span></button>
-          <button class="chapter" role="tab" data-ch="2"><div class="bar2"><i></i></div><b>2 · It labels</b><span>Evidence, assumption, question</span></button>
-          <button class="chapter" role="tab" data-ch="3"><div class="bar2"><i></i></div><b>3 · It catches</b><span>Numbers nobody sourced</span></button>
-          <button class="chapter" role="tab" data-ch="4"><div class="bar2"><i></i></div><b>4 · You agree</b><span>Every role signs off</span></button>
+        <div class="controls">
+          <button class="playbtn" id="v-play" aria-label="Pause">❚❚</button>
+          <div class="segs" role="tablist" aria-label="Video chapters">
+            <button class="seg2" data-scene="0"><span class="tr"><i></i></span><b>Describe it</b></button>
+            <button class="seg2" data-scene="1"><span class="tr"><i></i></span><b>It asks first</b></button>
+            <button class="seg2" data-scene="2"><span class="tr"><i></i></span><b>It labels</b></button>
+            <button class="seg2" data-scene="3"><span class="tr"><i></i></span><b>It catches</b></button>
+            <button class="seg2" data-scene="4"><span class="tr"><i></i></span><b>You agree</b></button>
+          </div>
         </div>
       </div>
       <div class="roles-strip"><span>Built for</span><span><span class="av av-pm">PM</span>Product</span><span><span class="av av-design">DS</span>Design</span><span><span class="av av-growth">GR</span>Growth</span><span><span class="av av-engineering">EN</span>Engineering</span></div>
     </section>
 
-    <section class="wrap intro">
-      <p class="eyebrow">One conversation</p>
-      <h2 class="serif">From a rough request to an agreed scope</h2>
-      <p>Most specs mix what you know with what you hope. Scopeline keeps them apart while your team decides.</p>
+    <section class="wrap ps">
+      <div class="seg" role="tablist" aria-label="Problem or solution"><button role="tab" aria-selected="true" data-ps="problem">Problem</button><button role="tab" aria-selected="false" data-ps="solution">Solution</button></div>
+      <h2 class="serif" id="ps-title">One feature, four interpretations</h2>
+      <p id="ps-sub">The request lives in a doc, the doubts in Slack, the edge cases in Figma comments and the baseline nowhere. Everyone leaves the meeting with a different scope.</p>
+      <div class="psboard">
+        <div class="pspanel" data-panel="problem">
+          <div class="scatter">
+            <div class="scard"><span class="src">PRD · Google Docs</span>Lift repeat purchases by 40% with one-tap reorder.<span class="conflict">No source</span></div>
+            <div class="scard"><span class="src">Slack · #checkout</span>Wait, does v1 include scheduled reorders?<span class="conflict">Scope unclear</span></div>
+            <div class="scard"><span class="src">Figma · comment</span>What happens if an item is out of stock?<span class="conflict">Unanswered</span></div>
+            <div class="scard"><span class="src">Analytics</span>Repeat-order baseline: not tracked.<span class="conflict">Missing</span></div>
+          </div>
+          <span class="verdict">✕ Four tools · four versions of the scope</span>
+        </div>
+        <div class="pspanel" data-panel="solution" hidden>
+          <div class="tree">
+            <span class="root-pill">✓ One agreed definition</span>
+            <div class="branches">
+              <div class="bcard"><span class="ck">✓</span><span><small>Agreed</small>Problem and scope signed off</span><span class="nametag" style="background:#15130f"><span class="av av-pm">PM</span>Dana</span></div>
+              <div class="bcard"><span class="ck">✓</span><span><small>Answered</small>Out-of-stock items are shown, excluded</span><span class="nametag" style="background:#d6457a"><span class="av av-design">DS</span>Maya</span></div>
+              <div class="bcard"><span class="ck">✓</span><span><small>Question sent</small>Baseline needs instrumentation</span><span class="nametag" style="background:#11805a"><span class="av av-growth">GR</span>Sam</span></div>
+              <div class="bcard"><span class="ck">✓</span><span><small>Criteria added</small>Prices re-checked on rebuild</span><span class="nametag" style="background:#3a4fc6"><span class="av av-engineering">EN</span>Lee</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="wrap row">
@@ -787,6 +1102,10 @@ function aiMsg(f, m) {
     const [label, co] = KIND[p.kind];
     const bad = p.status === "open" ? unsourced(f, p.text) : [];
     let body = esc(p.text); bad.forEach((n) => { body = body.replace(esc(n), `<mark class="bad">${esc(n)}</mark>`); });
+    if (p.kind === "visual") {
+      if (p.status !== "open") return `<div class="pcard vcard done"><div class="txt"><span class="co-tag">Visual · ${esc(p.text)}</span></div><span class="acts">${p.status === "accepted" ? "Added to Visuals" : "Dismissed"}</span></div>`;
+      return `<div class="pcard vcard"><div class="txt">${visualBlock(p.visual, `${m.id}|${p.id}`)}</div><span class="acts"><button class="yes" data-p="${m.id}|${p.id}|yes">Add to definition</button><button data-p="${m.id}|${p.id}|no" aria-label="Dismiss">✕</button></span></div>`;
+    }
     if (p.status !== "open") return `<div class="pcard callout ${co} done"><div class="txt"><span class="co-tag">${label}</span>${esc(p.text)}</div><span class="acts">${p.status === "accepted" ? "Added" : "Dismissed"}</span></div>`;
     return `<div class="pcard callout ${co}"><div class="txt"><span class="co-tag">${label}${p.source ? ` · ${esc(p.source)}` : ""}${p.kind === "question" ? ` · ${ROLES[p.role] || "PM"}` : ""}</span>
       ${p.editing ? `<textarea id="ed-${p.id}" rows="2">${esc(p.text)}</textarea>` : body}${p.why ? `<span class="why">${esc(p.why)}</span>` : ""}</div>
@@ -810,7 +1129,7 @@ function docPane(f) {
     ${SECTIONS.filter(([k]) => items(f, k).length).map(([k, label]) => {
       const list = items(f, k), st = secStatus(f, k), co = KIND[k][1];
       return `<div class="dsec"><div class="dsec-h"><h3>${label} <span class="st ${st}">${st}</span></h3>${list.length ? `<button class="agree ${st === "agreed" ? "on" : ""}" data-agree="${k}">${st === "agreed" ? "✓ Agreed" : "Agree"}</button>` : ""}</div>
-        ${list.length ? list.map((x) => { const nums = ["assumption", "measure", "outcome", "problem", "scope_in", "decision"].includes(k) ? unsourced(f, x.text) : []; let t = esc(x.text); nums.forEach((n) => { t = t.replace(esc(n), `<mark class="bad" title="No source">${esc(n)}</mark>`); }); return `<div class="ditem callout ${co}"><span>${t}${x.source ? `<span class="co-src">${esc(x.source)}</span>` : ""}${k === "question" ? `<span class="co-src">${ROLES[x.role] || "PM"}${x.answer ? ` · answered: ${esc(x.answer)}` : " · unanswered"}</span>` : ""}${k === "measure" ? `<span class="co-src">Baseline ${x.baseline ? esc(x.baseline) : '<span class="ph">unknown</span>'}</span>` : ""}${k === "assumption" ? `<span class="co-src">${x.owner ? "Owner: " + esc(x.owner) : "No owner or test yet"}</span>` : ""}</span>${nums.length ? `<span class="co-src" style="color:var(--bad)">${nums.map(esc).join(", ")} has no source</span>` : ""}</span><button class="x" data-del="${x.id}" aria-label="Remove">✕</button></div>`; }).join("") : `<p class="dempty">Empty</p>`}
+        ${k === "visual" ? list.map((x) => `<div class="ditem vitem">${visualBlock(x.visual, `doc|${x.id}`)}<button class="x" data-del="${x.id}" aria-label="Remove">✕</button></div>`).join("") : list.length ? list.map((x) => { const nums = ["assumption", "measure", "outcome", "problem", "scope_in", "decision"].includes(k) ? unsourced(f, x.text) : []; let t = esc(x.text); nums.forEach((n) => { t = t.replace(esc(n), `<mark class="bad" title="No source">${esc(n)}</mark>`); }); return `<div class="ditem callout ${co}"><span>${t}${x.source ? `<span class="co-src">${esc(x.source)}</span>` : ""}${k === "question" ? `<span class="co-src">${ROLES[x.role] || "PM"}${x.answer ? ` · answered: ${esc(x.answer)}` : " · unanswered"}</span>` : ""}${k === "measure" ? `<span class="co-src">Baseline ${x.baseline ? esc(x.baseline) : '<span class="ph">unknown</span>'}</span>` : ""}${k === "assumption" ? `<span class="co-src">${x.owner ? "Owner: " + esc(x.owner) : "No owner or test yet"}</span>` : ""}</span>${nums.length ? `<span class="co-src" style="color:var(--bad)">${nums.map(esc).join(", ")} has no source</span>` : ""}</span><button class="x" data-del="${x.id}" aria-label="Remove">✕</button></div>`; }).join("") : `<p class="dempty">Empty</p>`}
       </div>`;
     }).join("") || `<p class="dempty">Accepted items appear here, grouped by section.</p>`}
     ${SECTIONS.some(([k]) => !items(f, k).length) ? `<div class="dsec"><h3 style="font-size:.86rem">Still to cover</h3><div class="chips">${SECTIONS.filter(([k]) => !items(f, k).length).map(([k, l]) => `<button class="chip" data-say="Let's cover ${l.toLowerCase()} next. Ask me what you need.">${l}</button>`).join("")}</div></div>` : ""}
@@ -818,40 +1137,91 @@ function docPane(f) {
 }
 
 // =================== Demo animation ===================
-let demoTimers = [], demoObserver = null, chapter = 0;
-const CH_MS = [5200, 4200, 5200, 4600];
-function showChapter(n, auto) {
-  const d = document.getElementById("demo2"); if (!d) return;
-  demoTimers.forEach(clearTimeout); demoTimers = [];
-  chapter = n;
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  d.querySelectorAll("[data-c]").forEach((el) => el.classList.toggle("in", Number(el.dataset.c) <= n));
-  const fix = document.getElementById("d2-fix"); fix.classList.toggle("fixed", n > 3);
-  if (n === 3) demoTimers.push(setTimeout(() => fix.classList.add("fixed"), reduce ? 0 : 2600));
-  d.classList.toggle("agreed", n === 4);
-  const agreed = [0, 0, 3, 7, 11][n];
-  document.getElementById("d2-count").textContent = `${agreed} of 11 agreed`;
-  document.getElementById("d2-meter").style.width = Math.round(agreed / 11 * 100) + "%";
-  document.querySelectorAll(".chapter").forEach((c) => {
-    const k = Number(c.dataset.ch);
-    c.classList.toggle("on", k === n); c.classList.toggle("done", k < n);
-    c.style.setProperty("--dur", CH_MS[k - 1] + "ms");
-    const bar = c.querySelector(".bar2 i"); bar.style.animation = "none"; void bar.offsetWidth; bar.style.animation = "";
-    if (!auto || reduce) bar.style.animationPlayState = k === n && auto ? "running" : "paused";
-  });
-  if (auto && !reduce) demoTimers.push(setTimeout(() => showChapter(n === 4 ? 1 : n + 1, true), CH_MS[n - 1]));
+let demoTimers = [], demoObserver = null, chapter = 0, vPlaying = true, vScene = -1, vVisible = false;
+const SCENES = [6200, 5200, 4600, 5600, 4800];
+const REQ = "We want one-tap reorder to increase repeat purchases by 40%. Support tickets show customers rebuild baskets by hand.";
+const reduceMo = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+function vAt(ms, fn) { demoTimers.push(setTimeout(fn, ms)); }
+function vCamera(target, scale) {
+  const cam = document.getElementById("cam"), pl = document.getElementById("player"); if (!cam) return;
+  document.querySelectorAll("#player .zone").forEach((z) => z.classList.toggle("focus", z.id === target));
+  if (!target || reduceMo() || pl.clientWidth < 700) { cam.style.transform = "none"; cam.classList.remove("zoom"); return; }
+  const z = document.getElementById(target);
+  const W = pl.clientWidth, H = pl.clientHeight;
+  const cx = z.offsetLeft + z.offsetWidth / 2, cy = z.offsetTop + 34 + z.offsetHeight / 2;
+  const tx = W / 2 - cx * scale, ty = H / 2 - cy * scale;
+  cam.style.transform = `translate(${Math.min(0, Math.max(W - W * scale, tx))}px, ${Math.min(0, Math.max(H - H * scale, ty))}px) scale(${scale})`;
+  cam.classList.add("zoom");
 }
-function playDemo() { showChapter(1, true); }
+function vCursorTo(el, click) {
+  const c = document.getElementById("v-cursor"), pl = document.getElementById("player"); if (!c || !el) return;
+  const r = el.getBoundingClientRect(), p = pl.getBoundingClientRect();
+  c.style.left = (r.left - p.left + r.width * 0.6) + "px"; c.style.top = (r.top - p.top + r.height * 0.55) + "px";
+  if (click) vAt(1050, () => { c.classList.remove("click"); void c.getBoundingClientRect(); c.classList.add("click"); });
+}
+function vState(n) {
+  // Deterministic state for the start of scene n: everything from earlier scenes is visible.
+  const pl = document.getElementById("player"); if (!pl) return;
+  pl.querySelectorAll("[data-s]").forEach((el) => el.classList.toggle("hide", Number(el.dataset.s) > n));
+  document.getElementById("v-start").classList.toggle("gone", n > 0);
+  document.getElementById("v-typed").textContent = n > 0 ? REQ : "";
+  document.getElementById("v-opt").classList.toggle("on", n > 1);
+  document.getElementById("v-fix").classList.toggle("fixed", n > 3);
+  document.getElementById("v-use").style.display = n > 3 ? "none" : "";
+  document.getElementById("v-q").classList.toggle("glowb", n === 1);
+  document.getElementById("v-fix").classList.toggle("glowb", n === 3);
+  pl.classList.toggle("agreed", n >= 4);
+  const agreed = [0, 0, 3, 6, 11][n];
+  document.getElementById("v-count").textContent = `${agreed} of 11 agreed`;
+  document.getElementById("v-meter").style.width = Math.round(agreed / 11 * 100) + "%";
+  document.querySelectorAll(".seg2").forEach((sg) => { const k = Number(sg.dataset.scene); sg.classList.toggle("on", k === n); sg.classList.toggle("done", k < n); const i = sg.querySelector("i"); i.style.transition = "none"; i.style.width = k < n ? "100%" : "0"; });
+}
+function vScenePlay(n) {
+  demoTimers.forEach(clearTimeout); demoTimers = [];
+  vScene = n; chapter = n + 1; vState(n);
+  const bar = document.querySelector(`.seg2[data-scene="${n}"] i`);
+  if (vPlaying && !reduceMo()) { void bar.offsetWidth; bar.style.transition = `width ${SCENES[n]}ms linear`; bar.style.width = "100%"; }
+  if (reduceMo()) { vState(4); vCamera(null); return; }
+  const typed = document.getElementById("v-typed");
+  if (n === 0) {
+    vCamera("v-start", 1.0);
+    let i = 0; const tick = () => { if (!vPlaying) return; typed.textContent = REQ.slice(0, i); i += 2; if (i <= REQ.length + 1) vAt(38, tick); };
+    vAt(500, tick);
+    vCursorTo(document.getElementById("v-send"), true);
+    vAt(5400, () => { document.getElementById("v-start").classList.add("gone"); });
+  }
+  if (n === 1) { vCamera("v-chat", 1.45); vAt(1700, () => vCursorTo(document.getElementById("v-opt"), true)); vAt(2900, () => document.getElementById("v-opt").classList.add("on")); }
+  if (n === 2) { vCamera("v-doc", 1.35); const els = [...document.querySelectorAll('#v-doc [data-s="2"]')]; els.forEach((e) => e.classList.add("hide")); els.forEach((e, i) => vAt(900 + i * 650, () => { e.classList.remove("hide"); document.getElementById("v-count").textContent = `${i + 1} of 11 agreed`; document.getElementById("v-meter").style.width = Math.round((i + 1) / 11 * 100) + "%"; })); }
+  if (n === 3) { vCamera("v-doc", 1.45); vAt(1500, () => vCursorTo(document.getElementById("v-use"), true)); vAt(2700, () => { document.getElementById("v-fix").classList.add("fixed"); document.getElementById("v-use").style.display = "none"; }); }
+  if (n === 4) { vCamera(null); vAt(600, () => { document.getElementById("player").classList.add("agreed"); }); const c = document.getElementById("v-cursor"); c.style.left = "92%"; c.style.top = "92%"; }
+  if (vPlaying) vAt(SCENES[n], () => vScenePlay((n + 1) % SCENES.length));
+}
+function playDemo() { vPlaying = true; setPlayIcon(); vScenePlay(0); }
+function setPlayIcon() { const b = document.getElementById("v-play"); if (b) { b.textContent = vPlaying ? "❚❚" : "▶"; b.setAttribute("aria-label", vPlaying ? "Pause" : "Play"); } }
+function showChapter(n) { vScenePlay(Math.max(0, n - 1)); }
 function initLanding() {
-  const d = document.getElementById("demo2"); if (!d) return;
+  const pl = document.getElementById("player"); if (!pl) return;
   if (demoObserver) demoObserver.disconnect();
+  vState(4); vCamera(null); // complete at rest; plays when scrolled into view
   demoObserver = new IntersectionObserver((es) => es.forEach((e) => {
-    if (e.isIntersecting && chapter === 0) playDemo();
-    if (!e.isIntersecting) { demoTimers.forEach(clearTimeout); chapter = 0; }
+    vVisible = e.isIntersecting;
+    if (e.isIntersecting && vScene < 0 && vPlaying) vScenePlay(0);
+    if (!e.isIntersecting) { demoTimers.forEach(clearTimeout); vScene = -1; }
   }), { threshold: 0.3 });
-  demoObserver.observe(d);
-  showChapter(4, false); // complete at rest; plays when scrolled into view
-  chapter = 0;
+  demoObserver.observe(pl);
+  document.getElementById("v-play").addEventListener("click", () => { vPlaying = !vPlaying; setPlayIcon(); if (vPlaying) vScenePlay(Math.max(0, vScene)); else { demoTimers.forEach(clearTimeout); const i = document.querySelector(`.seg2[data-scene="${vScene}"] i`); if (i) { const w = getComputedStyle(i).width; i.style.transition = "none"; i.style.width = w; } } });
+  document.querySelectorAll(".seg2").forEach((sg) => sg.addEventListener("click", () => { vPlaying = true; setPlayIcon(); vScenePlay(Number(sg.dataset.scene)); }));
+  // Problem / Solution
+  const psTabs = document.querySelectorAll("[data-ps]");
+  const PS = { problem: ["One feature, four interpretations", "The request lives in a doc, the doubts in Slack, the edge cases in Figma comments and the baseline nowhere. Everyone leaves the meeting with a different scope."],
+    solution: ["One definition, every role signed off", "The same conversation holds the evidence, the open questions and each role's answers. What's agreed is recorded with who agreed and why."] };
+  psTabs.forEach((t) => t.addEventListener("click", () => {
+    psTabs.forEach((x) => x.setAttribute("aria-selected", String(x === t)));
+    document.querySelectorAll(".pspanel").forEach((p) => { p.hidden = p.dataset.panel !== t.dataset.ps; });
+    document.getElementById("ps-title").textContent = PS[t.dataset.ps][0]; document.getElementById("ps-sub").textContent = PS[t.dataset.ps][1];
+    if (t.dataset.ps === "solution") document.querySelectorAll(".bcard").forEach((c, i) => { c.classList.remove("in"); setTimeout(() => c.classList.add("in"), reduceMo() ? 0 : 200 + i * 220); });
+  }));
+  document.querySelectorAll(".bcard").forEach((c) => c.classList.add("in"));
   // Gaps
   const lis = [...document.querySelectorAll("#gapcard .glist li")];
   const upd = () => { const open = lis.filter((l) => !l.classList.contains("fixed")).length; const ready = 11 - open;
@@ -907,8 +1277,6 @@ document.addEventListener("click", (e) => {
   const f = cur();
   if (el.dataset.act === "home") { state.view = "home"; save(); render(); window.scrollTo(0, 0); return; }
   if (el.dataset.act === "new") { state.view = "new"; save(); render(); window.scrollTo(0, 0); return; }
-  if (el.classList.contains("chapter")) return showChapter(Number(el.dataset.ch), true);
-  if (el.dataset.act === "replay") return playDemo();
   if (el.dataset.act === "stop") { ctl?.abort(); return; }
   if (el.dataset.fill) { const t = el.closest("form").querySelector("textarea"); t.value = EXAMPLES[el.dataset.fill]; t.focus(); t.dispatchEvent(new Event("input")); return; }
   if (el.dataset.try) return startChat(EXAMPLES[el.dataset.try]);
@@ -932,6 +1300,7 @@ document.addEventListener("click", (e) => {
     if (act === "no") p.status = "dismissed";
     save(); render(); if (act !== "no") { toast(`Added to ${SEC_LABEL[p.kind].toLowerCase()}`); if (mobileTab === "chat") {} } return;
   }
+  if (el.dataset.vtoggle) { const v = findVisual(f, el.dataset.vtoggle); if (v) { v.editing = !v.editing; if (!v.editing) save(); render(); } return; }
   if (el.dataset.agree) { const k = el.dataset.agree; f.agreed[k] = !f.agreed[k]; save(); render(); return toast(f.agreed[k] ? `${SEC_LABEL[k]} agreed` : `${SEC_LABEL[k]} reopened`); }
   if (el.dataset.del) { f.doc = f.doc.filter((x) => x.id !== el.dataset.del); save(); render(); return; }
   if (el.dataset.act === "copy") {
@@ -939,6 +1308,22 @@ document.addEventListener("click", (e) => {
     const done = () => toast("Summary copied");
     try { navigator.clipboard.writeText(md).then(done, () => fallbackCopy(md)); } catch (err) { fallbackCopy(md); }
   }
+});
+function findVisual(f, key) {
+  const [a, b] = key.split("|");
+  if (a === "doc") return (f.doc.find((x) => x.id === b) || {}).visual;
+  const m = f.chat.find((x) => x.id === a); return m && ((m.proposals || []).find((x) => x.id === b) || {}).visual;
+}
+document.addEventListener("change", (e) => {
+  const inp = e.target.closest("input[data-vedit]"); if (!inp) return;
+  const f = cur(); if (!f) return;
+  const parts = inp.dataset.vedit.split("|"), key = parts[0] + "|" + parts[1], v = findVisual(f, key); if (!v) return;
+  const val = inp.value.trim() === "" ? null : Number(inp.value.replace(",", "."));
+  if (parts[2] === "s") v.steps[Number(parts[3])].value = isNaN(val) ? null : val;
+  else v.series[Number(parts[2])].points[Number(parts[3])].y = isNaN(val) ? null : val;
+  if (v.basis === "placeholder") { v.basis = "user"; v.source = v.source || "Entered by you"; }
+  save(); render();
+  const again = document.querySelector(`input[data-vedit="${inp.dataset.vedit}"]`); again?.focus();
 });
 function fallbackCopy(md) {
   const t = document.createElement("textarea"); t.value = md; t.style.position = "fixed"; t.style.top = "10px"; t.style.left = "10px"; t.style.width = "80vw"; t.style.height = "40vh"; t.style.zIndex = 70;
