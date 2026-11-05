@@ -1,0 +1,593 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"></head><body>
+<title>Scopeline Workspace</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: top bar, then a three-column workspace (steps · sections · gaps) that stacks on phones */
+:root {
+  --bg: #f6f7f5; --surface: #ffffff; --ink: #111614; --muted: #5b6460; --line: #e2e6e3;
+  --ev: #12805a; --ev-bg: #e3f4ec; --ev-line: #9fd8bf;
+  --as: #a35f00; --as-bg: #fdf1dc; --as-line: #f2cf8f;
+  --qu: #3b4fc4; --qu-bg: #e9ecfd; --qu-line: #b5bff5;
+  --dc: #111614; --dc-bg: #eef0ef; --dc-line: #c9cecc;
+  --danger: #b4392f;
+  --serif: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --sans: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0d1110; --surface: #161c1a; --ink: #eef2f0; --muted: #9aa5a0; --line: #26302c;
+  --ev: #6fd5a8; --ev-bg: #12291f; --ev-line: #24553f; --as: #f0bd62; --as-bg: #2e2310; --as-line: #5c461c;
+  --qu: #9fb0ff; --qu-bg: #1a2042; --qu-line: #34407a; --dc: #eef2f0; --dc-bg: #222927; --dc-line: #3a4440;
+  --danger: #f09a8a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0d1110; --surface: #161c1a; --ink: #eef2f0; --muted: #9aa5a0; --line: #26302c;
+  --ev: #6fd5a8; --ev-bg: #12291f; --ev-line: #24553f; --as: #f0bd62; --as-bg: #2e2310; --as-line: #5c461c;
+  --qu: #9fb0ff; --qu-bg: #1a2042; --qu-line: #34407a; --dc: #eef2f0; --dc-bg: #222927; --dc-line: #3a4440;
+  --danger: #f09a8a; color-scheme: dark }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+h1, .serif { font-family: var(--serif); font-weight: 300; letter-spacing: -0.03em; line-height: 1.05; }
+p { margin: 0; }
+button, input, textarea, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--qu); outline-offset: 2px; }
+.wrap { max-width: 1320px; margin: 0 auto; }
+
+/* Top bar */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; padding-block: 12px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--bg); z-index: 10; }
+.bar { display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 10px 8px 18px; box-shadow: 0 10px 30px -20px rgba(0,0,0,.3); }
+.logo { display: inline-flex; align-items: center; gap: 9px; font-family: var(--serif); font-size: 1.35rem; letter-spacing: -0.02em; background: none; border: 0; cursor: pointer; padding: 0; }
+.mark { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 22px; height: 22px; padding: 3px; border-radius: 7px; background: var(--ink); }
+.mark i { border-radius: 2px; } .mark i:nth-child(1){background:#3ccf91} .mark i:nth-child(2){background:#f5b748} .mark i:nth-child(3){background:#7d8cff} .mark i:nth-child(4){background:#fff}
+.crumb { color: var(--muted); font-size: 0.9rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar .spacer { flex: 1; }
+.demo-tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--qu); background: var(--qu-bg); border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--ink); background: var(--ink); color: var(--bg); font-weight: 600; font-size: 0.9rem; cursor: pointer; white-space: nowrap; }
+.btn:hover { opacity: .9; }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--ink); }
+.btn.sm { height: 32px; padding: 0 12px; font-size: 0.82rem; }
+.link { background: none; border: 0; padding: 2px 4px; color: var(--muted); font-size: 0.8rem; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.link:hover { color: var(--ink); }
+.link.danger { color: var(--danger); }
+
+/* Fields */
+.field { width: 100%; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 9px 12px; }
+textarea.field { resize: vertical; min-height: 64px; }
+.label { display: block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+.hint { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid2 .full { grid-column: 1 / -1; }
+.stack { display: flex; flex-direction: column; gap: 12px; }
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.checks { display: flex; flex-direction: column; gap: 6px; font-size: 0.88rem; }
+.checks label { display: flex; gap: 8px; align-items: flex-start; }
+.checks input { margin-top: 4px; accent-color: var(--ev); }
+
+/* Home */
+.home { display: grid; grid-template-columns: 1fr 380px; gap: 28px; padding-block: 28px 60px; }
+.home h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
+.lead { color: var(--muted); margin-top: 8px; max-width: 44em; }
+.flist { list-style: none; padding: 0; margin: 22px 0 0; display: flex; flex-direction: column; gap: 12px; }
+.fcard { width: 100%; text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; cursor: pointer; display: flex; flex-direction: column; gap: 8px; }
+.fcard:hover { border-color: var(--ink); }
+.fcard h2 { font-family: var(--serif); font-weight: 400; font-size: 1.5rem; letter-spacing: -0.015em; }
+.fcard p { color: var(--muted); font-size: 0.9rem; }
+.meter { flex: 1; height: 6px; border-radius: 999px; background: var(--line); overflow: hidden; } .meter span { display: block; height: 100%; background: var(--ev); }
+.mono { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px; }
+.panel h2 { font-family: var(--serif); font-weight: 400; font-size: 1.6rem; letter-spacing: -0.015em; }
+.empty-box { border: 1px dashed var(--line); border-radius: 16px; padding: 28px; text-align: center; color: var(--muted); }
+
+/* Workspace */
+.ws-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; padding-block: 18px 16px; }
+.ws-head h1 { font-size: clamp(2rem, 4.4vw, 3rem); }
+.example-note { color: var(--qu); font-size: 0.85rem; margin-top: 6px; }
+.ws { display: grid; grid-template-columns: 220px minmax(0, 1fr) 300px; gap: 22px; padding-bottom: 60px; align-items: start; }
+.steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 92px); }
+.steps button { width: 100%; display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 12px; border: 1px solid transparent; background: none; cursor: pointer; text-align: left; color: var(--muted); }
+.steps button:hover { background: var(--surface); color: var(--ink); }
+.steps button[aria-current="step"] { background: var(--surface); border-color: var(--line); color: var(--ink); font-weight: 600; box-shadow: 0 8px 20px -16px rgba(0,0,0,.4); }
+.steps .n { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-family: var(--mono); font-size: 0.7rem; background: var(--line); flex-shrink: 0; }
+.steps [aria-current="step"] .n { background: var(--ink); color: var(--bg); }
+.steps .dot { margin-left: auto; }
+.dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
+.dot.empty { border: 1.5px solid var(--muted); } .dot.proposed { background: var(--as); } .dot.agreed { background: var(--ev); }
+.main { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.step-title .serif { font-size: 2rem; }
+.eyebrow { font-family: var(--mono); font-size: 0.68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ev); }
+
+.section { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px; }
+.sec-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.sec-head h2 { font-family: var(--serif); font-weight: 400; font-size: 1.55rem; letter-spacing: -0.015em; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sec-head p { color: var(--muted); font-size: 0.88rem; margin-top: 2px; }
+.chip { font-family: var(--mono); font-size: 0.62rem; letter-spacing: .09em; text-transform: uppercase; border-radius: 6px; padding: 3px 7px; font-weight: 500; }
+.chip.empty { border: 1px dashed var(--muted); color: var(--muted); } .chip.proposed { background: var(--as-bg); color: var(--as); } .chip.agreed { background: var(--ev-bg); color: var(--ev); }
+
+.item { border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+.item-top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.item b { font-weight: 600; }
+.item .sub { color: var(--muted); font-size: 0.85rem; }
+.tag { display: inline-block; font-family: var(--mono); font-size: 0.6rem; letter-spacing: .09em; text-transform: uppercase; border-radius: 5px; padding: 2px 7px; font-weight: 500; }
+.t-ev { background: var(--ev-bg); color: var(--ev); } .t-as { background: var(--as-bg); color: var(--as); } .t-qu { background: var(--qu-bg); color: var(--qu); } .t-dc { background: var(--dc-bg); color: var(--dc); }
+.item.ev { border-color: var(--ev-line); } .item.as { border-color: var(--as-line); } .item.qu { border-color: var(--qu-line); } .item.dc { border-color: var(--dc-line); }
+.warn { color: var(--as); font-size: 0.8rem; }
+.unknown { display: inline-block; border: 1px dashed var(--muted); color: var(--muted); border-radius: 6px; padding: 0 7px; font-family: var(--mono); font-size: 0.72rem; }
+.kv { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin: 6px 0 0; }
+.kv dt { font-family: var(--mono); font-size: 0.6rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.kv dd { margin: 2px 0 0; font-size: 0.9rem; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.col { border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; min-width: 0; }
+.col h3 { font-family: var(--mono); font-weight: 500; font-size: 0.66rem; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.col ul { list-style: none; padding: 0; margin: 0; }
+.col li { display: flex; justify-content: space-between; gap: 8px; padding: 7px 0; border-top: 1px solid var(--line); font-size: 0.9rem; }
+.col li:first-child { border-top: 0; }
+details.add { border: 1px dashed var(--line); border-radius: 14px; padding: 12px 14px; }
+details.add[open] { border-style: solid; background: var(--bg); }
+details.add summary { cursor: pointer; color: var(--ev); font-weight: 600; font-size: 0.9rem; list-style: none; }
+details.add summary::-webkit-details-marker { display: none; }
+details.add[open] summary { margin-bottom: 12px; color: var(--ink); }
+details.edit summary { cursor: pointer; color: var(--ev); font-size: 0.85rem; }
+details.edit[open] summary { margin-bottom: 10px; }
+.thread-q { font-size: 0.85rem; color: var(--muted); }
+
+/* Gaps panel */
+.side { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 92px); display: flex; flex-direction: column; gap: 14px; }
+.gaps { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.gaps-head { display: flex; justify-content: space-between; align-items: center; }
+.gaps-head h2 { font-size: 1rem; }
+.count { font-size: 0.75rem; font-weight: 600; border-radius: 999px; padding: 2px 10px; background: var(--as-bg); color: var(--as); }
+.count.ok { background: var(--ev-bg); color: var(--ev); }
+.gap { display: grid; grid-template-columns: auto 1fr; gap: 10px; text-align: left; background: none; border: 0; border-top: 1px solid var(--line); padding: 10px 0 0; cursor: pointer; width: 100%; }
+.gap:hover b { text-decoration: underline; }
+.gap .dot { margin-top: 6px; }
+.gap b { font-size: 0.86rem; display: block; }
+.gap span.sub { font-size: 0.78rem; color: var(--muted); display: block; }
+.gap .go { font-size: 0.72rem; color: var(--ev); font-weight: 600; }
+.ready { display: flex; flex-direction: column; gap: 6px; }
+.history { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.history li { display: grid; grid-template-columns: 110px 1fr; gap: 10px; font-size: 0.88rem; }
+.history .sub { color: var(--muted); display: block; }
+
+/* Confirm + toast */
+.confirm { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 0.85rem; }
+.toast { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-size: 0.88rem; z-index: 30; box-shadow: 0 10px 30px -10px rgba(0,0,0,.5); }
+.err { color: var(--danger); font-size: 0.82rem; }
+
+@media (max-width: 1100px) {
+  .ws { grid-template-columns: 200px minmax(0,1fr); }
+  .side { grid-column: 1 / -1; position: static; }
+}
+@media (max-width: 760px) {
+  .home { grid-template-columns: 1fr; }
+  .ws { grid-template-columns: minmax(0, 1fr); }
+  .ws > nav { min-width: 0; }
+  .steps { position: static; flex-direction: row; overflow-x: auto; padding-bottom: 4px; }
+  .steps li { flex-shrink: 0; }
+  .grid2, .cols { grid-template-columns: 1fr; }
+  .kv { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .crumb, .demo-tag { display: none; }
+  .history li { grid-template-columns: 1fr; gap: 0; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top"><div class="bar" id="bar"></div></header>
+  <main id="app" aria-live="polite"></main>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(() => {
+// ---------- Domain (mirrors the app's src/lib/domain.ts) ----------
+const ROLES = { pm: "PM", design: "Design", growth: "Growth", engineering: "Engineering" };
+const A_STATUS = { untested: "Untested", testing: "Testing", supported: "Supported", refuted: "Refuted" };
+const SECTIONS = {
+  evidence: ["Evidence", "Notes, research and links the definition relies on."],
+  problem: ["Problem", "Who is affected, how, and the constraints you work within."],
+  audience: ["Audience", "The target user and what they do today."],
+  outcome: ["Intended outcome", "The change in behaviour you want to see."],
+  assumptions: ["Assumptions", "Beliefs the definition rests on. Each needs an owner and a test."],
+  open_questions: ["Open questions", "What the team still needs to find out, and who answers it."],
+  scope: ["Scope", "What this release includes and what it leaves out."],
+  alternatives: ["Alternatives", "Other release boundaries you considered, and why not."],
+  acceptance_criteria: ["Acceptance criteria", "Testable statements that say when the work is done."],
+  measures: ["Measures", "Success metric and guardrails. Leave values blank when unknown."],
+  decisions: ["Decisions", "What was decided, why, by whom, and what it rests on."],
+};
+const STEPS = [
+  ["context", "Add context", ["evidence"]],
+  ["clarify", "Clarify the problem", ["problem", "audience", "outcome"]],
+  ["evidence", "Review evidence", ["assumptions", "open_questions"]],
+  ["scope", "Compare scope", ["scope", "alternatives", "acceptance_criteria"]],
+  ["learning", "Define learning", ["measures"]],
+  ["review", "Review together", ["decisions"]],
+  ["share", "Share the result", []],
+];
+const stepOf = (key) => STEPS.find((s) => s[2].includes(key))[0];
+const filled = (s) => (s || "").trim().length > 0;
+function hasContent(f, key) {
+  switch (key) {
+    case "evidence": return f.sources.length > 0;
+    case "problem": return filled(f.problem) || filled(f.constraints);
+    case "audience": return filled(f.audience) || filled(f.currentBehaviour);
+    case "outcome": return filled(f.outcome);
+    case "assumptions": return f.assumptions.length > 0;
+    case "open_questions": return f.questions.length > 0;
+    case "scope": return f.scope.length > 0;
+    case "alternatives": return f.alternatives.length > 0;
+    case "acceptance_criteria": return f.criteria.length > 0;
+    case "measures": return f.measures.length > 0;
+    case "decisions": return f.decisions.length > 0;
+  }
+}
+const status = (f, key) => !hasContent(f, key) ? "empty" : (f.agreed[key] ? "agreed" : "proposed");
+function stepStatus(f, slug) {
+  const keys = STEPS.find((s) => s[0] === slug)[2];
+  const st = keys.map((k) => status(f, k));
+  if (!st.length || st.every((s) => s === "empty")) return "empty";
+  return st.every((s) => s === "agreed") ? "agreed" : "proposed";
+}
+function progress(f) {
+  const st = Object.keys(SECTIONS).map((k) => status(f, k));
+  return { total: st.length, agreed: st.filter((s) => s === "agreed").length, proposed: st.filter((s) => s === "proposed").length, empty: st.filter((s) => s === "empty").length };
+}
+// Gaps are counted from records. Nothing is estimated.
+function gaps(f) {
+  const out = [];
+  f.assumptions.forEach((a) => {
+    const miss = [!filled(a.owner) && "an owner", !filled(a.test) && "a test"].filter(Boolean);
+    if (miss.length) out.push({ kind: "as", title: `Assumption needs ${miss.join(" and ")}`, sub: a.statement, step: "evidence" });
+  });
+  f.measures.forEach((m) => { if (!filled(m.baseline)) out.push({ kind: "qu", title: "Baseline unknown", sub: m.metric, step: "learning" }); });
+  f.questions.filter((q) => !q.resolved).forEach((q) => out.push({ kind: "qu", title: `${ROLES[q.role]} hasn't answered`, sub: q.text, step: "evidence" }));
+  f.decisions.forEach((d) => { if (!d.assumptionIds.length && !d.sourceIds.length) out.push({ kind: "dc", title: "Decision rests on nothing linked", sub: d.what, step: "review" }); });
+  if (!f.measures.some((m) => m.kind === "success")) out.push({ kind: "qu", title: "No success measure", sub: "How will you know it worked?", step: "learning" });
+  if (!f.scope.some((s) => !s.in)) out.push({ kind: "as", title: "Nothing marked out of scope", sub: "Say what this release won't do", step: "scope" });
+  return out;
+}
+
+// ---------- Storage (this browser only) ----------
+const KEY = "scopeline-demo-v1";
+let state;
+function load() { try { const raw = localStorage.getItem(KEY); if (raw) return JSON.parse(raw); } catch (e) {} return null; }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+const uid = () => Math.random().toString(36).slice(2, 10);
+const now = () => new Date().toISOString();
+
+function blankFeature(title, request) {
+  return { id: uid(), title, request, example: false, created: now(), updated: now(),
+    problem: "", constraints: "", audience: "", currentBehaviour: "", outcome: "", agreed: {},
+    sources: [{ id: uid(), title: "Original request", origin: "Pasted when the feature was created", kind: "text", content: request }],
+    assumptions: [], questions: [], scope: [], alternatives: [], criteria: [], measures: [], decisions: [],
+    history: [{ at: now(), entity: "Feature", action: "created", detail: title }] };
+}
+function seed() {
+  const f = blankFeature("One-tap reorder", "We want one-tap reorder to increase repeat purchases.");
+  f.example = true;
+  f.outcome = "Customers who already ordered come back and complete another order with less effort.";
+  f.audience = "Customers with two or more past orders";
+  const support = { id: uid(), title: "Support tickets, October", origin: "Support export", kind: "text", content: "Several tickets describe rebuilding a past basket item by item." };
+  f.sources.push(support);
+  f.assumptions.push({ id: uid(), statement: "Easier reordering increases repeat purchases.", why: "If friction isn't the barrier, the feature won't change repeat behaviour.", owner: "", test: "", evidenceNeeded: "", status: "untested", sourceIds: [support.id] });
+  [["Which customers are expected to repeat, and why do they behave as they do today?", "pm"],
+   ["What happens when an item is unavailable or its price changed?", "design"],
+   ["What event data and baseline are available?", "engineering"]].forEach(([text, role]) => f.questions.push({ id: uid(), text, role, assignee: "", answer: "", resolved: false }));
+  f.scope.push({ id: uid(), text: "Rebuild a previous basket with current availability and prices", in: true },
+               { id: uid(), text: "Customer reviews the rebuilt basket before checkout", in: true });
+  f.measures.push({ id: uid(), kind: "success", metric: "Completed repeat orders, eligible cohort", baseline: "", target: "", cohort: "", window: "", missing: "Confirm a reorder-started event exists" },
+                  { id: uid(), kind: "guardrail", metric: "Order cancellations", baseline: "", target: "", cohort: "", window: "", missing: "" },
+                  { id: uid(), kind: "guardrail", metric: "Refunds", baseline: "", target: "", cohort: "", window: "", missing: "" });
+  f.history[0].detail = "Example feature";
+  return { features: [f], view: { name: "home" } };
+}
+state = load() || seed();
+
+// ---------- Helpers ----------
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const feature = () => state.features.find((f) => f.id === state.view.id);
+const unknown = (v) => filled(v) ? esc(v) : '<span class="unknown">Unknown</span>';
+const fmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+let pendingConfirm = null;
+function toast(msg) { const t = document.getElementById("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => (t.hidden = true), 2200); }
+function log(f, entity, action, detail = "", actor = "") { f.history.unshift({ at: now(), entity, action, detail, actor }); }
+// Any content change reopens an agreed section, as in the real app.
+function touch(f, key) {
+  f.updated = now();
+  if (f.agreed[key]) { f.agreed[key] = false; log(f, SECTIONS[key][0], "reopened", "Content changed after the section was agreed"); }
+}
+function go(view) { state.view = view; save(); render(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+
+// ---------- Render ----------
+function render() {
+  const f = feature();
+  if (state.view.name === "feature" && !f) state.view = { name: "home" };
+  renderBar();
+  document.getElementById("app").innerHTML = state.view.name === "home" ? homeView() : featureView(feature());
+}
+function renderBar() {
+  const f = feature();
+  document.getElementById("bar").innerHTML = `
+    <button class="logo" data-act="home" aria-label="All features"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</button>
+    ${state.view.name === "feature" && f ? `<span class="crumb">/ ${esc(f.title)}</span>` : ""}
+    <span class="spacer"></span>
+    <span class="demo-tag">Try-it version · saved in this browser</span>
+    ${state.view.name === "feature" ? `<button class="btn ghost sm" data-act="home">All features</button>` : ""}`;
+}
+
+function homeView() {
+  const list = state.features.map((f) => {
+    const p = progress(f), g = gaps(f).length;
+    return `<li><button class="fcard" data-act="open" data-id="${f.id}">
+      <div class="row" style="justify-content:space-between"><h2>${esc(f.title)}</h2>${f.example ? '<span class="tag t-qu">Example</span>' : ""}</div>
+      <p>${esc(f.request)}</p>
+      <div class="row"><div class="meter" aria-hidden="true"><span style="width:${Math.round(p.agreed / p.total * 100)}%"></span></div>
+      <span class="mono">${p.agreed}/${p.total} agreed · ${g} gap${g === 1 ? "" : "s"}</span></div>
+    </button></li>`;
+  }).join("");
+  return `<div class="home">
+    <section>
+      <h1>Your features</h1>
+      <p class="lead">Each feature moves through seven steps until product, design, growth and engineering agree its definition. The example is pre-filled so you can see how it works.</p>
+      ${state.features.length ? `<ul class="flist">${list}</ul>` : `<div class="empty-box" style="margin-top:22px">No features yet. Paste an idea in the form to start.</div>`}
+      <div style="margin-top:22px">${pendingConfirm === "reset"
+        ? `<div class="confirm">Delete everything you've added and restore the example? <button class="btn sm" data-act="reset-yes">Yes, reset</button><button class="btn ghost sm" data-act="cancel">Cancel</button></div>`
+        : `<button class="link" data-act="reset">Reset the try-it workspace</button>`}</div>
+    </section>
+    <aside class="panel">
+      <h2>Start a definition</h2>
+      <p class="lead" style="font-size:.9rem">Paste the request as you received it. It becomes the first source.</p>
+      <form data-form="create" class="stack" style="margin-top:16px">
+        <div><label class="label" for="c-title">Feature name</label><input class="field" id="c-title" name="title" required maxlength="140" placeholder="Saved carts"></div>
+        <div><label class="label" for="c-req">Request or idea</label><textarea class="field" id="c-req" name="request" required rows="5" placeholder="Let customers save a cart and come back to it later."></textarea></div>
+        <button class="btn" type="submit">Create feature</button>
+      </form>
+    </aside>
+  </div>`;
+}
+
+function featureView(f) {
+  const step = state.view.step || "context";
+  const p = progress(f), g = gaps(f);
+  const meta = STEPS.find((s) => s[0] === step);
+  const n = STEPS.indexOf(meta) + 1;
+  const nav = STEPS.map(([slug, title], i) => `<li><button data-act="step" data-step="${slug}" ${slug === step ? 'aria-current="step"' : ""}>
+      <span class="n">${i + 1}</span><span>${title}</span>${slug !== "share" ? `<span class="dot ${stepStatus(f, slug)}" aria-label="${stepStatus(f, slug)}"></span>` : ""}</button></li>`).join("");
+  return `
+    <div class="ws-head"><div><h1>${esc(f.title)}</h1>${f.example ? `<p class="example-note">Example feature. It contains no real research or results.</p>` : ""}</div>
+      <span class="mono">${p.agreed} agreed · ${p.proposed} proposed · ${p.empty} empty</span></div>
+    <div class="ws">
+      <nav aria-label="Definition steps"><ol class="steps">${nav}</ol></nav>
+      <div class="main">
+        <div class="step-title"><p class="eyebrow">Step ${n} of 7</p><h2 class="serif">${meta[1]}</h2></div>
+        ${STEP_VIEWS[step](f)}
+        ${n < 7 ? `<div class="row" style="justify-content:flex-end"><button class="btn ghost" data-act="step" data-step="${STEPS[n][0]}">Next: ${STEPS[n][1]} →</button></div>` : ""}
+      </div>
+      <aside class="side">
+        <div class="gaps">
+          <div class="gaps-head"><h2>Definition gaps</h2><span class="count ${g.length ? "" : "ok"}">${g.length ? g.length + " open" : "None"}</span></div>
+          <div class="ready"><div class="meter"><span style="width:${Math.round(p.agreed / p.total * 100)}%"></span></div><span class="mono">${p.agreed} of ${p.total} sections agreed</span></div>
+          ${g.length ? g.map((x) => `<button class="gap" data-act="step" data-step="${x.step}"><span class="dot ${x.kind === "as" ? "proposed" : x.kind === "dc" ? "empty" : ""}" style="${x.kind === "qu" ? "background:var(--qu)" : ""}"></span><span><b>${esc(x.title)}</b><span class="sub">${esc(x.sub)}</span><span class="go">Go to step →</span></span></button>`).join("")
+            : `<p class="hint">Counted from your records: no untested assumptions without owners, unknown baselines or unanswered questions.</p>`}
+        </div>
+      </aside>
+    </div>`;
+}
+
+function sectionCard(f, key, body) {
+  const st = status(f, key);
+  return `<section class="section" id="sec-${key}" aria-labelledby="h-${key}">
+    <div class="sec-head"><div><h2 id="h-${key}">${SECTIONS[key][0]} <span class="chip ${st}">${st}</span></h2><p>${SECTIONS[key][1]}</p></div>
+      ${st === "empty" ? "" : `<button class="btn ${st === "agreed" ? "ghost" : ""} sm" data-act="agree" data-key="${key}">${st === "agreed" ? "Reopen" : "Mark agreed"}</button>`}</div>
+    ${body}</section>`;
+}
+const del = (kind, id, label = "Remove") => `<button class="link" data-act="del" data-kind="${kind}" data-id="${id}">${label}</button>`;
+const addPanel = (title, form) => `<details class="add"><summary>+ ${title}</summary>${form}</details>`;
+const roleOpts = (sel) => Object.entries(ROLES).map(([v, l]) => `<option value="${v}" ${v === sel ? "selected" : ""}>${l}</option>`).join("");
+
+const STEP_VIEWS = {
+  context: (f) => sectionCard(f, "evidence", `
+    <div class="item ev"><span class="label">Original request</span><p style="font-family:var(--serif);font-size:1.25rem">“${esc(f.request)}”</p></div>
+    ${f.sources.slice(1).map((s) => `<div class="item ev"><div class="item-top"><div><span class="tag t-ev">Evidence</span> <b>${esc(s.title)}</b>${s.origin ? `<p class="sub">From: ${esc(s.origin)}</p>` : ""}</div>${del("source", s.id)}</div>${s.content ? `<p class="sub" style="white-space:pre-wrap">${esc(s.content)}</p>` : ""}</div>`).join("")}
+    ${addPanel("Add a source", `<form data-form="source" class="grid2">
+      <div><label class="label" for="s-t">Title</label><input class="field" id="s-t" name="title" required placeholder="Interview notes"></div>
+      <div><label class="label" for="s-o">Where it came from</label><input class="field" id="s-o" name="origin" placeholder="Zendesk, interview, competitor page"></div>
+      <div class="full"><label class="label" for="s-c">Content or link</label><textarea class="field" id="s-c" name="content" rows="4" placeholder="Paste notes, quotes or a link"></textarea><p class="hint">Sources are never rewritten. Adding one doesn't change any decision.</p></div>
+      <div><button class="btn" type="submit">Add source</button></div></form>`)}`),
+
+  clarify: (f) => [
+    sectionCard(f, "problem", `<form data-form="text" data-key="problem" class="stack">
+      <div><label class="label" for="t-p">Problem</label><textarea class="field" id="t-p" name="problem" rows="3" placeholder="Who is affected, and how does it show up today?">${esc(f.problem)}</textarea></div>
+      <div><label class="label" for="t-c">Constraints</label><textarea class="field" id="t-c" name="constraints" rows="2" placeholder="Deadlines, platforms, policies, dependencies">${esc(f.constraints)}</textarea></div>
+      <div><button class="btn" type="submit">Save problem</button></div></form>`),
+    sectionCard(f, "audience", `<form data-form="text" data-key="audience" class="stack">
+      <div><label class="label" for="t-a">Target user</label><textarea class="field" id="t-a" name="audience" rows="2">${esc(f.audience)}</textarea></div>
+      <div><label class="label" for="t-b">What they do today</label><textarea class="field" id="t-b" name="currentBehaviour" rows="2" placeholder="Leave blank if unknown, and add an open question instead.">${esc(f.currentBehaviour)}</textarea></div>
+      <div><button class="btn" type="submit">Save audience</button></div></form>`),
+    sectionCard(f, "outcome", `<form data-form="text" data-key="outcome" class="stack">
+      <div><label class="label" for="t-o">Intended change in behaviour</label><textarea class="field" id="t-o" name="outcome" rows="2">${esc(f.outcome)}</textarea></div>
+      <div><button class="btn" type="submit">Save outcome</button></div></form>`)].join(""),
+
+  evidence: (f) => {
+    const srcChecks = (prefix, checked = []) => f.sources.length ? `<div class="checks">${f.sources.map((s) => `<label for="${prefix}-${s.id}"><input type="checkbox" id="${prefix}-${s.id}" name="sourceIds" value="${s.id}" ${checked.includes(s.id) ? "checked" : ""}> ${esc(s.title)}</label>`).join("")}</div>` : `<p class="hint">No sources yet.</p>`;
+    const aFields = (p, a = {}) => `
+      <div class="full"><label class="label" for="${p}-st">Belief, in one sentence</label><textarea class="field" id="${p}-st" name="statement" rows="2" required>${esc(a.statement)}</textarea></div>
+      <div><label class="label" for="${p}-w">What breaks if it's wrong</label><textarea class="field" id="${p}-w" name="why" rows="2">${esc(a.why)}</textarea></div>
+      <div><label class="label" for="${p}-t">How it will be checked</label><textarea class="field" id="${p}-t" name="test" rows="2">${esc(a.test)}</textarea></div>
+      <div><label class="label" for="${p}-o">Owner</label><input class="field" id="${p}-o" name="owner" value="${esc(a.owner)}" placeholder="A person, not a team"></div>
+      <div><label class="label" for="${p}-s">Status</label><select class="field" id="${p}-s" name="status">${Object.entries(A_STATUS).map(([v, l]) => `<option value="${v}" ${v === (a.status || "untested") ? "selected" : ""}>${l}</option>`).join("")}</select></div>
+      <div class="full"><span class="label">Related sources</span>${srcChecks(p, a.sourceIds)}<p class="hint">Linking a source doesn't turn an assumption into a fact.</p></div>`;
+    return sectionCard(f, "assumptions", `
+      ${f.assumptions.map((a) => {
+        const miss = [!filled(a.owner) && "owner", !filled(a.test) && "test"].filter(Boolean);
+        return `<div class="item as"><div class="item-top"><div><span class="tag t-as">Assumption</span> <span class="mono">${A_STATUS[a.status]}</span></div>${del("assumption", a.id)}</div>
+          <b>${esc(a.statement)}</b>
+          <p class="sub">Owner: ${filled(a.owner) ? esc(a.owner) : "<em>none</em>"} · Test: ${filled(a.test) ? esc(a.test) : "<em>none</em>"}${a.sourceIds.length ? " · Sources: " + a.sourceIds.map((id) => esc(f.sources.find((s) => s.id === id)?.title)).join(", ") : ""}</p>
+          ${miss.length ? `<p class="warn">Needs ${miss.join(" and ")}.</p>` : ""}
+          <details class="edit"><summary>Edit</summary><form data-form="assumption" data-id="${a.id}" class="grid2">${aFields("a" + a.id, a)}<div><button class="btn" type="submit">Save assumption</button></div></form></details></div>`;
+      }).join("")}
+      ${addPanel("Register an assumption", `<form data-form="assumption" class="grid2">${aFields("na")}<div><button class="btn" type="submit">Register</button></div></form>`)}`)
+    + sectionCard(f, "open_questions", `
+      ${f.questions.map((q) => `<div class="item qu" style="${q.resolved ? "opacity:.7" : ""}"><div class="item-top"><div><span class="tag t-qu">Open question</span> <span class="mono">${ROLES[q.role]}${q.assignee ? " · " + esc(q.assignee) : ""}${q.resolved ? " · Resolved" : ""}</span></div>${del("question", q.id)}</div>
+        <b>${esc(q.text)}</b>
+        <form data-form="answer" data-id="${q.id}" class="stack"><div><label class="label" for="ans-${q.id}">Answer</label><textarea class="field" id="ans-${q.id}" name="answer" rows="2">${esc(q.answer)}</textarea></div>
+        <div class="row"><label class="row" for="res-${q.id}" style="gap:6px"><input type="checkbox" id="res-${q.id}" name="resolved" ${q.resolved ? "checked" : ""}> Resolved</label><button class="btn ghost sm" type="submit">Save answer</button></div></form></div>`).join("")}
+      ${addPanel("Add an open question", `<form data-form="question" class="grid2">
+        <div class="full"><label class="label" for="q-t">Question</label><textarea class="field" id="q-t" name="text" rows="2" required></textarea></div>
+        <div><label class="label" for="q-r">Who answers it</label><select class="field" id="q-r" name="role">${roleOpts("pm")}</select></div>
+        <div><label class="label" for="q-a">Person (optional)</label><input class="field" id="q-a" name="assignee"></div>
+        <div><button class="btn" type="submit">Add question</button></div></form>`)}`);
+  },
+
+  scope: (f) => sectionCard(f, "scope", `
+      <div class="cols">${[["In this release", true, "Move out"], ["Out of this release", false, "Move in"]].map(([t, isIn, mv]) => {
+        const items = f.scope.filter((s) => s.in === isIn);
+        return `<div class="col"><h3>${t} · ${items.length}</h3>${items.length ? `<ul>${items.map((s) => `<li><span>${esc(s.text)}</span><span style="white-space:nowrap"><button class="link" data-act="toggle-scope" data-id="${s.id}">${mv}</button>${del("scope", s.id)}</span></li>`).join("")}</ul>` : `<p class="hint">Nothing yet.</p>`}</div>`;
+      }).join("")}</div>
+      ${addPanel("Add a scope item", `<form data-form="scope" class="stack">
+        <div><label class="label" for="sc-t">Item</label><input class="field" id="sc-t" name="text" required></div>
+        <div class="row"><label for="sc-in" class="row" style="gap:6px"><input type="radio" id="sc-in" name="where" value="in" checked> In scope</label><label for="sc-out" class="row" style="gap:6px"><input type="radio" id="sc-out" name="where" value="out"> Out of scope</label></div>
+        <div><button class="btn" type="submit">Add item</button></div></form>`)}`)
+    + sectionCard(f, "alternatives", `
+      ${f.alternatives.map((a) => `<div class="item"><div class="item-top"><b>${esc(a.description)}</b>${del("alternative", a.id)}</div><p class="sub">Why not: ${filled(a.why) ? esc(a.why) : "<em>no reason recorded yet</em>"}</p></div>`).join("")}
+      ${addPanel("Add an alternative", `<form data-form="alternative" class="stack">
+        <div><label class="label" for="al-d">Other release boundary</label><textarea class="field" id="al-d" name="description" rows="2" required></textarea></div>
+        <div><label class="label" for="al-w">Why it wasn't chosen</label><textarea class="field" id="al-w" name="why" rows="2"></textarea></div>
+        <div><button class="btn" type="submit">Add alternative</button></div></form>`)}`)
+    + sectionCard(f, "acceptance_criteria", `
+      ${f.criteria.length ? `<ol style="margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px">${f.criteria.map((c) => `<li><span>${esc(c.text)}</span> ${del("criterion", c.id)}</li>`).join("")}</ol>` : ""}
+      ${addPanel("Add a criterion", `<form data-form="criterion" class="stack">
+        <div><label class="label" for="cr-t">Testable statement</label><textarea class="field" id="cr-t" name="text" rows="2" required></textarea></div>
+        <div><button class="btn" type="submit">Add criterion</button></div></form>`)}`),
+
+  learning: (f) => {
+    const mFields = (p, m = {}) => `
+      <div><label class="label" for="${p}-k">Type</label><select class="field" id="${p}-k" name="kind"><option value="success" ${m.kind !== "guardrail" ? "selected" : ""}>Success measure</option><option value="guardrail" ${m.kind === "guardrail" ? "selected" : ""}>Guardrail</option></select></div>
+      <div><label class="label" for="${p}-m">Metric</label><input class="field" id="${p}-m" name="metric" required value="${esc(m.metric)}"></div>
+      <div><label class="label" for="${p}-b">Baseline</label><input class="field" id="${p}-b" name="baseline" value="${esc(m.baseline)}"><p class="hint">Leave blank if you don't have it.</p></div>
+      <div><label class="label" for="${p}-t">Target</label><input class="field" id="${p}-t" name="target" value="${esc(m.target)}"><p class="hint">Leave blank until there's a baseline.</p></div>
+      <div><label class="label" for="${p}-c">Cohort</label><input class="field" id="${p}-c" name="cohort" value="${esc(m.cohort)}"></div>
+      <div><label class="label" for="${p}-w">Window</label><input class="field" id="${p}-w" name="window" value="${esc(m.window)}"></div>
+      <div class="full"><label class="label" for="${p}-x">Missing instrumentation</label><input class="field" id="${p}-x" name="missing" value="${esc(m.missing)}"></div>`;
+    return sectionCard(f, "measures", `
+      ${["success", "guardrail"].map((k) => {
+        const items = f.measures.filter((m) => m.kind === k);
+        if (!items.length) return "";
+        return `<p class="label">${k === "success" ? "Success measures" : "Guardrails"}</p>` + items.map((m) => `<div class="item"><div class="item-top"><b>${esc(m.metric)}</b>${del("measure", m.id)}</div>
+          <dl class="kv"><div><dt>Baseline</dt><dd>${unknown(m.baseline)}</dd></div><div><dt>Target</dt><dd>${unknown(m.target)}</dd></div><div><dt>Cohort</dt><dd>${unknown(m.cohort)}</dd></div><div><dt>Window</dt><dd>${unknown(m.window)}</dd></div></dl>
+          ${filled(m.missing) ? `<p class="warn">Missing instrumentation: ${esc(m.missing)}</p>` : ""}
+          <details class="edit"><summary>Edit</summary><form data-form="measure" data-id="${m.id}" class="grid2">${mFields("m" + m.id, m)}<div><button class="btn" type="submit">Save measure</button></div></form></details></div>`).join("");
+      }).join("")}
+      <p class="hint">A measurement plan names how impact will be evaluated. It never states expected impact as fact.</p>
+      ${addPanel("Add a measure", `<form data-form="measure" class="grid2">${mFields("nm")}<div><button class="btn" type="submit">Add measure</button></div></form>`)}`);
+  },
+
+  review: (f) => sectionCard(f, "decisions", `
+      ${f.decisions.map((d) => `<div class="item dc"><div class="item-top"><div><span class="tag t-dc">Decision</span> <span class="mono">${esc(d.by)} · ${fmt.format(new Date(d.at))}</span></div>${del("decision", d.id, "Withdraw")}</div>
+        <b>${esc(d.what)}</b><p class="sub">Reason: ${esc(d.reason)}</p>
+        ${d.assumptionIds.length ? `<p class="sub"><span style="color:var(--as)">Rests on:</span> ${d.assumptionIds.map((id) => esc(f.assumptions.find((a) => a.id === id)?.statement || "removed assumption")).join("; ")}</p>` : ""}
+        ${d.sourceIds.length ? `<p class="sub"><span style="color:var(--ev)">Sources:</span> ${d.sourceIds.map((id) => esc(f.sources.find((s) => s.id === id)?.title || "removed source")).join(", ")}</p>` : ""}</div>`).join("")}
+      ${addPanel("Record a decision", `<form data-form="decision" class="grid2">
+        <div class="full"><label class="label" for="d-w">What was decided</label><textarea class="field" id="d-w" name="what" rows="2" required></textarea></div>
+        <div class="full"><label class="label" for="d-r">Reason</label><textarea class="field" id="d-r" name="reason" rows="2" required></textarea></div>
+        <div><label class="label" for="d-b">Decided by</label><input class="field" id="d-b" name="by" required placeholder="Names or roles"></div><div></div>
+        <div><span class="label">Rests on assumptions</span>${f.assumptions.length ? `<div class="checks">${f.assumptions.map((a) => `<label for="da-${a.id}"><input type="checkbox" id="da-${a.id}" name="assumptionIds" value="${a.id}"> ${esc(a.statement)}</label>`).join("")}</div>` : `<p class="hint">None registered.</p>`}</div>
+        <div><span class="label">Supported by sources</span><div class="checks">${f.sources.map((s) => `<label for="ds-${s.id}"><input type="checkbox" id="ds-${s.id}" name="sourceIds" value="${s.id}"> ${esc(s.title)}</label>`).join("")}</div></div>
+        <div><button class="btn" type="submit">Record decision</button></div></form>`)}`),
+
+  share: (f) => {
+    const p = progress(f);
+    return `<section class="section"><h2 class="serif" style="font-size:1.5rem">${p.agreed === p.total ? "Every section is agreed" : "Not ready to share yet"}</h2>
+      <p class="sub" style="color:var(--muted)">${p.agreed} of ${p.total} sections agreed. The summary and brief export are part of a later milestone.</p>
+      <div>${Object.keys(SECTIONS).map((k) => `<div class="row" style="justify-content:space-between;border-top:1px solid var(--line);padding:9px 0"><button class="link" style="text-decoration:none;color:var(--ink);font-size:.92rem" data-act="step" data-step="${stepOf(k)}">${SECTIONS[k][0]}</button><span class="chip ${status(f, k)}">${status(f, k)}</span></div>`).join("")}</div></section>
+      <section class="section"><h2 class="serif" style="font-size:1.5rem">History</h2><p class="hint">Changes to scope, decisions, assumption status and agreement. Entries can't be edited.</p>
+      <ol class="history">${f.history.slice(0, 40).map((h) => `<li><span class="mono">${fmt.format(new Date(h.at))}</span><span><b>${esc(h.entity)}</b> ${esc(h.action)}${h.actor ? " by " + esc(h.actor) : ""}${h.detail ? `<span class="sub">${esc(h.detail)}</span>` : ""}</span></li>`).join("")}</ol></section>
+      <section class="section">${pendingConfirm === "delete" ? `<div class="confirm">Delete this feature and everything in it? <button class="btn sm" style="background:var(--danger);border-color:var(--danger)" data-act="delete-yes">Delete</button><button class="btn ghost sm" data-act="cancel">Cancel</button></div>` : `<button class="link danger" data-act="delete">Delete this feature</button>`}</section>`;
+  },
+};
+
+// ---------- Events ----------
+document.addEventListener("click", (e) => {
+  const el = e.target.closest("[data-act]"); if (!el) return;
+  const f = feature(), act = el.dataset.act;
+  if (act === "home") { pendingConfirm = null; return go({ name: "home" }); }
+  if (act === "open") return go({ name: "feature", id: el.dataset.id, step: "context" });
+  if (act === "step") { pendingConfirm = null; return go({ ...state.view, step: el.dataset.step }); }
+  if (act === "cancel") { pendingConfirm = null; return render(); }
+  if (act === "reset") { pendingConfirm = "reset"; return render(); }
+  if (act === "reset-yes") { pendingConfirm = null; state = seed(); save(); render(); return toast("Workspace reset"); }
+  if (act === "delete") { pendingConfirm = "delete"; return render(); }
+  if (act === "delete-yes") { pendingConfirm = null; state.features = state.features.filter((x) => x.id !== f.id); toast("Feature deleted"); return go({ name: "home" }); }
+  if (act === "agree") {
+    const k = el.dataset.key; if (!hasContent(f, k)) return;
+    f.agreed[k] = !f.agreed[k]; log(f, SECTIONS[k][0], f.agreed[k] ? "agreed" : "reopened");
+    save(); render(); return toast(f.agreed[k] ? `${SECTIONS[k][0]} agreed` : `${SECTIONS[k][0]} reopened`);
+  }
+  if (act === "toggle-scope") {
+    const s = f.scope.find((x) => x.id === el.dataset.id); s.in = !s.in;
+    log(f, "Scope", s.in ? "moved into scope" : "moved out of scope", s.text); touch(f, "scope"); save(); return render();
+  }
+  if (act === "del") {
+    const map = { source: ["sources", "evidence"], assumption: ["assumptions", "assumptions"], question: ["questions", "open_questions"], scope: ["scope", "scope"], alternative: ["alternatives", "alternatives"], criterion: ["criteria", "acceptance_criteria"], measure: ["measures", "measures"], decision: ["decisions", "decisions"] };
+    const [list, key] = map[el.dataset.kind];
+    const item = f[list].find((x) => x.id === el.dataset.id);
+    f[list] = f[list].filter((x) => x.id !== el.dataset.id);
+    if (el.dataset.kind === "decision") log(f, "Decision", "withdrawn", item.what);
+    if (el.dataset.kind === "scope") log(f, "Scope", "removed", item.text);
+    if (el.dataset.kind === "assumption") log(f, "Assumption", "removed", item.statement);
+    touch(f, key); save(); render(); return toast("Removed");
+  }
+});
+
+document.addEventListener("submit", (e) => {
+  const form = e.target.closest("form[data-form]"); if (!form) return;
+  e.preventDefault();
+  const fd = new FormData(form), v = (k) => String(fd.get(k) ?? "").trim(), all = (k) => fd.getAll(k).map(String);
+  const kind = form.dataset.form, id = form.dataset.id;
+  if (kind === "create") {
+    const nf = blankFeature(v("title"), v("request")); state.features.unshift(nf); save(); toast("Feature created");
+    return go({ name: "feature", id: nf.id, step: "context" });
+  }
+  const f = feature();
+  let msg = "Saved";
+  switch (kind) {
+    case "text": {
+      const k = form.dataset.key;
+      for (const [name] of fd) f[name] = v(name);
+      touch(f, k); msg = `${SECTIONS[k][0]} saved`; break;
+    }
+    case "source": f.sources.push({ id: uid(), title: v("title"), origin: v("origin"), kind: "text", content: v("content") }); touch(f, "evidence"); msg = "Source added"; break;
+    case "assumption": {
+      const data = { statement: v("statement"), why: v("why"), test: v("test"), owner: v("owner"), status: v("status") || "untested", sourceIds: all("sourceIds") };
+      if (id) { const a = f.assumptions.find((x) => x.id === id); if (a.status !== data.status) log(f, "Assumption", `status ${A_STATUS[a.status]} → ${A_STATUS[data.status]}`, data.statement); Object.assign(a, data); msg = "Assumption saved"; }
+      else { f.assumptions.push({ id: uid(), evidenceNeeded: "", ...data }); log(f, "Assumption", "registered", data.statement); msg = "Assumption registered"; }
+      touch(f, "assumptions"); break;
+    }
+    case "question": f.questions.push({ id: uid(), text: v("text"), role: v("role"), assignee: v("assignee"), answer: "", resolved: false }); touch(f, "open_questions"); msg = "Question added"; break;
+    case "answer": { const q = f.questions.find((x) => x.id === id); q.answer = v("answer"); q.resolved = fd.get("resolved") === "on"; touch(f, "open_questions"); msg = "Answer saved"; break; }
+    case "scope": f.scope.push({ id: uid(), text: v("text"), in: v("where") === "in" }); log(f, "Scope", v("where") === "in" ? "added to scope" : "excluded from scope", v("text")); touch(f, "scope"); msg = "Scope item added"; break;
+    case "alternative": f.alternatives.push({ id: uid(), description: v("description"), why: v("why") }); touch(f, "alternatives"); msg = "Alternative added"; break;
+    case "criterion": f.criteria.push({ id: uid(), text: v("text") }); touch(f, "acceptance_criteria"); msg = "Criterion added"; break;
+    case "measure": {
+      const data = { kind: v("kind"), metric: v("metric"), baseline: v("baseline"), target: v("target"), cohort: v("cohort"), window: v("window"), missing: v("missing") };
+      if (id) Object.assign(f.measures.find((x) => x.id === id), data); else f.measures.push({ id: uid(), ...data });
+      touch(f, "measures"); msg = id ? "Measure saved" : "Measure added"; break;
+    }
+    case "decision": {
+      const d = { id: uid(), what: v("what"), reason: v("reason"), by: v("by"), at: now(), assumptionIds: all("assumptionIds"), sourceIds: all("sourceIds") };
+      f.decisions.unshift(d); log(f, "Decision", "recorded", `${d.what}. Reason: ${d.reason}`, d.by); touch(f, "decisions"); msg = "Decision recorded"; break;
+    }
+  }
+  save(); render(); toast(msg);
+});
+
+render();
+})();
+</script>
+</body></html>
