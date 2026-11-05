@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Scopeline · Agree what to build before anyone builds it</title>
-  <meta name="description" content="The feature-definition workspace where product, design, growth and engineering agree one feature's scope. Every claim labelled, every number sourced or marked unknown, every decision recorded.">
+  <meta name="description" content="Free workspace where product, design, growth and engineering agree one feature's definition. Every claim labelled, every number sourced or marked unknown.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@600&display=swap">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -15,260 +15,227 @@
 
   <header class="site-header">
     <div class="container header-row">
-      <a class="logo" href="#top" aria-label="Scopeline home">
-        <span class="logo-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-        Scopeline
-      </a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
-      <nav id="site-nav" class="site-nav" aria-label="Main">
-        <a href="#top">Product</a>
-        <a href="#how">How it works</a>
-        <a class="pill pill-dark pill-small" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao">Start free <span class="knob" aria-hidden="true">›</span></a>
+      <a class="logo" href="#top" aria-label="Scopeline home"><span class="logo-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</a>
+      <nav class="rail" aria-label="Page sections">
+        <a href="#top" data-rail="top"><span>1</span>Request</a>
+        <a href="#try" data-rail="try"><span>2</span>Claims</a>
+        <a href="#gaps" data-rail="gaps"><span>3</span>Gaps</a>
+        <a href="#team" data-rail="team"><span>4</span>Team</a>
+        <a href="#next" data-rail="next"><span>5</span>What's next</a>
+        <i class="rail-fill" aria-hidden="true"></i>
       </nav>
+      <a class="pill pill-dark pill-small" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao">Start free <span class="knob" aria-hidden="true">›</span></a>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero" id="top">
-      <div class="container hero-grid2">
-        <div class="hero-left">
-          <h1>Agree what to build <em class="grad">before anyone builds&nbsp;it</em></h1>
-          <p class="lede">One shared definition for product, design, growth and engineering. Every claim labelled, every number sourced or marked unknown.</p>
-        </div>
-        <div class="free-card">
-          <p class="free-title">Free for product teams</p>
-          <ul class="ticks-sm"><li>No sign-up to try</li><li>Gaps counted as you write</li><li>Works in your browser</li></ul>
-          <a class="pill pill-dark" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao">Start free <span class="knob" aria-hidden="true">›</span></a>
+
+    <!-- 1 · Hero with a live demo -->
+    <section class="hero" id="top" data-section="top">
+      <div class="container hero-copy">
+        <p class="kicker"><span class="dot-live" aria-hidden="true"></span>Free for product teams · no sign-up</p>
+        <h1>Agree what to build <em>before anyone builds&nbsp;it</em></h1>
+        <p class="lede">Paste a request. Scopeline labels every claim, catches numbers nobody sourced, and gets your PM, designer, growth lead and engineer to one definition.</p>
+        <div class="hero-actions">
+          <span class="cta-wrap">
+            <a class="pill pill-dark pill-big" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao">Start free <span class="knob" aria-hidden="true">›</span></a>
+            <span class="hand-note" aria-hidden="true">It's free!<svg width="64" height="30" viewBox="0 0 64 30" fill="none"><path d="M2 8c12-6 26-6 34 2 5 5-4 10-8 5-4-6 10-11 24-6 4 1 7 4 9 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M57 8l4 8-9 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </span>
+          <a class="pill pill-outline" href="#try">Try it on a sentence</a>
         </div>
       </div>
 
       <div class="container">
-        <div class="product">
-          <div class="tabbar" role="tablist" aria-label="What Scopeline does"><button type="button" role="tab" id="tab-claims" aria-controls="panel-claims" aria-selected="true" data-tab="claims">Labelled claims </button><button type="button" role="tab" id="tab-gaps" aria-controls="panel-gaps" aria-selected="false" data-tab="gaps">Definition gaps </button><button type="button" role="tab" id="tab-team" aria-controls="panel-team" aria-selected="false" data-tab="team">Team review </button><button type="button" role="tab" id="tab-design" aria-controls="panel-design" aria-selected="false" data-tab="design">Design review <span class="soon">Next</span></button><button type="button" role="tab" id="tab-learn" aria-controls="panel-learn" aria-selected="false" data-tab="learn">After launch <span class="soon">Later</span></button></div>
-          <div class="stage stage-hero product-stage">
-          <div class="tab-panel" role="tabpanel" id="panel-claims" aria-labelledby="tab-claims" data-panel="claims">
-            <div class="tab-copy"><h3>Every claim is labelled</h3><p>Evidence, assumption, question or decision. A claim with no source stays an assumption.</p></div>
-            <div class="window">
-            <div class="win-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win-title">Scopeline · One-tap reorder</span>
-              <span class="avatars" aria-label="Reviewers"><span class="av av-pm">PM</span><span class="av av-ds">DS</span><span class="av av-gr">GR</span><span class="av av-en">EN</span></span></div>
-            <div class="win-body">
-              <aside class="pane-left">
-                <p class="pane-label">Review session</p>
-                <div class="event">
-                  <div class="event-head"><span>Sources added</span><span class="ok">Linked</span></div>
-                  <p class="mono-line c-ev">3 sources · 11 quotes</p>
-                  <div class="chips"><span>Support export</span><span>Interviews</span><span>Order data</span></div>
+        <div class="field field-hero">
+          <div class="window demo" id="demo" aria-label="Animated example: a request becomes a labelled definition">
+            <div class="win-bar">
+              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="win-title">Scopeline · Checkout squad</span>
+              <button class="replay" type="button" id="replay">↺ Replay</button>
+            </div>
+            <div class="demo-body">
+              <aside class="demo-chat">
+                <div class="d-msg d-user" data-t="0">Break down: “We want one-tap reorder to increase repeat purchases by 40%.”</div>
+                <ul class="d-tools">
+                  <li data-t="1"><span class="spin"></span>Reading the request<b>Done</b></li>
+                  <li data-t="2"><span class="spin"></span>Reading Support tickets, Oct<b>3 quotes</b></li>
+                  <li data-t="3"><span class="spin"></span>Checking every number<b>1 unsourced</b></li>
+                </ul>
+                <div class="d-msg d-ai" data-t="4">I labelled 4 claims. One number has no source, so I've proposed a fix and a question for Growth.</div>
+                <div class="d-q" data-t="9">
+                  <span class="tag t-qu">Question · Growth</span>
+                  <p>Do we have a repeat-order baseline?</p>
+                  <span class="d-opt">Yes, in analytics</span><span class="d-opt on">No, needs instrumentation</span>
                 </div>
-                <div class="event">
-                  <div class="event-head"><span>Claims labelled</span><span class="ok">Done</span></div>
-                  <p class="mono-line">2 evidence · 2 assumptions · 3 questions</p>
-                </div>
-                <div class="event">
-                  <div class="event-head"><span>Gaps found</span><span class="warn">3 open</span></div>
-                  <p class="mono-line c-as">Baseline unknown · Test missing</p>
-                </div>
-                <div class="bubble">Design and Growth each have questions waiting. Engineering reviews scope next.</div>
-                <div class="composer" aria-hidden="true">Ask a question or propose a change…</div>
               </aside>
-              <article class="pane-doc">
-                <div class="doc-head">
-                  <h2>One-tap reorder</h2>
-                  <span class="ready"><b>7</b>/11 sections agreed</span>
+              <article class="demo-doc">
+                <div class="doc-head"><h2>One-tap reorder</h2><span class="ready" id="demo-ready"><b>0</b>/11 agreed</span></div>
+                <div class="callout co-ev" data-t="5"><span class="co-tag">Evidence · Support tickets, Oct</span>Customers rebuild past baskets item by item.</div>
+                <div class="callout co-as" data-t="6"><span class="co-tag">Assumption · needs owner</span>Easier reordering increases repeat purchases.</div>
+                <div class="callout co-qu" data-t="7"><span class="co-tag">Open question · Design</span>What if an item is out of stock?</div>
+                <div class="proposal" data-t="8">
+                  <span class="co-tag">Proposed measure</span>
+                  <p class="p-old">Raise repeat purchases <mark class="bad">by 40%</mark></p>
+                  <p class="p-flag">“40%” isn't in any source.</p>
+                  <p class="p-new">Raise repeat purchases from <span class="ph">[baseline]</span> to <span class="ph">[target]</span></p>
+                  <div class="p-actions"><span class="fake-btn">Accept</span><span class="fake-btn ghost">Edit first</span></div>
                 </div>
-                <h3>Problem</h3>
-                <p>Returning customers rebuild past baskets item by item before they can order again.</p>
-                <div class="callout co-ev"><span class="co-tag">Evidence</span>Support tickets mention rebuilding baskets by hand. <span class="co-src">Source: Support export, Oct</span></div>
-                <div class="callout co-as"><span class="co-tag">Assumption · Owner: Growth</span>Easier reordering increases repeat purchases. <span class="co-src">Test: holdout on eligible cohort</span></div>
-                <h3>Scope</h3>
-                <ul class="doc-list"><li>Rebuild a previous basket with current prices</li><li>Customer reviews the basket before checkout</li></ul>
-                <div class="callout co-dc"><span class="co-tag">Decision · PM, Eng</span>No automatic repeat orders in this release. <span class="co-src">Reason: avoids surprise charges</span></div>
-                <div class="callout co-qu"><span class="co-tag">Open question · Design</span>What happens when an item is unavailable or its price changed?</div>
               </article>
             </div>
           </div>
-          </div>
-          <div class="tab-panel" role="tabpanel" id="panel-gaps" aria-labelledby="tab-gaps" data-panel="gaps" hidden>
-            <div class="tab-copy"><h3>See what's missing</h3><p>Untested assumptions, unknown baselines and unanswered questions, counted from your records.</p></div>
-            <div class="tab-solo"><div class="card-mock">
-            <div class="cm-head"><span>Definition gaps</span><span class="badge-warn">3 open</span></div>
-            <ul class="gap-list">
-              <li><span class="dot d-as"></span><div><b>Assumption has no test</b><span>“Easier reordering increases repeat purchases”</span></div><span class="fix">Propose test</span></li>
-              <li><span class="dot d-qu"></span><div><b>Baseline unknown</b><span>Completed repeat orders · eligible cohort</span></div><span class="fix">Ask Growth</span></li>
-              <li><span class="dot d-qu"></span><div><b>Design hasn't answered</b><span>Unavailable items in a rebuilt basket</span></div><span class="fix">Remind</span></li>
-            </ul>
-            <div class="meter" aria-label="7 of 11 sections agreed"><span style="width:64%"></span></div>
-            <p class="meter-label">7 of 11 sections agreed · 2 proposed · 2 empty</p>
-          </div></div>
-          </div>
-          <div class="tab-panel" role="tabpanel" id="panel-team" aria-labelledby="tab-team" data-panel="team" hidden>
-            <div class="tab-copy"><h3>Every role, one definition</h3><p>Design, growth and engineering resolve their own questions. Decisions keep their reason.</p></div>
-            <div class="tab-solo"><div class="card-mock doc-mock">
-            <p class="dm-meta">One-tap reorder · v3 · reviewed by Design and Engineering</p>
-            <h3>Scope</h3>
-            <ul class="doc-list"><li>Rebuild a previous basket with current prices</li><li><mark>Customer reviews the basket before checkout</mark><span class="cursor" aria-hidden="true">Design</span></li></ul>
-            <div class="resolver">
-              <div class="res-head"><span>Resolving open questions</span><span class="mono-line">2 / 4</span></div>
-              <p class="res-q"><span class="av av-ds">DS</span> If two items are out of stock, what does the customer see?</p>
-              <ul class="res-opts">
-                <li>Hide them from the basket</li>
-                <li class="on">Show them, excluded from the total</li>
-                <li>Block reorder until all items are back</li>
-              </ul>
-              <p class="res-by"><span class="av av-en">EN</span> Availability is checked when the basket is rebuilt.</p>
+        </div>
+        <a class="handoff" href="#try">Your own spec has sentences like this. Try one <span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+
+    <!-- 2 · Interactive labeller -->
+    <section class="section" id="try" data-section="try">
+      <div class="container">
+        <p class="eyebrow">2 · Claims</p>
+        <h2 class="display">Paste a sentence. See what's actually known.</h2>
+        <div class="labeller">
+          <div class="lab-input">
+            <div class="chips" role="group" aria-label="Example sentences">
+              <button type="button" class="chip-btn" data-example="0">Reorder spec</button>
+              <button type="button" class="chip-btn" data-example="1">Saved carts</button>
+              <button type="button" class="chip-btn" data-example="2">Team notes</button>
             </div>
-            <div class="callout co-dc"><span class="co-tag">Decision recorded · PM, Eng</span>Show unavailable items, excluded from the total. <span class="co-src">Rests on: support export</span></div>
-          </div></div>
+            <label class="sr" for="lab-text">Sentence from your spec</label>
+            <textarea id="lab-text" rows="5" spellcheck="false"></textarea>
+            <p class="hint">Runs in your browser. Nothing is sent anywhere.</p>
           </div>
-          <div class="tab-panel" role="tabpanel" id="panel-design" aria-labelledby="tab-design" data-panel="design" hidden>
-            <div class="tab-copy"><h3>Check designs against what you agreed</h3><p>Findings point to the criterion or decision they affect.</p></div>
-            <div class="window">
-            <div class="win-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win-title">Scopeline · One-tap reorder</span>
-              <span class="avatars" aria-label="Reviewers"><span class="av av-pm">PM</span><span class="av av-ds">DS</span><span class="av av-gr">GR</span><span class="av av-en">EN</span></span></div>
-            <div class="win-body">
-              <aside class="pane-left">
-                <p class="pane-label">Design review</p>
-                <div class="event">
-                  <div class="event-head"><span>Checked against</span><span class="ok">Agreed definition</span></div>
-                  <p class="mono-line">4 acceptance criteria · 1 decision · 3 edge cases</p>
-                </div>
-                <div class="event">
-                  <div class="event-head"><span>Findings</span><span class="warn">2 proposed</span></div>
-                  <p class="mono-line c-as">Hierarchy · Edge case</p>
-                </div>
-                <div class="bubble">Each finding points to the criterion or decision it affects. Design accepts or dismisses it.</div>
-              </aside>
-              <article class="pane-doc">
-                <div class="doc-head"><h2>Reorder screen · v2 design</h2><span class="ready"><b>3</b>/4 criteria met</span></div>
+          <div class="lab-output" aria-live="polite">
+            <div class="lab-counts">
+              <span class="cnt c-ev"><b id="n-ev">0</b> evidence</span>
+              <span class="cnt c-as"><b id="n-as">0</b> assumptions</span>
+              <span class="cnt c-qu"><b id="n-qu">0</b> questions</span>
+              <span class="cnt c-dc"><b id="n-dc">0</b> decisions</span>
+              <span class="cnt c-flag"><b id="n-flag">0</b> unsourced numbers</span>
+            </div>
+            <ul class="lab-claims" id="lab-claims"></ul>
+          </div>
+        </div>
+        <a class="handoff" href="#gaps">Labels show what's missing. Now close the gaps <span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+
+    <!-- 3 · Interactive gaps -->
+    <section class="section tint" id="gaps" data-section="gaps">
+      <div class="container split">
+        <div class="split-copy">
+          <p class="eyebrow">3 · Gaps</p>
+          <h2 class="display">Close the gaps before the review meeting</h2>
+          <p class="sub">Click <b>Fix</b> on each one. Readiness is counted from the definition, never scored by AI.</p>
+          <div class="meter-big" aria-label="Sections agreed"><span id="gap-meter" style="width:64%"></span></div>
+          <p class="meter-text"><b id="gap-agreed">7</b> of 11 sections ready</p>
+        </div>
+        <div class="field field-amber">
+          <div class="card-mock gaps-card" id="gaps-card">
+            <div class="cm-head"><span>Top priorities</span><span class="badge" id="gap-badge">4 open</span></div>
+            <ul class="gap-list">
+              <li data-gap><span class="g-dot as"></span><div><b>Assumption has no owner or test</b><span>Easier reordering increases repeat purchases</span><em>Owner: Dana (Growth) · Test: holdout on eligible cohort</em></div><button type="button">Fix</button></li>
+              <li data-gap><span class="g-dot qu"></span><div><b>Baseline unknown</b><span>Completed repeat orders</span><em>Question sent to Growth · instrumentation ticket added</em></div><button type="button">Fix</button></li>
+              <li data-gap><span class="g-dot qu"></span><div><b>Design hasn't answered</b><span>What if an item is out of stock?</span><em>Show it, excluded from the total</em></div><button type="button">Fix</button></li>
+              <li data-gap><span class="g-dot dc"></span><div><b>Nothing marked out of scope</b><span>Say what v1 won't do</span><em>Out of scope: scheduled automatic reorders</em></div><button type="button">Fix</button></li>
+            </ul>
+            <div class="ready-state" id="ready-state" hidden>
+              <b>Ready to agree</b><span>Every section has content and nothing is missing.</span>
+              <button type="button" class="pill pill-dark pill-small" id="agree-all">Mark all agreed</button>
+            </div>
+            <button type="button" class="link-reset" id="gap-reset" hidden>Reset</button>
+          </div>
+        </div>
+      </div>
+      <div class="container"><a class="handoff" href="#team">Agreement takes every role. Here's what each one sees <span aria-hidden="true">↓</span></a></div>
+    </section>
+
+    <!-- 4 · Role switcher -->
+    <section class="section" id="team" data-section="team">
+      <div class="container split reverse">
+        <div class="split-copy">
+          <p class="eyebrow">4 · Team</p>
+          <h2 class="display">Every role reviews the same definition</h2>
+          <p class="sub">Pick a role. Each one gets its own questions, on the same records.</p>
+          <div class="roles" role="tablist" aria-label="Reviewer role">
+            <button type="button" role="tab" aria-selected="true" data-role="design"><span class="av av-ds">DS</span>Design</button>
+            <button type="button" role="tab" aria-selected="false" data-role="growth"><span class="av av-gr">GR</span>Growth</button>
+            <button type="button" role="tab" aria-selected="false" data-role="eng"><span class="av av-en">EN</span>Engineering</button>
+            <button type="button" role="tab" aria-selected="false" data-role="pm"><span class="av av-pm">PM</span>Product</button>
+          </div>
+        </div>
+        <div class="field field-blue">
+          <div class="card-mock role-doc" data-active="design">
+            <p class="dm-meta">One-tap reorder · v3</p>
+            <div class="rd-sec" data-for="pm"><h3>Problem</h3><p>Returning customers rebuild past baskets item by item.</p></div>
+            <div class="rd-sec" data-for="design eng"><h3>Scope</h3><p>Rebuild a past basket with current prices. Customer reviews it before checkout.</p></div>
+            <div class="rd-sec" data-for="growth"><h3>Measure</h3><p>Completed repeat orders · baseline <span class="ph">unknown</span></p></div>
+            <div class="rd-sec" data-for="eng"><h3>Acceptance criteria</h3><p>Prices and availability are re-checked when the basket is rebuilt.</p></div>
+            <div class="resolver" id="resolver">
+              <div class="res-head"><span id="res-title">Design · 2 questions</span><span class="mono-s" id="res-step">1 / 2</span></div>
+              <p class="res-q" id="res-q"></p>
+              <div class="res-opts" id="res-opts"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container"><a class="handoff" href="#next">Once it's agreed, the definition keeps working <span aria-hidden="true">↓</span></a></div>
+    </section>
+
+    <!-- 5 · Next stages -->
+    <section class="section tint" id="next" data-section="next">
+      <div class="container">
+        <p class="eyebrow">5 · What's next</p>
+        <h2 class="display">The agreed definition keeps working after you ship</h2>
+        <div class="stage-tabs" role="tablist" aria-label="Stages">
+          <button type="button" role="tab" aria-selected="true" data-stage="design">Review the design <span class="soon">Coming next</span></button>
+          <button type="button" role="tab" aria-selected="false" data-stage="learn">Learn after launch <span class="soon">Later</span></button>
+        </div>
+        <div class="field field-hero field-low">
+          <div class="window">
+            <div class="win-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win-title">Scopeline · One-tap reorder</span></div>
+            <div class="stage-panel" data-panel="design">
+              <div class="sp-grid">
                 <div class="shot" aria-hidden="true">
                   <div class="shot-row"><span class="shot-title"></span><span class="shot-pill"></span></div>
-                  <div class="shot-item"><i></i><span></span><b></b></div>
+                  <div class="shot-item"><i></i><span></span></div>
                   <div class="shot-item off"><i></i><span></span><b class="pin">1</b></div>
-                  <div class="shot-item"><i></i><span></span><b></b></div>
-                  <div class="shot-cta"><b class="pin">2</b></div>
+                  <div class="shot-item"><i></i><span></span></div>
+                  <div class="shot-cta"><b class="pin blue">2</b></div>
                 </div>
-                <div class="callout co-as"><span class="co-tag">Proposed finding 1 · Edge case</span>Unavailable item looks the same as available ones. <span class="co-src">Affects decision: show unavailable items, excluded from the total</span></div>
-                <div class="callout co-qu"><span class="co-tag">Proposed finding 2 · Hierarchy</span>“Reorder” competes with “Edit basket”. The agreed scope says customers review before checkout. <span class="co-src">Affects criterion 2</span></div>
-              </article>
+                <div class="sp-notes">
+                  <div class="callout co-as"><span class="co-tag">Finding 1 · Edge case</span>The unavailable item looks like the others. <span class="co-src">Affects decision: show it, excluded from the total</span></div>
+                  <div class="callout co-qu"><span class="co-tag">Finding 2 · Hierarchy</span>“Reorder” competes with “Edit basket”. <span class="co-src">Affects criterion: customer reviews before checkout</span></div>
+                </div>
+              </div>
             </div>
-          </div>
-          </div>
-          <div class="tab-panel" role="tabpanel" id="panel-learn" aria-labelledby="tab-learn" data-panel="learn" hidden>
-            <div class="tab-copy"><h3>Learn from what shipped</h3><p>Results are compared with the original assumption, not a target picked afterwards.</p></div>
-            <div class="window">
-            <div class="win-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win-title">Scopeline · One-tap reorder</span>
-              <span class="avatars" aria-label="Reviewers"><span class="av av-pm">PM</span><span class="av av-ds">DS</span><span class="av av-gr">GR</span><span class="av av-en">EN</span></span></div>
-            <div class="win-body">
-              <aside class="pane-left">
-                <p class="pane-label">After launch</p>
-                <div class="event">
-                  <div class="event-head"><span>Original assumption</span><span class="warn">Testing</span></div>
-                  <p class="mono-line">Easier reordering increases repeat purchases</p>
-                </div>
-                <div class="event">
-                  <div class="event-head"><span>Data source</span><span class="warn">Not connected</span></div>
-                  <p class="mono-line c-qu">Connect analytics to fill results</p>
-                </div>
-                <div class="bubble">Results are compared with what the team agreed, not with a new target picked after launch.</div>
-              </aside>
-              <article class="pane-doc">
-                <div class="doc-head"><h2>One-tap reorder · learning review</h2><span class="ready pending">Pending data</span></div>
+            <div class="stage-panel" data-panel="learn" hidden>
+              <div class="sp-grid">
                 <dl class="learn-grid">
-                  <div><dt>Success measure</dt><dd>Completed repeat orders</dd></div>
-                  <div><dt>Baseline</dt><dd><span class="unknown">Unknown</span></dd></div>
-                  <div><dt>Result</dt><dd><span class="unknown">Unknown</span></dd></div>
+                  <div><dt>Measure</dt><dd>Completed repeat orders</dd></div>
+                  <div><dt>Baseline</dt><dd><span class="ph">unknown</span></dd></div>
+                  <div><dt>Result</dt><dd><span class="ph">pending</span></dd></div>
                   <div><dt>Guardrails</dt><dd>Refunds · Cancellations</dd></div>
                 </dl>
-                <div class="callout co-as"><span class="co-tag">Assumption · Owner: Growth</span>Easier reordering increases repeat purchases. <span class="co-src">Test agreed before launch: holdout on eligible cohort</span></div>
-                <div class="callout co-qu"><span class="co-tag">Open item</span>No verdict until the holdout result is in. Scopeline won't infer impact from a before-and-after change.</div>
-              </article>
+                <div class="sp-notes">
+                  <div class="callout co-as"><span class="co-tag">Assumption · Growth</span>Easier reordering increases repeat purchases. <span class="co-src">Test agreed before launch: holdout on eligible cohort</span></div>
+                  <div class="callout co-qu"><span class="co-tag">Open item</span>No verdict until the holdout result is in.</div>
+                </div>
+              </div>
             </div>
-          </div>
-          </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section contrast">
-      <div class="container">
-        <h2 class="display">The same sentence, written two ways</h2>
-        <div class="compare">
-          <div class="cmp cmp-plain">
-            <p class="cmp-label">In a typical spec</p>
-            <p class="cmp-text">“Most customers reorder the same basket every month, so one-tap reorder will lift repeat purchases.”</p>
-            <p class="cmp-note">Reads like a fact. Nobody can tell what's known and what's hoped.</p>
-          </div>
-          <div class="cmp cmp-ours">
-            <p class="cmp-label">In Scopeline</p>
-            <div class="callout co-qu"><span class="co-tag">Open question · Growth</span>Do most customers reorder the same basket? <span class="co-src">No source linked yet</span></div>
-            <div class="callout co-as"><span class="co-tag">Assumption · Untested</span>One-tap reorder will lift repeat purchases. <span class="co-src">Needs an owner and a test</span></div>
-            <p class="cmp-note">Same idea. Now the team knows what to check before committing work.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-      </div>
-    </section>
-
-    <section class="section" id="how">
-      <div class="container">
-        <h2 class="display">Seven steps to an agreed definition</h2>
-        <div class="walk">
-          <div class="walk-visual">
-            <div class="wv" data-panel="1">
-              <p class="wv-label">Sources</p>
-              <div class="callout co-ev"><span class="co-tag">Original request</span>“We want one-tap reorder to increase repeat purchases.”</div>
-              <div class="chips"><span>Support export · Oct</span><span>5 interviews</span><span>Order history</span></div>
-            </div>
-            <div class="wv" data-panel="2" hidden>
-              <p class="wv-label">Clarify</p>
-              <dl class="kv"><div><dt>Target user</dt><dd>Customers with 2+ past orders</dd></div><div><dt>What they do today</dt><dd><span class="unknown">Unknown</span> <small>question sent to PM</small></dd></div><div><dt>Intended outcome</dt><dd>Reorder with less effort</dd></div></dl>
-            </div>
-            <div class="wv" data-panel="3" hidden>
-              <p class="wv-label">Claims</p>
-              <div class="callout co-ev"><span class="co-tag">Evidence</span>Tickets mention rebuilding baskets by hand.</div>
-              <div class="callout co-as"><span class="co-tag">Assumption · Owner: Growth</span>Easier reordering lifts repeat purchases.</div>
-              <div class="callout co-qu"><span class="co-tag">Open question · Design</span>What if an item is out of stock?</div>
-            </div>
-            <div class="wv" data-panel="4" hidden>
-              <p class="wv-label">Scope options</p>
-              <div class="opt opt-on"><b>A · Rebuild basket, customer reviews</b><span class="tag-on">Chosen</span><small>Reason: smallest option that tests the assumption</small></div>
-              <div class="opt"><b>B · Automatic repeat orders</b><small>Not now: risk of surprise charges</small></div>
-            </div>
-            <div class="wv" data-panel="5" hidden>
-              <p class="wv-label">Success measure</p>
-              <p class="metric">Completed repeat orders</p>
-              <dl class="mgrid"><div><dt>Baseline</dt><dd><span class="unknown">Unknown</span></dd></div><div><dt>Window</dt><dd>28 days</dd></div></dl>
-              <div class="chips"><span>Guardrail: refunds</span><span>Guardrail: cancellations</span></div>
-            </div>
-            <div class="wv" data-panel="6" hidden>
-              <p class="wv-label">Review</p>
-              <div class="thread"><p><span class="av av-ds">DS</span> Do we show unavailable items?</p><p><span class="av av-gr">GR</span> Which cohort is eligible?</p><p><span class="av av-en">EN</span> Prices are re-checked at rebuild.</p></div>
-              <div class="callout co-dc"><span class="co-tag">Decision · PM, Eng</span>Show unavailable items, excluded from the total.</div>
-            </div>
-            <div class="wv" data-panel="7" hidden>
-              <p class="wv-label">Share</p>
-              <div class="docs"><div><b>Summary</b><span>1 page · leadership</span></div><div><b>Brief</b><span>Full detail · delivery</span></div></div>
-              <p class="same">Both rendered from the same 11 agreed sections</p>
-            </div>
-          </div>
-          <ol class="walk-steps" role="tablist" aria-label="Session steps">
-            <li><button type="button" role="tab" aria-selected="true" data-step="1"><span class="n">1</span><span><b>Add context</b><em>Paste the idea and your research.</em></span></button></li>
-            <li><button type="button" role="tab" aria-selected="false" data-step="2"><span class="n">2</span><span><b>Clarify the problem</b><em>Who it's for and what should change.</em></span></button></li>
-            <li><button type="button" role="tab" aria-selected="false" data-step="3"><span class="n">3</span><span><b>Review evidence</b><em>Every claim gets a label.</em></span></button></li>
-            <li><button type="button" role="tab" aria-selected="false" data-step="4"><span class="n">4</span><span><b>Compare scope</b><em>Pick a boundary, keep the reason.</em></span></button></li>
-            <li><button type="button" role="tab" aria-selected="false" data-step="5"><span class="n">5</span><span><b>Define learning</b><em>Metrics and guardrails. Blanks stay blank.</em></span></button></li>
-            <li><button type="button" role="tab" aria-selected="false" data-step="6"><span class="n">6</span><span><b>Review together</b><em>Each role answers its own questions.</em></span></button></li>
-            <li><button type="button" role="tab" aria-selected="false" data-step="7"><span class="n">7</span><span><b>Share the result</b><em>One summary, one brief, same records.</em></span></button></li>
-          </ol>
-        </div>
-      </div>
-    </section>
-
+    <!-- 6 · Start -->
     <section class="section final" id="start">
-      <div class="container final-row">
-        <h2 class="display">Start with one real feature</h2>
+      <div class="container final-box">
+        <div class="journey" aria-hidden="true">
+          <span>Request</span><i></i><span>Claims</span><i></i><span>Gaps</span><i></i><span>Agreement</span>
+        </div>
+        <h2 class="display">Bring the next feature you're about to scope</h2>
         <a class="pill pill-dark pill-big" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao">Start free <span class="knob" aria-hidden="true">›</span></a>
+        <p class="fine">Free · Works in your browser · No sign-up</p>
       </div>
     </section>
   </main>
@@ -276,7 +243,7 @@
   <footer class="site-footer">
     <div class="container footer-row">
       <span>&copy; <span id="year"></span> Scopeline</span>
-      <span class="muted">Free for product teams · Example content contains no real research or results</span>
+      <span class="muted">Example content contains no real research or results.</span>
     </div>
   </footer>
 
