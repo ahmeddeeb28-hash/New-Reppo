@@ -14,3 +14,22 @@ nav.addEventListener('click', (e) => {
     toggle.setAttribute('aria-expanded', 'false');
   }
 });
+
+// Walkthrough: click a step to show its screen
+const tabs = document.querySelectorAll('.walk-steps [role="tab"]');
+const panels = document.querySelectorAll('.wv[data-panel]');
+function showStep(n) {
+  tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.step === n)));
+  panels.forEach((p) => { p.hidden = p.dataset.panel !== n; });
+}
+tabs.forEach((t) => {
+  t.addEventListener('click', () => showStep(t.dataset.step));
+  t.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    e.preventDefault();
+    const i = [...tabs].indexOf(t) + (e.key === 'ArrowDown' ? 1 : -1);
+    const next = tabs[(i + tabs.length) % tabs.length];
+    next.focus();
+    showStep(next.dataset.step);
+  });
+});
