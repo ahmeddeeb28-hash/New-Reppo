@@ -703,6 +703,50 @@ mark.bad { background: var(--bad-bg); color: var(--bad); border-radius: 4px; pad
 }
 
 @media (max-width: 1560px) { .app-bar .stages { display: none; } }
+
+/* ---------- Problem / Solution film ---------- */
+.psboard { background: #15130f; color: var(--ink); isolation: isolate; padding: clamp(28px, 4vw, 52px); }
+.bl { position: absolute; inset: -20%; z-index: -1; transition: opacity 1.2s ease; filter: blur(50px); animation: breathe 5s ease-in-out infinite; pointer-events: none; }
+.bl-red { background: radial-gradient(38% 45% at 50% 50%, rgba(255,92,72,.55), transparent 70%), radial-gradient(30% 35% at 20% 30%, rgba(255,160,80,.25), transparent 70%); }
+.bl-green { background: radial-gradient(38% 45% at 50% 40%, rgba(69,211,155,.55), transparent 70%), radial-gradient(30% 35% at 80% 70%, rgba(92,196,255,.3), transparent 70%); opacity: 0; }
+.psboard.mode-solution .bl-red { opacity: 0; } .psboard.mode-solution .bl-green { opacity: 1; }
+@keyframes breathe { 50% { transform: scale(1.08); filter: blur(60px); } }
+.pscam { position: relative; transform-origin: 0 0; transition: transform 1.1s cubic-bezier(.65,0,.25,1); }
+.ps-replay { position: absolute; right: 16px; top: 14px; z-index: 3; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.08); color: #fff; border-radius: 999px; padding: 5px 12px; font-size: 0.8rem; cursor: pointer; }
+.ps-replay:hover { background: rgba(255,255,255,.16); }
+.scatter { position: relative; padding-block: 40px 96px; }
+.scard { transition: transform .9s cubic-bezier(.2,.9,.3,1.1), opacity .7s ease, filter .6s ease, box-shadow .5s ease; }
+.scard.pre { opacity: 0; }
+.scard.pre:nth-of-type(1) { transform: translate(-120px, -90px) rotate(-14deg) scale(.85); }
+.scard.pre:nth-of-type(2) { transform: translate(60px, -140px) rotate(12deg) scale(.85); }
+.scard.pre:nth-of-type(3) { transform: translate(-40px, 140px) rotate(-10deg) scale(.85); }
+.scard.pre:nth-of-type(4) { transform: translate(140px, 100px) rotate(16deg) scale(.85); }
+.psboard.focusing .scard:not(.hot), .psboard.focusing .bcard:not(.hot) { filter: blur(2.5px); opacity: .55; }
+.scard.hot { box-shadow: 0 0 0 2px #ff6a55, 0 0 40px 6px rgba(255,92,72,.55); z-index: 2; }
+.scard.hot .conflict { animation: badgePulse .9s ease infinite; }
+@keyframes badgePulse { 50% { box-shadow: 0 0 0 6px rgba(194,56,44,.25); transform: scale(1.08); } }
+.pslines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
+.pslines path { fill: none; stroke: #ff6a55; stroke-width: 1.6; stroke-dasharray: 6 6; opacity: 0; transition: opacity .6s; animation: flow 1.2s linear infinite; }
+.pslines.show path { opacity: .85; }
+@keyframes flow { to { stroke-dashoffset: -24; } }
+.scatter .scard { position: relative; z-index: 1; }
+.qnode { position: absolute; left: 50%; top: calc(100% - 36px); transform: translate(-50%, -50%) scale(.6); z-index: 1; background: #ff6a55; color: #fff; font-weight: 700; font-size: 0.82rem; border-radius: 999px; padding: 6px 14px; opacity: 0; transition: all .5s cubic-bezier(.3,1.6,.5,1); box-shadow: 0 0 30px rgba(255,92,72,.7); white-space: nowrap; }
+.qnode.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.verdict { transition: transform .5s cubic-bezier(.3,1.6,.5,1), opacity .5s; }
+.verdict.pre { opacity: 0; transform: translateY(14px) scale(.9); }
+.verdict.shake { animation: shake .5s ease; }
+@keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+.root-pill { transition: transform .6s cubic-bezier(.3,1.6,.5,1), opacity .5s, box-shadow .6s; }
+.root-pill.pre { opacity: 0; transform: translateY(-40px) scale(.7); }
+.root-pill.burst { box-shadow: 0 0 0 10px rgba(69,211,155,.25), 0 0 60px 10px rgba(69,211,155,.6); }
+.branches::before, .branches::after { transition: transform .9s ease; }
+.branches.pre::before { transform: scaleX(0); } .branches.pre::after { transform: scaleY(0); transform-origin: top; }
+.branches::before, .branches::after, .bcard::before { border-color: rgba(255,255,255,.28) !important; }
+.bcard { transition: all .5s ease, filter .6s ease; }
+.bcard.hot { box-shadow: 0 0 0 2px #45d39b, 0 0 40px 6px rgba(69,211,155,.5); }
+.psboard .verdict { background: rgba(255,255,255,.95); }
+@media (prefers-reduced-motion: reduce) { .bl { animation: none; } .pscam { transition: none; } .pslines path { animation: none; } }
+
 @media (max-width: 1100px) { .moments { grid-template-columns: 1fr 1fr; } .hand { display: none; } }
 @media (max-width: 900px) {
   .ws { grid-template-columns: minmax(0, 1fr); }
@@ -1279,26 +1323,32 @@ function homeView() {
       <div class="seg" role="tablist" aria-label="Problem or solution"><button role="tab" aria-selected="true" data-ps="problem">Problem</button><button role="tab" aria-selected="false" data-ps="solution">Solution</button></div>
       <h2 class="serif" id="ps-title">One feature, four interpretations</h2>
       <p id="ps-sub">The request lives in a doc, the doubts in Slack, the edge cases in Figma comments and the baseline nowhere. Everyone leaves the meeting with a different scope.</p>
-      <div class="psboard">
+      <div class="psboard mode-problem" id="psboard">
+        <div class="bl bl-red" aria-hidden="true"></div><div class="bl bl-green" aria-hidden="true"></div>
+        <button class="ps-replay" id="ps-replay" type="button">↺ Replay</button>
+        <div class="pscam" id="pscam">
         <div class="pspanel" data-panel="problem">
-          <div class="scatter">
+          <div class="scatter" id="scatter">
+            <svg class="pslines" id="pslines" aria-hidden="true"></svg>
+            <span class="qnode" id="qnode">4 versions of the scope?</span>
             <div class="scard"><span class="src">PRD · Google Docs</span>Lift repeat purchases by 40% with one-tap reorder.<span class="conflict">No source</span></div>
             <div class="scard"><span class="src">Slack · #checkout</span>Wait, does v1 include scheduled reorders?<span class="conflict">Scope unclear</span></div>
             <div class="scard"><span class="src">Figma · comment</span>What happens if an item is out of stock?<span class="conflict">Unanswered</span></div>
             <div class="scard"><span class="src">Analytics</span>Repeat-order baseline: not tracked.<span class="conflict">Missing</span></div>
           </div>
-          <span class="verdict">✕ Four tools · four versions of the scope</span>
+          <span class="verdict" id="verdict">✕ Four tools · four versions of the scope</span>
         </div>
         <div class="pspanel" data-panel="solution" hidden>
           <div class="tree">
-            <span class="root-pill">✓ One agreed definition</span>
-            <div class="branches">
+            <span class="root-pill" id="rootpill">✓ One agreed definition</span>
+            <div class="branches" id="branches">
               <div class="bcard"><span class="ck">✓</span><span><small>Agreed</small>Problem and scope signed off</span><span class="nametag" style="background:#15130f">${avatar("pm", 20)}Dana</span></div>
               <div class="bcard"><span class="ck">✓</span><span><small>Answered</small>Out-of-stock items are shown, excluded</span><span class="nametag" style="background:#d6457a">${avatar("design", 20)}Maya</span></div>
               <div class="bcard"><span class="ck">✓</span><span><small>Question sent</small>Baseline needs instrumentation</span><span class="nametag" style="background:#11805a">${avatar("growth", 20)}Sam</span></div>
               <div class="bcard"><span class="ck">✓</span><span><small>Criteria added</small>Prices re-checked on rebuild</span><span class="nametag" style="background:#3a4fc6">${avatar("engineering", 20)}Lee</span></div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>
@@ -1735,17 +1785,64 @@ function initLanding() {
   demoObserver.observe(pl);
   document.getElementById("v-play").addEventListener("click", () => { vPlaying = !vPlaying; setPlayIcon(); if (vPlaying) vScenePlay(Math.max(0, vScene)); else { demoTimers.forEach(clearTimeout); const i = document.querySelector(`.seg2[data-scene="${vScene}"] i`); if (i) { const w = getComputedStyle(i).width; i.style.transition = "none"; i.style.width = w; } } });
   document.querySelectorAll(".seg2").forEach((sg) => sg.addEventListener("click", () => { vPlaying = true; setPlayIcon(); vScenePlay(Number(sg.dataset.scene)); }));
-  // Problem / Solution
+  // Problem / Solution: a short film with camera moves and backlighting
   const psTabs = document.querySelectorAll("[data-ps]");
   const PS = { problem: ["One feature, four interpretations", "The request lives in a doc, the doubts in Slack, the edge cases in Figma comments and the baseline nowhere. Everyone leaves the meeting with a different scope."],
     solution: ["One definition, every role signed off", "The same conversation holds the evidence, the open questions and each role's answers. What's agreed is recorded with who agreed and why."] };
-  psTabs.forEach((t) => t.addEventListener("click", () => {
-    psTabs.forEach((x) => x.setAttribute("aria-selected", String(x === t)));
-    document.querySelectorAll(".pspanel").forEach((p) => { p.hidden = p.dataset.panel !== t.dataset.ps; });
-    document.getElementById("ps-title").textContent = PS[t.dataset.ps][0]; document.getElementById("ps-sub").textContent = PS[t.dataset.ps][1];
-    if (t.dataset.ps === "solution") document.querySelectorAll(".bcard").forEach((c, i) => { c.classList.remove("in"); setTimeout(() => c.classList.add("in"), reduceMo() ? 0 : 200 + i * 220); });
-  }));
+  const board = document.getElementById("psboard"), cam = document.getElementById("pscam");
+  let pt = [];
+  const pAt = (ms, fn) => pt.push(setTimeout(() => { if (board.isConnected) fn(); }, ms));
+  const showPanel = (mode) => {
+    psTabs.forEach((x) => x.setAttribute("aria-selected", String(x.dataset.ps === mode)));
+    document.querySelectorAll(".pspanel").forEach((p) => { p.hidden = p.dataset.panel !== mode; });
+    document.getElementById("ps-title").textContent = PS[mode][0]; document.getElementById("ps-sub").textContent = PS[mode][1];
+    board.classList.toggle("mode-problem", mode === "problem"); board.classList.toggle("mode-solution", mode === "solution");
+  };
+  let camScale = 1;
+  const psCam = (el, scale) => {
+    board.querySelectorAll(".hot").forEach((h) => h.classList.remove("hot"));
+    if (!el || reduceMo() || board.clientWidth < 700) { cam.style.transform = "none"; camScale = 1; board.classList.remove("focusing"); return; }
+    const c = cam.getBoundingClientRect(), r = el.getBoundingClientRect();
+    const cx = (r.left + r.width / 2 - c.left) / camScale, cy = (r.top + r.height / 2 - c.top) / camScale;
+    const W = cam.offsetWidth, H = cam.offsetHeight;
+    cam.style.transform = `translate(${W / 2 - cx * scale}px, ${H / 2 - cy * scale}px) scale(${scale})`; camScale = scale;
+    el.classList.add("hot"); board.classList.add("focusing");
+  };
+  const drawLines = () => {
+    const sc = document.getElementById("scatter"), svg = document.getElementById("pslines"), q = document.getElementById("qnode");
+    const b = sc.getBoundingClientRect(), qr = q.getBoundingClientRect(), qx = (qr.left + qr.width / 2 - b.left) / camScale, qy = (qr.top + qr.height / 2 - b.top) / camScale;
+    svg.innerHTML = [...sc.querySelectorAll(".scard")].map((c) => { const r = c.getBoundingClientRect(); const x = (r.left + r.width / 2 - b.left) / camScale, y = (r.top + r.height / 2 - b.top) / camScale; return `<path d="M${x} ${y} Q ${(x + qx) / 2} ${Math.min(y, qy) - 30} ${qx} ${qy}"/>`; }).join("");
+  };
+  const playProblem = (auto) => {
+    pt.forEach(clearTimeout); pt = []; showPanel("problem"); psCam(null);
+    const cards = [...document.querySelectorAll(".scard")], v = document.getElementById("verdict"), q = document.getElementById("qnode"), svg = document.getElementById("pslines");
+    if (reduceMo()) { cards.forEach((c) => c.classList.remove("pre")); q.classList.add("show"); v.classList.remove("pre"); drawLines(); svg.classList.add("show"); return; }
+    cards.forEach((c) => c.classList.add("pre")); v.classList.add("pre"); q.classList.remove("show"); svg.classList.remove("show");
+    cards.forEach((c, i) => pAt(250 + i * 180, () => c.classList.remove("pre")));
+    pAt(1500, () => { drawLines(); svg.classList.add("show"); q.classList.add("show"); });
+    cards.forEach((c, i) => pAt(2400 + i * 1150, () => psCam(c, 1.35)));
+    const end = 2400 + cards.length * 1150;
+    pAt(end, () => psCam(null));
+    pAt(end + 900, () => { v.classList.remove("pre"); v.classList.add("shake"); setTimeout(() => v.classList.remove("shake"), 600); });
+    if (auto) pAt(end + 2600, () => playSolution(true));
+  };
+  const playSolution = () => {
+    pt.forEach(clearTimeout); pt = []; showPanel("solution"); psCam(null);
+    const pill = document.getElementById("rootpill"), br = document.getElementById("branches"), cards = [...document.querySelectorAll(".bcard")];
+    if (reduceMo()) { pill.classList.remove("pre"); br.classList.remove("pre"); cards.forEach((c) => c.classList.add("in")); return; }
+    pill.classList.add("pre"); br.classList.add("pre"); cards.forEach((c) => c.classList.remove("in"));
+    pAt(300, () => { pill.classList.remove("pre"); pill.classList.add("burst"); });
+    pAt(1100, () => pill.classList.remove("burst"));
+    pAt(900, () => br.classList.remove("pre"));
+    cards.forEach((c, i) => pAt(1500 + i * 260, () => c.classList.add("in")));
+    cards.forEach((c, i) => pAt(3000 + i * 1000, () => psCam(c, 1.3)));
+    pAt(3000 + cards.length * 1000, () => psCam(null));
+  };
+  psTabs.forEach((t) => t.addEventListener("click", () => (t.dataset.ps === "problem" ? playProblem(false) : playSolution())));
+  document.getElementById("ps-replay").addEventListener("click", () => playProblem(true));
   document.querySelectorAll(".bcard").forEach((c) => c.classList.add("in"));
+  let psPlayed = false;
+  new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting && !psPlayed) { psPlayed = true; playProblem(true); o.disconnect(); } }), { threshold: 0.4 }).observe(board);
 
   // How it works: story that plays when scrolled into view
   const hw = document.getElementById("hwin"), hs = document.getElementById("hsteps");
