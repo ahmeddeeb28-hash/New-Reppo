@@ -3,49 +3,249 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Site</title>
-  <meta name="description" content="A new static website.">
+  <title>Scopeline · Agree what to build before anyone builds it</title>
+  <meta name="description" content="A guided feature-definition workspace where product, design, growth and engineering agree one feature's scope, with evidence, assumptions and decisions kept explicit.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
+
   <header class="site-header">
-    <a class="logo" href="#">New Site</a>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#work">Work</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <div class="container header-row">
+      <a class="logo" href="#top" aria-label="Scopeline home">
+        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 8h10M6 12h6M6 16h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Scopeline
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <a href="#how">How it works</a>
+        <a href="#roles">For your team</a>
+        <a href="#fit">Where it fits</a>
+        <a class="btn btn-small" href="#pilot">Request a pilot</a>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <h1>Hello, world.</h1>
-      <p>A clean starting point. Replace this with your headline.</p>
-      <a class="button" href="#contact">Get in touch</a>
-    </section>
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Feature-definition workspace</p>
+          <h1>Agree what to build before anyone builds it.</h1>
+          <p class="lede">Scopeline guides product, design, growth and engineering through one feature's problem, scope and success measures. Evidence, assumptions and decisions stay separate, so everyone leaves with the same idea of what "done" means.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#pilot">Run a pilot on a real feature</a>
+            <a class="btn btn-ghost" href="#how">See how a session works</a>
+          </div>
+          <p class="fineprint">Pilot open to product teams of one to three squads.</p>
+        </div>
 
-    <section id="about">
-      <h2>About</h2>
-      <p>Tell visitors who you are and what this site is for.</p>
-    </section>
-
-    <section id="work">
-      <h2>Work</h2>
-      <div class="grid">
-        <article class="card"><h3>Project one</h3><p>Short description.</p></article>
-        <article class="card"><h3>Project two</h3><p>Short description.</p></article>
-        <article class="card"><h3>Project three</h3><p>Short description.</p></article>
+        <!-- Product mock: the evidence / assumption / question / decision split -->
+        <div class="mock" aria-label="Example feature definition">
+          <div class="mock-bar">
+            <span class="mock-title">One-tap reorder</span>
+            <span class="mock-step">Step 3 of 7 · Review evidence</span>
+          </div>
+          <div class="mock-input">
+            <span class="mono-label">Request</span>
+            <p>"We want one-tap reorder to increase repeat purchases."</p>
+          </div>
+          <div class="filters" role="group" aria-label="Filter claims by type">
+            <button type="button" class="filter is-on" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="filter" data-filter="evidence" aria-pressed="false">Evidence</button>
+            <button type="button" class="filter" data-filter="assumption" aria-pressed="false">Assumptions</button>
+            <button type="button" class="filter" data-filter="question" aria-pressed="false">Questions</button>
+            <button type="button" class="filter" data-filter="decision" aria-pressed="false">Decisions</button>
+          </div>
+          <ul class="claims">
+            <li class="claim" data-type="evidence">
+              <span class="tag t-evidence">Evidence</span>
+              <p>Support tickets mention rebuilding past baskets item by item.</p>
+              <span class="claim-meta">Source: Support export, Oct · linked</span>
+            </li>
+            <li class="claim" data-type="assumption">
+              <span class="tag t-assumption">Assumption</span>
+              <p>Easier reordering increases repeat purchases.</p>
+              <span class="claim-meta">Owner: Growth · Test: holdout on eligible cohort</span>
+            </li>
+            <li class="claim" data-type="question">
+              <span class="tag t-question">Open question</span>
+              <p>What happens when an item is unavailable or its price changed?</p>
+              <span class="claim-meta">Assigned to Design</span>
+            </li>
+            <li class="claim" data-type="decision">
+              <span class="tag t-decision">Decision</span>
+              <p>Customers review the rebuilt basket before checkout.</p>
+              <span class="claim-meta">Reason: avoids surprise charges · PM, Eng</span>
+            </li>
+          </ul>
+          <div class="mock-measure">
+            <div><span class="mono-label">Success measure</span><p>Completed repeat orders, eligible cohort</p></div>
+            <div><span class="mono-label">Baseline</span><p class="unknown">Unknown</p></div>
+          </div>
+          <p class="mock-caption">Example content for illustration. No real data.</p>
+        </div>
       </div>
     </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <p><a href="mailto:hello@example.com">hello@example.com</a></p>
+    <!-- Problem -->
+    <section class="section problem">
+      <div class="container">
+        <p class="eyebrow">The problem</p>
+        <h2>One feature, three interpretations</h2>
+        <p class="section-lede">A request moves into design and delivery. The reasoning stays scattered across notes, boards and calls, and each role fills the gaps differently.</p>
+        <div class="interpretations">
+          <figure class="quote-card">
+            <span class="role">PM</span>
+            <blockquote>"We're shipping reorder for the top customers."</blockquote>
+          </figure>
+          <figure class="quote-card">
+            <span class="role">Design</span>
+            <blockquote>"We're redesigning order history around reorder."</blockquote>
+          </figure>
+          <figure class="quote-card">
+            <span class="role">Growth</span>
+            <blockquote>"We're measuring repeat rate for every customer."</blockquote>
+          </figure>
+        </div>
+        <p class="problem-note">The mismatch usually surfaces after engineering review or after launch, when it costs the most to fix.</p>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section" id="how">
+      <div class="container">
+        <p class="eyebrow">How a session works</p>
+        <h2>Seven steps from request to agreed definition</h2>
+        <p class="section-lede">Steps can be visited in any order. Each section shows whether it is empty, proposed or agreed.</p>
+        <ol class="steps">
+          <li><span class="step-n">1</span><h3>Add context</h3><p>Paste the idea and attach notes or research. Every source stays linked.</p></li>
+          <li><span class="step-n">2</span><h3>Clarify the problem</h3><p>Confirm the target user, current behaviour and intended outcome. Unanswered items stay marked unknown.</p></li>
+          <li class="is-key"><span class="step-n">3</span><h3>Review evidence</h3><p>Every claim is labelled as evidence, assumption, open question or decision.</p></li>
+          <li class="is-key"><span class="step-n">4</span><h3>Compare scope</h3><p>Weigh release options side by side. The chosen boundary is saved with its reason.</p></li>
+          <li><span class="step-n">5</span><h3>Define learning</h3><p>Agree the success measure, guardrails and evaluation approach. Missing baselines stay blank.</p></li>
+          <li class="is-key"><span class="step-n">6</span><h3>Review together</h3><p>Design, growth and engineering each get their own questions on the same definition.</p></li>
+          <li><span class="step-n">7</span><h3>Share the result</h3><p>Approve the definition and export a short summary and a full brief from the same records.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Principles -->
+    <section class="section principles">
+      <div class="container">
+        <p class="eyebrow">How the AI behaves</p>
+        <h2>It asks and proposes. Your team decides.</h2>
+        <div class="principle-grid">
+          <div class="principle"><h3>Proposals, not edits</h3><p>Everything the AI suggests stays marked as proposed until someone accepts, edits or rejects it.</p></div>
+          <div class="principle"><h3>Unknown stays unknown</h3><p>It never fills in a baseline, target or audience size you didn't give it. It leaves the field blank and raises a question.</p></div>
+          <div class="principle"><h3>Every claim is labelled</h3><p>A statement with no linked source counts as an assumption, never as a fact.</p></div>
+          <div class="principle"><h3>Decisions aren't overwritten</h3><p>When a source changes, Scopeline flags the decisions that may need another look instead of rewriting them.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Roles -->
+    <section class="section" id="roles">
+      <div class="container">
+        <p class="eyebrow">For your team</p>
+        <h2>One definition, four ways to review it</h2>
+        <div class="roles">
+          <article class="role-card">
+            <span class="role">Product manager</span>
+            <h3>Reach a clear release scope</h3>
+            <p>See unresolved decisions before the team commits work.</p>
+            <p class="reviews">Reviews for value and scope</p>
+          </article>
+          <article class="role-card">
+            <span class="role">Product designer</span>
+            <h3>Start with the full context</h3>
+            <p>Get the user problem, journey, edge cases and constraints without rebuilding them from meeting notes.</p>
+            <p class="reviews">Reviews for journeys and edge cases</p>
+          </article>
+          <article class="role-card">
+            <span class="role">Growth</span>
+            <h3>Set the measurement early</h3>
+            <p>Define the behavioural hypothesis, metrics and experiment questions before design starts.</p>
+            <p class="reviews">Reviews for measurement and behavioural logic</p>
+          </article>
+          <article class="role-card">
+            <span class="role">Engineering lead</span>
+            <h3>Challenge it before handoff</h3>
+            <p>Raise feasibility, dependencies and acceptance criteria while the scope can still change.</p>
+            <p class="reviews">Reviews for feasibility and dependencies</p>
+          </article>
+        </div>
+        <p class="role-note">Heads of Product get read-only access to see how decisions were made across features.</p>
+      </div>
+    </section>
+
+    <!-- Fit -->
+    <section class="section fit" id="fit">
+      <div class="container">
+        <p class="eyebrow">Where it fits</p>
+        <h2>Built for agreement, not for faster documents</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th scope="col"></th><th scope="col">AI PRD writers</th><th scope="col">Product management suites</th><th scope="col">Chat assistant + docs</th><th scope="col">Scopeline</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Main output</th><td>A drafted document</td><td>Specs inside a wider system</td><td>Text you copy elsewhere</td><td>An agreed, reviewable definition</td></tr>
+              <tr><th scope="row">Assumptions</th><td>Flagged in review</td><td>Varies by product</td><td>Mixed into the prose</td><td>Tracked with an owner, a test and a status</td></tr>
+              <tr><th scope="row">Cross-role review</th><td>Comments on a draft</td><td>Comments on entities</td><td>Happens in meetings</td><td>Role-specific questions and recorded decisions</td></tr>
+              <tr><th scope="row">Best when</th><td>You need a first draft fast</td><td>Your roadmap already lives there</td><td>The feature is small</td><td>Several roles must agree before work starts</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Output -->
+    <section class="section output">
+      <div class="container output-grid">
+        <div>
+          <p class="eyebrow">What you take away</p>
+          <h2>A summary and a brief that always match</h2>
+          <p class="section-lede">Both are produced from the same agreed records, so the one-page summary for leadership never drifts from the detailed brief engineering builds from.</p>
+          <ul class="checklist">
+            <li>Problem, audience and intended outcome</li>
+            <li>In-scope and out-of-scope items, with the alternatives you rejected</li>
+            <li>Assumption register with owners and tests</li>
+            <li>Success measures, guardrails and missing instrumentation</li>
+            <li>Acceptance criteria and a decision log</li>
+          </ul>
+        </div>
+        <div class="next-card">
+          <p class="eyebrow">Coming next</p>
+          <ul>
+            <li><strong>Assumption tests.</strong> Track each test and its result.</li>
+            <li><strong>Learning review.</strong> Compare post-launch results with the original hypothesis.</li>
+            <li><strong>Connected tools.</strong> Export to Linear, Jira and Notion.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pilot CTA -->
+    <section class="section pilot" id="pilot">
+      <div class="container pilot-inner">
+        <h2>Bring one real feature to a pilot session</h2>
+        <p>We're working with a small number of product teams. Bring a feature you're about to scope, and we'll run the session with your PM, designer, growth lead and engineer.</p>
+        <a class="btn btn-invert" href="mailto:hello@example.com?subject=Scopeline%20pilot">Request a pilot</a>
+        <p class="pilot-email">Or email <span class="select">hello@example.com</span></p>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p>&copy; <span id="year"></span> New Site</p>
+    <div class="container footer-row">
+      <span>&copy; <span id="year"></span> Scopeline</span>
+      <span class="muted">Working name. Pilot in progress.</span>
+    </div>
   </footer>
 
   <script src="js/main.js"></script>
