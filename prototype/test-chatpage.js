@@ -29,7 +29,7 @@ const k1=await p.locator('.m-ai').last().locator('.pcard .co-tag').allTextConten
 ok(k1.some(k=>k.startsWith('Outcome'))&&k1.some(k=>k.startsWith('Assumption')),'outcome also registers the impact as an assumption');
 await p.click('[data-acceptall]');
 ok(await p.locator('.stages span.done').count()>=2,'progress stages update');
-await p.click('[data-agree="problem"]');ok(await p.locator('.agree.on').count()===1,'sections can be agreed');
+await p.click('[data-doctab="problem"]');await p.click('[data-agree="problem"]');ok(await p.locator('.agree.on').count()===1,'sections can be agreed');
 await p.screenshot({path:S+'/c-chat.png'});
 await p.click('[data-act="home"]');ok(await p.locator('[data-open]').count()>=1,'home offers the last chat');
 await p.click('[data-open] >> nth=0');ok(await p.locator('.m-user').count()>=2,'continue reopens the chat');

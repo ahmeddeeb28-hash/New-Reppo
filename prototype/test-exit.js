@@ -1,0 +1,28 @@
+const {chromium}=require('playwright');const F='file://'+process.argv[2];const S=process.argv[3];
+const ok=(c,m)=>console.log((c?'PASS ':'FAIL ')+m);
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1440,height:900}});const e=[];p.on('pageerror',x=>e.push(x.message));
+await p.goto(F);await p.evaluate(()=>localStorage.clear());await p.reload();await p.click('.lp-hero [data-act="new"]');
+await p.click('form[data-form="start"] [data-fill="reorder"]');await p.click('form[data-form="start"] .send');await p.waitForSelector('.m-ai .pcard');
+ok(await p.locator('.flagbtn').count()===2,'flagged number offers two options');
+await p.locator('.flagbtn',{hasText:'Use a placeholder'}).click();
+ok((await p.locator('.m-ai').first().textContent()).includes('[target]'),'placeholder option rewrites the number');
+const q1=await p.locator('.qcard b').last().textContent();
+await p.locator('[data-skip]').click();await p.waitForTimeout(200);
+const q2=await p.locator('.qcard b').last().textContent();
+ok(q1!==q2,'skip moves to a different question');
+await p.locator('[data-act="guideoff"]').last().click();await p.waitForTimeout(200);
+ok((await p.locator('.m-ai').last().textContent()).includes('no more questions'),'stop asking is confirmed');
+await p.fill('#chat-in','Customers reorder weekly groceries.');await p.press('#chat-in','Enter');await p.waitForTimeout(900);
+ok(await p.locator('.m-ai').last().locator('.qcard').count()===0,'no new questions after stopping');ok((await p.locator('.m-ai').last().locator('.co-tag').first().textContent()).startsWith('Assumption'),'messages are labelled on their own merits after stopping');
+ok((await p.textContent('[data-act="guidetoggle"]')).includes('Off'),'top bar shows Questions: Off');
+await p.click('[data-act="finish"]');await p.waitForTimeout(200);
+ok(await p.locator('.wrapcard').count()===1,'Finish for now shows a wrap-up');
+ok((await p.textContent('.wrapcard')).includes('Nothing else is required'),'wrap-up says nothing else is required');
+await p.screenshot({path:S+'/exit.png'});
+await p.locator('.wrapcard [data-act="home"]').click();ok(await p.locator('.lp-hero').count()===1,'Back to home exits');
+// keep my number
+await p.click('.lp-hero [data-act="new"]');await p.click('form[data-form="start"] [data-fill="reorder"]');await p.click('form[data-form="start"] .send');await p.waitForSelector('.flagbtn');
+await p.locator('.flagbtn',{hasText:'Keep my number'}).click();await p.click('[data-doctab="claims"]');
+ok((await p.textContent('.docpane')).includes('number kept by you, unverified'),'kept number is accepted and marked unverified');
+ok(await p.locator('.docpane mark.bad').count()===0,'kept number is no longer flagged');
+ok(e.length===0,'no errors '+e.join('; '));await b.close();})();
