@@ -74,6 +74,11 @@
       <!-- Product mock on a colour field -->
       <div class="container">
         <div class="stage stage-hero">
+          <div class="stage-tabs" role="tablist" aria-label="Product stages">
+            <button type="button" role="tab" aria-selected="true" data-stage="define">Define &amp; agree</button>
+            <button type="button" role="tab" aria-selected="false" data-stage="design">Review the design <span class="soon">Next</span></button>
+            <button type="button" role="tab" aria-selected="false" data-stage="learn">Learn after launch <span class="soon">Later</span></button>
+          </div>
           <div class="window" aria-label="Example: a feature definition being reviewed">
             <div class="win-bar">
               <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -82,7 +87,7 @@
                 <span class="av av-pm" title="PM">PM</span><span class="av av-ds" title="Design">DS</span><span class="av av-gr" title="Growth">GR</span><span class="av av-en" title="Engineering">EN</span>
               </span>
             </div>
-            <div class="win-body">
+            <div class="win-body" data-stage-panel="define">
               <aside class="pane-left">
                 <p class="pane-label">Review session</p>
                 <div class="event">
@@ -116,7 +121,88 @@
                 <div class="callout co-qu"><span class="co-tag">Open question · Design</span>What happens when an item is unavailable or its price changed?</div>
               </article>
             </div>
+
+            <div class="win-body" data-stage-panel="design" hidden>
+              <aside class="pane-left">
+                <p class="pane-label">Design review</p>
+                <div class="event">
+                  <div class="event-head"><span>Checked against</span><span class="ok">Agreed definition</span></div>
+                  <p class="mono-line">4 acceptance criteria · 1 decision · 3 edge cases</p>
+                </div>
+                <div class="event">
+                  <div class="event-head"><span>Findings</span><span class="warn">2 proposed</span></div>
+                  <p class="mono-line c-as">Hierarchy · Edge case</p>
+                </div>
+                <div class="bubble">Each finding points to the criterion or decision it affects. Design accepts or dismisses it.</div>
+              </aside>
+              <article class="pane-doc">
+                <div class="doc-head"><h2>Reorder screen · v2 design</h2><span class="ready"><b>3</b>/4 criteria met</span></div>
+                <div class="shot" aria-hidden="true">
+                  <div class="shot-row"><span class="shot-title"></span><span class="shot-pill"></span></div>
+                  <div class="shot-item"><i></i><span></span><b></b></div>
+                  <div class="shot-item off"><i></i><span></span><b class="pin">1</b></div>
+                  <div class="shot-item"><i></i><span></span><b></b></div>
+                  <div class="shot-cta"><b class="pin">2</b></div>
+                </div>
+                <div class="callout co-as"><span class="co-tag">Proposed finding 1 · Edge case</span>Unavailable item looks the same as available ones. <span class="co-src">Affects decision: show unavailable items, excluded from the total</span></div>
+                <div class="callout co-qu"><span class="co-tag">Proposed finding 2 · Hierarchy</span>“Reorder” competes with “Edit basket”. The agreed scope says customers review before checkout. <span class="co-src">Affects criterion 2</span></div>
+              </article>
+            </div>
+
+            <div class="win-body" data-stage-panel="learn" hidden>
+              <aside class="pane-left">
+                <p class="pane-label">After launch</p>
+                <div class="event">
+                  <div class="event-head"><span>Original assumption</span><span class="warn">Testing</span></div>
+                  <p class="mono-line">Easier reordering increases repeat purchases</p>
+                </div>
+                <div class="event">
+                  <div class="event-head"><span>Data source</span><span class="warn">Not connected</span></div>
+                  <p class="mono-line c-qu">Connect analytics to fill results</p>
+                </div>
+                <div class="bubble">Results are compared with what the team agreed, not with a new target picked after launch.</div>
+              </aside>
+              <article class="pane-doc">
+                <div class="doc-head"><h2>One-tap reorder · learning review</h2><span class="ready pending">Pending data</span></div>
+                <dl class="learn-grid">
+                  <div><dt>Success measure</dt><dd>Completed repeat orders</dd></div>
+                  <div><dt>Baseline</dt><dd><span class="unknown">Unknown</span></dd></div>
+                  <div><dt>Result</dt><dd><span class="unknown">Unknown</span></dd></div>
+                  <div><dt>Guardrails</dt><dd>Refunds · Cancellations</dd></div>
+                </dl>
+                <div class="callout co-as"><span class="co-tag">Assumption · Owner: Growth</span>Easier reordering increases repeat purchases. <span class="co-src">Test agreed before launch: holdout on eligible cohort</span></div>
+                <div class="callout co-qu"><span class="co-tag">Open item</span>No verdict until the holdout result is in. Scopeline won't infer impact from a before-and-after change.</div>
+              </article>
+            </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stages -->
+    <section class="section stages">
+      <div class="container">
+        <p class="eyebrow typed">one workspace</p>
+        <h2 class="display">From the first request to what you learned after launch</h2>
+        <div class="stage-grid">
+          <article class="st st-now">
+            <span class="st-status">Available now</span>
+            <span class="st-n">1</span>
+            <h3>Define &amp; agree</h3>
+            <p>Problem, evidence, assumptions, scope and measures, reviewed by every role. Gaps counted as you go.</p>
+          </article>
+          <article class="st">
+            <span class="st-status soon">Coming next</span>
+            <span class="st-n">2</span>
+            <h3>Review the design</h3>
+            <p>Check designs against the agreed definition before release: hierarchy, edge cases and the criteria you signed off.</p>
+          </article>
+          <article class="st">
+            <span class="st-status soon">Later</span>
+            <span class="st-n">3</span>
+            <h3>Learn after launch</h3>
+            <p>Compare results with the original assumptions and tests, so the next feature starts from what you actually learned.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -124,7 +210,7 @@
     <!-- Same sentence, two ways -->
     <section class="section contrast">
       <div class="container">
-        <p class="eyebrow">Why it's different</p>
+        <p class="eyebrow typed">Why it's different</p>
         <h2 class="display">The same sentence, written two ways</h2>
         <div class="compare">
           <div class="cmp cmp-plain">
@@ -285,9 +371,15 @@
             <p class="dm-meta">One-tap reorder · v3 · reviewed by Design and Engineering</p>
             <h3>Scope</h3>
             <ul class="doc-list"><li>Rebuild a previous basket with current prices</li><li><mark>Customer reviews the basket before checkout</mark><span class="cursor" aria-hidden="true">Design</span></li></ul>
-            <div class="thread">
-              <p><span class="av av-ds">DS</span> If two items are out of stock, do we still show the basket?</p>
-              <p><span class="av av-en">EN</span> Yes. Availability is checked when the basket is rebuilt.</p>
+            <div class="resolver">
+              <div class="res-head"><span>Resolving open questions</span><span class="mono-line">2 / 4</span></div>
+              <p class="res-q"><span class="av av-ds">DS</span> If two items are out of stock, what does the customer see?</p>
+              <ul class="res-opts">
+                <li>Hide them from the basket</li>
+                <li class="on">Show them, excluded from the total</li>
+                <li>Block reorder until all items are back</li>
+              </ul>
+              <p class="res-by"><span class="av av-en">EN</span> Availability is checked when the basket is rebuilt.</p>
             </div>
             <div class="callout co-dc"><span class="co-tag">Decision recorded · PM, Eng</span>Show unavailable items, excluded from the total. <span class="co-src">Rests on: support export</span></div>
           </div>
@@ -327,7 +419,7 @@
     <!-- Principles -->
     <section class="section principles">
       <div class="container">
-        <p class="eyebrow">How the AI behaves</p>
+        <p class="eyebrow typed">How the AI behaves</p>
         <h2 class="display">It asks and proposes. Your team decides.</h2>
         <div class="principle-grid">
           <div class="principle"><b>Proposals, not edits</b><p>Suggestions stay marked as proposed until someone accepts, edits or rejects them.</p></div>
@@ -341,7 +433,7 @@
     <!-- Fit -->
     <section class="section" id="fit">
       <div class="container">
-        <p class="eyebrow">Where it fits</p>
+        <p class="eyebrow typed">Where it fits</p>
         <h2 class="display">Built for agreement, not for faster documents</h2>
         <div class="table-wrap">
           <table>
