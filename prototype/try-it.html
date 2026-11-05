@@ -175,6 +175,53 @@ details.edit[open] summary { margin-bottom: 10px; }
   .crumb, .demo-tag { display: none; }
   .history li { grid-template-columns: 1fr; gap: 0; }
 }
+
+/* ---------- Assistant: chat left, definition right ---------- */
+.ws2 { display: grid; grid-template-columns: 400px minmax(0, 1fr); gap: 22px; padding-bottom: 60px; align-items: start; }
+.chat { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 92px); height: calc(100vh - 116px); min-height: 520px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; }
+.chat-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.chat-head b { font-size: 0.95rem; }
+.chat-log { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.msg-user { align-self: flex-end; max-width: 88%; background: var(--qu-bg); border: 1px solid var(--qu-line); border-radius: 16px 16px 4px 16px; padding: 10px 14px; font-size: 0.92rem; white-space: pre-wrap; }
+.msg-ai { display: flex; flex-direction: column; gap: 10px; }
+.msg-ai .reply { font-size: 0.92rem; }
+.ai-mark { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; color: var(--muted); }
+.ai-mark .mark { width: 18px; height: 18px; border-radius: 5px; padding: 2px; }
+.qcard { border: 1.5px solid var(--qu-line); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.qcard .opts { display: flex; flex-direction: column; gap: 6px; }
+.opt-btn { text-align: left; font: inherit; font-size: 0.86rem; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 8px 12px; cursor: pointer; }
+.opt-btn:hover { border-color: var(--qu); }
+.opt-btn.on { background: var(--qu-bg); border-color: var(--qu); font-weight: 600; }
+.pcard { border: 1px solid var(--line); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.pcard.done { opacity: .65; }
+.pcard .old { text-decoration: line-through; color: var(--danger); background: color-mix(in srgb, var(--danger) 8%, transparent); border-radius: 8px; padding: 6px 10px; font-size: 0.86rem; }
+.pcard .new { background: var(--ev-bg); border-radius: 8px; padding: 6px 10px; font-size: 0.88rem; }
+.pcard .why { font-size: 0.8rem; color: var(--muted); }
+.flag { font-size: 0.78rem; color: var(--danger); }
+.pactions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.composer2 { border-top: 1px solid var(--line); padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.composer2 textarea { min-height: 70px; }
+.thinking { font-size: 0.86rem; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.thinking::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--qu); animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .25; transform: scale(.7); } }
+.starter { display: flex; flex-direction: column; gap: 10px; color: var(--muted); font-size: 0.9rem; }
+.steptabs { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+.steptabs::-webkit-scrollbar { display: none; }
+.steptabs button { flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 0.86rem; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); cursor: pointer; }
+.steptabs button[aria-current="step"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.steptabs .n { font-family: var(--mono); font-size: 0.7rem; }
+.gapbar { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 12px 16px; }
+.gapbar summary { cursor: pointer; display: flex; align-items: center; gap: 12px; list-style: none; flex-wrap: wrap; }
+.gapbar summary::-webkit-details-marker { display: none; }
+.gapbar .meter { min-width: 120px; }
+.prio { list-style: none; padding: 0; margin: 10px 0 0; display: flex; flex-direction: column; gap: 6px; counter-reset: p; }
+.prio li { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; counter-increment: p; }
+.prio li::before { content: counter(p); width: 24px; height: 24px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; font-family: var(--mono); font-size: 0.72rem; }
+.prio b { display: block; font-size: 0.88rem; } .prio span.sub { font-size: 0.78rem; color: var(--muted); }
+@media (max-width: 960px) {
+  .ws2 { grid-template-columns: minmax(0, 1fr); }
+  .chat { position: static; height: 560px; order: 2; }
+}
 </style>
 
 <div class="wrap">
@@ -266,7 +313,7 @@ function blankFeature(title, request) {
     problem: "", constraints: "", audience: "", currentBehaviour: "", outcome: "", agreed: {},
     sources: [{ id: uid(), title: "Original request", origin: "Pasted when the feature was created", kind: "text", content: request }],
     assumptions: [], questions: [], scope: [], alternatives: [], criteria: [], measures: [], decisions: [],
-    history: [{ at: now(), entity: "Feature", action: "created", detail: title }] };
+    history: [{ at: now(), entity: "Feature", action: "created", detail: title }], chat: [] };
 }
 function seed() {
   const f = blankFeature("One-tap reorder", "We want one-tap reorder to increase repeat purchases.");
@@ -353,31 +400,156 @@ function homeView() {
 }
 
 function featureView(f) {
+  f.chat = f.chat || [];
   const step = state.view.step || "context";
   const p = progress(f), g = gaps(f);
   const meta = STEPS.find((s) => s[0] === step);
   const n = STEPS.indexOf(meta) + 1;
-  const nav = STEPS.map(([slug, title], i) => `<li><button data-act="step" data-step="${slug}" ${slug === step ? 'aria-current="step"' : ""}>
-      <span class="n">${i + 1}</span><span>${title}</span>${slug !== "share" ? `<span class="dot ${stepStatus(f, slug)}" aria-label="${stepStatus(f, slug)}"></span>` : ""}</button></li>`).join("");
+  const tabs = STEPS.map(([slug, title], i) => `<button data-act="step" data-step="${slug}" ${slug === step ? 'aria-current="step"' : ""}><span class="n">${i + 1}</span>${title}${slug !== "share" ? ` <span class="dot ${stepStatus(f, slug)}"></span>` : ""}</button>`).join("");
+  const prio = g.slice(0, 3);
   return `
     <div class="ws-head"><div><h1>${esc(f.title)}</h1>${f.example ? `<p class="example-note">Example feature. It contains no real research or results.</p>` : ""}</div>
       <span class="mono">${p.agreed} agreed · ${p.proposed} proposed · ${p.empty} empty</span></div>
-    <div class="ws">
-      <nav aria-label="Definition steps"><ol class="steps">${nav}</ol></nav>
+    <div class="ws2">
+      ${chatPanel(f)}
       <div class="main">
+        <details class="gapbar" ${state.view.gapsOpen ? "open" : ""} data-gaps>
+          <summary><b>Top priorities</b><span class="count ${g.length ? "" : "ok"}">${g.length ? g.length + " gaps" : "No gaps"}</span><div class="meter"><span style="width:${Math.round(p.agreed / p.total * 100)}%"></span></div><span class="mono">${p.agreed}/${p.total} agreed</span></summary>
+          ${prio.length ? `<ol class="prio">${prio.map((x) => `<li><span><b>${esc(x.title)}</b><span class="sub">${esc(x.sub)}</span></span><button class="btn sm" data-act="step" data-step="${x.step}">Fix</button></li>`).join("")}</ol>${g.length > 3 ? `<p class="hint" style="margin-top:8px">${g.length - 3} more after these. Counted from your records, not scored by AI.</p>` : ""}` : `<p class="hint" style="margin-top:8px">Nothing missing that Scopeline can count.</p>`}
+        </details>
+        <nav class="steptabs" aria-label="Definition steps">${tabs}</nav>
         <div class="step-title"><p class="eyebrow">Step ${n} of 7</p><h2 class="serif">${meta[1]}</h2></div>
         ${STEP_VIEWS[step](f)}
         ${n < 7 ? `<div class="row" style="justify-content:flex-end"><button class="btn ghost" data-act="step" data-step="${STEPS[n][0]}">Next: ${STEPS[n][1]} →</button></div>` : ""}
       </div>
-      <aside class="side">
-        <div class="gaps">
-          <div class="gaps-head"><h2>Definition gaps</h2><span class="count ${g.length ? "" : "ok"}">${g.length ? g.length + " open" : "None"}</span></div>
-          <div class="ready"><div class="meter"><span style="width:${Math.round(p.agreed / p.total * 100)}%"></span></div><span class="mono">${p.agreed} of ${p.total} sections agreed</span></div>
-          ${g.length ? g.map((x) => `<button class="gap" data-act="step" data-step="${x.step}"><span class="dot ${x.kind === "as" ? "proposed" : x.kind === "dc" ? "empty" : ""}" style="${x.kind === "qu" ? "background:var(--qu)" : ""}"></span><span><b>${esc(x.title)}</b><span class="sub">${esc(x.sub)}</span><span class="go">Go to step →</span></span></button>`).join("")
-            : `<p class="hint">Counted from your records: no untested assumptions without owners, unknown baselines or unanswered questions.</p>`}
-        </div>
-      </aside>
     </div>`;
+}
+
+// ---------- Assistant ----------
+const KIND_LABEL = { evidence: ["Evidence", "t-ev"], assumption: ["Assumption", "t-as"], question: ["Open question", "t-qu"], scope_in: ["In scope", "t-dc"], scope_out: ["Out of scope", "t-dc"], criterion: ["Acceptance criterion", "t-dc"], measure: ["Measure", "t-dc"], problem: ["Problem", "t-dc"], audience: ["Audience", "t-dc"], outcome: ["Outcome", "t-dc"] };
+let sampleFn = null, sampleState = "loading", busy = false, ctl = null;
+(async () => {
+  try { sampleFn = window.claude ? await window.claude.use("sample") : null; } catch (e) { sampleFn = null; }
+  sampleState = sampleFn ? "ready" : "off";
+  if (state.view.name === "feature") render();
+})();
+
+// Numbers the user supplied anywhere in the feature. Anything else is flagged.
+function knownNumbers(f) {
+  const text = [f.request, f.problem, f.constraints, f.audience, f.currentBehaviour, f.outcome, ...f.sources.map((s) => s.content + " " + s.title), ...f.measures.map((m) => [m.baseline, m.target, m.window, m.cohort].join(" ")), ...f.chat.filter((m) => m.role === "user").map((m) => m.text)].join(" ");
+  return new Set(text.match(/\d+(?:[.,]\d+)?/g) || []);
+}
+function unsupportedNumbers(f, text) {
+  const known = knownNumbers(f);
+  return (String(text).match(/\d+(?:[.,]\d+)?/g) || []).filter((n) => !known.has(n));
+}
+
+function chatPanel(f) {
+  const log = f.chat.map((m) => m.role === "user" ? `<div class="msg-user">${esc(m.text)}</div>` : aiMessage(f, m)).join("");
+  const starter = !f.chat.length ? `<div class="starter"><p>I'll ask follow-up questions and propose labelled items for the definition. Nothing is added until you accept it.</p>
+      ${sampleState === "ready" ? `<button class="btn" data-act="ai-start">Break down this request</button>` : ""}</div>` : "";
+  const off = sampleState === "off" ? `<p class="hint">The assistant isn't available in this view. Open the page on claude.ai to use it. Every step still works by hand.</p>` : sampleState === "loading" ? `<p class="hint">Connecting the assistant…</p>` : "";
+  return `<aside class="chat" aria-label="Assistant">
+    <div class="chat-head"><span class="ai-mark"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><b>Assistant</b></span>
+      ${sampleState === "ready" ? `<button class="btn ghost sm" data-act="ai-review" ${busy ? "disabled" : ""}>Review definition</button>` : ""}</div>
+    <div class="chat-log" id="chat-log">${starter}${log}${busy ? `<div class="thinking">Thinking…</div>` : ""}${state.chatError ? `<p class="err">${esc(state.chatError)}</p>` : ""}</div>
+    <form class="composer2" data-form="chat">
+      ${off}
+      <label class="label" for="chat-in">Message</label>
+      <textarea class="field" id="chat-in" name="text" placeholder="Answer a question, add context, or ask for changes" ${sampleState !== "ready" ? "disabled" : ""}></textarea>
+      <div class="row" style="justify-content:space-between"><span class="hint">Proposals stay proposals until you accept.</span>
+        ${busy ? `<button class="btn ghost sm" type="button" data-act="ai-stop">Stop</button>` : `<button class="btn sm" type="submit" ${sampleState !== "ready" ? "disabled" : ""}>Send</button>`}</div>
+    </form></aside>`;
+}
+
+function aiMessage(f, m) {
+  const qs = (m.questions || []).map((q) => `<div class="qcard"><span><span class="tag t-qu">Question · ${ROLES[q.role] || "PM"}</span></span><b style="font-size:.9rem">${esc(q.text)}</b>
+      ${q.options && q.options.length ? `<div class="opts">${q.options.map((o, i) => `<button class="opt-btn ${q.answer === o ? "on" : ""}" data-act="ai-answer" data-msg="${m.id}" data-q="${q.id}" data-i="${i}" ${q.answer ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>` : ""}
+      ${q.answer ? `<span class="hint">Answered. Saved to open questions as resolved.</span>` : `<button class="link" style="align-self:flex-start" data-act="ai-keepq" data-msg="${m.id}" data-q="${q.id}">${q.kept ? "Saved to open questions" : "Save as open question"}</button>`}</div>`).join("");
+  const ps = (m.proposals || []).map((x) => {
+    const [label, cls] = KIND_LABEL[x.kind] || ["Proposal", "t-dc"];
+    const bad = unsupportedNumbers(f, x.text);
+    const old = (["problem", "audience", "outcome"].includes(x.kind) && filled(f[x.kind])) ? f[x.kind] : "";
+    if (x.status !== "open") return `<div class="pcard done"><span><span class="tag ${cls}">${label}</span> <span class="mono">${x.status === "accepted" ? "Accepted" : "Dismissed"}</span></span><p style="font-size:.86rem">${esc(x.text)}</p></div>`;
+    return `<div class="pcard"><span><span class="tag ${cls}">${label}</span>${x.source ? ` <span class="mono">from ${esc(x.source)}</span>` : ""}</span>
+      ${old ? `<p class="old">${esc(old)}</p>` : ""}
+      ${x.editing ? `<textarea class="field" id="edit-${x.id}" rows="3">${esc(x.text)}</textarea>` : `<p class="new">${esc(x.text)}</p>`}
+      ${bad.length ? `<p class="flag">Contains ${bad.map(esc).join(", ")}, which isn't in your sources. Edit it or add a source first.</p>` : ""}
+      ${x.why ? `<p class="why">${esc(x.why)}</p>` : ""}
+      <div class="pactions">
+        ${x.editing ? `<button class="btn sm" data-act="ai-accept" data-msg="${m.id}" data-p="${x.id}">Save and add</button>` : `<button class="btn sm" data-act="ai-accept" data-msg="${m.id}" data-p="${x.id}">Accept</button><button class="link" data-act="ai-edit" data-msg="${m.id}" data-p="${x.id}">Edit first</button>`}
+        <button class="link" data-act="ai-dismiss" data-msg="${m.id}" data-p="${x.id}">Dismiss</button></div></div>`;
+  }).join("");
+  const applied = (m.proposals || []).filter((x) => x.status === "accepted").length;
+  return `<div class="msg-ai"><span class="ai-mark"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline${m.proposals && m.proposals.length ? ` · ${applied} of ${m.proposals.length} applied` : ""}</span>
+    ${m.text ? `<p class="reply">${esc(m.text)}</p>` : ""}${qs}${ps}</div>`;
+}
+
+function definitionSnapshot(f) {
+  return JSON.stringify({
+    title: f.title, request: f.request, problem: f.problem, constraints: f.constraints, audience: f.audience, currentBehaviour: f.currentBehaviour, outcome: f.outcome,
+    sources: f.sources.map((s) => ({ title: s.title, content: (s.content || "").slice(0, 1500) })),
+    assumptions: f.assumptions.map((a) => ({ statement: a.statement, owner: a.owner || null, test: a.test || null, status: a.status })),
+    openQuestions: f.questions.map((q) => ({ text: q.text, role: q.role, answer: q.answer || null })),
+    inScope: f.scope.filter((x) => x.in).map((x) => x.text), outOfScope: f.scope.filter((x) => !x.in).map((x) => x.text),
+    criteria: f.criteria.map((c) => c.text), measures: f.measures.map((m) => ({ kind: m.kind, metric: m.metric, baseline: m.baseline || null, target: m.target || null })),
+    decisions: f.decisions.map((d) => ({ what: d.what, reason: d.reason })),
+  });
+}
+
+const RULES = `You are the assistant inside Scopeline, where a product team (PM, design, growth, engineering) agrees one feature's definition before building it.
+Rules you must follow:
+1. You ask and propose. People decide. Keep "reply" to at most two plain sentences, unless the user asks for advice (how to frame or pitch it, risks, trade-offs, objections): then coach in up to six short lines, using only facts in the definition and writing [unknown] where a fact is missing.
+2. Never invent numbers, percentages, dates, baselines, targets, sample sizes or audience sizes. If a measure needs a value, write a placeholder like [baseline] or [target] and ask the right role a question.
+3. Label every claim. Use kind "evidence" ONLY when it restates something in the supplied sources, and put that source's title in "source". Anything else is an "assumption".
+4. Do not repeat anything already in the definition.
+5. Ask at most 2 follow-up questions, each for one role, with 2 to 4 short answer options when sensible.
+6. At most 5 proposals. Kinds: evidence, assumption, question, scope_in, scope_out, criterion, measure, problem, audience, outcome. For "measure" set measureKind to "success" or "guardrail" and give only the metric name, with placeholders for any value.
+7. Never state that the feature will cause an outcome. Expected impact is an assumption.
+Return ONLY JSON with this shape:
+{"reply": string, "questions": [{"text": string, "role": "pm"|"design"|"growth"|"engineering", "options": [string]}], "proposals": [{"kind": string, "text": string, "source": string, "measureKind": string, "why": string}]}`;
+
+async function askAssistant(f, userText, mode) {
+  if (!sampleFn || busy) return;
+  if (userText) f.chat.push({ id: uid(), role: "user", text: userText });
+  busy = true; state.chatError = ""; save(); render(); scrollChat();
+  const transcript = f.chat.slice(-10).map((m) => m.role === "user" ? `User: ${m.text}` : `Assistant: ${m.text || ""}${(m.questions || []).filter((q) => q.answer).map((q) => `\n  Q (${q.role}): ${q.text} -> answered: ${q.answer}`).join("")}`).join("\n");
+  const task = mode === "review"
+    ? "Review the current definition. Find the most important gaps (unsupported claims, assumptions without owner or test, missing out-of-scope items, unmeasurable outcomes, missing edge cases) and propose up to 3 fixes as proposals, most important first. For problem, audience or outcome you may propose a rewritten version as the full new text."
+    : "Continue the session. Use the user's latest message and the definition. Ask the follow-up questions that unblock the definition and propose items to add.";
+  const input = `${RULES}\n\nCurrent definition (JSON):\n${definitionSnapshot(f)}\n\nConversation so far:\n${transcript || "(none)"}\n\nTask: ${task}`;
+  ctl = new AbortController();
+  try {
+    const out = await sampleFn.json(input, { signal: ctl.signal, cache: false });
+    const kinds = Object.keys(KIND_LABEL);
+    f.chat.push({ id: uid(), role: "assistant", text: String(out.reply || ""),
+      questions: (Array.isArray(out.questions) ? out.questions : []).slice(0, 2).map((q) => ({ id: uid(), text: String(q.text || ""), role: ROLES[q.role] ? q.role : "pm", options: (Array.isArray(q.options) ? q.options : []).slice(0, 4).map(String), answer: "" })).filter((q) => q.text),
+      proposals: (Array.isArray(out.proposals) ? out.proposals : []).slice(0, 5).filter((x) => kinds.includes(x.kind) && x.text).map((x) => ({ id: uid(), kind: x.kind, text: String(x.text), source: String(x.source || ""), measureKind: x.measureKind === "guardrail" ? "guardrail" : "success", why: String(x.why || ""), status: "open" })) });
+    // Evidence must name a real source; otherwise it is relabelled as an assumption.
+    const last = f.chat[f.chat.length - 1];
+    last.proposals.forEach((x) => { if (x.kind === "evidence" && !f.sources.some((s) => s.title === x.source)) { x.kind = "assumption"; x.why = (x.why ? x.why + " " : "") + "Relabelled as an assumption: no matching source."; } });
+  } catch (e) {
+    const code = e && e.code;
+    state.chatError = code === "not_granted" ? "The assistant needs your permission to use Claude. Allow it when asked, or keep working by hand."
+      : code === "rate_limited" ? "Too many requests just now. Wait a moment, then send again."
+      : code === "aborted" || (e && e.name === "AbortError") ? "Stopped."
+      : "The assistant couldn't answer that. Try again, or keep working by hand.";
+  } finally { busy = false; ctl = null; save(); render(); scrollChat(); }
+}
+function scrollChat() { const el = document.getElementById("chat-log"); if (el) el.scrollTop = el.scrollHeight; }
+
+function applyProposal(f, x) {
+  const t = x.text.trim();
+  switch (x.kind) {
+    case "evidence": f.sources.push({ id: uid(), title: t.slice(0, 80), origin: x.source ? `From ${x.source}, accepted from the assistant` : "Accepted from the assistant", kind: "text", content: t }); touch(f, "evidence"); break;
+    case "assumption": f.assumptions.push({ id: uid(), statement: t, why: "", owner: "", test: "", evidenceNeeded: "", status: "untested", sourceIds: [] }); log(f, "Assumption", "registered", t); touch(f, "assumptions"); break;
+    case "question": f.questions.push({ id: uid(), text: t, role: "pm", assignee: "", answer: "", resolved: false }); touch(f, "open_questions"); break;
+    case "scope_in": case "scope_out": f.scope.push({ id: uid(), text: t, in: x.kind === "scope_in" }); log(f, "Scope", x.kind === "scope_in" ? "added to scope" : "excluded from scope", t); touch(f, "scope"); break;
+    case "criterion": f.criteria.push({ id: uid(), text: t }); touch(f, "acceptance_criteria"); break;
+    case "measure": f.measures.push({ id: uid(), kind: x.measureKind, metric: t, baseline: "", target: "", cohort: "", window: "", missing: "" }); touch(f, "measures"); break;
+    case "problem": case "audience": case "outcome": f[x.kind] = t; touch(f, x.kind); break;
+  }
+  log(f, "Assistant proposal", "accepted", `${KIND_LABEL[x.kind][0]}: ${t}`);
 }
 
 function sectionCard(f, key, body) {
@@ -524,6 +696,25 @@ document.addEventListener("click", (e) => {
   if (act === "reset-yes") { pendingConfirm = null; state = seed(); save(); render(); return toast("Workspace reset"); }
   if (act === "delete") { pendingConfirm = "delete"; return render(); }
   if (act === "delete-yes") { pendingConfirm = null; state.features = state.features.filter((x) => x.id !== f.id); toast("Feature deleted"); return go({ name: "home" }); }
+  if (act === "ai-start") return askAssistant(f, `Break down this request: "${f.request}"`);
+  if (act === "ai-review") return askAssistant(f, "Review the definition and show the top priorities.", "review");
+  if (act === "ai-stop") { ctl?.abort(); return; }
+  if (act && act.startsWith("ai-")) {
+    const m = f.chat.find((x) => x.id === el.dataset.msg);
+    if (act === "ai-answer" || act === "ai-keepq") {
+      const q = m.questions.find((x) => x.id === el.dataset.q);
+      if (act === "ai-answer") { q.answer = q.options[Number(el.dataset.i)]; f.questions.push({ id: uid(), text: q.text, role: q.role, assignee: "", answer: q.answer, resolved: true }); touch(f, "open_questions"); toast("Answer saved. Send a message to continue."); }
+      else if (!q.kept) { q.kept = true; f.questions.push({ id: uid(), text: q.text, role: q.role, assignee: "", answer: "", resolved: false }); touch(f, "open_questions"); toast(`Saved for ${ROLES[q.role]}`); }
+      save(); return render();
+    }
+    const x = m.proposals.find((y) => y.id === el.dataset.p);
+    if (act === "ai-edit") { x.editing = true; render(); document.getElementById("edit-" + x.id)?.focus(); return; }
+    if (act === "ai-dismiss") { x.status = "dismissed"; save(); return render(); }
+    if (act === "ai-accept") {
+      if (x.editing) { const v = document.getElementById("edit-" + x.id)?.value.trim(); if (v) x.text = v; x.editing = false; }
+      x.status = "accepted"; applyProposal(f, x); save(); render(); return toast(`Added to ${KIND_LABEL[x.kind][0].toLowerCase()}`);
+    }
+  }
   if (act === "agree") {
     const k = el.dataset.key; if (!hasContent(f, k)) return;
     f.agreed[k] = !f.agreed[k]; log(f, SECTIONS[k][0], f.agreed[k] ? "agreed" : "reopened");
@@ -555,6 +746,7 @@ document.addEventListener("submit", (e) => {
     return go({ name: "feature", id: nf.id, step: "context" });
   }
   const f = feature();
+  if (kind === "chat") { const t = v("text"); if (t) askAssistant(f, t); return; }
   let msg = "Saved";
   switch (kind) {
     case "text": {
@@ -587,6 +779,7 @@ document.addEventListener("submit", (e) => {
   save(); render(); toast(msg);
 });
 
+document.addEventListener("toggle", (e) => { if (e.target.matches && e.target.matches("[data-gaps]")) { state.view.gapsOpen = e.target.open; save(); } }, true);
 render();
 })();
 </script>
