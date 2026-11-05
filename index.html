@@ -620,6 +620,22 @@ mark.bad { background: var(--bad-bg); color: var(--bad); border-radius: 4px; pad
 .btn.outline-light { background: transparent; color: #fff; border-color: rgba(255,255,255,.4); }
 .btn.outline-light:hover { border-color: #fff; }
 
+
+/* Keep-working panel: balanced, not stretched */
+.row.flip.wide-vis { grid-template-columns: 1.25fr 0.75fr; }
+.wide-vis .row-copy h2 { font-size: clamp(2.1rem, 3.8vw, 3.2rem); }
+.keep-field { min-height: 0; padding: clamp(18px, 3vw, 36px); }
+.keep-card { max-width: 720px; }
+.keep-grid { grid-template-columns: 210px minmax(0, 1fr); gap: 22px; align-items: center; }
+.keep-side { gap: 10px; }
+.keep-head b { font-size: 0.95rem; }
+.crit { gap: 4px; }
+.crit li { padding: 6px 8px; font-size: 0.86rem; align-items: center; }
+.crit li.no { align-items: flex-start; padding: 10px; }
+.crit .fix { margin-top: 2px; }
+@media (max-width: 1100px) { .row.flip.wide-vis { grid-template-columns: 1fr; } .row.flip.wide-vis .row-copy { order: 0; } }
+@media (max-width: 640px) { .keep-grid { grid-template-columns: 1fr; } .keep-grid .phone { width: 220px; margin: 0 auto; } }
+
 @media (max-width: 1100px) { .moments { grid-template-columns: 1fr 1fr; } .hand { display: none; } }
 @media (max-width: 900px) {
   .ws { grid-template-columns: minmax(0, 1fr); }
@@ -1296,7 +1312,7 @@ function homeView() {
       </div></div>
     </section>
 
-    <section class="wrap row flip">
+    <section class="wrap row flip wide-vis">
       <div class="row-copy">
         <h2 class="serif">The definition keeps working after you agree</h2>
         <p>Designs get checked against what you signed off. Results get compared with the original assumption.</p>
@@ -1315,13 +1331,12 @@ function homeView() {
               <div class="ph-btns"><span class="ghost">Edit basket</span><span class="solid">Reorder<b class="pin blue">2</b></span></div>
             </div>
             <div class="keep-side">
-              <div class="keep-head"><b>Checked against your agreed definition</b><span class="badge">2 of 4 met</span></div>
-              <p class="keep-lede">Design shared v2 of the reorder screen. Scopeline compares it with the acceptance criteria the team agreed.</p>
+              <div class="keep-head"><b>Design v2 · checked against the agreed criteria</b><span class="badge">2 of 4 met</span></div>
               <ul class="crit">
-                <li class="ok"><span class="mk">✓</span>Prices are re-checked when the basket is rebuilt</li>
-                <li class="ok"><span class="mk">✓</span>The total excludes unavailable items</li>
-                <li class="no"><b class="pin">1</b><div>Unavailable items are clearly marked<span class="fix"><em>Now:</em> Spinach is out of stock but looks available.<br><em>Fix:</em> grey it out and label it “Out of stock”.</span></div></li>
-                <li class="no"><b class="pin blue">2</b><div>The customer can review the basket before paying<span class="fix"><em>Now:</em> “Reorder” is the only strong action.<br><em>Fix:</em> give “Edit basket” equal weight.</span></div></li>
+                <li class="ok"><span class="mk">✓</span>Prices re-checked on rebuild</li>
+                <li class="ok"><span class="mk">✓</span>Total excludes unavailable items</li>
+                <li class="no"><b class="pin">1</b><div>Unavailable items clearly marked<span class="fix"><em>Fix:</em> grey out Spinach, label it “Out of stock”</span></div></li>
+                <li class="no"><b class="pin blue">2</b><div>Customer reviews before paying<span class="fix"><em>Fix:</em> give “Edit basket” equal weight</span></div></li>
               </ul>
             </div>
           </div>
