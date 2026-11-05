@@ -2,6 +2,15 @@
 
 Choices made where the design doc was silent, as the doc asks. Newest first.
 
+## Product direction (Nov 2026)
+
+| # | Decision | Reason | Revisit when |
+|---|----------|--------|--------------|
+| P1 | One product, Scopeline, in three stages: **Define & agree** (now), **Review the design** (next), **Learn after launch** (later). | The Lovable prototype (ProductLens, UX friction analysis) and the build plan (feature scoping) were two products. Design review fits as the stage after an agreed definition, checked against its criteria and decisions. | Pilot users mainly want stage 2 on its own. |
+| P2 | Keep the Scopeline name and visual direction (serif headlines, colour fields, four claim colours). | Chosen by the founder after comparing with the ProductLens style. | — |
+| P3 | Scopeline is free to use. Every call to action is "Start free"; no pilot or audit requests. | Founder decision. | Pricing is introduced. |
+| P4 | No invented social proof: no placeholder customer logos, testimonials or real-brand metrics on any page. | The ProductLens prototype had these; they create legal and trust risk. | Real customers agree to be named. |
+
 ## Milestone 1 — data model and feature editing (Nov 2026)
 
 | # | Decision | Reason | Revisit when |
