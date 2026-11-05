@@ -6,18 +6,11 @@ Plain HTML, CSS and JavaScript with no build step.
 
 ## Structure
 
-```
-index.html      Page markup and copy
-css/style.css   Styles (light and dark via prefers-color-scheme)
-js/main.js      Mobile menu, claim filter in the hero mock, footer year
-assets/         Images, icons, fonts
-```
+`index.html` is the whole product in one file: the start screen opens with a chat box, and starting a chat turns the page into the workspace (conversation on the left, definition on the right).
 
-## Before launch
-
-- "Scopeline" is a working name. Check availability before using it publicly.
-- "Start free" buttons link to the try-it workspace; point them at the hosted app once it is deployed.
-- Hero mock content is illustrative example data, not research.
+- With Claude available (opened on claude.ai), the assistant asks follow-up questions and proposes labelled items.
+- Anywhere else, guided mode asks the same questions in order and labels answers with built-in rules.
+- Chats are saved in the browser (localStorage).
 
 ## Run locally
 

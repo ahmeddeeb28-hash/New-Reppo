@@ -1,225 +1,469 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Scopeline · Agree what to build before anyone builds it</title>
-  <meta name="description" content="Free workspace where product, design, growth and engineering agree one feature's definition. Every claim labelled, every number sourced or marked unknown.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@600&display=swap">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <a class="skip" href="#main">Skip to content</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"></head><body>
+<title>Scopeline</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@600&display=swap">
+<style>
+/* One page: the landing view opens with a chat box; starting it turns the page into the chat workspace.
+   Light mode only. Warm paper, near-black ink, four claim colours (evidence, assumption, question, decision). */
+:root {
+  --bg: #fbfaf7; --tint: #f4f1ea; --surface: #ffffff; --ink: #15130f; --muted: #625d55; --line: #e6e1d8;
+  --ev: #11805a; --ev-bg: #e3f4ec; --ev-line: #a6dcc4;
+  --as: #a35a00; --as-bg: #fdf0da; --as-line: #f0c98a;
+  --qu: #3a4fc6; --qu-bg: #e9ecfd; --qu-line: #b9c2f5;
+  --dc: #15130f; --dc-bg: #efede8; --dc-line: #cfcac0;
+  --bad: #c2382c; --bad-bg: #fde6e3;
+  --serif: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --sans: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --hand: "Caveat", "Segoe Print", cursive;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--bg); z-index: 50; }
+p { margin: 0; } h1, h2, h3 { margin: 0; text-wrap: balance; }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--qu); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.serif { font-family: var(--serif); font-weight: 300; letter-spacing: -0.03em; line-height: 1; }
+.muted { color: var(--muted); }
+.mono { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
-  <header class="site-header">
-    <div class="container header-row">
-      <a class="logo" href="#top" aria-label="Scopeline home"><span class="logo-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</a>
-      <nav class="rail" aria-label="Page sections">
-        <a href="#top" data-rail="top"><span>1</span>Request</a>
-        <a href="#try" data-rail="try"><span>2</span>Claims</a>
-        <a href="#gaps" data-rail="gaps"><span>3</span>Gaps</a>
-        <a href="#team" data-rail="team"><span>4</span>Team</a>
-        <a href="#next" data-rail="next"><span>5</span>What's next</a>
-        <i class="rail-fill" aria-hidden="true"></i>
-      </nav>
-      <a class="pill pill-dark pill-small" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao">Start free <span class="knob" aria-hidden="true">›</span></a>
+/* Shared bits */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--ink); background: var(--ink); color: #fff; font-weight: 600; font-size: 0.9rem; cursor: pointer; white-space: nowrap; transition: transform .15s; text-decoration: none; }
+.btn:hover { transform: translateY(-1px); }
+.btn.ghost { background: var(--surface); color: var(--ink); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--ink); }
+.btn.sm { height: 32px; padding: 0 12px; font-size: 0.82rem; }
+.btn:disabled { opacity: .45; cursor: default; transform: none; }
+.knob { display: inline-grid; place-items: center; width: 28px; height: 28px; margin-right: -10px; border-radius: 50%; background: #3a3730; font-size: 1rem; }
+.link { background: none; border: 0; padding: 2px 4px; color: var(--muted); font-size: 0.8rem; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.link:hover { color: var(--ink); }
+.logo { display: inline-flex; align-items: center; gap: 9px; font-family: var(--serif); font-size: 1.4rem; letter-spacing: -0.02em; background: none; border: 0; cursor: pointer; padding: 0; color: var(--ink); }
+.mark { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 22px; height: 22px; padding: 3px; border-radius: 7px; background: var(--ink); flex-shrink: 0; }
+.mark i { border-radius: 2px; } .mark i:nth-child(1){background:#3ccf91} .mark i:nth-child(2){background:#f5b748} .mark i:nth-child(3){background:#7d8cff} .mark i:nth-child(4){background:#fff}
+.tag { display: inline-block; font-family: var(--mono); font-size: 0.6rem; letter-spacing: .09em; text-transform: uppercase; border-radius: 5px; padding: 2px 7px; font-weight: 500; }
+.t-ev { background: var(--ev-bg); color: var(--ev); } .t-as { background: var(--as-bg); color: var(--as); } .t-qu { background: var(--qu-bg); color: var(--qu); } .t-dc { background: var(--dc-bg); color: var(--dc); }
+.callout { border-radius: 12px; border: 1px solid; padding: 10px 13px; font-size: 0.92rem; line-height: 1.45; }
+.co-tag { display: block; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 500; margin-bottom: 3px; }
+.co-src { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
+.co-ev { background: var(--ev-bg); border-color: var(--ev-line); } .co-ev .co-tag { color: var(--ev); }
+.co-as { background: var(--as-bg); border-color: var(--as-line); } .co-as .co-tag { color: var(--as); }
+.co-qu { background: var(--qu-bg); border-color: var(--qu-line); } .co-qu .co-tag { color: var(--qu); }
+.co-dc { background: var(--dc-bg); border-color: var(--dc-line); } .co-dc .co-tag { color: var(--dc); }
+mark.bad { background: var(--bad-bg); color: var(--bad); border-radius: 4px; padding: 0 3px; }
+.ph { font-family: var(--mono); font-size: 0.82em; border: 1px dashed var(--muted); border-radius: 6px; padding: 0 6px; color: var(--muted); }
+.av { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; font-family: var(--mono); font-size: 0.56rem; font-weight: 500; color: #fff; flex-shrink: 0; }
+.av-pm { background: #15130f; } .av-design { background: #d6457a; } .av-growth { background: #11805a; } .av-engineering { background: #3a4fc6; }
+.toast { position: fixed; left: 50%; top: calc(env(safe-area-inset-top, 0px) + 72px); transform: translateX(-50%); background: var(--ink); color: #fff; padding: 10px 18px; border-radius: 999px; font-size: 0.88rem; z-index: 60; box-shadow: 0 10px 30px -10px rgba(0,0,0,.5); }
+.field { position: relative; border-radius: 28px; overflow: hidden; padding: clamp(14px, 3.5vw, 48px); isolation: isolate; }
+.field::before { content: ""; position: absolute; inset: -25%; z-index: -1; filter: blur(46px) saturate(1.2); background: radial-gradient(38% 55% at 10% 30%, #45d39b 0%, transparent 70%), radial-gradient(34% 50% at 42% 95%, #f7b84b 0%, transparent 70%), radial-gradient(42% 60% at 78% 18%, #8193ff 0%, transparent 70%), radial-gradient(38% 50% at 96% 88%, #ff8fa6 0%, transparent 70%), linear-gradient(120deg, #cff3df, #fde8c4 45%, #dfe3ff); animation: drift 22s ease-in-out infinite alternate; }
+@keyframes drift { to { transform: translate3d(4%, -3%, 0) rotate(4deg) scale(1.05); } }
+
+/* ---------- Composer (same component on the landing page and in the chat) ---------- */
+.composer { background: var(--surface); border: 1.5px solid var(--line); border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 24px 50px -32px rgba(20,20,40,.45); transition: border-color .2s, box-shadow .2s; }
+.composer:focus-within { border-color: var(--ink); box-shadow: 0 24px 60px -28px rgba(20,20,40,.55); }
+.composer textarea { width: 100%; border: 0; resize: none; background: transparent; font-size: 1.05rem; line-height: 1.5; min-height: 56px; max-height: 200px; outline: none; }
+.composer-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: 5px 12px; font-size: 0.82rem; cursor: pointer; white-space: nowrap; }
+.chip:hover { border-color: var(--ink); background: var(--surface); }
+.send { width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--ink); color: #fff; font-size: 1.1rem; cursor: pointer; display: grid; place-items: center; flex-shrink: 0; }
+.send:disabled { opacity: .3; cursor: default; }
+
+/* ---------- Landing view ---------- */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; padding-top: 12px; }
+.bar { display: flex; align-items: center; gap: 14px; background: rgba(255,255,255,.9); backdrop-filter: blur(14px); border: 1px solid var(--line); border-radius: 999px; padding: 8px 8px 8px 18px; box-shadow: 0 14px 34px -24px rgba(0,0,0,.35); }
+.bar .spacer { flex: 1; }
+.bar nav { display: flex; gap: 4px; }
+.bar nav a { text-decoration: none; color: var(--muted); font-size: 0.9rem; padding: 6px 12px; border-radius: 999px; }
+.bar nav a:hover { color: var(--ink); background: var(--tint); }
+.hero { padding-block: 64px 32px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px; }
+.kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; }
+.dot-live { width: 8px; height: 8px; border-radius: 50%; background: var(--ev); animation: live 2s infinite; }
+@keyframes live { 0% { box-shadow: 0 0 0 0 rgba(17,128,90,.5); } 70% { box-shadow: 0 0 0 8px rgba(17,128,90,0); } 100% { box-shadow: 0 0 0 0 rgba(17,128,90,0); } }
+.hero h1 { font-size: clamp(2.8rem, 7.4vw, 5.8rem); }
+.hero h1 em { font-style: italic; color: var(--ev); }
+.hero .lede { font-size: clamp(1.05rem, 1.5vw, 1.2rem); color: var(--muted); max-width: 34em; }
+.start-box { width: min(760px, 100%); text-align: left; position: relative; }
+.hand { position: absolute; right: -118px; top: 18px; font-family: var(--hand); font-size: 1.6rem; transform: rotate(8deg); display: flex; align-items: center; gap: 4px; pointer-events: none; }
+.start-note { font-size: 0.85rem; color: var(--muted); }
+.recent { width: min(760px, 100%); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; justify-content: center; font-size: 0.85rem; color: var(--muted); }
+.recent button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 0.85rem; }
+.recent button:hover { border-color: var(--ink); }
+
+.sec { padding-block: clamp(64px, 8vw, 104px); }
+.sec.tint { background: var(--tint); }
+.sec-head { display: flex; flex-direction: column; gap: 12px; align-items: center; text-align: center; margin-bottom: 40px; }
+.sec-head h2 { font-size: clamp(2.1rem, 4.4vw, 3.5rem); max-width: 14em; }
+.sec-head p { color: var(--muted); max-width: 34em; }
+.eyebrow { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+/* Animated demo (what happens after Start) */
+.demo { background: var(--surface); border-radius: 18px; box-shadow: 0 40px 80px -34px rgba(20,20,40,.5), 0 0 0 1px rgba(0,0,0,.05); overflow: hidden; max-width: 1060px; margin: 0 auto; }
+.win-bar { display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-bottom: 1px solid var(--line); background: #f8f6f2; }
+.dots { display: inline-flex; gap: 7px; } .dots i { width: 11px; height: 11px; border-radius: 50%; background: #ff5f57; } .dots i:nth-child(2) { background: #febc2e; } .dots i:nth-child(3) { background: #28c840; }
+.win-bar .t { font-size: 0.84rem; color: var(--muted); }
+.win-bar .r { margin-left: auto; }
+.demo-body { display: grid; grid-template-columns: 1fr 1fr; min-height: 470px; }
+.demo-chat { padding: 18px; display: flex; flex-direction: column; gap: 10px; border-right: 1px solid var(--line); background: #faf9f6; }
+.demo-doc { padding: 22px; display: flex; flex-direction: column; gap: 10px; }
+.demo [data-t] { transition: opacity .45s ease, transform .45s ease; }
+.demo.playing [data-t]:not(.in) { opacity: 0; transform: translateY(8px); }
+.demo.playing [data-t].in { opacity: 1; transform: none; }
+
+/* Feature moments: each opens the chat */
+.moments { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.moment { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; transition: transform .2s, box-shadow .2s; }
+.moment:hover { transform: translateY(-3px); box-shadow: 0 20px 40px -28px rgba(0,0,0,.4); }
+.moment h3 { font-family: var(--serif); font-weight: 400; font-size: 1.45rem; letter-spacing: -0.015em; line-height: 1.1; }
+.moment .art { flex: 1; display: flex; flex-direction: column; gap: 8px; justify-content: flex-end; min-height: 150px; }
+.moment .try { align-self: flex-start; }
+.mini-q { border: 1.5px solid var(--qu-line); border-radius: 12px; padding: 10px; font-size: 0.82rem; display: flex; flex-direction: column; gap: 6px; }
+.mini-q span.o { border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px; }
+.mini-q span.o.on { background: var(--qu-bg); border-color: var(--qu); font-weight: 600; }
+.mini-thread { display: flex; flex-direction: column; gap: 6px; font-size: 0.82rem; }
+.mini-thread p { display: flex; gap: 8px; align-items: flex-start; }
+.final { display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+.final h2 { font-size: clamp(2.1rem, 4.4vw, 3.5rem); max-width: 13em; }
+.foot { border-top: 1px solid var(--line); padding-block: 26px; font-size: 0.86rem; color: var(--muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+/* ---------- Chat workspace view ---------- */
+.app { height: 100%; display: flex; flex-direction: column; }
+.app-bar { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.app-bar .title { font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stages { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+.stages::-webkit-scrollbar { display: none; }
+.stages span { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; white-space: nowrap; background: var(--surface); }
+.stages span.done { background: var(--ev-bg); color: var(--ev); border-color: var(--ev-line); }
+.stages span.now { background: var(--ink); color: #fff; border-color: var(--ink); }
+.mode { font-size: 0.72rem; font-family: var(--mono); color: var(--qu); background: var(--qu-bg); border-radius: 999px; padding: 3px 9px; white-space: nowrap; }
+.ws { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 0; min-height: calc(100vh - 70px); }
+.thread-col { display: flex; flex-direction: column; min-width: 0; border-right: 1px solid var(--line); }
+.thread { flex: 1; padding: 24px clamp(8px, 3vw, 40px) 16px; display: flex; flex-direction: column; gap: 16px; max-width: 820px; width: 100%; margin: 0 auto; }
+.m-user { align-self: flex-end; max-width: 80%; background: var(--qu-bg); border: 1px solid var(--qu-line); border-radius: 18px 18px 4px 18px; padding: 10px 14px; white-space: pre-wrap; }
+.m-ai { display: flex; flex-direction: column; gap: 10px; max-width: 92%; }
+.who { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; color: var(--muted); }
+.who .mark { width: 18px; height: 18px; border-radius: 5px; padding: 2px; }
+.m-ai .reply { white-space: pre-wrap; }
+.qcard { border: 1.5px solid var(--qu-line); border-radius: 16px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; background: var(--surface); }
+.qcard b { font-size: 0.95rem; }
+.opts { display: flex; flex-direction: column; gap: 6px; }
+.opt { text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 8px 12px 8px 34px; font-size: 0.88rem; cursor: pointer; position: relative; }
+.opt::before { content: ""; position: absolute; left: 12px; top: 50%; width: 13px; height: 13px; margin-top: -6.5px; border-radius: 4px; border: 1.5px solid var(--muted); }
+.opt:hover:not(:disabled) { border-color: var(--qu); }
+.opt.on { background: var(--qu-bg); border-color: var(--qu); font-weight: 600; } .opt.on::before { background: var(--qu); border-color: var(--qu); }
+.opt:disabled:not(.on) { opacity: .5; cursor: default; }
+.props { display: flex; flex-direction: column; gap: 8px; }
+.props-head { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: var(--muted); }
+.pcard { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; align-items: start; border-radius: 14px; border: 1px solid; padding: 10px 12px; }
+.pcard .txt { font-size: 0.92rem; }
+.pcard .acts { display: flex; gap: 4px; align-items: center; }
+.pcard .acts button { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 3px 10px; font-size: 0.78rem; cursor: pointer; }
+.pcard .acts button.yes { background: var(--ink); color: #fff; border-color: var(--ink); }
+.pcard .flag { grid-column: 1 / -1; font-size: 0.78rem; color: var(--bad); }
+.pcard .why { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
+.pcard.done { opacity: .55; } .pcard.done .acts { font-size: 0.76rem; color: var(--muted); }
+.pcard textarea { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; font-size: 0.9rem; }
+.thinking { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 0.9rem; }
+.thinking::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--qu); animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .25; transform: scale(.7); } }
+.err { color: var(--bad); font-size: 0.86rem; }
+.dock { position: sticky; bottom: 0; padding: 12px clamp(8px, 3vw, 40px) calc(env(safe-area-inset-bottom, 0px) + 16px); background: linear-gradient(transparent, var(--bg) 30%); }
+.dock .composer { max-width: 820px; margin: 0 auto; }
+
+/* Definition panel */
+.docpane { position: sticky; top: 0; height: calc(100vh - 70px); overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 14px; background: var(--surface); }
+.doc-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.doc-top h2 { font-family: var(--serif); font-weight: 400; font-size: 1.55rem; letter-spacing: -0.015em; }
+.ready { display: flex; flex-direction: column; gap: 6px; }
+.meter { height: 7px; border-radius: 999px; background: var(--line); overflow: hidden; } .meter span { display: block; height: 100%; background: var(--ev); transition: width .5s ease; }
+.gapline { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--muted); }
+.dsec { border-top: 1px solid var(--line); padding-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+.dsec-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.dsec-h h3 { font-size: 0.86rem; }
+.st { font-family: var(--mono); font-size: 0.58rem; letter-spacing: .08em; text-transform: uppercase; border-radius: 5px; padding: 2px 6px; }
+.st.empty { border: 1px dashed var(--muted); color: var(--muted); } .st.proposed { background: var(--as-bg); color: var(--as); } .st.agreed { background: var(--ev-bg); color: var(--ev); }
+.agree { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; font-size: 0.72rem; padding: 2px 9px; cursor: pointer; }
+.agree.on { background: var(--ev); color: #fff; border-color: var(--ev); }
+.ditem { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: start; font-size: 0.88rem; border-radius: 10px; padding: 7px 9px; border: 1px solid; }
+.ditem .x { opacity: 0; border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 0.9rem; padding: 0 2px; }
+.ditem:hover .x, .ditem .x:focus-visible { opacity: 1; }
+.dempty { font-size: 0.82rem; color: var(--muted); }
+.mobile-tabs { display: none; }
+
+@media (max-width: 1100px) { .moments { grid-template-columns: 1fr 1fr; } .hand { display: none; } }
+@media (max-width: 900px) {
+  .ws { grid-template-columns: minmax(0, 1fr); }
+  .docpane { position: static; height: auto; }
+  .thread-col { border-right: 0; }
+  .mobile-tabs { display: flex; gap: 4px; padding: 8px 0; }
+  .mobile-tabs button { flex: 1; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 7px; font-size: 0.86rem; cursor: pointer; }
+  .mobile-tabs button[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .ws[data-tab="chat"] .docpane, .ws[data-tab="doc"] .thread-col { display: none; }
+  .stages { display: none; }
+  .demo-body { grid-template-columns: 1fr; }
+  .demo-chat { border-right: 0; border-bottom: 1px solid var(--line); }
+  .bar nav { display: none; }
+}
+@media (max-width: 600px) { .moments { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+
+<div id="root"></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(() => {
+const root = document.getElementById("root");
+// =================== Domain ===================
+const ROLES = { pm: "PM", design: "Design", growth: "Growth", engineering: "Engineering" };
+const SECTIONS = [
+  ["problem", "Problem"], ["audience", "Audience"], ["outcome", "Intended outcome"], ["evidence", "Evidence"],
+  ["assumption", "Assumptions"], ["question", "Open questions"], ["scope_in", "In scope"], ["scope_out", "Out of scope"],
+  ["criterion", "Acceptance criteria"], ["measure", "Measures"], ["decision", "Decisions"],
+];
+const SEC_LABEL = Object.fromEntries(SECTIONS);
+const KIND = {
+  problem: ["Problem", "co-dc", "t-dc"], audience: ["Audience", "co-dc", "t-dc"], outcome: ["Outcome", "co-dc", "t-dc"],
+  evidence: ["Evidence", "co-ev", "t-ev"], assumption: ["Assumption", "co-as", "t-as"], question: ["Open question", "co-qu", "t-qu"],
+  scope_in: ["In scope", "co-dc", "t-dc"], scope_out: ["Out of scope", "co-dc", "t-dc"], criterion: ["Acceptance criterion", "co-dc", "t-dc"],
+  measure: ["Measure", "co-dc", "t-dc"], decision: ["Decision", "co-dc", "t-dc"],
+};
+const STAGES = [["Context", ["problem", "evidence"]], ["Audience", ["audience", "outcome"]], ["Claims", ["assumption", "question"]], ["Scope", ["scope_in", "scope_out"]], ["Measures", ["measure"]], ["Review", ["decision"]]];
+const filled = (s) => (s || "").trim().length > 0;
+const items = (f, k) => f.doc.filter((x) => x.kind === k);
+const secStatus = (f, k) => !items(f, k).length ? "empty" : (f.agreed[k] ? "agreed" : "proposed");
+function gaps(f) {
+  const g = [];
+  for (const [k, label] of SECTIONS) if (!items(f, k).length && k !== "decision" && k !== "criterion") g.push({ text: `${label} is empty`, ask: k });
+  items(f, "assumption").forEach((a) => { if (!a.owner) g.push({ text: `Assumption needs an owner and a test: “${a.text}”`, ask: "assumption" }); });
+  items(f, "measure").forEach((m) => { if (!m.baseline) g.push({ text: `Baseline unknown for “${m.text}”`, ask: "measure" }); });
+  items(f, "question").forEach((q) => { if (!q.answer) g.push({ text: `${ROLES[q.role] || "PM"} hasn't answered: “${q.text}”`, ask: "question" }); });
+  return g;
+}
+
+// =================== Claim rules (guided mode and the number guard) ===================
+const SOURCE_RE = /\b(according to|per the|source:|from the (survey|interviews?|tickets|data|analytics)|support tickets|interview notes|analytics shows?|data shows?)\b/i;
+const DECISION_RE = /\b(we decided|we agreed|decision:|we will not|we won't|agreed to)\b/i;
+const CAUSAL_RE = /\b(will|lift|boost|increase|reduce|cut|drive|improve|cause|lead to)\b/i;
+const NUM_RE = /\d+(?:[.,]\d+)?\s?%?/g;
+const sentences = (t) => t.split(/(?<=[.!?])\s+|\n+/).map((s) => s.trim().replace(/^[-•*]\s*/, "")).filter((s) => s.length > 2);
+function classifySentence(s, pastedResearch) {
+  if (s.endsWith("?")) return "question";
+  if (DECISION_RE.test(s)) return "decision";
+  if ((pastedResearch || SOURCE_RE.test(s)) && !CAUSAL_RE.test(s)) return "evidence";
+  return "assumption";
+}
+function knownNumbers(f) {
+  // Only numbers that appear inside evidence (something with a named source) count as sourced.
+  const t = [...f.doc.filter((x) => x.kind === "evidence").map((x) => x.text), ...f.chat.flatMap((m) => (m.proposals || []).filter((p) => p.kind === "evidence").map((p) => p.text))].join(" ");
+  return new Set((t.match(NUM_RE) || []).map((n) => n.replace(/\s/g, "")));
+}
+const unsourced = (f, text) => (String(text).match(NUM_RE) || []).map((n) => n.replace(/\s/g, "")).filter((n) => !knownNumbers(f).has(n));
+
+// =================== Storage ===================
+const KEY = "scopeline-chat-v1";
+let state = { features: [], view: "home", current: null };
+try { const raw = localStorage.getItem(KEY); if (raw) state = Object.assign(state, JSON.parse(raw)); } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+const uid = () => Math.random().toString(36).slice(2, 10);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const cur = () => state.features.find((f) => f.id === state.current);
+function toast(m) { const t = document.getElementById("toast"); t.textContent = m; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => (t.hidden = true), 2200); }
+function titleFrom(text) { const w = text.replace(/["“”]/g, "").replace(/^(we want|i want|let's|let us|build|add)\s+/i, "").split(/\s+/).slice(0, 5).join(" "); return w.charAt(0).toUpperCase() + w.slice(1).replace(/[.,;:!?]+$/, ""); }
+
+// =================== Assistant engines ===================
+let sampleFn = null, aiState = "loading", busy = false, ctl = null, lastError = "", mobileTab = "chat";
+(async () => {
+  await Promise.resolve(); // let the rest of the script finish defining things first
+  try { sampleFn = window.claude ? await window.claude.use("sample") : null; } catch (e) { sampleFn = null; }
+  aiState = sampleFn ? "ready" : "off";
+  render();
+})();
+setTimeout(() => { if (aiState === "loading") { aiState = "off"; render(); } }, 11000);
+
+// Guided mode: asks the same questions in order and labels answers with the claim rules.
+const GUIDE = [
+  { key: "problem", q: "Who has this problem today, and how does it show up?", role: "pm" },
+  { key: "evidence", q: "What do you already know? Paste notes, tickets or research. Say “nothing yet” if there's none.", role: "pm" },
+  { key: "audience", q: "Who is the first version for?", role: "pm", options: ["Existing customers", "New users", "One specific segment"] },
+  { key: "outcome", q: "If this works, what will people do differently?", role: "growth" },
+  { key: "scope_in", q: "What's the smallest version worth shipping?", role: "pm" },
+  { key: "scope_out", q: "What will v1 not do?", role: "pm" },
+  { key: "measure", q: "Which behaviour will you measure? Name the metric. Leave numbers out unless you have a source.", role: "growth" },
+  { key: "question", q: "What's still unknown, and who should answer it?", role: "pm" },
+];
+function nextGuide(f) { return GUIDE.find((g) => !items(f, g.key).length && !(f.skipped || []).includes(g.key)); }
+function guidedProposals(f, text, key) {
+  const out = [];
+  const nothing = /^(nothing|none|no|n\/a|not yet|nothing yet)\.?$/i.test(text.trim());
+  if (nothing) return out;
+  if (["problem", "audience", "outcome", "scope_in", "scope_out", "measure", "criterion"].includes(key)) {
+    out.push({ kind: key, text: text.trim() });
+    if (key === "outcome") out.push({ kind: "assumption", text: `This feature will lead to: ${text.trim().replace(/\.$/, "")}.`, why: "Expected impact stays an assumption until tested." });
+    return out;
+  }
+  sentences(text).forEach((s) => out.push({ kind: key === "evidence" ? classifySentence(s, true) : classifySentence(s, false), text: s, source: key === "evidence" ? "Your pasted notes" : "" }));
+  return out;
+}
+function guidedReply(f, userText) {
+  const asked = f.chat.slice().reverse().find((m) => m.role === "assistant" && m.guideKey);
+  const msg = { id: uid(), role: "assistant", text: "", questions: [], proposals: [] };
+  if (!f.chat.some((m) => m.role === "assistant")) {
+    const props = sentences(userText).map((s) => ({ kind: classifySentence(s, false), text: s }));
+    const ev = props.filter((x) => x.kind === "evidence").length;
+    msg.text = `I split your request into ${props.length} claim${props.length === 1 ? "" : "s"}. ${ev ? `${ev} name${ev === 1 ? "s" : ""} a source, so I've marked ${ev === 1 ? "it" : "them"} as evidence. The rest stay assumptions until someone finds a source.` : "None of them names a source yet, so they stay assumptions until someone finds one."}`;
+    props.forEach((x) => { if (x.kind === "evidence") x.source = "Named in your request"; });
+    msg.proposals = props;
+  } else if (asked && userText) {
+    const props = guidedProposals(f, userText, asked.guideKey);
+    msg.proposals = props;
+    msg.text = props.length ? "Here's how I'd record that. Accept what's right." : "Noted. We'll leave that section open for now.";
+    if (!props.length) f.skipped = [...(f.skipped || []), asked.guideKey];
+  }
+  const g = nextGuide({ ...f, doc: [...f.doc, ...msg.proposals.map((p) => ({ kind: p.kind }))] });
+  if (g) { msg.guideKey = g.key; msg.questions = [{ id: uid(), text: g.q, role: g.role, options: g.options || [] }]; }
+  else { const gl = gaps(f); msg.text += `\n\nThat covers every step. ${gl.length ? `${gl.length} gaps are left in the definition panel. Mark sections agreed as your team signs off.` : "Nothing is missing. Mark sections agreed as your team signs off."}`; }
+  msg.proposals = msg.proposals.map((p) => ({ id: uid(), status: "open", role: p.kind === "question" ? "pm" : undefined, ...p }));
+  return msg;
+}
+
+const RULES = `You are the assistant inside Scopeline, a chat where a product team (PM, design, growth, engineering) agrees one feature's definition before building it. You lead the conversation one step at a time: context and problem, audience and outcome, claims (evidence vs assumptions), scope in and out, measures, then review.
+Rules:
+1. You ask and propose; people decide. "reply" is at most two plain sentences, unless the user asks for advice (framing, pitching, risks, trade-offs): then coach in up to six short lines using only facts in the definition, writing [unknown] where a fact is missing.
+2. Never invent numbers, percentages, dates, baselines, targets or audience sizes. Use placeholders like [baseline] and ask the right role.
+3. Use kind "evidence" ONLY to restate something from the user's own messages or pasted notes that names its source; put the source in "source". Anything else is an "assumption".
+4. Never repeat items already in the definition.
+5. Ask exactly one follow-up question for the next missing step, for one role, with 2 to 4 short answer options when sensible.
+6. At most 5 proposals. Kinds: problem, audience, outcome, evidence, assumption, question, scope_in, scope_out, criterion, measure, decision.
+7. Never state that the feature will cause an outcome; expected impact is an assumption.
+Return ONLY JSON: {"reply": string, "questions": [{"text": string, "role": "pm"|"design"|"growth"|"engineering", "options": [string]}], "proposals": [{"kind": string, "text": string, "source": string, "role": string, "why": string}]}`;
+function snapshot(f) {
+  const by = (k) => items(f, k).map((x) => x.text);
+  return JSON.stringify({ request: f.request, problem: by("problem"), audience: by("audience"), outcome: by("outcome"), evidence: items(f, "evidence").map((x) => ({ text: x.text, source: x.source })), assumptions: items(f, "assumption").map((x) => ({ text: x.text, owner: x.owner || null })), openQuestions: items(f, "question").map((x) => ({ text: x.text, role: x.role, answer: x.answer || null })), inScope: by("scope_in"), outOfScope: by("scope_out"), criteria: by("criterion"), measures: items(f, "measure").map((x) => ({ text: x.text, baseline: x.baseline || null })), decisions: by("decision"), emptySections: SECTIONS.filter(([k]) => !items(f, k).length).map(([, l]) => l) });
+}
+async function aiReply(f) {
+  const transcript = f.chat.slice(-12).map((m) => m.role === "user" ? `User: ${m.text}` : `Assistant: ${m.text}${(m.questions || []).map((q) => `\n  asked ${q.role}: ${q.text}${q.answer ? ` -> ${q.answer}` : ""}`).join("")}`).join("\n");
+  const input = `${RULES}\n\nDefinition so far (JSON):\n${snapshot(f)}\n\nConversation:\n${transcript}\n\nWrite the next assistant turn.`;
+  ctl = new AbortController();
+  const out = await sampleFn.json(input, { signal: ctl.signal, cache: false });
+  const kinds = Object.keys(KIND);
+  const msg = { id: uid(), role: "assistant", text: String(out.reply || ""),
+    questions: (Array.isArray(out.questions) ? out.questions : []).slice(0, 2).filter((q) => q && q.text).map((q) => ({ id: uid(), text: String(q.text), role: ROLES[q.role] ? q.role : "pm", options: (Array.isArray(q.options) ? q.options : []).slice(0, 4).map(String) })),
+    proposals: (Array.isArray(out.proposals) ? out.proposals : []).slice(0, 5).filter((p) => p && kinds.includes(p.kind) && p.text).map((p) => ({ id: uid(), status: "open", kind: p.kind, text: String(p.text), source: String(p.source || ""), role: ROLES[p.role] ? p.role : "pm", why: String(p.why || "") })) };
+  // Evidence must quote something the user gave; otherwise it becomes an assumption.
+  const userText = f.chat.filter((m) => m.role === "user").map((m) => m.text.toLowerCase()).join(" ");
+  msg.proposals.forEach((p) => { if (p.kind === "evidence" && !(p.source && userText.includes(p.text.toLowerCase().slice(0, 24)))) { p.kind = "assumption"; p.source = ""; p.why = (p.why ? p.why + " " : "") + "Relabelled: not found in what you shared."; } });
+  return msg;
+}
+async function respond(f, userText) {
+  if (busy) return;
+  if (userText) f.chat.push({ id: uid(), role: "user", text: userText });
+  busy = true; lastError = ""; save(); render(); scrollThread();
+  try {
+    let msg;
+    if (aiState === "ready") {
+      try { msg = await aiReply(f); }
+      catch (e) {
+        if (e && (e.code === "aborted" || e.name === "AbortError")) { lastError = "Stopped."; throw e; }
+        if (e && e.code === "not_granted") { aiState = "off"; lastError = "Claude wasn't allowed for this page, so I've switched to guided mode."; }
+        else if (e && e.code === "rate_limited") { lastError = "Too many requests. Using guided mode for this turn."; }
+        else lastError = "The assistant couldn't answer, so guided mode answered instead.";
+        msg = guidedReply(f, userText);
+      }
+    } else {
+      await new Promise((r) => setTimeout(r, 450));
+      msg = guidedReply(f, userText);
+    }
+    f.chat.push(msg);
+  } catch (e) { /* stopped */ }
+  finally { busy = false; ctl = null; f.updated = Date.now(); save(); render(); scrollThread(); }
+}
+function accept(f, p) {
+  const item = { id: uid(), kind: p.kind, text: p.text.trim(), source: p.source || "", role: p.role || "pm", answer: "", owner: "", baseline: "" };
+  f.doc.push(item);
+  if (f.agreed[p.kind]) { f.agreed[p.kind] = false; toast(`${SEC_LABEL[p.kind]} reopened: content changed`); }
+  p.status = "accepted";
+}
+
+// =================== Starting a chat ===================
+function startChat(text) {
+  const t = text.trim(); if (!t) return;
+  const f = { id: uid(), title: titleFrom(t) || "New feature", request: t, created: Date.now(), updated: Date.now(), chat: [], doc: [], agreed: {}, skipped: [] };
+  state.features.unshift(f); state.current = f.id; state.view = "chat"; mobileTab = "chat";
+  save(); render(); window.scrollTo(0, 0);
+  respond(f, `${t}`);
+}
+const EXAMPLES = {
+  reorder: "We want one-tap reorder to increase repeat purchases by 40%. Support tickets show customers rebuild baskets by hand.",
+  carts: "Let customers save a cart and come back to it later. Most users abandon carts on mobile.",
+  invites: "Add team invites so admins can bring colleagues in. Sales says enterprise deals stall without it.",
+  pitch: "Help me pitch saved carts to my VP of Product next week. What risks will she ask about?",
+};
+
+// =================== Render ===================
+function render() { root.innerHTML = state.view === "chat" && cur() ? appView(cur()) : homeView(); afterRender(); }
+
+function composer(id, placeholder, big) {
+  return `<form class="composer" data-form="${id}">
+    <label class="sr" for="${id}-in">${big ? "Describe the feature you're about to scope" : "Message"}</label>
+    <textarea id="${id}-in" name="text" rows="${big ? 3 : 2}" placeholder="${placeholder}" ${busy && !big ? "disabled" : ""}></textarea>
+    <div class="composer-row">
+      <div class="chips">${big
+        ? `<button type="button" class="chip" data-fill="reorder">One-tap reorder</button><button type="button" class="chip" data-fill="carts">Saved carts</button><button type="button" class="chip" data-fill="invites">Team invites</button>`
+        : `<button type="button" class="chip" data-say="What's missing from the definition?">What's missing?</button><button type="button" class="chip" data-say="Review the definition and propose the top 3 fixes.">Review</button><button type="button" class="chip" data-say="How should I pitch this to my VP? What risks will they ask about?">Pitch it</button>`}</div>
+      ${busy && !big ? `<button type="button" class="btn ghost sm" data-act="stop">Stop</button>` : `<button type="submit" class="send" aria-label="${big ? "Start" : "Send"}">↑</button>`}
     </div>
-  </header>
+  </form>`;
+}
 
-  <main id="main">
+function homeView() {
+  const recent = state.features.slice(0, 4);
+  return `
+  <header class="top"><div class="wrap"><div class="bar">
+    <button class="logo" data-act="home"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</button>
+    <span class="spacer"></span>
+    <nav aria-label="Page"><a href="#how">How it works</a><a href="#moments">What it does</a></nav>
+    ${recent.length ? `<button class="btn ghost sm" data-open="${recent[0].id}">Open last chat</button>` : ""}
+    <a class="btn sm" href="#start" data-act="focus-start">Start free <span class="knob" aria-hidden="true">›</span></a>
+  </div></div></header>
 
-    <!-- 1 · Hero with a live demo -->
-    <section class="hero" id="top" data-section="top">
-      <div class="container hero-copy">
-        <p class="kicker"><span class="dot-live" aria-hidden="true"></span>Free for product teams · no sign-up</p>
-        <h1>Agree what to build <em>before anyone builds&nbsp;it</em></h1>
-        <p class="lede">Paste a request. Scopeline labels every claim, catches numbers nobody sourced, and gets your PM, designer, growth lead and engineer to one definition.</p>
-        <div class="hero-actions">
-          <span class="cta-wrap">
-            <a class="pill pill-dark pill-big" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao">Start free <span class="knob" aria-hidden="true">›</span></a>
-            <span class="hand-note" aria-hidden="true">It's free!<svg width="64" height="30" viewBox="0 0 64 30" fill="none"><path d="M2 8c12-6 26-6 34 2 5 5-4 10-8 5-4-6 10-11 24-6 4 1 7 4 9 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M57 8l4 8-9 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </span>
-          <a class="pill pill-outline" href="#try">Try it on a sentence</a>
-        </div>
+  <main>
+    <section class="wrap hero" id="start">
+      <p class="kicker"><span class="dot-live" aria-hidden="true"></span>Free for product teams · no sign-up</p>
+      <h1 class="serif">Agree what to build <em>before anyone builds&nbsp;it</em></h1>
+      <p class="lede">Describe the feature. Scopeline asks the follow-up questions, labels every claim, and builds one definition your whole team can agree on.</p>
+      <div class="start-box">
+        ${composer("start", "Describe the feature you're about to scope…", true)}
+        <span class="hand" aria-hidden="true"><svg width="40" height="26" viewBox="0 0 40 26" fill="none"><path d="M38 6C28 2 14 4 6 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 8l2 9 8-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>It's free!</span>
       </div>
+      <p class="start-note">Your chats are saved in this browser. Nothing is shared until you share it.</p>
+      ${recent.length ? `<div class="recent">Continue: ${recent.map((f) => `<button data-open="${f.id}">${esc(f.title)}</button>`).join("")}</div>` : ""}
+    </section>
 
-      <div class="container">
-        <div class="field field-hero">
-          <div class="window demo" id="demo" aria-label="Animated example: a request becomes a labelled definition">
-            <div class="win-bar">
-              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="win-title">Scopeline · Checkout squad</span>
-              <button class="replay" type="button" id="replay">↺ Replay</button>
-            </div>
+    <section class="sec" id="how">
+      <div class="wrap">
+        <div class="sec-head"><p class="eyebrow">What happens when you press start</p><h2 class="serif">A request becomes a definition, in one conversation</h2></div>
+        <div class="field">
+          <div class="demo" id="demo">
+            <div class="win-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="t">Scopeline · One-tap reorder</span><span class="r"><button class="btn ghost sm" data-act="replay">↺ Replay</button></span></div>
             <div class="demo-body">
-              <aside class="demo-chat">
-                <div class="d-msg d-user" data-t="0">Break down: “We want one-tap reorder to increase repeat purchases by 40%.”</div>
-                <ul class="d-tools">
-                  <li data-t="1"><span class="spin"></span>Reading the request<b>Done</b></li>
-                  <li data-t="2"><span class="spin"></span>Reading Support tickets, Oct<b>3 quotes</b></li>
-                  <li data-t="3"><span class="spin"></span>Checking every number<b>1 unsourced</b></li>
-                </ul>
-                <div class="d-msg d-ai" data-t="4">I labelled 4 claims. One number has no source, so I've proposed a fix and a question for Growth.</div>
-                <div class="d-q" data-t="9">
-                  <span class="tag t-qu">Question · Growth</span>
-                  <p>Do we have a repeat-order baseline?</p>
-                  <span class="d-opt">Yes, in analytics</span><span class="d-opt on">No, needs instrumentation</span>
-                </div>
-              </aside>
-              <article class="demo-doc">
-                <div class="doc-head"><h2>One-tap reorder</h2><span class="ready" id="demo-ready"><b>0</b>/11 agreed</span></div>
-                <div class="callout co-ev" data-t="5"><span class="co-tag">Evidence · Support tickets, Oct</span>Customers rebuild past baskets item by item.</div>
-                <div class="callout co-as" data-t="6"><span class="co-tag">Assumption · needs owner</span>Easier reordering increases repeat purchases.</div>
-                <div class="callout co-qu" data-t="7"><span class="co-tag">Open question · Design</span>What if an item is out of stock?</div>
-                <div class="proposal" data-t="8">
-                  <span class="co-tag">Proposed measure</span>
-                  <p class="p-old">Raise repeat purchases <mark class="bad">by 40%</mark></p>
-                  <p class="p-flag">“40%” isn't in any source.</p>
-                  <p class="p-new">Raise repeat purchases from <span class="ph">[baseline]</span> to <span class="ph">[target]</span></p>
-                  <div class="p-actions"><span class="fake-btn">Accept</span><span class="fake-btn ghost">Edit first</span></div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-        <a class="handoff" href="#try">Your own spec has sentences like this. Try one <span aria-hidden="true">↓</span></a>
-      </div>
-    </section>
-
-    <!-- 2 · Interactive labeller -->
-    <section class="section" id="try" data-section="try">
-      <div class="container">
-        <p class="eyebrow">2 · Claims</p>
-        <h2 class="display">Paste a sentence. See what's actually known.</h2>
-        <div class="labeller">
-          <div class="lab-input">
-            <div class="chips" role="group" aria-label="Example sentences">
-              <button type="button" class="chip-btn" data-example="0">Reorder spec</button>
-              <button type="button" class="chip-btn" data-example="1">Saved carts</button>
-              <button type="button" class="chip-btn" data-example="2">Team notes</button>
-            </div>
-            <label class="sr" for="lab-text">Sentence from your spec</label>
-            <textarea id="lab-text" rows="5" spellcheck="false"></textarea>
-            <p class="hint">Runs in your browser. Nothing is sent anywhere.</p>
-          </div>
-          <div class="lab-output" aria-live="polite">
-            <div class="lab-counts">
-              <span class="cnt c-ev"><b id="n-ev">0</b> evidence</span>
-              <span class="cnt c-as"><b id="n-as">0</b> assumptions</span>
-              <span class="cnt c-qu"><b id="n-qu">0</b> questions</span>
-              <span class="cnt c-dc"><b id="n-dc">0</b> decisions</span>
-              <span class="cnt c-flag"><b id="n-flag">0</b> unsourced numbers</span>
-            </div>
-            <ul class="lab-claims" id="lab-claims"></ul>
-          </div>
-        </div>
-        <a class="handoff" href="#gaps">Labels show what's missing. Now close the gaps <span aria-hidden="true">↓</span></a>
-      </div>
-    </section>
-
-    <!-- 3 · Interactive gaps -->
-    <section class="section tint" id="gaps" data-section="gaps">
-      <div class="container split">
-        <div class="split-copy">
-          <p class="eyebrow">3 · Gaps</p>
-          <h2 class="display">Close the gaps before the review meeting</h2>
-          <p class="sub">Click <b>Fix</b> on each one. Readiness is counted from the definition, never scored by AI.</p>
-          <div class="meter-big" aria-label="Sections agreed"><span id="gap-meter" style="width:64%"></span></div>
-          <p class="meter-text"><b id="gap-agreed">7</b> of 11 sections ready</p>
-        </div>
-        <div class="field field-amber">
-          <div class="card-mock gaps-card" id="gaps-card">
-            <div class="cm-head"><span>Top priorities</span><span class="badge" id="gap-badge">4 open</span></div>
-            <ul class="gap-list">
-              <li data-gap><span class="g-dot as"></span><div><b>Assumption has no owner or test</b><span>Easier reordering increases repeat purchases</span><em>Owner: Dana (Growth) · Test: holdout on eligible cohort</em></div><button type="button">Fix</button></li>
-              <li data-gap><span class="g-dot qu"></span><div><b>Baseline unknown</b><span>Completed repeat orders</span><em>Question sent to Growth · instrumentation ticket added</em></div><button type="button">Fix</button></li>
-              <li data-gap><span class="g-dot qu"></span><div><b>Design hasn't answered</b><span>What if an item is out of stock?</span><em>Show it, excluded from the total</em></div><button type="button">Fix</button></li>
-              <li data-gap><span class="g-dot dc"></span><div><b>Nothing marked out of scope</b><span>Say what v1 won't do</span><em>Out of scope: scheduled automatic reorders</em></div><button type="button">Fix</button></li>
-            </ul>
-            <div class="ready-state" id="ready-state" hidden>
-              <b>Ready to agree</b><span>Every section has content and nothing is missing.</span>
-              <button type="button" class="pill pill-dark pill-small" id="agree-all">Mark all agreed</button>
-            </div>
-            <button type="button" class="link-reset" id="gap-reset" hidden>Reset</button>
-          </div>
-        </div>
-      </div>
-      <div class="container"><a class="handoff" href="#team">Agreement takes every role. Here's what each one sees <span aria-hidden="true">↓</span></a></div>
-    </section>
-
-    <!-- 4 · Role switcher -->
-    <section class="section" id="team" data-section="team">
-      <div class="container split reverse">
-        <div class="split-copy">
-          <p class="eyebrow">4 · Team</p>
-          <h2 class="display">Every role reviews the same definition</h2>
-          <p class="sub">Pick a role. Each one gets its own questions, on the same records.</p>
-          <div class="roles" role="tablist" aria-label="Reviewer role">
-            <button type="button" role="tab" aria-selected="true" data-role="design"><span class="av av-ds">DS</span>Design</button>
-            <button type="button" role="tab" aria-selected="false" data-role="growth"><span class="av av-gr">GR</span>Growth</button>
-            <button type="button" role="tab" aria-selected="false" data-role="eng"><span class="av av-en">EN</span>Engineering</button>
-            <button type="button" role="tab" aria-selected="false" data-role="pm"><span class="av av-pm">PM</span>Product</button>
-          </div>
-        </div>
-        <div class="field field-blue">
-          <div class="card-mock role-doc" data-active="design">
-            <p class="dm-meta">One-tap reorder · v3</p>
-            <div class="rd-sec" data-for="pm"><h3>Problem</h3><p>Returning customers rebuild past baskets item by item.</p></div>
-            <div class="rd-sec" data-for="design eng"><h3>Scope</h3><p>Rebuild a past basket with current prices. Customer reviews it before checkout.</p></div>
-            <div class="rd-sec" data-for="growth"><h3>Measure</h3><p>Completed repeat orders · baseline <span class="ph">unknown</span></p></div>
-            <div class="rd-sec" data-for="eng"><h3>Acceptance criteria</h3><p>Prices and availability are re-checked when the basket is rebuilt.</p></div>
-            <div class="resolver" id="resolver">
-              <div class="res-head"><span id="res-title">Design · 2 questions</span><span class="mono-s" id="res-step">1 / 2</span></div>
-              <p class="res-q" id="res-q"></p>
-              <div class="res-opts" id="res-opts"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container"><a class="handoff" href="#next">Once it's agreed, the definition keeps working <span aria-hidden="true">↓</span></a></div>
-    </section>
-
-    <!-- 5 · Next stages -->
-    <section class="section tint" id="next" data-section="next">
-      <div class="container">
-        <p class="eyebrow">5 · What's next</p>
-        <h2 class="display">The agreed definition keeps working after you ship</h2>
-        <div class="stage-tabs" role="tablist" aria-label="Stages">
-          <button type="button" role="tab" aria-selected="true" data-stage="design">Review the design <span class="soon">Coming next</span></button>
-          <button type="button" role="tab" aria-selected="false" data-stage="learn">Learn after launch <span class="soon">Later</span></button>
-        </div>
-        <div class="field field-hero field-low">
-          <div class="window">
-            <div class="win-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win-title">Scopeline · One-tap reorder</span></div>
-            <div class="stage-panel" data-panel="design">
-              <div class="sp-grid">
-                <div class="shot" aria-hidden="true">
-                  <div class="shot-row"><span class="shot-title"></span><span class="shot-pill"></span></div>
-                  <div class="shot-item"><i></i><span></span></div>
-                  <div class="shot-item off"><i></i><span></span><b class="pin">1</b></div>
-                  <div class="shot-item"><i></i><span></span></div>
-                  <div class="shot-cta"><b class="pin blue">2</b></div>
-                </div>
-                <div class="sp-notes">
-                  <div class="callout co-as"><span class="co-tag">Finding 1 · Edge case</span>The unavailable item looks like the others. <span class="co-src">Affects decision: show it, excluded from the total</span></div>
-                  <div class="callout co-qu"><span class="co-tag">Finding 2 · Hierarchy</span>“Reorder” competes with “Edit basket”. <span class="co-src">Affects criterion: customer reviews before checkout</span></div>
-                </div>
+              <div class="demo-chat">
+                <div class="m-user" data-t="0" style="max-width:92%">We want one-tap reorder to increase repeat purchases by 40%.</div>
+                <div class="m-ai" data-t="1"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span><p>I split that into two claims. “40%” has no source, so I've left it as a placeholder.</p></div>
+                <div class="qcard" data-t="4"><span><span class="tag t-qu">Question · Growth</span></span><b>Do we have a repeat-order baseline?</b>
+                  <div class="opts"><span class="opt">Yes, in analytics</span><span class="opt on">No, needs instrumentation</span></div></div>
               </div>
-            </div>
-            <div class="stage-panel" data-panel="learn" hidden>
-              <div class="sp-grid">
-                <dl class="learn-grid">
-                  <div><dt>Measure</dt><dd>Completed repeat orders</dd></div>
-                  <div><dt>Baseline</dt><dd><span class="ph">unknown</span></dd></div>
-                  <div><dt>Result</dt><dd><span class="ph">pending</span></dd></div>
-                  <div><dt>Guardrails</dt><dd>Refunds · Cancellations</dd></div>
-                </dl>
-                <div class="sp-notes">
-                  <div class="callout co-as"><span class="co-tag">Assumption · Growth</span>Easier reordering increases repeat purchases. <span class="co-src">Test agreed before launch: holdout on eligible cohort</span></div>
-                  <div class="callout co-qu"><span class="co-tag">Open item</span>No verdict until the holdout result is in.</div>
-                </div>
+              <div class="demo-doc">
+                <div class="doc-top"><h2 style="font-family:var(--serif);font-weight:400;font-size:1.4rem">Definition</h2><span class="mono" id="demo-count">0 of 11 sections</span></div>
+                <div class="callout co-as" data-t="2"><span class="co-tag">Assumption · needs owner</span>One-tap reorder increases repeat purchases.</div>
+                <div class="callout co-dc" data-t="3"><span class="co-tag">Measure</span>Repeat purchases from <span class="ph">[baseline]</span> to <span class="ph">[target]</span><span class="co-src"><mark class="bad">40%</mark> removed: no source</span></div>
+                <div class="callout co-qu" data-t="5"><span class="co-tag">Open question · Growth</span>Baseline needs instrumentation first.</div>
+                <div class="callout co-ev" data-t="6"><span class="co-tag">Evidence · Support tickets</span>Customers rebuild baskets by hand.</div>
               </div>
             </div>
           </div>
@@ -227,26 +471,179 @@
       </div>
     </section>
 
-    <!-- 6 · Start -->
-    <section class="section final" id="start">
-      <div class="container final-box">
-        <div class="journey" aria-hidden="true">
-          <span>Request</span><i></i><span>Claims</span><i></i><span>Gaps</span><i></i><span>Agreement</span>
+    <section class="sec tint" id="moments">
+      <div class="wrap">
+        <div class="sec-head"><p class="eyebrow">What it does</p><h2 class="serif">Four things it does differently</h2><p>Each one opens the chat with an example.</p></div>
+        <div class="moments">
+          <article class="moment"><h3>Asks before it writes</h3>
+            <div class="art"><div class="mini-q"><span><span class="tag t-qu">Design</span></span><b>What if an item is out of stock?</b><span class="o">Hide it</span><span class="o on">Show it, excluded from total</span></div></div>
+            <button class="btn ghost sm try" data-try="reorder">Try it →</button></article>
+          <article class="moment"><h3>Labels every claim</h3>
+            <div class="art"><div class="callout co-ev"><span class="co-tag">Evidence</span>Tickets mention rebuilding baskets.</div><div class="callout co-as"><span class="co-tag">Assumption</span>Reorder lifts repeat orders.</div></div>
+            <button class="btn ghost sm try" data-try="carts">Try it →</button></article>
+          <article class="moment"><h3>Catches made-up numbers</h3>
+            <div class="art"><div class="callout co-dc"><span class="co-tag">Measure</span>Abandonment down <mark class="bad">by 30%</mark><span class="co-src" style="color:var(--bad)">No source. Becomes [target].</span></div></div>
+            <button class="btn ghost sm try" data-try="carts">Try it →</button></article>
+          <article class="moment"><h3>Coaches with facts only</h3>
+            <div class="art"><div class="mini-thread"><p><span class="av av-pm">PM</span>How do I pitch this to my VP?</p><p><span class="av" style="background:var(--ink)">S</span>Lead with the problem. Baseline is [unknown], so ask for a 2-week test, not a target.</p></div></div>
+            <button class="btn ghost sm try" data-try="pitch">Try it →</button></article>
         </div>
-        <h2 class="display">Bring the next feature you're about to scope</h2>
-        <a class="pill pill-dark pill-big" href="https://claude.ai/artifact/FZojWfULSNHUJGcgzWwQao">Start free <span class="knob" aria-hidden="true">›</span></a>
-        <p class="fine">Free · Works in your browser · No sign-up</p>
       </div>
     </section>
-  </main>
 
-  <footer class="site-footer">
-    <div class="container footer-row">
-      <span>&copy; <span id="year"></span> Scopeline</span>
-      <span class="muted">Example content contains no real research or results.</span>
+    <section class="sec">
+      <div class="wrap final">
+        <h2 class="serif">What are you about to build?</h2>
+        <div class="start-box">${composer("start2", "Describe it in a sentence or two…", true)}</div>
+      </div>
+      <div class="wrap foot"><span>© ${new Date().getFullYear()} Scopeline</span><span>Example content contains no real research or results.</span></div>
+    </section>
+  </main>`;
+}
+
+function stageBar(f) {
+  const nowIdx = STAGES.findIndex(([, ks]) => ks.some((k) => !items(f, k).length));
+  return `<div class="stages" aria-label="Progress">${STAGES.map(([name, ks], i) => {
+    const done = ks.every((k) => items(f, k).length);
+    return `<span class="${done ? "done" : i === nowIdx ? "now" : ""}">${done ? "✓" : i + 1} ${name}</span>`;
+  }).join("")}</div>`;
+}
+
+function appView(f) {
+  return `
+  <div class="wrap app">
+    <div class="app-bar">
+      <button class="logo" data-act="home" aria-label="Back to start"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
+      <span class="title">${esc(f.title)}</span>
+      <span class="mode">${aiState === "ready" ? "Claude" : aiState === "loading" ? "Connecting…" : "Guided mode"}</span>
+      ${stageBar(f)}
+      <button class="btn ghost sm" data-act="copy">Copy summary</button>
     </div>
-  </footer>
+    <div class="mobile-tabs"><button aria-pressed="${mobileTab === "chat"}" data-tab="chat">Chat</button><button aria-pressed="${mobileTab === "doc"}" data-tab="doc">Definition · ${f.doc.length}</button></div>
+    <div class="ws" data-tab="${mobileTab}">
+      <div class="thread-col">
+        <div class="thread" id="thread">
+          ${f.chat.map((m) => m.role === "user" ? `<div class="m-user">${esc(m.text)}</div>` : aiMsg(f, m)).join("")}
+          ${busy ? `<div class="thinking">${aiState === "ready" ? "Thinking… the first answer can take up to a minute" : "Thinking…"}</div>` : ""}
+          ${lastError ? `<p class="err">${esc(lastError)}</p>` : ""}
+        </div>
+        <div class="dock">${composer("chat", "Answer, paste notes, or ask for changes…", false)}</div>
+      </div>
+      ${docPane(f)}
+    </div>
+  </div>`;
+}
 
-  <script src="js/main.js"></script>
-</body>
-</html>
+function aiMsg(f, m) {
+  const qs = (m.questions || []).map((q) => `<div class="qcard"><span><span class="tag t-qu">Question · ${ROLES[q.role] || "PM"}</span></span><b>${esc(q.text)}</b>
+    ${q.options && q.options.length ? `<div class="opts">${q.options.map((o, i) => `<button class="opt ${q.answer === o ? "on" : ""}" data-ans="${m.id}|${q.id}|${i}" ${q.answer ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>` : `<span class="muted" style="font-size:.82rem">Answer in the message box.</span>`}</div>`).join("");
+  const open = (m.proposals || []).filter((p) => p.status === "open");
+  const ps = (m.proposals || []).map((p) => {
+    const [label, co] = KIND[p.kind];
+    const bad = p.status === "open" ? unsourced(f, p.text) : [];
+    let body = esc(p.text); bad.forEach((n) => { body = body.replace(esc(n), `<mark class="bad">${esc(n)}</mark>`); });
+    if (p.status !== "open") return `<div class="pcard callout ${co} done"><div class="txt"><span class="co-tag">${label}</span>${esc(p.text)}</div><span class="acts">${p.status === "accepted" ? "Added" : "Dismissed"}</span></div>`;
+    return `<div class="pcard callout ${co}"><div class="txt"><span class="co-tag">${label}${p.source ? ` · ${esc(p.source)}` : ""}${p.kind === "question" ? ` · ${ROLES[p.role] || "PM"}` : ""}</span>
+      ${p.editing ? `<textarea id="ed-${p.id}" rows="2">${esc(p.text)}</textarea>` : body}${p.why ? `<span class="why">${esc(p.why)}</span>` : ""}</div>
+      <span class="acts">${p.editing ? `<button class="yes" data-p="${m.id}|${p.id}|save">Save</button>` : `<button class="yes" data-p="${m.id}|${p.id}|yes">Accept</button><button data-p="${m.id}|${p.id}|edit">Edit</button>`}<button data-p="${m.id}|${p.id}|no" aria-label="Dismiss">✕</button></span>
+      ${bad.length ? `<span class="flag">${bad.map(esc).join(", ")} isn't in anything you've shared. Edit it to a placeholder like [target], or paste the source.</span>` : ""}</div>`;
+  }).join("");
+  const applied = (m.proposals || []).filter((p) => p.status === "accepted").length;
+  return `<div class="m-ai"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span>
+    ${m.text ? `<p class="reply">${esc(m.text)}</p>` : ""}
+    ${ps ? `<div class="props"><div class="props-head"><span>${applied} of ${m.proposals.length} added</span>${open.length > 1 ? `<button class="link" data-acceptall="${m.id}">Accept all ${open.length}</button>` : ""}</div>${ps}</div>` : ""}
+    ${qs}</div>`;
+}
+
+function docPane(f) {
+  const total = SECTIONS.length, agreed = SECTIONS.filter(([k]) => secStatus(f, k) === "agreed").length, filledN = SECTIONS.filter(([k]) => items(f, k).length).length;
+  const g = gaps(f);
+  return `<aside class="docpane" aria-label="Definition">
+    <div class="doc-top"><h2>Definition</h2><span class="mono">${filledN} of ${total} filled · ${agreed} agreed</span></div>
+    <div class="ready"><div class="meter"><span style="width:${Math.round(filledN / total * 100)}%"></span></div>
+      <div class="gapline"><span>${g.length ? `${g.length} gap${g.length === 1 ? "" : "s"} counted from the definition` : "No gaps Scopeline can count"}</span>${g.length ? `<button class="link" data-say="What's missing from the definition? Ask me about the most important gap.">Ask about gaps</button>` : ""}</div></div>
+    ${SECTIONS.filter(([k]) => items(f, k).length).map(([k, label]) => {
+      const list = items(f, k), st = secStatus(f, k), co = KIND[k][1];
+      return `<div class="dsec"><div class="dsec-h"><h3>${label} <span class="st ${st}">${st}</span></h3>${list.length ? `<button class="agree ${st === "agreed" ? "on" : ""}" data-agree="${k}">${st === "agreed" ? "✓ Agreed" : "Agree"}</button>` : ""}</div>
+        ${list.length ? list.map((x) => { const nums = ["assumption", "measure", "outcome", "problem", "scope_in", "decision"].includes(k) ? unsourced(f, x.text) : []; let t = esc(x.text); nums.forEach((n) => { t = t.replace(esc(n), `<mark class="bad" title="No source">${esc(n)}</mark>`); }); return `<div class="ditem callout ${co}"><span>${t}${x.source ? `<span class="co-src">${esc(x.source)}</span>` : ""}${k === "question" ? `<span class="co-src">${ROLES[x.role] || "PM"}${x.answer ? ` · answered: ${esc(x.answer)}` : " · unanswered"}</span>` : ""}${k === "measure" ? `<span class="co-src">Baseline ${x.baseline ? esc(x.baseline) : '<span class="ph">unknown</span>'}</span>` : ""}${k === "assumption" ? `<span class="co-src">${x.owner ? "Owner: " + esc(x.owner) : "No owner or test yet"}</span>` : ""}</span>${nums.length ? `<span class="co-src" style="color:var(--bad)">${nums.map(esc).join(", ")} has no source</span>` : ""}</span><button class="x" data-del="${x.id}" aria-label="Remove">✕</button></div>`; }).join("") : `<p class="dempty">Empty</p>`}
+      </div>`;
+    }).join("") || `<p class="dempty">Accepted items appear here, grouped by section.</p>`}
+    ${SECTIONS.some(([k]) => !items(f, k).length) ? `<div class="dsec"><h3 style="font-size:.86rem">Still to cover</h3><div class="chips">${SECTIONS.filter(([k]) => !items(f, k).length).map(([k, l]) => `<button class="chip" data-say="Let's cover ${l.toLowerCase()} next. Ask me what you need.">${l}</button>`).join("")}</div></div>` : ""}
+  </aside>`;
+}
+
+// =================== Demo animation ===================
+let demoTimers = [], demoPlayed = false;
+function playDemo() {
+  const d = document.getElementById("demo"); if (!d || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  demoTimers.forEach(clearTimeout); demoTimers = [];
+  const els = [...d.querySelectorAll("[data-t]")]; d.classList.add("playing"); els.forEach((e) => e.classList.remove("in"));
+  const count = document.getElementById("demo-count");
+  els.sort((a, b) => a.dataset.t - b.dataset.t).forEach((e, i) => demoTimers.push(setTimeout(() => { e.classList.add("in"); if (count) count.textContent = `${Math.min(i, 4)} of 11 sections`; }, 400 + i * 1100)));
+}
+function afterRender() {
+  const d = document.getElementById("demo");
+  if (d && !demoPlayed) {
+    new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting) { demoPlayed = true; playDemo(); o.disconnect(); } }), { threshold: 0.35 }).observe(d);
+  } else if (d) { d.classList.remove("playing"); }
+  document.querySelectorAll(".composer textarea").forEach((t) => {
+    const fit = () => { t.style.height = "auto"; t.style.height = Math.min(t.scrollHeight, 200) + "px"; };
+    t.addEventListener("input", fit);
+    t.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); t.form.requestSubmit(); } });
+  });
+}
+function scrollThread() { const t = document.getElementById("thread"); if (t && t.lastElementChild) t.lastElementChild.scrollIntoView({ block: "end", behavior: "smooth" }); }
+
+// =================== Events ===================
+document.addEventListener("submit", (e) => {
+  const form = e.target.closest("form[data-form]"); if (!form) return; e.preventDefault();
+  const text = form.querySelector("textarea").value.trim(); if (!text) return;
+  if (form.dataset.form.startsWith("start")) return startChat(text);
+  form.querySelector("textarea").value = ""; respond(cur(), text);
+});
+document.addEventListener("click", (e) => {
+  const el = e.target.closest("button, a"); if (!el) return;
+  const f = cur();
+  if (el.dataset.act === "home") { state.view = "home"; save(); render(); window.scrollTo(0, 0); return; }
+  if (el.dataset.act === "focus-start") { e.preventDefault(); document.getElementById("start-in")?.focus(); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+  if (el.dataset.act === "replay") return playDemo();
+  if (el.dataset.act === "stop") { ctl?.abort(); return; }
+  if (el.dataset.fill) { const t = el.closest("form").querySelector("textarea"); t.value = EXAMPLES[el.dataset.fill]; t.focus(); t.dispatchEvent(new Event("input")); return; }
+  if (el.dataset.try) return startChat(EXAMPLES[el.dataset.try]);
+  if (el.dataset.open) { state.current = el.dataset.open; state.view = "chat"; save(); render(); scrollThread(); return; }
+  if (el.dataset.tab) { mobileTab = el.dataset.tab; render(); return; }
+  if (!f) return;
+  if (el.dataset.say) { if (!busy) respond(f, el.dataset.say); return; }
+  if (el.dataset.ans) {
+    const [mid, qid, i] = el.dataset.ans.split("|"); const m = f.chat.find((x) => x.id === mid); const q = m.questions.find((x) => x.id === qid);
+    q.answer = q.options[Number(i)];
+    if (m.guideKey && aiState !== "ready") { save(); return respond(f, q.answer); }
+    f.doc.push({ id: uid(), kind: "question", text: q.text, role: q.role, answer: q.answer, source: "", owner: "", baseline: "" });
+    save(); return respond(f, `${ROLES[q.role]} answer: ${q.answer}`);
+  }
+  if (el.dataset.acceptall) { const m = f.chat.find((x) => x.id === el.dataset.acceptall); m.proposals.filter((p) => p.status === "open").forEach((p) => accept(f, p)); save(); render(); return toast("Added to the definition"); }
+  if (el.dataset.p) {
+    const [mid, pid, act] = el.dataset.p.split("|"); const m = f.chat.find((x) => x.id === mid); const p = m.proposals.find((x) => x.id === pid);
+    if (act === "edit") { p.editing = true; render(); document.getElementById("ed-" + p.id)?.focus(); return; }
+    if (act === "save") { const v = document.getElementById("ed-" + p.id)?.value.trim(); if (v) p.text = v; p.editing = false; accept(f, p); }
+    if (act === "yes") accept(f, p);
+    if (act === "no") p.status = "dismissed";
+    save(); render(); if (act !== "no") { toast(`Added to ${SEC_LABEL[p.kind].toLowerCase()}`); if (mobileTab === "chat") {} } return;
+  }
+  if (el.dataset.agree) { const k = el.dataset.agree; f.agreed[k] = !f.agreed[k]; save(); render(); return toast(f.agreed[k] ? `${SEC_LABEL[k]} agreed` : `${SEC_LABEL[k]} reopened`); }
+  if (el.dataset.del) { f.doc = f.doc.filter((x) => x.id !== el.dataset.del); save(); render(); return; }
+  if (el.dataset.act === "copy") {
+    const md = `# ${f.title}\n\n> ${f.request}\n\n` + SECTIONS.map(([k, l]) => `## ${l}${f.agreed[k] ? " (agreed)" : ""}\n` + (items(f, k).map((x) => `- ${x.text}${x.source ? ` _(source: ${x.source})_` : ""}${k === "measure" ? ` — baseline: ${x.baseline || "unknown"}` : ""}${k === "question" ? ` — ${ROLES[x.role] || "PM"}${x.answer ? `: ${x.answer}` : ", unanswered"}` : ""}`).join("\n") || "- _empty_")).join("\n\n");
+    const done = () => toast("Summary copied");
+    try { navigator.clipboard.writeText(md).then(done, () => fallbackCopy(md)); } catch (err) { fallbackCopy(md); }
+  }
+});
+function fallbackCopy(md) {
+  const t = document.createElement("textarea"); t.value = md; t.style.position = "fixed"; t.style.top = "10px"; t.style.left = "10px"; t.style.width = "80vw"; t.style.height = "40vh"; t.style.zIndex = 70;
+  document.body.appendChild(t); t.select(); toast("Select all and copy, then click anywhere to close");
+  setTimeout(() => document.addEventListener("click", () => t.remove(), { once: true }), 50);
+}
+render();
+})();
+</script>
+</body></html>
