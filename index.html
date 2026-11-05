@@ -423,6 +423,168 @@ mark.bad { background: var(--bad-bg); color: var(--bad); border-radius: 4px; pad
 .vedit input { width: 72px; border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; font-size: 0.82rem; }
 .vitem { grid-template-columns: minmax(0, 1fr) auto; border-color: var(--line); background: var(--surface); }
 
+
+/* ---------- Squad row with illustrated avatars ---------- */
+.squad { display: flex; flex-direction: column; align-items: center; gap: 16px; padding-block: 44px 8px; }
+.squad-title { font-family: var(--mono); font-size: 0.72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.squad-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; width: 100%; max-width: 1000px; }
+.who-card { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,.8); backdrop-filter: blur(6px); border: 1px solid var(--line); border-radius: 18px; padding: 12px 14px; transition: transform .2s ease, box-shadow .2s ease, border-color .2s; min-width: 0; }
+.who-card:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -22px rgba(0,0,0,.45); }
+.who-card b { display: block; font-size: 0.95rem; }
+.who-card span { display: block; font-size: 0.8rem; color: var(--muted); line-height: 1.35; }
+.who-card .avi { flex-shrink: 0; border-radius: 50%; box-shadow: 0 0 0 3px #fff, 0 0 0 4.5px var(--ring, var(--line)); }
+.c-pm { --ring: #15130f; } .c-design { --ring: #d6457a; } .c-growth { --ring: #11805a; } .c-engineering { --ring: #3a4fc6; }
+.c-pm:hover { border-color: #15130f; } .c-design:hover { border-color: #d6457a; } .c-growth:hover { border-color: #11805a; } .c-engineering:hover { border-color: #3a4fc6; }
+.nametag .avi { border-radius: 50%; box-shadow: 0 0 0 1.5px rgba(255,255,255,.8); }
+@media (max-width: 900px) { .squad-row { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .squad-row { grid-template-columns: 1fr; } }
+
+
+/* ---------- "Keeps working" panel ---------- */
+.keep-field { min-height: 440px; display: grid; align-items: center; }
+.keep-card { max-width: 600px; width: 100%; gap: 12px; }
+.keep-grid { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 18px; align-items: start; }
+.phone { position: relative; border: 6px solid #15130f; border-radius: 26px; padding: 10px 10px 12px; background: #fff; display: flex; flex-direction: column; gap: 7px; font-size: 11px; box-shadow: 0 20px 40px -24px rgba(0,0,0,.5); }
+.ph-top { display: flex; justify-content: space-between; font-size: 9px; color: var(--muted); }
+.ph-title { font-weight: 700; font-size: 13px; margin: 2px 0 4px; }
+.ph-item { position: relative; display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 10px; padding: 6px; }
+.ph-item i { width: 26px; height: 26px; border-radius: 7px; flex-shrink: 0; }
+.ph-item span { display: flex; flex-direction: column; } .ph-item b { font-size: 11px; } .ph-item em { font-style: normal; color: var(--muted); font-size: 10px; }
+.ph-item.flagged { box-shadow: 0 0 0 2px var(--as-line); }
+.ph-item .pin, .ph-btns .pin { position: absolute; right: -9px; top: -9px; }
+.ph-total { display: flex; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 6px; margin-top: 2px; }
+.ph-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.ph-btns span { position: relative; text-align: center; border-radius: 9px; padding: 7px 0; font-weight: 600; }
+.ph-btns .ghost { border: 1px solid var(--line); color: var(--muted); } .ph-btns .solid { background: #15130f; color: #fff; }
+.pin { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--as); color: #fff; font-family: var(--mono); font-size: 0.66rem; flex-shrink: 0; box-shadow: 0 0 0 3px rgba(163,90,0,.18); }
+.pin.blue { background: var(--qu); box-shadow: 0 0 0 3px rgba(58,79,198,.18); }
+.keep-side { display: flex; flex-direction: column; gap: 9px; min-width: 0; }
+.keep-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 0.92rem; }
+.finding { display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--line); border-radius: 12px; padding: 10px; font-size: 0.86rem; }
+.chip-link { display: inline-block; margin-top: 6px; font-size: 0.74rem; color: var(--muted); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; }
+.keep-cols { display: grid; grid-template-columns: 1.3fr 1fr; gap: 10px; }
+.watch { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; font-size: 0.84rem; }
+.watch .co-tag { color: var(--muted); }
+.wrow { display: flex; align-items: center; gap: 8px; } .wrow i { width: 8px; height: 8px; border-radius: 50%; background: var(--ev); box-shadow: 0 0 0 3px var(--ev-bg); }
+.verdict2 { font-size: 0.84rem; color: var(--muted); background: var(--bg); border-radius: 10px; padding: 9px 12px; }
+@media (max-width: 600px) { .keep-grid, .keep-cols { grid-template-columns: 1fr; } .phone { max-width: 220px; margin: 0 auto; } }
+
+
+/* ---------- How it works: animated story ---------- */
+.hsteps { position: relative; }
+.hsteps li::before { display: none; }
+.hline { position: absolute; left: 21px; top: 22px; bottom: 52px; width: 2px; background: var(--line); border-radius: 2px; }
+.hline b { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: var(--ev); border-radius: 2px; transition: height .9s cubic-bezier(.65,0,.25,1); }
+.hsteps li { cursor: pointer; transition: opacity .5s ease, transform .5s ease; }
+.hsteps .n { transition: transform .45s cubic-bezier(.3,1.6,.5,1), background .4s, box-shadow .4s; position: relative; z-index: 1; }
+.hsteps.hplaying li { opacity: .38; }
+.hsteps.hplaying li.on, .hsteps.hplaying li.done { opacity: 1; }
+.hsteps li.on .n { transform: scale(1.18); background: var(--ev); box-shadow: 0 0 0 8px var(--ev-bg); }
+.hsteps li.done .n { background: var(--ev); }
+.hsteps li.on h3 { color: var(--ev); }
+.hwin { background: var(--surface); border-radius: 22px; box-shadow: 0 40px 80px -40px rgba(20,20,60,.5), 0 0 0 1px rgba(0,0,0,.05); overflow: hidden; align-self: center; }
+.hwin-bar { display: flex; align-items: center; gap: 12px; padding: 11px 16px; border-bottom: 1px solid var(--line); background: #f8f6f2; font-size: 0.84rem; color: var(--muted); }
+.hdef { margin-left: auto; font-size: 0.76rem; background: var(--ev-bg); color: var(--ev); border-radius: 999px; padding: 3px 10px; transition: transform .3s; }
+.hdef.bump { animation: hbump .5s ease; }
+@keyframes hbump { 40% { transform: scale(1.25); } }
+.hwin-body { padding: 18px; display: flex; flex-direction: column; gap: 10px; min-height: 470px; }
+.hwin [data-hs] { transition: opacity .55s ease, transform .55s cubic-bezier(.2,.9,.3,1.2), max-height .55s ease; }
+.hwin.hplaying [data-hs]:not(.in) { opacity: 0; transform: translateY(14px) scale(.98); max-height: 0; margin-top: -10px; overflow: hidden; }
+.hwin.hplaying [data-hs].in { max-height: 300px; }
+.hdots { display: none; gap: 5px; padding: 10px 14px; background: var(--bg); border: 1px solid var(--line); border-radius: 14px; align-self: flex-start; }
+.hwin.hplaying .hdots.in { display: inline-flex; }
+.hdots i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: hdot 1s infinite; }
+.hdots i:nth-child(2) { animation-delay: .15s; } .hdots i:nth-child(3) { animation-delay: .3s; }
+@keyframes hdot { 50% { opacity: .25; transform: translateY(-3px); } }
+.hwin #h-opt { transition: all .3s; }
+.hwin.hplaying #h-opt:not(.picked) { background: var(--surface); border-color: var(--line); font-weight: 400; }
+.hwin.hplaying #h-opt:not(.picked)::before { background: none; border-color: var(--muted); }
+.hacc { font-size: 0.78rem; color: var(--ev); font-weight: 600; }
+.hwin.hplaying .hprop:not(.accepted) .hacc { opacity: 0; }
+.hprop.accepted { animation: hflash .9s ease; }
+@keyframes hflash { 30% { box-shadow: 0 0 0 4px var(--ev-bg); border-color: var(--ev); } }
+.hsign { border: 1.5px solid var(--ev-line); background: var(--ev-bg); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.hav { display: flex; }
+.hav .avi { margin-right: -8px; border-radius: 50%; box-shadow: 0 0 0 3px #fff; transition: transform .45s cubic-bezier(.3,1.6,.5,1), opacity .4s; }
+.hwin.hplaying .hsign:not(.signed) .avi { opacity: 0; transform: scale(.4); }
+.htoast { align-self: flex-start; background: var(--ink); color: #fff; font-size: 0.8rem; border-radius: 999px; padding: 5px 12px; transition: opacity .4s, transform .4s; }
+.hwin.hplaying .hsign:not(.copied) .htoast { opacity: 0; transform: translateY(6px); }
+
+
+.hwin-body { max-height: 600px; overflow-y: auto; scroll-behavior: smooth; }
+.hnext { border: 1px solid var(--line); border-radius: 16px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
+.hrow { display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; font-size: 0.86rem; padding: 4px 0; transition: opacity .4s, transform .4s; }
+.hrow i { font-style: normal; font-size: 0.7rem; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; }
+.hwin.hplaying .hnext:not(.go) .hrow { opacity: 0; transform: translateX(12px); }
+.hhand { align-self: flex-start; margin-top: 4px; font-size: 0.78rem; font-weight: 600; color: var(--qu); background: var(--qu-bg); border-radius: 999px; padding: 4px 10px; transition: opacity .4s; }
+.hwin.hplaying .hnext:not(.handed) .hhand { opacity: 0; }
+.hres { border: 1.5px solid var(--qu-line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.hres-head { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
+.hbars { display: flex; flex-direction: column; gap: 8px; }
+.hbars div { display: grid; grid-template-columns: 70px 1fr; gap: 10px; align-items: center; font-size: 0.8rem; color: var(--muted); }
+.hb { display: block; height: 14px; border-radius: 6px; transition: width 1.2s cubic-bezier(.2,.8,.2,1); }
+.hb1 { width: 52%; background: var(--dc-line); } .hb2 { width: 64%; background: var(--qu); }
+.hwin.hplaying .hres:not(.grow) .hb { width: 0; }
+.hq { font-size: 0.88rem; }
+.hverdict { display: flex; gap: 6px; }
+.hverdict span { border: 1px solid var(--line); border-radius: 999px; padding: 5px 14px; font-size: 0.82rem; font-weight: 600; transition: all .35s; }
+.hres.decided .hverdict .pick, .hwin:not(.hplaying) .hverdict .pick { background: var(--ink); color: #fff; border-color: var(--ink); }
+.hsaved { font-size: 0.8rem; color: var(--ev); font-weight: 600; transition: opacity .4s; }
+.hwin.hplaying .hres:not(.saved) .hsaved { opacity: 0; }
+/* Make the result count */
+.effect { padding-block: clamp(64px, 8vw, 104px); }
+.effect h2 { font-size: clamp(2.1rem, 4.4vw, 3.4rem); max-width: 14em; margin-top: 10px; }
+.effect > p { color: var(--muted); max-width: 36em; margin-top: 12px; font-size: 1.08rem; }
+.tips { margin-top: 36px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; counter-reset: tip; }
+.tip { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 8px; counter-increment: tip; transition: transform .2s, box-shadow .2s; }
+.tip:hover { transform: translateY(-3px); box-shadow: 0 20px 40px -30px rgba(0,0,0,.5); }
+.tip::before { content: "0" counter(tip); font-family: var(--mono); font-size: 0.74rem; color: var(--ev); }
+.tip h3 { font-family: var(--serif); font-weight: 400; font-size: 1.35rem; letter-spacing: -0.01em; line-height: 1.15; }
+.tip p { color: var(--muted); font-size: 0.92rem; }
+.tip .who-tag { margin-top: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--muted); }
+@media (max-width: 900px) { .tips { grid-template-columns: 1fr; } }
+
+
+/* ---------- Mega menu navigation ---------- */
+.bar { position: relative; }
+.mnav { display: flex; align-items: center; gap: 2px; }
+.mitem { position: static; }
+.mbtn, .mplain { border: 1px solid transparent; background: none; font: inherit; font-size: 0.92rem; color: var(--muted); padding: 7px 12px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; }
+.mbtn:hover, .mplain:hover, .mbtn[aria-expanded="true"] { color: var(--ink); background: var(--tint); }
+.mbtn[aria-expanded="true"] { border-color: #b9a8ff; box-shadow: 0 0 0 3px #efe9ff; }
+.chev { width: 12px; height: 12px; transition: transform .2s; }
+.mbtn[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.mega { position: absolute; top: calc(100% + 10px); left: 0; right: 0; z-index: 60; background: #fff; border: 1px solid var(--line); border-radius: 24px; box-shadow: 0 40px 80px -30px rgba(20,20,60,.35); display: grid; grid-template-columns: minmax(0, 1fr) 280px; overflow: hidden; animation: megaIn .22s ease; }
+.mega[hidden] { display: none !important; }
+.mega.small { left: auto; right: 160px; width: 380px; grid-template-columns: 1fr; padding: 12px; }
+@keyframes megaIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.mcols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; padding: 22px 26px; }
+.mlabel { font-family: var(--mono); font-size: 0.68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px 8px; }
+.mlink { display: flex; gap: 12px; align-items: flex-start; padding: 9px 10px; border-radius: 14px; text-decoration: none; color: var(--ink); cursor: pointer; transition: background .15s; }
+.mlink:hover, .mlink:focus-visible { background: var(--tint); }
+.mlink b { display: flex; align-items: center; gap: 8px; font-size: 0.93rem; font-weight: 600; }
+.mlink em { display: block; font-style: normal; font-size: 0.8rem; color: var(--muted); margin-top: 1px; }
+.mlink .ico { width: 34px; height: 34px; padding: 8px; border-radius: 10px; background: var(--bg); border: 1px solid var(--line); stroke: var(--ink); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.mlink.sm .ico { width: 28px; height: 28px; padding: 6px; }
+.mlink.role .avi { flex-shrink: 0; border-radius: 50%; }
+.mlink i.soon { font-style: normal; }
+.mrow2 { display: grid; grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--line); margin-top: 6px; padding-top: 6px; }
+.mfeature { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 26px 24px; text-decoration: none; color: var(--ink); background: linear-gradient(160deg, #efe9ff 0%, #f3f0ff 45%, #e2efff 100%); border-left: 1px solid var(--line); }
+.mtag { align-self: flex-start; border: 1.5px solid #6b4fd8; color: #6b4fd8; border-radius: 999px; padding: 3px 12px; font-size: 0.76rem; font-weight: 600; }
+.mfeature b { font-family: var(--serif); font-weight: 400; font-size: 1.5rem; line-height: 1.15; letter-spacing: -0.01em; margin-top: 6px; }
+.mfeature > span:not(.mtag):not(.mplay) { color: var(--muted); font-size: 0.88rem; }
+.mplay { margin-top: auto; display: inline-flex; align-items: center; gap: 8px; color: #6b4fd8; font-weight: 600; font-size: 0.9rem; }
+.mplay .ico { width: 26px; height: 26px; padding: 6px; border-radius: 50%; background: #6b4fd8; fill: #fff; stroke: none; }
+.mob-menu { display: none; }
+@media (max-width: 900px) {
+  .bar nav.mnav { display: none; }
+  .mob-menu { display: inline-flex; }
+  .bar.open nav.mnav { display: flex; flex-direction: column; align-items: stretch; position: absolute; top: calc(100% + 8px); left: 0; right: 0; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 10px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.4); max-height: 75vh; overflow-y: auto; z-index: 60; }
+  .bar.open .mega, .bar.open .mega.small { position: static; width: auto; box-shadow: none; border: 0; grid-template-columns: 1fr; animation: none; }
+  .bar.open .mcols { grid-template-columns: 1fr; padding: 6px; }
+  .bar.open .mfeature { border-radius: 16px; }
+}
+
 @media (max-width: 1100px) { .moments { grid-template-columns: 1fr 1fr; } .hand { display: none; } }
 @media (max-width: 900px) {
   .ws { grid-template-columns: minmax(0, 1fr); }
@@ -602,6 +764,7 @@ function parseFigures(text) {
 function intentOf(t) {
   t = t.toLowerCase();
   if (/\b(market|forecast|projection|predict|tam|sam|som|market size|trend|growth rate|chart|graph|visual|visuali[sz]e|plot|competitor|share|funnel|matrix)\b/.test(t)) return "visual";
+  if (/\b(what'?s next|next steps?|after (i|we) agree|then what|after agree|launch|ship it|go live|make (the )?results? (count|effective)|effective|measure success|after launch)\b/.test(t)) return "next";
   if (/\b(what'?s missing|missing|gaps?|review)\b/.test(t)) return "gaps";
   if (/\b(pitch|vp|present|presentation|stakeholder|exec|leadership|sell (it|this))\b/.test(t)) return "pitch";
   if (/\b(risks?|could go wrong|trade-?offs?|downside|worry)\b/.test(t)) return "risks";
@@ -637,7 +800,20 @@ function visualReply(f, text) {
   }
   return { text: reply, proposals: props };
 }
+function nextStepsText(f) {
+  const m = first(f, "measure"), a = items(f, "assumption").find((x) => !x.owner) || items(f, "assumption")[0];
+  const q = items(f, "question").filter((x) => !x.answer);
+  const lines = [
+    `Growth: record the baseline for ${m ? `“${trunc(m, 50)}”` : "your success measure [unknown]"} before launch, and add any missing tracking.`,
+    `Engineering: build v1${first(f, "scope_in") ? ` (${trunc(first(f, "scope_in"), 50)})` : ""} behind a flag, with a holdout group if that's the agreed test.`,
+    `Design: check the screens against ${items(f, "criterion").length ? `the ${items(f, "criterion").length} acceptance criteria` : "the acceptance criteria [none yet]"} before release.`,
+    `PM: give ${a ? `“${trunc(a.text, 50)}”` : "each assumption"} an owner and a test, and book the learning review.`,
+  ];
+  if (q.length) lines.push(`Close ${q.length} open question${q.length === 1 ? "" : "s"} first: ${q.slice(0, 2).map((x) => `${ROLES[x.role] || "PM"} on “${trunc(x.text, 40)}”`).join("; ")}.`);
+  return `After you agree and share:\n${lines.map((l, i) => `${i + 1}. ${l}`).join("\n")}\n\nTo make the result count: keep the test you agreed (don't switch to a before-and-after chart), watch guardrails weekly, then decide scale, iterate or stop, and record why.`;
+}
 function intentReply(f, intent, text) {
+  if (intent === "next") return { text: nextStepsText(f) };
   if (intent === "visual") return visualReply(f, text);
   if (intent === "gaps") { const g = gaps(f).slice(0, 5); return { text: g.length ? "Here's what's missing, most important first:\n" + g.map((x, i) => `${i + 1}. ${x.text}`).join("\n") : "Nothing is missing that I can count. Ask each role to agree their sections." }; }
   if (intent === "pitch") return { text: `A pitch from what's in the definition:\n1. Problem: ${first(f, "problem") || "[unknown]"}\n2. Evidence: ${first(f, "evidence") || "[unknown]"}\n3. The bet (untested): ${first(f, "assumption") || "[unknown]"}\n4. The ask: agree v1 = ${first(f, "scope_in") || "[unknown]"}, measured by ${first(f, "measure") || "[unknown]"} with baseline [unknown].\nLead with the problem, not the feature.` };
@@ -652,6 +828,28 @@ function intentReply(f, intent, text) {
   if (intent === "summary") { const filledN = SECTIONS.filter(([k]) => items(f, k).length).length; return { text: `${filledN} of ${SECTIONS.length} sections have content, ${SECTIONS.filter(([k]) => f.agreed[k]).length} agreed, ${gaps(f).length} gaps. Use Copy summary at the top to share it.` }; }
   return { text: "In guided mode I can help with: what's missing, risks, a pitch, a summary, or charts (forecast, market size, competitors, assumption matrix, funnel). Ask for any of those, or answer the question below." };
 }
+
+
+// =================== Illustrated role avatars ===================
+const AVATARS = {
+  pm:          { bg: "#ece8df", shirt: "#15130f", skin: "#e8b48f", hair: "#2b1d14", style: "bun" },
+  design:      { bg: "#fbe1ea", shirt: "#d6457a", skin: "#c98b63", hair: "#1c1410", style: "curly" },
+  growth:      { bg: "#dff3e9", shirt: "#11805a", skin: "#f1c7a5", hair: "#9a5a2c", style: "short" },
+  engineering: { bg: "#e3e7fd", shirt: "#3a4fc6", skin: "#8d5a3b", hair: "#15110e", style: "fade" },
+};
+function avatar(role, size = 40) {
+  const a = AVATARS[role] || AVATARS.pm;
+  const hair = {
+    bun: `<circle cx="32" cy="15" r="7" fill="${a.hair}"/><path d="M19 30c0-9 6-14 13-14s13 5 13 14c-3-5-8-7-13-7s-10 2-13 7z" fill="${a.hair}"/>`,
+    curly: `<g fill="${a.hair}"><circle cx="21" cy="25" r="6"/><circle cx="27" cy="19" r="6.5"/><circle cx="35" cy="18" r="6.5"/><circle cx="42" cy="24" r="6"/><circle cx="44" cy="31" r="4.5"/><circle cx="20" cy="32" r="4.5"/></g>`,
+    short: `<path d="M19 29c0-9 6-14 13-14 8 0 13 5 13 12-4-4-9-5-14-5-5 0-9 3-12 7z" fill="${a.hair}"/>`,
+    fade: `<path d="M20 27c1-7 6-11 12-11s11 4 12 11c-3-3-7-4-12-4s-9 1-12 4z" fill="${a.hair}"/>`,
+  }[a.style];
+  return `<svg class="avi" width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true"><clipPath id="c-${role}-${size}"><circle cx="32" cy="32" r="32"/></clipPath><g clip-path="url(#c-${role}-${size})"><rect width="64" height="64" fill="${a.bg}"/><path d="M10 64c2-12 11-18 22-18s20 6 22 18z" fill="${a.shirt}"/><rect x="27" y="38" width="10" height="9" rx="4" fill="${a.skin}"/><circle cx="32" cy="30" r="12" fill="${a.skin}"/>${hair}<circle cx="27.5" cy="31" r="1.4" fill="#15130f"/><circle cx="36.5" cy="31" r="1.4" fill="#15130f"/><path d="M28.5 36c2 1.6 5 1.6 7 0" stroke="#15130f" stroke-width="1.4" fill="none" stroke-linecap="round"/></g></svg>`;
+}
+
+// =================== Menu icons ===================
+const ICON = {chat: `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>`,tag: `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l9 9-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg>`,gap: `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v5M12 16h.01"/></svg>`,chart: `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-3"/></svg>`,coach: `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3 11v3h6v-3a6 6 0 0 0-3-11zM9 21h6"/></svg>`,eye: `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>`,learn: `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg>`,book: `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4zM20 4h-5"/></svg>`,check: `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>`,q: `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6M12 17h.01"/></svg>`,play: `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg>`};
 
 // =================== Storage ===================
 const KEY = "scopeline-chat-v1";
@@ -708,6 +906,8 @@ function guidedReply(f, userText) {
     msg.text = `I split your request into ${props.length} claim${props.length === 1 ? "" : "s"}. ${ev ? `${ev} name${ev === 1 ? "s" : ""} a source, so I've marked ${ev === 1 ? "it" : "them"} as evidence. The rest stay assumptions until someone finds a source.` : "None of them names a source yet, so they stay assumptions until someone finds one."}`;
     props.forEach((x) => { if (x.kind === "evidence") x.source = "Named in your request"; });
     msg.proposals = props;
+    const it = intentOf(userText);
+    if (it && it !== "help") { const r = intentReply(f, it, userText); msg.text = r.text + "\n\n" + msg.text; msg.proposals = [...(r.proposals || []), ...props]; }
   } else if (userText && intentOf(userText) && !(asked && asked.questions && asked.questions.some((q) => q.answer === userText))) {
     const r = intentReply(f, intentOf(userText), userText);
     msg.text = r.text; msg.proposals = r.proposals || [];
@@ -722,7 +922,7 @@ function guidedReply(f, userText) {
   }
   const g = nextGuide({ ...f, doc: [...f.doc, ...msg.proposals.map((p) => ({ kind: p.kind }))] });
   if (g) { msg.guideKey = g.key; msg.questions = [{ id: uid(), text: g.q, role: g.role, options: g.options || [] }]; }
-  else { const gl = gaps(f); msg.text += `\n\nThat covers every step. ${gl.length ? `${gl.length} gaps are left in the definition panel. Mark sections agreed as your team signs off.` : "Nothing is missing. Mark sections agreed as your team signs off."}`; }
+  else { const gl = gaps(f); msg.text += `\n\nThat covers every step. ${gl.length ? `${gl.length} gaps are left in the definition panel. Mark sections agreed as your team signs off.` : "Nothing is missing. Mark sections agreed as your team signs off."}\n\n${nextStepsText(f)}`; }
   msg.proposals = msg.proposals.map((p) => ({ id: uid(), status: "open", role: p.kind === "question" ? "pm" : undefined, ...p }));
   return msg;
 }
@@ -737,6 +937,7 @@ Rules:
 5. Ask exactly one follow-up question for the next missing step, for one role, with 2 to 4 short answer options when sensible.
 6. At most 5 proposals. Kinds: problem, audience, outcome, evidence, assumption, question, scope_in, scope_out, criterion, measure, decision.
 7. Never state that the feature will cause an outcome; expected impact is an assumption.
+9. If the user asks what happens after agreeing, or how to make results effective, give owner-by-owner next steps from the definition: baseline and tracking before launch (Growth), build behind a flag with the agreed test (Engineering), check designs against acceptance criteria (Design), owners and a review date for assumptions (PM); then keep the agreed test, watch guardrails, decide scale/iterate/stop with a reason.
 8. Visuals: when the user asks for market research, a forecast, sizing, a comparison or a chart, or when a chart would make a decision clearer, add a proposal with kind "visual", a short title in "text", and a "visual" object: {"type": "line"|"bar"|"matrix"|"funnel", "unit": string, "series": [{"name": string, "points": [{"x": string, "y": number|null}]}], "items": [{"label": string, "impact": 1|2|3, "evidence": 1|2|3}], "steps": [{"label": string, "value": number|null}], "basis": "user"|"placeholder"|"estimate"|"definition", "source": string, "note": string}. Use "series" for line and bar, "items" for matrix (assumptions by impact and evidence), "steps" for funnel. Numbers the user gave: basis "user". No data: null values with basis "placeholder" (forecasts as Low/Base/High series). You cannot browse the web. Only if the user explicitly asks for market estimates may you give rough figures from your training knowledge, with basis "estimate", what they are based on in "source", and a reply that says they must be verified before use.
 Return ONLY JSON: {"reply": string, "questions": [{"text": string, "role": "pm"|"design"|"growth"|"engineering", "options": [string]}], "proposals": [{"kind": string, "text": string, "source": string, "role": string, "why": string, "visual": object}]}`;
 function snapshot(f) {
@@ -800,6 +1001,13 @@ const EXAMPLES = {
   carts: "Let customers save a cart and come back to it later. Most users abandon carts on mobile.",
   invites: "Add team invites so admins can bring colleagues in. Sales says enterprise deals stall without it.",
   pitch: "Help me pitch saved carts to my VP of Product next week. What risks will she ask about?",
+  market: "Show me the market size and a forecast for one-tap reorder in grocery apps.",
+  uc_pm: "I'm a PM. Help me scope saved carts for our mobile app before sprint planning next week.",
+  uc_design: "I'm a product designer. Saved carts are coming to our app. What journeys and edge cases should we agree first?",
+  uc_growth: "I lead growth. We're launching one-tap reorder. How do we set the baseline and test before launch?",
+  uc_eng: "I'm an engineering lead. Product wants one-tap reorder. What should we clarify about feasibility and acceptance criteria?",
+  uc_startup: "We're a 5-person startup. I'm PM, designer and growth. Help me scope team invites for our app.",
+  next: "We agreed the scope for one-tap reorder. What should we do next, and how do we make the results effective?",
 };
 
 // =================== Render ===================
@@ -812,7 +1020,7 @@ function composer(id, placeholder, big) {
     <div class="composer-row">
       <div class="chips">${big
         ? `<button type="button" class="chip" data-fill="reorder">One-tap reorder</button><button type="button" class="chip" data-fill="carts">Saved carts</button><button type="button" class="chip" data-fill="invites">Team invites</button>`
-        : `<button type="button" class="chip" data-say="What's missing from the definition?">What's missing?</button><button type="button" class="chip" data-say="What are the biggest risks?">Risks</button><button type="button" class="chip" data-say="Show me a forecast chart for this feature.">Forecast</button><button type="button" class="chip" data-say="Show me the market size and competitors as a chart.">Market</button><button type="button" class="chip" data-say="How should I pitch this to my VP?">Pitch it</button>`}</div>
+        : `<button type="button" class="chip" data-say="What's missing from the definition?">What's missing?</button><button type="button" class="chip" data-say="What are the biggest risks?">Risks</button><button type="button" class="chip" data-say="Show me a forecast chart for this feature.">Forecast</button><button type="button" class="chip" data-say="Show me the market size and competitors as a chart.">Market</button><button type="button" class="chip" data-say="How should I pitch this to my VP?">Pitch it</button><button type="button" class="chip" data-say="What's next after we agree, and how do we make the results effective?">Next steps</button>`}</div>
       ${busy && !big ? `<button type="button" class="btn ghost sm" data-act="stop">Stop</button>` : `<button type="submit" class="send" aria-label="${big ? "Start" : "Send"}">↑</button>`}
     </div>
   </form>`;
@@ -824,7 +1032,52 @@ function homeView() {
   <header class="top"><div class="wrap"><div class="bar">
     <button class="logo" data-act="home"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</button>
     <span class="spacer"></span>
-    <nav aria-label="Page"><a href="#product">Product</a><a href="#how-it-works">How it works</a><a href="#faq">FAQ</a></nav>
+    <nav class="mnav" aria-label="Main">
+      <div class="mitem">
+        <button class="mbtn" aria-expanded="false" aria-controls="mm-product" data-menu="product">Product <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="mega" id="mm-product" hidden>
+          <div class="mcols">
+            <div>
+              <p class="mlabel">Features</p>
+              <a class="mlink" href="#product" data-close>${ICON.chat}<span><b>Chat that asks first</b><em>Follow-up questions to the right role</em></span></a>
+              <a class="mlink" data-try="carts">${ICON.tag}<span><b>Labelled claims</b><em>Evidence, assumptions, questions</em></span></a>
+              <a class="mlink" href="#gapcard" data-close>${ICON.gap}<span><b>Gap review</b><em>Counted from the definition, not scored</em></span></a>
+              <a class="mlink" data-try="market">${ICON.chart}<span><b>Charts and forecasts</b><em>Your numbers, or placeholders</em></span></a>
+              <a class="mlink" data-try="pitch">${ICON.coach}<span><b>Coaching</b><em>Pitches and risks from your facts</em></span></a>
+              <div class="mrow2">
+                <a class="mlink sm" href="#results" data-close>${ICON.eye}<span><b>Design review <i class="soon">Next</i></b></span></a>
+                <a class="mlink sm" href="#results" data-close>${ICON.learn}<span><b>Learning review <i class="soon">Later</i></b></span></a>
+              </div>
+            </div>
+            <div>
+              <p class="mlabel">Use cases</p>
+              <a class="mlink role" data-try="uc_pm">${avatar("pm", 34)}<span><b>Product managers</b><em>Reach an agreed scope before sprint planning</em></span></a>
+              <a class="mlink role" data-try="uc_design">${avatar("design", 34)}<span><b>Product designers</b><em>Start with the journeys and edge cases</em></span></a>
+              <a class="mlink role" data-try="uc_growth">${avatar("growth", 34)}<span><b>Growth teams</b><em>Baselines and tests before launch</em></span></a>
+              <a class="mlink role" data-try="uc_eng">${avatar("engineering", 34)}<span><b>Engineering leads</b><em>Feasibility and criteria while scope can change</em></span></a>
+              <a class="mlink role" data-try="uc_startup">${avatar("pm", 34)}<span><b>Small startup squads</b><em>One person wearing three hats</em></span></a>
+            </div>
+          </div>
+          <a class="mfeature" href="#product" data-act="watch">
+            <span class="mtag">Product video</span>
+            <b>See a request become an agreed definition</b>
+            <span>Five scenes, under 30 seconds</span>
+            <span class="mplay">${ICON.play} Watch now</span>
+          </a>
+        </div>
+      </div>
+      <div class="mitem">
+        <button class="mbtn" aria-expanded="false" aria-controls="mm-res" data-menu="res">Resources <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="mega small" id="mm-res" hidden>
+          <a class="mlink" href="#how-it-works" data-close>${ICON.book}<span><b>How a session works</b><em>Six steps from chat to result</em></span></a>
+          <a class="mlink" href="#results" data-close>${ICON.check}<span><b>Six habits after you agree</b><em>Make the result count</em></span></a>
+          <a class="mlink" data-try="reorder">${ICON.chat}<span><b>Example: one-tap reorder</b><em>Open a worked example in the chat</em></span></a>
+          <a class="mlink" href="#faq" data-close>${ICON.q}<span><b>FAQ</b><em>Free? Made-up numbers? Which AI?</em></span></a>
+        </div>
+      </div>
+      <a class="mplain" href="#how-it-works">How it works</a>
+    </nav>
+    <button class="btn ghost sm mob-menu" data-act="mobmenu" aria-expanded="false">Menu</button>
     ${recent.length ? `<button class="btn ghost sm" data-open="${recent[0].id}">Your last chat</button>` : ""}
     <button class="btn sm" data-act="new">Start free <span class="knob" aria-hidden="true">›</span></button>
   </div></div></header>
@@ -886,7 +1139,15 @@ function homeView() {
           </div>
         </div>
       </div>
-      <div class="roles-strip"><span>Built for</span><span><span class="av av-pm">PM</span>Product</span><span><span class="av av-design">DS</span>Design</span><span><span class="av av-growth">GR</span>Growth</span><span><span class="av av-engineering">EN</span>Engineering</span></div>
+      <div class="squad">
+        <p class="squad-title">Built for the whole squad</p>
+        <div class="squad-row">
+          <div class="who-card c-pm">${avatar("pm", 48)}<div><b>Product</b><span>Value, scope and open decisions</span></div></div>
+          <div class="who-card c-design">${avatar("design", 48)}<div><b>Design</b><span>Journeys, edge cases and states</span></div></div>
+          <div class="who-card c-growth">${avatar("growth", 48)}<div><b>Growth</b><span>Behaviour, baselines and measures</span></div></div>
+          <div class="who-card c-engineering">${avatar("engineering", 48)}<div><b>Engineering</b><span>Feasibility and acceptance criteria</span></div></div>
+        </div>
+      </div>
     </section>
 
     <section class="wrap ps">
@@ -907,10 +1168,10 @@ function homeView() {
           <div class="tree">
             <span class="root-pill">✓ One agreed definition</span>
             <div class="branches">
-              <div class="bcard"><span class="ck">✓</span><span><small>Agreed</small>Problem and scope signed off</span><span class="nametag" style="background:#15130f"><span class="av av-pm">PM</span>Dana</span></div>
-              <div class="bcard"><span class="ck">✓</span><span><small>Answered</small>Out-of-stock items are shown, excluded</span><span class="nametag" style="background:#d6457a"><span class="av av-design">DS</span>Maya</span></div>
-              <div class="bcard"><span class="ck">✓</span><span><small>Question sent</small>Baseline needs instrumentation</span><span class="nametag" style="background:#11805a"><span class="av av-growth">GR</span>Sam</span></div>
-              <div class="bcard"><span class="ck">✓</span><span><small>Criteria added</small>Prices re-checked on rebuild</span><span class="nametag" style="background:#3a4fc6"><span class="av av-engineering">EN</span>Lee</span></div>
+              <div class="bcard"><span class="ck">✓</span><span><small>Agreed</small>Problem and scope signed off</span><span class="nametag" style="background:#15130f">${avatar("pm", 20)}Dana</span></div>
+              <div class="bcard"><span class="ck">✓</span><span><small>Answered</small>Out-of-stock items are shown, excluded</span><span class="nametag" style="background:#d6457a">${avatar("design", 20)}Maya</span></div>
+              <div class="bcard"><span class="ck">✓</span><span><small>Question sent</small>Baseline needs instrumentation</span><span class="nametag" style="background:#11805a">${avatar("growth", 20)}Sam</span></div>
+              <div class="bcard"><span class="ck">✓</span><span><small>Criteria added</small>Prices re-checked on rebuild</span><span class="nametag" style="background:#3a4fc6">${avatar("engineering", 20)}Lee</span></div>
             </div>
           </div>
         </div>
@@ -1006,31 +1267,98 @@ function homeView() {
         <p>Designs get checked against what you signed off. Results get compared with the original assumption.</p>
         <div class="seg" role="tablist"><button role="tab" aria-selected="true" data-stage="design">Design review <span class="soon">Next</span></button><button role="tab" aria-selected="false" data-stage="learn">After launch <span class="soon">Later</span></button></div>
       </div>
-      <div class="field f-blue"><div class="card">
-        <div class="spanel" data-panel="design"><div class="callout co-as"><span class="co-tag">Finding · Edge case</span>The unavailable item looks like the others.<span class="co-src">Affects decision: show it, excluded from the total</span></div><div class="callout co-qu" style="margin-top:8px"><span class="co-tag">Finding · Hierarchy</span>“Reorder” competes with “Edit basket”.<span class="co-src">Affects criterion: customer reviews before checkout</span></div></div>
-        <div class="spanel" data-panel="learn" hidden><div class="callout co-as"><span class="co-tag">Assumption · Growth</span>Easier reordering increases repeat purchases.<span class="co-src">Test agreed before launch: holdout</span></div><div class="callout co-qu" style="margin-top:8px"><span class="co-tag">Result</span><span class="ph">pending</span> No verdict until the holdout result is in.</div></div>
+      <div class="field f-blue keep-field"><div class="card keep-card">
+        <div class="spanel" data-panel="design">
+          <div class="keep-grid">
+            <div class="phone" aria-label="Example design: reorder screen">
+              <div class="ph-top"><span>9:41</span><span>●●●</span></div>
+              <p class="ph-title">Reorder last basket</p>
+              <div class="ph-item"><i style="background:#f3d9b1"></i><span><b>Oat milk 1L</b><em>£1.80</em></span></div>
+              <div class="ph-item flagged"><i style="background:#cfe3d4"></i><span><b>Spinach 200g</b><em>£1.20</em></span><b class="pin">1</b></div>
+              <div class="ph-item"><i style="background:#e6d7f2"></i><span><b>Rye bread</b><em>£2.40</em></span></div>
+              <div class="ph-total"><span>Total</span><b>£5.40</b></div>
+              <div class="ph-btns"><span class="ghost">Edit basket</span><span class="solid">Reorder<b class="pin blue">2</b></span></div>
+            </div>
+            <div class="keep-side">
+              <div class="keep-head"><b>Design review · v2</b><span class="badge">2 findings</span></div>
+              <div class="meter"><span style="width:75%"></span></div><span class="mono">3 of 4 acceptance criteria met</span>
+              <div class="finding"><b class="pin">1</b><div><span class="co-tag" style="color:var(--as)">Edge case</span>The out-of-stock item looks like the others.<span class="chip-link">Decision: show it, excluded from total</span></div></div>
+              <div class="finding"><b class="pin blue">2</b><div><span class="co-tag" style="color:var(--qu)">Hierarchy</span>“Reorder” outweighs “Edit basket”.<span class="chip-link">Criterion: customer reviews first</span></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="spanel" data-panel="learn" hidden>
+          <div class="keep-head"><b>Learning review · One-tap reorder</b><span class="badge">Pending data</span></div>
+          <div class="viz-body">${chartSVG({ type: "line", series: [{ name: "Exposed", points: ["W1", "W2", "W3", "W4"].map((x) => ({ x, y: null })) }, { name: "Holdout", points: ["W1", "W2", "W3", "W4"].map((x) => ({ x, y: null })) }] }, 460, 170)}</div>
+          <div class="keep-cols">
+            <div class="callout co-as"><span class="co-tag">Assumption · Growth</span>Easier reordering increases repeat purchases.<span class="co-src">Test agreed before launch: holdout</span></div>
+            <div class="watch"><span class="co-tag">Guardrails watched</span><span class="wrow"><i></i>Refunds</span><span class="wrow"><i></i>Cancellations</span><span class="wrow"><i></i>Support contacts</span></div>
+          </div>
+          <div class="verdict2"><span class="ph">pending</span> No verdict until 4 weeks of holdout data are in. Results are compared with the original assumption, not a new target.</div>
+        </div>
       </div></div>
     </section>
 
     <section class="sec tint" id="how-it-works"><div class="wrap how">
       <div>
         <p class="eyebrow">How a session works</p>
-        <h2 class="serif" style="font-size:clamp(2.2rem,4.4vw,3.4rem);margin:12px 0 32px">Four steps, one chat</h2>
-        <ol class="steps">
-          <li><span class="n">01</span><div><h3>Describe the feature</h3><p>A sentence, notes or a transcript is enough.</p></div></li>
-          <li><span class="n">02</span><div><h3>Answer its questions</h3><p>One at a time, each for the role that knows.</p></div></li>
-          <li><span class="n">03</span><div><h3>Accept what's right</h3><p>Labelled proposals fill the definition as you go.</p></div></li>
-          <li><span class="n">04</span><div><h3>Agree and share</h3><p>Each role signs off. Copy the summary for the team.</p></div></li>
+        <h2 class="serif" style="font-size:clamp(2.2rem,4.4vw,3.4rem);margin:12px 0 32px">From one chat to a result you can trust</h2>
+        <ol class="steps hsteps" id="hsteps">
+          <i class="hline" aria-hidden="true"><b id="hline-fill"></b></i>
+          <li data-hstep="1"><span class="n">01</span><div><h3>Describe the feature</h3><p>A sentence, notes or a transcript is enough.</p></div></li>
+          <li data-hstep="2"><span class="n">02</span><div><h3>Answer its questions</h3><p>One at a time, each for the role that knows.</p></div></li>
+          <li data-hstep="3"><span class="n">03</span><div><h3>Accept what's right</h3><p>Labelled proposals fill the definition as you go.</p></div></li>
+          <li data-hstep="4"><span class="n">04</span><div><h3>Agree and share</h3><p>Each role signs off. Copy the summary for the team.</p></div></li>
+          <li data-hstep="5"><span class="n">05</span><div><h3>Hand off and build</h3><p>Every next step gets an owner. Tracking goes in before launch.</p></div></li>
+          <li data-hstep="6"><span class="n">06</span><div><h3>Measure and learn</h3><p>Compare with the agreed test, decide, and keep the learning.</p></div></li>
         </ol>
+        <button class="btn ghost sm" id="h-replay" style="margin-top:6px">↺ Replay</button>
       </div>
-      <div class="convo">
-        <div class="m-user">Let's scope saved carts for the mobile app.</div>
-        <div class="m-ai"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span><p>Who has this problem today, and how does it show up?</p></div>
-        <div class="m-user">Shoppers on mobile lose their cart when the app closes.</div>
-        <div class="pcard callout co-dc"><div class="txt"><span class="co-tag">Problem</span>Shoppers on mobile lose their cart when the app closes.</div><span class="acts">Added</span></div>
-        <div class="qcard"><span><span class="tag t-qu">Question · Engineering</span></span><b>How long should a saved cart last?</b><div class="opts"><span class="opt">7 days</span><span class="opt">Until checkout</span></div></div>
+      <div class="hwin" id="hwin" aria-label="Animated example of a session">
+        <div class="hwin-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Saved carts</span><span class="hdef" id="hdef"><b id="hdef-n">1</b> in definition</span></div>
+        <div class="hwin-body">
+          <div class="m-user" data-hs="1"><span id="h-typed">Let's scope saved carts for the mobile app.</span></div>
+          <div class="hdots" data-hs="2" id="h-dots"><i></i><i></i><i></i></div>
+          <div class="m-ai" data-hs="2"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span><p>Who has this problem today, and how does it show up?</p></div>
+          <div class="m-user" data-hs="2">Shoppers on mobile lose their cart when the app closes.</div>
+          <div class="qcard" data-hs="2"><span><span class="tag t-qu">Question · Engineering</span></span><b>How long should a saved cart last?</b><div class="opts"><span class="opt">7 days</span><span class="opt on" id="h-opt">Until checkout</span></div></div>
+          <div class="pcard callout co-dc hprop" data-hs="3" id="h-prop"><div class="txt"><span class="co-tag">Problem</span>Shoppers on mobile lose their cart when the app closes.</div><span class="acts"><span class="hacc" id="h-acc">Added ✓</span></span></div>
+          <div class="hsign" data-hs="4" id="h-sign"><span class="co-tag" style="color:var(--ev)">Agreed by</span>
+            <div class="hav">${avatar("pm", 34)}${avatar("design", 34)}${avatar("growth", 34)}${avatar("engineering", 34)}</div>
+            <span class="htoast">Summary copied for the team</span></div>
+          <div class="m-ai" data-hs="5"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span><p>Agreed. Here's what has to happen before launch:</p></div>
+          <div class="hnext" data-hs="5" id="h-next">
+            <div class="hrow">${avatar("growth", 26)}<span>Add a repeat-order event and record the baseline</span><i>Growth</i></div>
+            <div class="hrow">${avatar("engineering", 26)}<span>Build v1 behind a flag with a holdout group</span><i>Eng</i></div>
+            <div class="hrow">${avatar("design", 26)}<span>Review screens against the 4 acceptance criteria</span><i>Design</i></div>
+            <div class="hrow">${avatar("pm", 26)}<span>Set the learning review for week 4</span><i>PM</i></div>
+            <span class="hhand">Brief copied · paste into Linear, Jira or Notion</span>
+          </div>
+          <div class="hres" data-hs="6" id="h-res">
+            <div class="hres-head"><b>Week 4 · learning review</b><span class="mono">illustrative</span></div>
+            <div class="hbars"><div><span>Holdout</span><i class="hb hb1"></i></div><div><span>Exposed</span><i class="hb hb2"></i></div></div>
+            <p class="hq">Did easier reordering increase repeat purchases?</p>
+            <div class="hverdict"><span>Scale</span><span class="pick">Iterate</span><span>Stop</span></div>
+            <span class="hsaved">✓ Decision and reason saved to the next feature</span>
+          </div>
+        </div>
       </div>
     </div></section>
+
+    <section class="wrap effect" id="results">
+      <p class="eyebrow">After you agree</p>
+      <h2 class="serif">Six habits that make the result count</h2>
+      <p>The definition only pays off if the launch can prove or disprove it. These are the steps teams skip.</p>
+      <div class="tips">
+        <div class="tip"><h3>Record the baseline before launch</h3><p>Without it, nobody can say later whether anything changed.</p><span class="who-tag">${avatar("growth", 22)}Growth</span></div>
+        <div class="tip"><h3>Keep the test you agreed</h3><p>If you planned a holdout, don't swap it for a before-and-after chart at the end.</p><span class="who-tag">${avatar("engineering", 22)}Engineering</span></div>
+        <div class="tip"><h3>Give every assumption an owner and a date</h3><p>An assumption without an owner never gets tested.</p><span class="who-tag">${avatar("pm", 22)}Product</span></div>
+        <div class="tip"><h3>Watch the guardrails weekly</h3><p>Refunds, cancellations, support contacts. Catch harm before the review.</p><span class="who-tag">${avatar("growth", 22)}Growth</span></div>
+        <div class="tip"><h3>Decide: scale, iterate or stop</h3><p>Write down which, and why. “Keep watching” is not a decision.</p><span class="who-tag">${avatar("pm", 22)}Product</span></div>
+        <div class="tip"><h3>Carry the learning forward</h3><p>Start the next feature from what this one proved, not from scratch.</p><span class="who-tag">${avatar("design", 22)}Everyone</span></div>
+      </div>
+      <div class="cta-row" style="justify-content:flex-start;margin-top:22px"><button class="btn ghost" data-try="next">Ask the chat for your next steps →</button></div>
+    </section>
 
     <section class="wrap faq" id="faq">
       <h2 class="serif">Questions</h2>
@@ -1141,7 +1469,7 @@ let demoTimers = [], demoObserver = null, chapter = 0, vPlaying = true, vScene =
 const SCENES = [6200, 5200, 4600, 5600, 4800];
 const REQ = "We want one-tap reorder to increase repeat purchases by 40%. Support tickets show customers rebuild baskets by hand.";
 const reduceMo = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
-function vAt(ms, fn) { demoTimers.push(setTimeout(fn, ms)); }
+function vAt(ms, fn) { demoTimers.push(setTimeout(() => { if (document.getElementById("player")) fn(); }, ms)); }
 function vCamera(target, scale) {
   const cam = document.getElementById("cam"), pl = document.getElementById("player"); if (!cam) return;
   document.querySelectorAll("#player .zone").forEach((z) => z.classList.toggle("focus", z.id === target));
@@ -1222,6 +1550,56 @@ function initLanding() {
     if (t.dataset.ps === "solution") document.querySelectorAll(".bcard").forEach((c, i) => { c.classList.remove("in"); setTimeout(() => c.classList.add("in"), reduceMo() ? 0 : 200 + i * 220); });
   }));
   document.querySelectorAll(".bcard").forEach((c) => c.classList.add("in"));
+
+  // How it works: story that plays when scrolled into view
+  const hw = document.getElementById("hwin"), hs = document.getElementById("hsteps");
+  if (hw && hs) {
+    let ht = [], hPlayed = false;
+    const at = (ms, fn) => ht.push(setTimeout(() => { if (hw.isConnected) fn(); }, ms)); // stop safely if the page view changed
+    const MSG = "Let's scope saved carts for the mobile app.";
+    const setStep = (n) => {
+      hs.querySelectorAll("li").forEach((li) => { const k = Number(li.dataset.hstep); li.classList.toggle("on", k === n); li.classList.toggle("done", k < n); });
+      document.getElementById("hline-fill").style.height = Math.max(0, (n - 1) / 5 * 100) + "%";
+    };
+    const show = (k) => hw.querySelectorAll(`[data-hs="${k}"]`).forEach((e) => e.classList.add("in"));
+    const play = (from = 1) => {
+      if (reduceMo()) return;
+      ht.forEach(clearTimeout); ht = [];
+      hw.classList.add("hplaying"); hs.classList.add("hplaying");
+      hw.querySelectorAll("[data-hs]").forEach((e) => e.classList.toggle("in", Number(e.dataset.hs) < from));
+      ["picked"].forEach(() => document.getElementById("h-opt").classList.toggle("picked", from > 2));
+      document.getElementById("h-prop").classList.toggle("accepted", from > 3);
+      const sign = document.getElementById("h-sign"); sign.classList.remove("signed", "copied");
+      sign.querySelectorAll(".avi").forEach((a) => (a.style.transitionDelay = "0s"));
+      document.getElementById("hdef-n").textContent = from > 3 ? "4" : from > 2 ? "1" : "0";
+      document.getElementById("h-dots").classList.remove("in");
+      const nx = document.getElementById("h-next"), rs = document.getElementById("h-res");
+      nx.classList.toggle("go", from > 5); nx.classList.toggle("handed", from > 5); rs.classList.remove("grow", "decided", "saved");
+      nx.querySelectorAll(".hrow").forEach((r) => (r.style.transitionDelay = "0s"));
+      const body = hw.querySelector(".hwin-body"); body.scrollTop = 0;
+      const follow = () => { body.scrollTop = body.scrollHeight; };
+      let t = 0;
+      const steps = {
+        1: () => { setStep(1); show(1); const el = document.getElementById("h-typed"); el.textContent = ""; let i = 0; const tick = () => { el.textContent = MSG.slice(0, i); i++; if (i <= MSG.length) at(42, tick); }; tick(); return 2600; },
+        2: () => { setStep(2); document.getElementById("h-dots").classList.add("in");
+          at(900, () => { document.getElementById("h-dots").classList.remove("in"); hw.querySelectorAll('[data-hs="2"]:not(#h-dots)').forEach((e, i) => at(i * 650, () => e.classList.add("in"))); });
+          at(3300, () => document.getElementById("h-opt").classList.add("picked")); return 4200; },
+        3: () => { setStep(3); show(3); at(1100, () => { document.getElementById("h-prop").classList.add("accepted"); const d = document.getElementById("hdef"); document.getElementById("hdef-n").textContent = "1"; d.classList.remove("bump"); void d.offsetWidth; d.classList.add("bump"); }); return 2400; },
+        4: () => { setStep(4); show(4); const sign = document.getElementById("h-sign");
+          sign.querySelectorAll(".avi").forEach((a, i) => (a.style.transitionDelay = (0.25 + i * 0.35) + "s"));
+          at(150, () => sign.classList.add("signed")); at(1900, () => { sign.classList.add("copied"); document.getElementById("hdef-n").textContent = "4"; const d = document.getElementById("hdef"); d.classList.remove("bump"); void d.offsetWidth; d.classList.add("bump"); }); at(400, follow); return 3000; },
+        5: () => { setStep(5); show(5); at(100, follow);
+          nx.querySelectorAll(".hrow").forEach((r, i) => (r.style.transitionDelay = (0.5 + i * 0.45) + "s"));
+          at(200, () => nx.classList.add("go")); at(2700, () => { nx.classList.add("handed"); follow(); }); return 4000; },
+        6: () => { setStep(6); show(6); at(150, follow); at(500, () => rs.classList.add("grow")); at(2200, () => rs.classList.add("decided")); at(3100, () => { rs.classList.add("saved"); follow(); }); return 4200; },
+      };
+      for (let k = from; k <= 6; k++) { const kk = k; at(t, () => steps[kk]()); t += { 1: 2600, 2: 4200, 3: 2400, 4: 3000, 5: 4000, 6: 4200 }[k]; }
+      at(t, () => { hw.classList.remove("hplaying"); hs.classList.remove("hplaying"); hw.querySelectorAll("[data-hs]").forEach((e) => e.classList.add("in")); });
+    };
+    new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting && !hPlayed) { hPlayed = true; play(1); o.disconnect(); } }), { threshold: 0.45 }).observe(hw);
+    document.getElementById("h-replay").addEventListener("click", () => play(1));
+    hs.querySelectorAll("li").forEach((li) => li.addEventListener("click", () => play(Number(li.dataset.hstep))));
+  }
   // Gaps
   const lis = [...document.querySelectorAll("#gapcard .glist li")];
   const upd = () => { const open = lis.filter((l) => !l.classList.contains("fixed")).length; const ready = 11 - open;
@@ -1276,6 +1654,10 @@ document.addEventListener("click", (e) => {
   const el = e.target.closest("button, a"); if (!el) return;
   const f = cur();
   if (el.dataset.act === "home") { state.view = "home"; save(); render(); window.scrollTo(0, 0); return; }
+  if (el.dataset.menu) { const open = el.getAttribute("aria-expanded") === "true"; closeMenus(true); if (!open) { el.setAttribute("aria-expanded", "true"); document.getElementById(el.getAttribute("aria-controls")).hidden = false; } return; }
+  if (el.dataset.act === "mobmenu") { const bar = el.closest(".bar"); const o = bar.classList.toggle("open"); el.setAttribute("aria-expanded", String(o)); el.textContent = o ? "Close" : "Menu"; return; }
+  if (el.dataset.act === "watch") { e.preventDefault(); closeMenus(); document.getElementById("product")?.scrollIntoView({ behavior: "smooth" }); vPlaying = true; setPlayIcon(); vScenePlay(0); return; }
+  if (el.hasAttribute("data-close")) { closeMenus(); }
   if (el.dataset.act === "new") { state.view = "new"; save(); render(); window.scrollTo(0, 0); return; }
   if (el.dataset.act === "stop") { ctl?.abort(); return; }
   if (el.dataset.fill) { const t = el.closest("form").querySelector("textarea"); t.value = EXAMPLES[el.dataset.fill]; t.focus(); t.dispatchEvent(new Event("input")); return; }
@@ -1309,6 +1691,12 @@ document.addEventListener("click", (e) => {
     try { navigator.clipboard.writeText(md).then(done, () => fallbackCopy(md)); } catch (err) { fallbackCopy(md); }
   }
 });
+function closeMenus(keepMobile) {
+  document.querySelectorAll(".mbtn[aria-expanded=true]").forEach((b) => { b.setAttribute("aria-expanded", "false"); const m = document.getElementById(b.getAttribute("aria-controls")); if (m) m.hidden = true; });
+  const bar = keepMobile ? null : document.querySelector(".bar.open"); if (bar) { bar.classList.remove("open"); const mb = bar.querySelector(".mob-menu"); if (mb) { mb.textContent = "Menu"; mb.setAttribute("aria-expanded", "false"); } }
+}
+document.addEventListener("click", (e) => { if (!e.target.closest(".mitem") && !e.target.closest(".mob-menu") && !e.target.closest(".mnav")) closeMenus(); }, true);
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") { const openBtn = document.querySelector(".mbtn[aria-expanded=true]"); closeMenus(); openBtn?.focus(); } });
 function findVisual(f, key) {
   const [a, b] = key.split("|");
   if (a === "doc") return (f.doc.find((x) => x.id === b) || {}).visual;
