@@ -7,7 +7,7 @@
   <meta name="description" content="The feature-definition workspace where product, design, growth and engineering agree one feature's scope. Every claim labelled, every number sourced or marked unknown, every decision recorded.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@600&display=swap">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -25,7 +25,7 @@
         <a href="#gaps">Gaps</a>
         <a href="#team">For teams</a>
         <a href="#fit">Where it fits</a>
-        <a class="pill pill-dark pill-small" href="#pilot">Request a pilot <span aria-hidden="true">→</span></a>
+        <a class="pill pill-dark pill-small" href="#audit">Free scope audit <span class="knob" aria-hidden="true">›</span></a>
       </nav>
     </div>
   </header>
@@ -38,15 +38,36 @@
         <h1>Agree what to build <em class="grad">before anyone builds&nbsp;it</em></h1>
         <p class="lede">Product, design, growth and engineering define one feature together. Every claim is labelled, every number is sourced or marked unknown, and every decision keeps its reason.</p>
         <div class="hero-actions">
-          <a class="pill pill-dark" href="#pilot">Request a pilot <span aria-hidden="true">→</span></a>
-          <a class="pill pill-outline" href="#how">See a session</a>
+          <span class="cta-wrap">
+            <a class="pill pill-dark pill-big" href="#audit">Get a free scope audit <span class="knob" aria-hidden="true">›</span></a>
+            <span class="hand-note" aria-hidden="true">
+              <svg width="78" height="34" viewBox="0 0 78 34" fill="none"><path d="M76 20c-14 6-30 7-40-1-6-5 4-11 9-6 5 6-9 12-22 10-7-1-13-4-19-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M9 6 3 14l10 1" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              It's free!
+            </span>
+          </span>
+          <a class="pill pill-outline" href="#how">See how a session works</a>
         </div>
-        <p class="fineprint">Pilot for product teams of one to three squads · Proposals, never silent edits</p>
+        <p class="fineprint">Send one spec or PRD. Get back every unsupported claim, untested assumption and unknown number.</p>
         <ul class="facts" aria-label="What one session produces">
           <li><strong class="c-ev">4</strong> roles review</li>
           <li><strong class="c-qu">1</strong> shared definition</li>
           <li><strong class="c-as">0</strong> invented numbers</li>
           <li><strong class="c-dc">7</strong> guided steps</li>
+        </ul>
+      </div>
+
+      <div class="marquee" aria-label="Problems Scopeline helps with">
+        <div class="marquee-track">
+          <span>Scope changes after engineering review</span><span>Success metric agreed after launch</span><span>Assumptions written as facts</span><span>Design starts without the edge cases</span><span>Baselines nobody can find</span><span>Decisions lost in Slack threads</span>
+          <span aria-hidden="true">Scope changes after engineering review</span><span aria-hidden="true">Success metric agreed after launch</span><span aria-hidden="true">Assumptions written as facts</span><span aria-hidden="true">Design starts without the edge cases</span><span aria-hidden="true">Baselines nobody can find</span><span aria-hidden="true">Decisions lost in Slack threads</span>
+        </div>
+      </div>
+
+      <div class="container">
+        <ul class="promises">
+          <li><span class="check" aria-hidden="true"></span>One definition every role reviews, not four separate docs</li>
+          <li><span class="check" aria-hidden="true"></span>Evidence and assumptions kept apart, so nobody mistakes a hope for a fact</li>
+          <li><span class="check" aria-hidden="true"></span>Decisions recorded with their reason, ready for the next feature</li>
         </ul>
       </div>
 
@@ -121,20 +142,101 @@
       </div>
     </section>
 
-    <!-- How it works -->
+    <!-- Start where you are -->
+    <section class="section paths">
+      <div class="container">
+        <h2 class="display center">Start where you are. We'll take you to the right next step.</h2>
+        <div class="path-grid">
+          <article class="path">
+            <h3>“Our features keep getting re-scoped”</h3>
+            <p>Design and engineering find the gaps after work has started, and success gets defined after launch.</p>
+            <a class="pill pill-outline pill-small" href="#gaps">See what gets caught</a>
+            <div class="path-art art-chaos" aria-hidden="true">
+              <span style="--r:-6deg;--x:44%;--y:8%">Late eng pushback<i>×</i></span>
+              <span style="--r:5deg;--x:6%;--y:32%">No baseline<i>×</i></span>
+              <span style="--r:-3deg;--x:36%;--y:56%">Untested assumption<i>×</i></span>
+              <span style="--r:4deg;--x:10%;--y:78%">Scope creep<i>×</i></span>
+            </div>
+          </article>
+          <article class="path">
+            <h3>“Show me how a session works”</h3>
+            <p>Seven guided steps take a pasted request to a definition all four roles agree on.</p>
+            <a class="pill pill-outline pill-small" href="#how">Walk through the steps</a>
+            <div class="path-art art-steps" aria-hidden="true">
+              <div><b>3</b>Review evidence<span>Claims labelled</span></div>
+              <div><b>4</b>Compare scope<span>Boundary + reason</span></div>
+              <div><b>6</b>Review together<span>Every role answers</span></div>
+            </div>
+          </article>
+          <article class="path" id="audit">
+            <h3>“I want to try it on a real feature”</h3>
+            <p>Send one spec or PRD. You get a free gap report, then we run a session with your team.</p>
+            <a class="pill pill-dark pill-small" href="#pilot">Get a free scope audit <span class="knob" aria-hidden="true">›</span></a>
+            <div class="path-art art-report" aria-hidden="true">
+              <div class="rep"><b>Gap report</b><span>Saved carts PRD</span>
+                <p><i class="d-as"></i>4 claims with no source</p>
+                <p><i class="d-qu"></i>2 metrics with no baseline</p>
+                <p><i class="d-dc"></i>1 decision with no reason</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works: interactive steps -->
     <section class="section" id="how">
       <div class="container">
-        <p class="eyebrow">How a session works</p>
-        <h2 class="display">Seven steps from request to agreed definition</h2>
-        <ol class="steps">
-          <li><span class="n">1</span><b>Add context</b><span>Paste the idea, notes and research. Sources stay linked.</span></li>
-          <li><span class="n">2</span><b>Clarify the problem</b><span>Target user, current behaviour, intended outcome.</span></li>
-          <li class="key"><span class="n">3</span><b>Review evidence</b><span>Every claim labelled as evidence, assumption, question or decision.</span></li>
-          <li class="key"><span class="n">4</span><b>Compare scope</b><span>Options side by side. The chosen boundary keeps its reason.</span></li>
-          <li><span class="n">5</span><b>Define learning</b><span>Success measure and guardrails. Unknown values stay blank.</span></li>
-          <li class="key"><span class="n">6</span><b>Review together</b><span>Each role answers its own questions on the same definition.</span></li>
-          <li><span class="n">7</span><b>Share the result</b><span>A summary and a brief from the same agreed records.</span></li>
-        </ol>
+        <h2 class="display center">Seven steps from request to agreed definition</h2>
+        <div class="walk">
+          <div class="walk-visual">
+            <div class="wv" data-panel="1">
+              <p class="wv-label">Sources</p>
+              <div class="callout co-ev"><span class="co-tag">Original request</span>“We want one-tap reorder to increase repeat purchases.”</div>
+              <div class="chips"><span>Support export · Oct</span><span>5 interviews</span><span>Order history</span></div>
+            </div>
+            <div class="wv" data-panel="2" hidden>
+              <p class="wv-label">Clarify</p>
+              <dl class="kv"><div><dt>Target user</dt><dd>Customers with 2+ past orders</dd></div><div><dt>What they do today</dt><dd><span class="unknown">Unknown</span> <small>question sent to PM</small></dd></div><div><dt>Intended outcome</dt><dd>Reorder with less effort</dd></div></dl>
+            </div>
+            <div class="wv" data-panel="3" hidden>
+              <p class="wv-label">Claims</p>
+              <div class="callout co-ev"><span class="co-tag">Evidence</span>Tickets mention rebuilding baskets by hand.</div>
+              <div class="callout co-as"><span class="co-tag">Assumption · Owner: Growth</span>Easier reordering lifts repeat purchases.</div>
+              <div class="callout co-qu"><span class="co-tag">Open question · Design</span>What if an item is out of stock?</div>
+            </div>
+            <div class="wv" data-panel="4" hidden>
+              <p class="wv-label">Scope options</p>
+              <div class="opt opt-on"><b>A · Rebuild basket, customer reviews</b><span class="tag-on">Chosen</span><small>Reason: smallest option that tests the assumption</small></div>
+              <div class="opt"><b>B · Automatic repeat orders</b><small>Not now: risk of surprise charges</small></div>
+            </div>
+            <div class="wv" data-panel="5" hidden>
+              <p class="wv-label">Success measure</p>
+              <p class="metric">Completed repeat orders</p>
+              <dl class="mgrid"><div><dt>Baseline</dt><dd><span class="unknown">Unknown</span></dd></div><div><dt>Window</dt><dd>28 days</dd></div></dl>
+              <div class="chips"><span>Guardrail: refunds</span><span>Guardrail: cancellations</span></div>
+            </div>
+            <div class="wv" data-panel="6" hidden>
+              <p class="wv-label">Review</p>
+              <div class="thread"><p><span class="av av-ds">DS</span> Do we show unavailable items?</p><p><span class="av av-gr">GR</span> Which cohort is eligible?</p><p><span class="av av-en">EN</span> Prices are re-checked at rebuild.</p></div>
+              <div class="callout co-dc"><span class="co-tag">Decision · PM, Eng</span>Show unavailable items, excluded from the total.</div>
+            </div>
+            <div class="wv" data-panel="7" hidden>
+              <p class="wv-label">Share</p>
+              <div class="docs"><div><b>Summary</b><span>1 page · leadership</span></div><div><b>Brief</b><span>Full detail · delivery</span></div></div>
+              <p class="same">Both rendered from the same 11 agreed sections</p>
+            </div>
+          </div>
+          <ol class="walk-steps" role="tablist" aria-label="Session steps">
+            <li><button type="button" role="tab" aria-selected="true" data-step="1"><span class="n">1</span><span><b>Add context</b><em>Paste the idea, notes and research. Every source stays linked.</em></span></button></li>
+            <li><button type="button" role="tab" aria-selected="false" data-step="2"><span class="n">2</span><span><b>Clarify the problem</b><em>Target user, current behaviour, intended outcome. Gaps stay marked unknown.</em></span></button></li>
+            <li><button type="button" role="tab" aria-selected="false" data-step="3"><span class="n">3</span><span><b>Review evidence</b><em>Every claim labelled as evidence, assumption, question or decision.</em></span></button></li>
+            <li><button type="button" role="tab" aria-selected="false" data-step="4"><span class="n">4</span><span><b>Compare scope</b><em>Options side by side. The chosen boundary keeps its reason.</em></span></button></li>
+            <li><button type="button" role="tab" aria-selected="false" data-step="5"><span class="n">5</span><span><b>Define learning</b><em>Success measure and guardrails. Missing values stay blank.</em></span></button></li>
+            <li><button type="button" role="tab" aria-selected="false" data-step="6"><span class="n">6</span><span><b>Review together</b><em>Design, growth and engineering answer their own questions.</em></span></button></li>
+            <li><button type="button" role="tab" aria-selected="false" data-step="7"><span class="n">7</span><span><b>Share the result</b><em>A summary and a brief from the same agreed records.</em></span></button></li>
+          </ol>
+        </div>
       </div>
     </section>
 
@@ -262,10 +364,10 @@
       <div class="container">
         <div class="stage stage-final">
           <div class="final-card">
-            <h2 class="display">Bring one real feature to a pilot session</h2>
-            <p>We run the session with your PM, designer, growth lead and engineer, on a feature you're about to scope.</p>
+            <h2 class="display">Start with one real feature</h2>
+            <p>Send a spec or PRD you're about to commit to. We send back a gap report, then run a scoping session with your PM, designer, growth lead and engineer.</p>
             <div class="hero-actions">
-              <a class="pill pill-dark" href="mailto:hello@example.com?subject=Scopeline%20pilot">Request a pilot <span aria-hidden="true">→</span></a>
+              <a class="pill pill-dark" href="mailto:hello@example.com?subject=Scopeline%20scope%20audit">Get a free scope audit <span class="knob" aria-hidden="true">›</span></a>
             </div>
             <p class="fineprint">Or email <span class="select">hello@example.com</span></p>
           </div>
