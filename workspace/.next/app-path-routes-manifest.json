@@ -1,0 +1,6 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/page": "/",
+  "/features/[id]/page": "/features/[id]",
+  "/features/[id]/[step]/page": "/features/[id]/[step]"
+}

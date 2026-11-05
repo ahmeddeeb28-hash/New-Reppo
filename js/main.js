@@ -14,20 +14,3 @@ nav.addEventListener('click', (e) => {
     toggle.setAttribute('aria-expanded', 'false');
   }
 });
-
-// Hero mock: filter claims by type
-const filters = document.querySelectorAll('.filter');
-const claims = document.querySelectorAll('.claim');
-filters.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const type = btn.dataset.filter;
-    filters.forEach((b) => {
-      const on = b === btn;
-      b.classList.toggle('is-on', on);
-      b.setAttribute('aria-pressed', String(on));
-    });
-    claims.forEach((c) => {
-      c.classList.toggle('is-dim', type !== 'all' && c.dataset.type !== type);
-    });
-  });
-});
