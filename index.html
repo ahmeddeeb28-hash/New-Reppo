@@ -195,6 +195,123 @@ mark.bad { background: var(--bad-bg); color: var(--bad); border-radius: 4px; pad
 .dempty { font-size: 0.82rem; color: var(--muted); }
 .mobile-tabs { display: none; }
 
+
+/* ---------- Landing v2: ChatPRD-like structure, our content ---------- */
+.lp-hero { padding-block: 64px 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px; }
+.lp-hero h1 { font-size: clamp(2.9rem, 7.6vw, 6rem); max-width: 11em; }
+.lp-hero h1 em { font-style: italic; color: var(--ev); }
+.lp-hero .lede { font-size: clamp(1.05rem, 1.5vw, 1.22rem); color: var(--muted); max-width: 34em; }
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; align-items: center; }
+.btn.big { height: 54px; padding: 0 26px; font-size: 1rem; }
+.btn.big .knob { width: 34px; height: 34px; margin-right: -14px; }
+.fineprint { font-size: 0.86rem; color: var(--muted); }
+.walk { margin-top: 48px; }
+.chapters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 1060px; margin: 18px auto 0; }
+.chapter { text-align: left; border: 0; background: rgba(255,255,255,.75); backdrop-filter: blur(6px); border-radius: 14px; padding: 10px 12px 12px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; }
+.chapter b { font-size: 0.92rem; } .chapter span { font-size: 0.8rem; color: var(--muted); }
+.chapter .bar2 { height: 3px; border-radius: 3px; background: rgba(0,0,0,.08); overflow: hidden; }
+.chapter .bar2 i { display: block; height: 100%; width: 0; background: var(--ink); }
+.chapter.on { background: #fff; box-shadow: 0 10px 24px -18px rgba(0,0,0,.5); }
+.chapter.done .bar2 i { width: 100%; }
+.chapter.on .bar2 i { animation: fillbar var(--dur, 5s) linear forwards; }
+@keyframes fillbar { from { width: 0; } to { width: 100%; } }
+.demo2 .demo-body { min-height: 500px; }
+.demo2 [data-c] { transition: opacity .45s ease, transform .45s ease, background .4s, border-color .4s; }
+.demo2.anim [data-c]:not(.in) { opacity: 0; transform: translateY(8px); }
+.demo2 .pfix .p-new, .demo2 .pfix.fixed .p-old-flag { display: none; }
+.demo2 .pfix.fixed .p-new { display: block; }
+.demo2 .pfix.fixed .p-old { text-decoration: line-through; color: var(--muted); }
+.demo2 .p-new { background: var(--ev-bg); border-radius: 8px; padding: 6px 10px; margin-top: 6px; }
+.demo2 .p-old-flag { display: block; color: var(--bad); font-size: 0.8rem; margin-top: 4px; }
+.agreed-strip { display: flex; gap: 6px; flex-wrap: wrap; }
+.agreed-strip span { font-size: 0.74rem; border-radius: 999px; padding: 3px 9px; background: var(--as-bg); color: var(--as); transition: all .4s; }
+.demo2.agreed .agreed-strip span { background: var(--ev-bg); color: var(--ev); }
+.demo2 .meter { margin-top: 2px; }
+.roles-strip { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; padding-block: 40px 8px; color: var(--muted); font-size: 0.92rem; align-items: center; }
+.roles-strip span { display: inline-flex; align-items: center; gap: 8px; }
+.intro { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; padding-block: clamp(72px, 9vw, 120px) 24px; }
+.intro h2 { font-size: clamp(2.4rem, 5.4vw, 4.6rem); max-width: 12em; }
+.intro p { color: var(--muted); max-width: 36em; font-size: 1.1rem; }
+.row { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(32px, 6vw, 80px); align-items: center; padding-block: clamp(56px, 7vw, 96px); }
+.row.flip { grid-template-columns: 1.15fr 0.85fr; }
+.row.flip .row-copy { order: 2; }
+.row-copy { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.row-copy h2 { font-size: clamp(2.2rem, 4.4vw, 3.6rem); }
+.row-copy > p { color: var(--muted); font-size: 1.1rem; max-width: 30em; }
+.dots-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.dots-list li { position: relative; padding-left: 20px; }
+.dots-list li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); }
+.row-copy .btn { align-self: flex-start; }
+.f-amber::before { background: radial-gradient(50% 60% at 15% 20%, #ffd27e, transparent 70%), radial-gradient(50% 60% at 85% 85%, #ff9d6c, transparent 70%), linear-gradient(140deg, #fff1d6, #ffdcbc); }
+.f-blue::before { background: radial-gradient(50% 60% at 82% 15%, #8f9dff, transparent 70%), radial-gradient(45% 55% at 12% 88%, #c08cff, transparent 70%), linear-gradient(140deg, #e5e8ff, #e0d4ff); }
+.f-green::before { background: radial-gradient(50% 60% at 15% 25%, #5fdca6, transparent 70%), radial-gradient(50% 60% at 85% 85%, #9fe2d4, transparent 70%), linear-gradient(140deg, #d9f7e8, #c8efe6); }
+.f-rose::before { background: radial-gradient(50% 60% at 20% 20%, #ff9fb3, transparent 70%), radial-gradient(50% 60% at 85% 80%, #ffc27a, transparent 70%), linear-gradient(140deg, #ffe3e8, #ffe9cf); }
+.card { position: relative; background: var(--surface); border-radius: 18px; padding: 20px; box-shadow: 0 30px 60px -30px rgba(20,20,40,.45); display: flex; flex-direction: column; gap: 10px; max-width: 520px; margin: 0 auto; }
+.card-head { display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 0.95rem; }
+.badge { font-size: 0.74rem; border-radius: 999px; padding: 3px 10px; font-weight: 600; background: var(--as-bg); color: var(--as); }
+.badge.ok { background: var(--ev-bg); color: var(--ev); }
+.glist { list-style: none; padding: 0; margin: 0; }
+.glist li { display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 10px; align-items: start; padding: 11px 0; border-top: 1px solid var(--line); }
+.glist b { display: block; font-size: 0.9rem; } .glist .s { display: block; font-size: 0.8rem; color: var(--muted); }
+.glist em { display: none; font-style: normal; font-size: 0.8rem; color: var(--ev); margin-top: 3px; }
+.gdot { width: 9px; height: 9px; border-radius: 50%; margin-top: 6px; } .gdot.as { background: var(--as); } .gdot.qu { background: var(--qu); } .gdot.dc { background: var(--dc); }
+.glist button { border: 1px solid var(--ink); background: var(--ink); color: #fff; border-radius: 999px; padding: 4px 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
+.glist li.fixed b { text-decoration: line-through; color: var(--muted); font-weight: 500; }
+.glist li.fixed em { display: block; } .glist li.fixed .gdot { background: var(--ev); }
+.glist li.fixed button { background: var(--ev-bg); color: var(--ev); border-color: var(--ev-line); pointer-events: none; }
+.readybox { background: var(--ev-bg); border: 1px solid var(--ev-line); border-radius: 12px; padding: 12px; font-size: 0.88rem; }
+.readybox b { display: block; color: var(--ev); font-family: var(--serif); font-weight: 400; font-size: 1.3rem; }
+.readybox[hidden] { display: none; }
+.rolebtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; max-width: 400px; }
+.rolebtns button { display: flex; align-items: center; gap: 10px; border: 1.5px solid var(--line); background: var(--surface); border-radius: 14px; padding: 9px 12px; cursor: pointer; font-weight: 600; text-align: left; }
+.rolebtns button[aria-selected="true"] { border-color: var(--ink); box-shadow: 0 10px 22px -16px rgba(0,0,0,.5); }
+.rsec { border-radius: 10px; padding: 8px 10px; border: 1px solid transparent; opacity: .4; transition: all .3s; }
+.rsec h3 { font-size: 0.86rem; } .rsec p { font-size: 0.84rem; color: var(--muted); }
+.rsec.lit { opacity: 1; border-color: var(--line); background: var(--bg); }
+.resolver { border: 1.5px solid var(--qu-line); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.res-head { display: flex; justify-content: space-between; font-weight: 600; font-size: 0.84rem; }
+.res-done { background: var(--ev-bg); color: var(--ev); border-radius: 10px; padding: 9px 12px; font-size: 0.86rem; }
+.numfix .line { font-size: 1.05rem; font-family: var(--serif); line-height: 1.35; }
+.numfix .warnl { color: var(--bad); font-size: 0.82rem; }
+.numfix.fixed .warnl { color: var(--ev); }
+.coach { display: flex; flex-direction: column; gap: 10px; font-size: 0.9rem; }
+.coach .u { align-self: flex-end; background: var(--qu-bg); border: 1px solid var(--qu-line); border-radius: 14px 14px 4px 14px; padding: 8px 12px; max-width: 85%; }
+.coach .a { background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+.coach .a ol { margin: 6px 0 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; }
+.seg { display: inline-flex; gap: 4px; padding: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; }
+.seg button { border: 0; background: none; border-radius: 999px; padding: 7px 14px; font-weight: 600; font-size: 0.88rem; color: var(--muted); cursor: pointer; display: inline-flex; gap: 8px; align-items: center; }
+.seg button[aria-selected="true"] { background: var(--ink); color: #fff; }
+.soon { font-family: var(--mono); font-size: 0.58rem; letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 2px 7px; background: var(--as-bg); color: var(--as); }
+.spanel[hidden] { display: none; }
+.how { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: start; padding-block: clamp(64px, 8vw, 104px); }
+.steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; position: relative; }
+.steps li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding-bottom: 30px; position: relative; }
+.steps li::before { content: ""; position: absolute; left: 21px; top: 44px; bottom: 0; width: 2px; background: var(--line); }
+.steps li:last-child::before { display: none; }
+.steps .n { width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font-family: var(--mono); font-size: 0.8rem; }
+.steps h3 { font-size: 1.15rem; margin-bottom: 4px; } .steps p { color: var(--muted); }
+.convo { display: flex; flex-direction: column; gap: 10px; }
+.faq { max-width: 820px; margin: 0 auto; padding-block: clamp(64px, 8vw, 104px); }
+.faq h2 { font-size: clamp(2.2rem, 4.4vw, 3.4rem); text-align: center; margin-bottom: 28px; }
+.faq details { border-top: 1px solid var(--line); padding: 16px 4px; }
+.faq details:last-child { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-size: 1.3rem; line-height: 1; color: var(--muted); }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { color: var(--muted); margin-top: 8px; max-width: 46em; }
+.closing { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; padding-block: clamp(72px, 9vw, 120px); }
+.closing h2 { font-size: clamp(2.4rem, 5vw, 4.2rem); max-width: 12em; }
+/* New chat screen (opened by Start free) */
+.newchat { min-height: calc(100vh - 70px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; padding-block: 40px; }
+.newchat h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); }
+.newchat .start-box { width: min(720px, 100%); text-align: left; }
+@media (max-width: 960px) {
+  .row, .row.flip, .how { grid-template-columns: 1fr; }
+  .row.flip .row-copy { order: 0; }
+  .chapters { grid-template-columns: 1fr 1fr; }
+}
+
 @media (max-width: 1100px) { .moments { grid-template-columns: 1fr 1fr; } .hand { display: none; } }
 @media (max-width: 900px) {
   .ws { grid-template-columns: minmax(0, 1fr); }
@@ -269,6 +386,7 @@ const unsourced = (f, text) => (String(text).match(NUM_RE) || []).map((n) => n.r
 const KEY = "scopeline-chat-v1";
 let state = { features: [], view: "home", current: null };
 try { const raw = localStorage.getItem(KEY); if (raw) state = Object.assign(state, JSON.parse(raw)); } catch (e) {}
+if (state.view === "new") state.view = "home";
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
 const uid = () => Math.random().toString(36).slice(2, 10);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -406,7 +524,7 @@ const EXAMPLES = {
 };
 
 // =================== Render ===================
-function render() { root.innerHTML = state.view === "chat" && cur() ? appView(cur()) : homeView(); afterRender(); }
+function render() { root.innerHTML = state.view === "chat" && cur() ? appView(cur()) : state.view === "new" ? newChatView() : homeView(); afterRender(); }
 
 function composer(id, placeholder, big) {
   return `<form class="composer" data-form="${id}">
@@ -422,83 +540,210 @@ function composer(id, placeholder, big) {
 }
 
 function homeView() {
-  const recent = state.features.slice(0, 4);
+  const recent = state.features.slice(0, 1);
   return `
   <header class="top"><div class="wrap"><div class="bar">
     <button class="logo" data-act="home"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</button>
     <span class="spacer"></span>
-    <nav aria-label="Page"><a href="#how">How it works</a><a href="#moments">What it does</a></nav>
-    ${recent.length ? `<button class="btn ghost sm" data-open="${recent[0].id}">Open last chat</button>` : ""}
-    <a class="btn sm" href="#start" data-act="focus-start">Start free <span class="knob" aria-hidden="true">›</span></a>
+    <nav aria-label="Page"><a href="#product">Product</a><a href="#how-it-works">How it works</a><a href="#faq">FAQ</a></nav>
+    ${recent.length ? `<button class="btn ghost sm" data-open="${recent[0].id}">Your last chat</button>` : ""}
+    <button class="btn sm" data-act="new">Start free <span class="knob" aria-hidden="true">›</span></button>
   </div></div></header>
 
   <main>
-    <section class="wrap hero" id="start">
+    <section class="wrap lp-hero">
       <p class="kicker"><span class="dot-live" aria-hidden="true"></span>Free for product teams · no sign-up</p>
       <h1 class="serif">Agree what to build <em>before anyone builds&nbsp;it</em></h1>
-      <p class="lede">Describe the feature. Scopeline asks the follow-up questions, labels every claim, and builds one definition your whole team can agree on.</p>
-      <div class="start-box">
-        ${composer("start", "Describe the feature you're about to scope…", true)}
-        <span class="hand" aria-hidden="true"><svg width="40" height="26" viewBox="0 0 40 26" fill="none"><path d="M38 6C28 2 14 4 6 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 8l2 9 8-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>It's free!</span>
+      <p class="lede">An AI chat that turns a rough feature request into one definition your PM, designer, growth lead and engineer agree on. Every claim labelled. Every number sourced or left blank.</p>
+      <div class="cta-row">
+        <button class="btn big" data-act="new">Start free <span class="knob" aria-hidden="true">›</span></button>
+        <a class="btn big ghost" href="#how-it-works">See how it works</a>
       </div>
-      <p class="start-note">Your chats are saved in this browser. Nothing is shared until you share it.</p>
-      ${recent.length ? `<div class="recent">Continue: ${recent.map((f) => `<button data-open="${f.id}">${esc(f.title)}</button>`).join("")}</div>` : ""}
+      <p class="fineprint">Free · Works in your browser · Your chats stay in this browser</p>
     </section>
 
-    <section class="sec" id="how">
-      <div class="wrap">
-        <div class="sec-head"><p class="eyebrow">What happens when you press start</p><h2 class="serif">A request becomes a definition, in one conversation</h2></div>
-        <div class="field">
-          <div class="demo" id="demo">
-            <div class="win-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="t">Scopeline · One-tap reorder</span><span class="r"><button class="btn ghost sm" data-act="replay">↺ Replay</button></span></div>
-            <div class="demo-body">
-              <div class="demo-chat">
-                <div class="m-user" data-t="0" style="max-width:92%">We want one-tap reorder to increase repeat purchases by 40%.</div>
-                <div class="m-ai" data-t="1"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span><p>I split that into two claims. “40%” has no source, so I've left it as a placeholder.</p></div>
-                <div class="qcard" data-t="4"><span><span class="tag t-qu">Question · Growth</span></span><b>Do we have a repeat-order baseline?</b>
-                  <div class="opts"><span class="opt">Yes, in analytics</span><span class="opt on">No, needs instrumentation</span></div></div>
-              </div>
-              <div class="demo-doc">
-                <div class="doc-top"><h2 style="font-family:var(--serif);font-weight:400;font-size:1.4rem">Definition</h2><span class="mono" id="demo-count">0 of 11 sections</span></div>
-                <div class="callout co-as" data-t="2"><span class="co-tag">Assumption · needs owner</span>One-tap reorder increases repeat purchases.</div>
-                <div class="callout co-dc" data-t="3"><span class="co-tag">Measure</span>Repeat purchases from <span class="ph">[baseline]</span> to <span class="ph">[target]</span><span class="co-src"><mark class="bad">40%</mark> removed: no source</span></div>
-                <div class="callout co-qu" data-t="5"><span class="co-tag">Open question · Growth</span>Baseline needs instrumentation first.</div>
-                <div class="callout co-ev" data-t="6"><span class="co-tag">Evidence · Support tickets</span>Customers rebuild baskets by hand.</div>
-              </div>
+    <section class="wrap walk" id="product" aria-label="Product walkthrough">
+      <div class="field">
+        <div class="demo demo2 anim" id="demo2">
+          <div class="win-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="t">Scopeline · One-tap reorder</span><span class="r"><button class="btn ghost sm" data-act="replay">↺ Replay</button></span></div>
+          <div class="demo-body">
+            <div class="demo-chat">
+              <div class="m-user" data-c="1" style="max-width:92%">We want one-tap reorder to increase repeat purchases by 40%. Support tickets show customers rebuild baskets by hand.</div>
+              <div class="m-ai" data-c="1"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span><p>Before I write anything: who is this for, and do we have a baseline?</p></div>
+              <div class="qcard" data-c="1"><span><span class="tag t-qu">Question · Growth</span></span><b>Do we have a repeat-order baseline?</b>
+                <div class="opts"><span class="opt">Yes, in analytics</span><span class="opt on">No, needs instrumentation</span></div></div>
+              <div class="m-ai" data-c="3"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span><p>“40%” isn't in anything you shared, so I've left the target blank and sent Growth a question.</p></div>
+              <div class="m-ai" data-c="4"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span><p>Design, Growth and Engineering have answered. Every section is ready to agree.</p></div>
+            </div>
+            <div class="demo-doc">
+              <div class="doc-top"><h2 style="font-family:var(--serif);font-weight:400;font-size:1.4rem">Definition</h2><span class="mono" id="d2-count">0 of 11 agreed</span></div>
+              <div class="meter"><span id="d2-meter" style="width:0%"></span></div>
+              <div class="callout co-ev" data-c="2"><span class="co-tag">Evidence · Support tickets</span>Customers rebuild baskets by hand.</div>
+              <div class="callout co-as" data-c="2"><span class="co-tag">Assumption · Owner: Growth</span>One-tap reorder increases repeat purchases.</div>
+              <div class="callout co-qu" data-c="2"><span class="co-tag">Open question · Design</span>What if an item is out of stock?</div>
+              <div class="callout co-dc pfix" data-c="3" id="d2-fix"><span class="co-tag">Measure</span><span class="p-old">Repeat purchases up <mark class="bad">40%</mark></span><span class="p-old-flag">No source for “40%”.</span><span class="p-new">Repeat purchases from <span class="ph">[baseline]</span> to <span class="ph">[target]</span></span></div>
+              <div class="agreed-strip" data-c="4"><span>Problem</span><span>Audience</span><span>Evidence</span><span>Assumptions</span><span>Scope</span><span>Measures</span><span>+5 more</span></div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section class="sec tint" id="moments">
-      <div class="wrap">
-        <div class="sec-head"><p class="eyebrow">What it does</p><h2 class="serif">Four things it does differently</h2><p>Each one opens the chat with an example.</p></div>
-        <div class="moments">
-          <article class="moment"><h3>Asks before it writes</h3>
-            <div class="art"><div class="mini-q"><span><span class="tag t-qu">Design</span></span><b>What if an item is out of stock?</b><span class="o">Hide it</span><span class="o on">Show it, excluded from total</span></div></div>
-            <button class="btn ghost sm try" data-try="reorder">Try it →</button></article>
-          <article class="moment"><h3>Labels every claim</h3>
-            <div class="art"><div class="callout co-ev"><span class="co-tag">Evidence</span>Tickets mention rebuilding baskets.</div><div class="callout co-as"><span class="co-tag">Assumption</span>Reorder lifts repeat orders.</div></div>
-            <button class="btn ghost sm try" data-try="carts">Try it →</button></article>
-          <article class="moment"><h3>Catches made-up numbers</h3>
-            <div class="art"><div class="callout co-dc"><span class="co-tag">Measure</span>Abandonment down <mark class="bad">by 30%</mark><span class="co-src" style="color:var(--bad)">No source. Becomes [target].</span></div></div>
-            <button class="btn ghost sm try" data-try="carts">Try it →</button></article>
-          <article class="moment"><h3>Coaches with facts only</h3>
-            <div class="art"><div class="mini-thread"><p><span class="av av-pm">PM</span>How do I pitch this to my VP?</p><p><span class="av" style="background:var(--ink)">S</span>Lead with the problem. Baseline is [unknown], so ask for a 2-week test, not a target.</p></div></div>
-            <button class="btn ghost sm try" data-try="pitch">Try it →</button></article>
+        <div class="chapters" role="tablist" aria-label="Walkthrough chapters">
+          <button class="chapter" role="tab" data-ch="1"><div class="bar2"><i></i></div><b>1 · It asks first</b><span>Follow-up questions to the right role</span></button>
+          <button class="chapter" role="tab" data-ch="2"><div class="bar2"><i></i></div><b>2 · It labels</b><span>Evidence, assumption, question</span></button>
+          <button class="chapter" role="tab" data-ch="3"><div class="bar2"><i></i></div><b>3 · It catches</b><span>Numbers nobody sourced</span></button>
+          <button class="chapter" role="tab" data-ch="4"><div class="bar2"><i></i></div><b>4 · You agree</b><span>Every role signs off</span></button>
         </div>
       </div>
+      <div class="roles-strip"><span>Built for</span><span><span class="av av-pm">PM</span>Product</span><span><span class="av av-design">DS</span>Design</span><span><span class="av av-growth">GR</span>Growth</span><span><span class="av av-engineering">EN</span>Engineering</span></div>
     </section>
 
-    <section class="sec">
-      <div class="wrap final">
-        <h2 class="serif">What are you about to build?</h2>
-        <div class="start-box">${composer("start2", "Describe it in a sentence or two…", true)}</div>
-      </div>
-      <div class="wrap foot"><span>© ${new Date().getFullYear()} Scopeline</span><span>Example content contains no real research or results.</span></div>
+    <section class="wrap intro">
+      <p class="eyebrow">One conversation</p>
+      <h2 class="serif">From a rough request to an agreed scope</h2>
+      <p>Most specs mix what you know with what you hope. Scopeline keeps them apart while your team decides.</p>
     </section>
+
+    <section class="wrap row">
+      <div class="row-copy">
+        <h2 class="serif">Turn a rough request into a labelled definition</h2>
+        <p>Paste a sentence, notes or a transcript. The chat splits it into claims and asks what it can't know.</p>
+        <ul class="dots-list"><li>Evidence only when you named a source</li><li>Everything else stays an assumption</li><li>Nothing is added until you accept it</li></ul>
+        <button class="btn ghost" data-try="carts">See it in the chat →</button>
+      </div>
+      <div class="field f-green"><div class="card">
+        <div class="m-user" style="font-size:.9rem">Let customers save a cart. Most users abandon carts on mobile, according to the funnel report.</div>
+        <div class="props-head"><span>Scopeline · 0 of 2 added</span></div>
+        <div class="pcard callout co-ev"><div class="txt"><span class="co-tag">Evidence · Funnel report</span>Most users abandon carts on mobile.</div><span class="acts"><button class="yes" tabindex="-1">Accept</button></span></div>
+        <div class="pcard callout co-as"><div class="txt"><span class="co-tag">Assumption</span>Saved carts will bring them back.<span class="why">Expected impact stays an assumption until tested.</span></div><span class="acts"><button class="yes" tabindex="-1">Accept</button></span></div>
+      </div></div>
+    </section>
+
+    <section class="wrap row flip">
+      <div class="row-copy">
+        <h2 class="serif">A review that counts gaps, not vibes</h2>
+        <p>Readiness comes from the definition itself, not an AI score. Try fixing these.</p>
+        <ul class="dots-list"><li>Assumptions without an owner or test</li><li>Baselines nobody has</li><li>Questions a role hasn't answered</li></ul>
+        <button class="btn ghost" data-try="reorder">See it in the chat →</button>
+      </div>
+      <div class="field f-amber"><div class="card" id="gapcard">
+        <div class="card-head"><span>Top priorities</span><span class="badge" id="gapbadge">3 open</span></div>
+        <div class="meter"><span id="gapmeter" style="width:73%"></span></div><span class="mono" id="gaptext">8 of 11 sections ready</span>
+        <ul class="glist">
+          <li><span class="gdot as"></span><div><b>Assumption has no owner or test</b><span class="s">Reorder increases repeat purchases</span><em>Owner: Dana (Growth) · Test: holdout</em></div><button type="button" data-gfix>Fix</button></li>
+          <li><span class="gdot qu"></span><div><b>Baseline unknown</b><span class="s">Completed repeat orders</span><em>Question sent to Growth</em></div><button type="button" data-gfix>Fix</button></li>
+          <li><span class="gdot dc"></span><div><b>Nothing marked out of scope</b><span class="s">Say what v1 won't do</span><em>Out of scope: scheduled reorders</em></div><button type="button" data-gfix>Fix</button></li>
+        </ul>
+        <div class="readybox" id="gapready" hidden><b>Ready to agree</b>Every section has content and nothing is missing.</div>
+      </div></div>
+    </section>
+
+    <section class="wrap row">
+      <div class="row-copy">
+        <h2 class="serif">Every role answers in the same thread</h2>
+        <p>Pick a role. Each one gets its own questions, on the same definition.</p>
+        <div class="rolebtns" role="tablist" aria-label="Role">
+          <button role="tab" aria-selected="true" data-role="design"><span class="av av-design">DS</span>Design</button>
+          <button role="tab" aria-selected="false" data-role="growth"><span class="av av-growth">GR</span>Growth</button>
+          <button role="tab" aria-selected="false" data-role="engineering"><span class="av av-engineering">EN</span>Engineering</button>
+          <button role="tab" aria-selected="false" data-role="pm"><span class="av av-pm">PM</span>Product</button>
+        </div>
+      </div>
+      <div class="field f-blue"><div class="card" id="rolecard">
+        <span class="mono">One-tap reorder · v3</span>
+        <div class="rsec" data-for="pm"><h3>Problem</h3><p>Returning customers rebuild baskets item by item.</p></div>
+        <div class="rsec" data-for="design engineering"><h3>Scope</h3><p>Rebuild a past basket with current prices; customer reviews it first.</p></div>
+        <div class="rsec" data-for="growth"><h3>Measure</h3><p>Completed repeat orders · baseline <span class="ph">unknown</span></p></div>
+        <div class="resolver"><div class="res-head"><span id="rtitle">Design</span><span class="mono" id="rstep">1 / 2</span></div><p id="rq"></p><div class="opts" id="ropts"></div></div>
+      </div></div>
+    </section>
+
+    <section class="wrap row flip">
+      <div class="row-copy">
+        <h2 class="serif">It catches numbers nobody sourced</h2>
+        <p>A target that appears from nowhere becomes a placeholder and a question, before it reaches a roadmap.</p>
+        <ul class="dots-list"><li>Checks every number against what you shared</li><li>Suggests [baseline] and [target] instead</li><li>Sends the question to Growth</li></ul>
+        <button class="btn ghost" data-try="reorder">See it in the chat →</button>
+      </div>
+      <div class="field f-rose"><div class="card numfix" id="numfix">
+        <div class="card-head"><span>Proposed measure</span><span class="badge" id="nfbadge">1 flag</span></div>
+        <p class="line" id="nfline">Raise repeat purchases <mark class="bad">by 40%</mark> within one quarter.</p>
+        <p class="warnl" id="nfwarn">“40%” isn't in any source you've shared.</p>
+        <div class="cta-row" style="justify-content:flex-start"><button class="btn sm" id="nfbtn">Use placeholders</button></div>
+      </div></div>
+    </section>
+
+    <section class="wrap row">
+      <div class="row-copy">
+        <h2 class="serif">Coaching that sticks to your facts</h2>
+        <p>Ask how to pitch it or what could go wrong. Answers use the definition and mark what's missing.</p>
+        <ul class="dots-list"><li>Pitch structure for your VP</li><li>Risks and trade-offs to raise early</li><li>[unknown] where a fact is missing</li></ul>
+        <button class="btn ghost" data-try="pitch">Ask it yourself →</button>
+      </div>
+      <div class="field"><div class="card coach">
+        <div class="u">How should I pitch one-tap reorder to my VP?</div>
+        <div class="a"><span class="who" style="margin-bottom:4px"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span>
+          <ol><li><b>Problem:</b> customers rebuild baskets by hand (support tickets).</li><li><b>Bet:</b> easier reordering lifts repeat orders. Untested.</li><li><b>Ask:</b> a holdout test. Baseline is <span class="ph">[unknown]</span>, so no target yet.</li></ol></div>
+      </div></div>
+    </section>
+
+    <section class="wrap row flip">
+      <div class="row-copy">
+        <h2 class="serif">The definition keeps working after you agree</h2>
+        <p>Designs get checked against what you signed off. Results get compared with the original assumption.</p>
+        <div class="seg" role="tablist"><button role="tab" aria-selected="true" data-stage="design">Design review <span class="soon">Next</span></button><button role="tab" aria-selected="false" data-stage="learn">After launch <span class="soon">Later</span></button></div>
+      </div>
+      <div class="field f-blue"><div class="card">
+        <div class="spanel" data-panel="design"><div class="callout co-as"><span class="co-tag">Finding · Edge case</span>The unavailable item looks like the others.<span class="co-src">Affects decision: show it, excluded from the total</span></div><div class="callout co-qu" style="margin-top:8px"><span class="co-tag">Finding · Hierarchy</span>“Reorder” competes with “Edit basket”.<span class="co-src">Affects criterion: customer reviews before checkout</span></div></div>
+        <div class="spanel" data-panel="learn" hidden><div class="callout co-as"><span class="co-tag">Assumption · Growth</span>Easier reordering increases repeat purchases.<span class="co-src">Test agreed before launch: holdout</span></div><div class="callout co-qu" style="margin-top:8px"><span class="co-tag">Result</span><span class="ph">pending</span> No verdict until the holdout result is in.</div></div>
+      </div></div>
+    </section>
+
+    <section class="sec tint" id="how-it-works"><div class="wrap how">
+      <div>
+        <p class="eyebrow">How a session works</p>
+        <h2 class="serif" style="font-size:clamp(2.2rem,4.4vw,3.4rem);margin:12px 0 32px">Four steps, one chat</h2>
+        <ol class="steps">
+          <li><span class="n">01</span><div><h3>Describe the feature</h3><p>A sentence, notes or a transcript is enough.</p></div></li>
+          <li><span class="n">02</span><div><h3>Answer its questions</h3><p>One at a time, each for the role that knows.</p></div></li>
+          <li><span class="n">03</span><div><h3>Accept what's right</h3><p>Labelled proposals fill the definition as you go.</p></div></li>
+          <li><span class="n">04</span><div><h3>Agree and share</h3><p>Each role signs off. Copy the summary for the team.</p></div></li>
+        </ol>
+      </div>
+      <div class="convo">
+        <div class="m-user">Let's scope saved carts for the mobile app.</div>
+        <div class="m-ai"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span><p>Who has this problem today, and how does it show up?</p></div>
+        <div class="m-user">Shoppers on mobile lose their cart when the app closes.</div>
+        <div class="pcard callout co-dc"><div class="txt"><span class="co-tag">Problem</span>Shoppers on mobile lose their cart when the app closes.</div><span class="acts">Added</span></div>
+        <div class="qcard"><span><span class="tag t-qu">Question · Engineering</span></span><b>How long should a saved cart last?</b><div class="opts"><span class="opt">7 days</span><span class="opt">Until checkout</span></div></div>
+      </div>
+    </div></section>
+
+    <section class="wrap faq" id="faq">
+      <h2 class="serif">Questions</h2>
+      <details><summary>Is it really free?</summary><p>Yes. Start a chat without signing up. Your chats are saved in this browser.</p></details>
+      <details><summary>Does it make up numbers?</summary><p>No. Numbers that aren't in something you shared are flagged and replaced with placeholders like [target]. Expected impact is always recorded as an assumption.</p></details>
+      <details><summary>Which AI does it use?</summary><p>When you open it on claude.ai it uses Claude, after you allow it. Anywhere else, guided mode asks the same questions and labels your answers with built-in rules.</p></details>
+      <details><summary>Can my team work on the same definition?</summary><p>Not yet. Today each person's chats stay in their own browser. Copy the summary to share it. Shared workspaces are planned.</p></details>
+      <details><summary>How is this different from a PRD writer?</summary><p>PRD writers produce a document fast. Scopeline is for agreeing the scope: it keeps evidence and assumptions apart, counts what's missing and records who agreed.</p></details>
+    </section>
+
+    <section class="wrap closing">
+      <h2 class="serif">Scope your next feature with the whole team</h2>
+      <button class="btn big" data-act="new">Start free <span class="knob" aria-hidden="true">›</span></button>
+      <p class="fineprint">Free · No sign-up</p>
+    </section>
+    <div class="wrap foot"><span>© ${new Date().getFullYear()} Scopeline</span><span>Example content contains no real research or results.</span></div>
   </main>`;
+}
+
+function newChatView() {
+  const recent = state.features.slice(0, 5);
+  return `<div class="wrap"><div class="app-bar"><button class="logo" data-act="home"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</button><span class="mode" style="margin-left:auto">${aiState === "ready" ? "Claude" : aiState === "loading" ? "Connecting…" : "Guided mode"}</span></div>
+    <section class="newchat">
+      <h1 class="serif">What are you about to build?</h1>
+      <p class="muted">Describe it in a sentence or paste your notes. I'll ask the rest.</p>
+      <div class="start-box">${composer("start", "Describe the feature you're about to scope…", true)}</div>
+      ${recent.length ? `<div class="recent">Continue: ${recent.map((f) => `<button data-open="${f.id}">${esc(f.title)}</button>`).join("")}</div>` : ""}
+    </section></div>`;
 }
 
 function stageBar(f) {
@@ -573,24 +818,80 @@ function docPane(f) {
 }
 
 // =================== Demo animation ===================
-let demoTimers = [], demoPlayed = false;
-function playDemo() {
-  const d = document.getElementById("demo"); if (!d || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+let demoTimers = [], demoObserver = null, chapter = 0;
+const CH_MS = [5200, 4200, 5200, 4600];
+function showChapter(n, auto) {
+  const d = document.getElementById("demo2"); if (!d) return;
   demoTimers.forEach(clearTimeout); demoTimers = [];
-  const els = [...d.querySelectorAll("[data-t]")]; d.classList.add("playing"); els.forEach((e) => e.classList.remove("in"));
-  const count = document.getElementById("demo-count");
-  els.sort((a, b) => a.dataset.t - b.dataset.t).forEach((e, i) => demoTimers.push(setTimeout(() => { e.classList.add("in"); if (count) count.textContent = `${Math.min(i, 4)} of 11 sections`; }, 400 + i * 1100)));
+  chapter = n;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  d.querySelectorAll("[data-c]").forEach((el) => el.classList.toggle("in", Number(el.dataset.c) <= n));
+  const fix = document.getElementById("d2-fix"); fix.classList.toggle("fixed", n > 3);
+  if (n === 3) demoTimers.push(setTimeout(() => fix.classList.add("fixed"), reduce ? 0 : 2600));
+  d.classList.toggle("agreed", n === 4);
+  const agreed = [0, 0, 3, 7, 11][n];
+  document.getElementById("d2-count").textContent = `${agreed} of 11 agreed`;
+  document.getElementById("d2-meter").style.width = Math.round(agreed / 11 * 100) + "%";
+  document.querySelectorAll(".chapter").forEach((c) => {
+    const k = Number(c.dataset.ch);
+    c.classList.toggle("on", k === n); c.classList.toggle("done", k < n);
+    c.style.setProperty("--dur", CH_MS[k - 1] + "ms");
+    const bar = c.querySelector(".bar2 i"); bar.style.animation = "none"; void bar.offsetWidth; bar.style.animation = "";
+    if (!auto || reduce) bar.style.animationPlayState = k === n && auto ? "running" : "paused";
+  });
+  if (auto && !reduce) demoTimers.push(setTimeout(() => showChapter(n === 4 ? 1 : n + 1, true), CH_MS[n - 1]));
+}
+function playDemo() { showChapter(1, true); }
+function initLanding() {
+  const d = document.getElementById("demo2"); if (!d) return;
+  if (demoObserver) demoObserver.disconnect();
+  demoObserver = new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting && chapter === 0) playDemo();
+    if (!e.isIntersecting) { demoTimers.forEach(clearTimeout); chapter = 0; }
+  }), { threshold: 0.3 });
+  demoObserver.observe(d);
+  showChapter(4, false); // complete at rest; plays when scrolled into view
+  chapter = 0;
+  // Gaps
+  const lis = [...document.querySelectorAll("#gapcard .glist li")];
+  const upd = () => { const open = lis.filter((l) => !l.classList.contains("fixed")).length; const ready = 11 - open;
+    document.getElementById("gapmeter").style.width = Math.round(ready / 11 * 100) + "%"; document.getElementById("gaptext").textContent = `${ready} of 11 sections ready`;
+    const b = document.getElementById("gapbadge"); b.textContent = open ? `${open} open` : "None open"; b.classList.toggle("ok", !open); document.getElementById("gapready").hidden = open > 0; };
+  lis.forEach((li) => li.querySelector("[data-gfix]").addEventListener("click", (ev) => { li.classList.add("fixed"); ev.currentTarget.textContent = "Fixed"; upd(); }));
+  // Roles
+  const RQ = { design: [["What if an item is out of stock?", ["Hide it", "Show it, excluded from total"]], ["Where does reorder start?", ["Order history", "Home screen"]]],
+    growth: [["Do we have a repeat-order baseline?", ["Yes, in analytics", "No, needs instrumentation"]], ["How will we know it worked?", ["Holdout test", "Before-and-after only"]]],
+    engineering: [["When are prices re-checked?", ["When the basket is rebuilt", "At payment"]], ["Any dependency on another team?", ["Catalogue variants", "None"]]],
+    pm: [["Who is v1 for?", ["Customers with 2+ orders", "Everyone"]], ["What does v1 leave out?", ["Scheduled reorders", "Editing past orders"]]] };
+  let role = "design", qi = 0;
+  const drawRole = () => {
+    document.querySelectorAll("#rolecard .rsec").forEach((x) => x.classList.toggle("lit", x.dataset.for.split(" ").includes(role)));
+    document.getElementById("rtitle").textContent = ROLES[role];
+    const box = document.getElementById("ropts");
+    if (qi >= RQ[role].length) { document.getElementById("rstep").textContent = "Done"; document.getElementById("rq").textContent = ""; box.innerHTML = `<div class="res-done">${ROLES[role]}'s answers are saved as decisions with reasons.</div>`; return; }
+    const [q, o] = RQ[role][qi]; document.getElementById("rstep").textContent = `${qi + 1} / ${RQ[role].length}`; document.getElementById("rq").textContent = q;
+    box.innerHTML = o.map((x) => `<button class="opt" type="button">${esc(x)}</button>`).join("");
+    box.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { b.classList.add("on"); setTimeout(() => { qi++; drawRole(); }, 380); }));
+  };
+  document.querySelectorAll(".rolebtns [role=tab]").forEach((t) => t.addEventListener("click", () => { document.querySelectorAll(".rolebtns [role=tab]").forEach((x) => x.setAttribute("aria-selected", String(x === t))); role = t.dataset.role; qi = 0; drawRole(); }));
+  drawRole();
+  // Number fix
+  document.getElementById("nfbtn").addEventListener("click", (ev) => {
+    document.getElementById("nfline").innerHTML = 'Raise repeat purchases from <span class="ph">[baseline]</span> to <span class="ph">[target]</span> within one quarter.';
+    document.getElementById("nfwarn").textContent = "Question sent to Growth: do we have a baseline?";
+    document.getElementById("numfix").classList.add("fixed"); const b = document.getElementById("nfbadge"); b.textContent = "Fixed"; b.classList.add("ok"); ev.currentTarget.hidden = true;
+  });
+  // Stages
+  document.querySelectorAll(".seg [role=tab]").forEach((t) => t.addEventListener("click", () => { document.querySelectorAll(".seg [role=tab]").forEach((x) => x.setAttribute("aria-selected", String(x === t))); document.querySelectorAll(".spanel").forEach((p) => { p.hidden = p.dataset.panel !== t.dataset.stage; }); }));
 }
 function afterRender() {
-  const d = document.getElementById("demo");
-  if (d && !demoPlayed) {
-    new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting) { demoPlayed = true; playDemo(); o.disconnect(); } }), { threshold: 0.35 }).observe(d);
-  } else if (d) { d.classList.remove("playing"); }
+  if (state.view === "home") initLanding(); else if (demoObserver) { demoObserver.disconnect(); demoTimers.forEach(clearTimeout); chapter = 0; }
   document.querySelectorAll(".composer textarea").forEach((t) => {
     const fit = () => { t.style.height = "auto"; t.style.height = Math.min(t.scrollHeight, 200) + "px"; };
     t.addEventListener("input", fit);
     t.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); t.form.requestSubmit(); } });
   });
+  if (state.view === "new") document.getElementById("start-in")?.focus();
 }
 function scrollThread() { const t = document.getElementById("thread"); if (t && t.lastElementChild) t.lastElementChild.scrollIntoView({ block: "end", behavior: "smooth" }); }
 
@@ -605,7 +906,8 @@ document.addEventListener("click", (e) => {
   const el = e.target.closest("button, a"); if (!el) return;
   const f = cur();
   if (el.dataset.act === "home") { state.view = "home"; save(); render(); window.scrollTo(0, 0); return; }
-  if (el.dataset.act === "focus-start") { e.preventDefault(); document.getElementById("start-in")?.focus(); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+  if (el.dataset.act === "new") { state.view = "new"; save(); render(); window.scrollTo(0, 0); return; }
+  if (el.classList.contains("chapter")) return showChapter(Number(el.dataset.ch), true);
   if (el.dataset.act === "replay") return playDemo();
   if (el.dataset.act === "stop") { ctl?.abort(); return; }
   if (el.dataset.fill) { const t = el.closest("form").querySelector("textarea"); t.value = EXAMPLES[el.dataset.fill]; t.focus(); t.dispatchEvent(new Event("input")); return; }
