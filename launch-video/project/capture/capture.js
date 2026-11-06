@@ -1,0 +1,32 @@
+const {chromium}=require('playwright');const F='file://'+process.argv[2];const O=process.argv[3];const fs=require('fs');
+const layout={};
+(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1920,height:1080},deviceScaleFactor:4});
+const settle=async(ms=700)=>{await p.evaluate(()=>document.fonts.ready);await p.waitForTimeout(ms);};
+const cut=async(sel,name,opts={})=>{const l=p.locator(sel).first();const bb=await l.boundingBox();layout[name]=bb;await l.screenshot({path:`${O}/${name}.png`,...opts});};
+await p.emulateMedia({reducedMotion:'reduce'});
+await p.goto(F);await p.evaluate(()=>localStorage.clear());await p.reload();await settle(1200);
+await p.screenshot({path:O+'/landing.png'});
+// problem board
+await p.evaluate(()=>document.getElementById('psboard').scrollIntoView({block:'center'}));await settle(800);
+await cut('#psboard','psboard');
+for(let i=1;i<=4;i++) await cut(`.scard:nth-of-type(${i})`,'scard'+i);
+await cut('#verdict','verdict');
+await p.click('[data-ps="solution"]');await settle(800);
+await cut('#psboard','psboard-sol');await cut('#rootpill','rootpill');
+for(let i=1;i<=4;i++) await cut(`.bcard >> nth=${i-1}`,'bcard'+i);
+// chat
+await p.evaluate(()=>scrollTo(0,0));await p.click('.lp-hero [data-act="new"]');await settle();
+await p.screenshot({path:O+'/chat-empty.png'});
+await p.fill('#start-in','We want one-tap reorder to increase repeat purchases by 40%. Support tickets show customers rebuild baskets by hand.');
+await p.screenshot({path:O+'/chat-typed.png'});
+await p.press('#start-in','Enter');await p.waitForSelector('.m-ai .pcard');await settle(1500);
+await p.screenshot({path:O+'/chat-proposals.png'});
+await cut('.m-ai','m-ai1');const n=await p.locator('.pcard').count();for(let i=0;i<Math.min(n,5);i++)await cut(`.pcard >> nth=${i}`,'pcard'+(i+1));
+await p.click('[data-acceptall]');await settle(1200);
+await p.screenshot({path:O+'/chat-accepted.png'});
+await cut('.docpane','docpane');
+const say=async(t)=>{const k=await p.locator('.m-ai').count();await p.fill('#chat-in',t);await p.press('#chat-in','Enter');await p.waitForFunction(k=>document.querySelectorAll('.m-ai').length>k,k);await settle(1500);};
+await say('Show me a forecast chart for this feature.');
+await p.screenshot({path:O+'/chat-forecast.png'});
+await cut('.m-ai:last-of-type .vcard','vcard1');
+fs.writeFileSync(O+'/layout.json',JSON.stringify(layout,null,1));console.log(Object.keys(layout).join(' '));await b.close();})();
