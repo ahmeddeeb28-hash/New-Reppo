@@ -60,7 +60,31 @@ export const SFX: { from: number; src: string; volume: number; dur?: number; not
   { from: S.outro.from + STAMP + 4, src: 'sparkle', volume: 0.9, dur: 60, note: 'rule + dust sparkle' },
 ];
 
-export const Main: React.FC<{ bgm?: boolean }> = ({ bgm = true }) => {
+
+// Voiceover (Piper neural TTS, en_US "lessac" high; processed: trim, EQ, 3:1 compression, -15 LUFS).
+// Each line is pinned relative to its shot and sits inside it; `len` is the clip length in frames.
+export const VO: { from: number; src: string; len: number; text: string }[] = [
+  { from: S.open.from + 28, src: 'open', len: 70, text: 'Agree what to build... before anyone builds it.' },
+  { from: S.problem.from + 10, src: 'problem', len: 149, text: 'Today, one feature lives in four tools. And everyone leaves with a different scope.' },
+  { from: S.title1.from + 4, src: 'title1', len: 51, text: 'So start with one conversation.' },
+  { from: S.chat.from + 14, src: 'chat1', len: 47, text: 'Describe it in plain words.' },
+  { from: S.chat.from + SWAP_AT + 2, src: 'chat2', len: 134, text: "Scopeline splits it into claims, and flags what's evidence, and what's a guess." },
+  { from: S.define.from + 52, src: 'define', len: 82, text: 'Agree a claim, and it joins one shared definition.' },
+  { from: S.title2.from + 4, src: 'forecast', len: 148, text: 'Ask for a chart, and you get one. But numbers stay blank until someone sources them.' },
+  { from: S.solution.from + 12, src: 'solution', len: 120, text: 'Product, design, growth and engineering sign off on the same thing.' },
+  { from: S.outro.from + STAMP + 10, src: 'outro', len: 51, text: 'Scopeline. Start free.' },
+];
+/** 1 when no one is speaking, falling to `depth` while the voice is on (8f ramps). */
+const duck = (f: number, depth: number) => {
+  let m = 1;
+  for (const v of VO) {
+    const a = v.from - 8, b = v.from + v.len + 6;
+    if (f > a - 8 && f < b + 8) m = Math.min(m, interpolate(f, [a - 8, a, b, b + 8], [1, depth, depth, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }));
+  }
+  return m;
+};
+
+export const Main: React.FC<{ bgm?: boolean; voice?: boolean }> = ({ bgm = true, voice = true }) => {
   const { durationInFrames } = useVideoConfig();
   return (
     <AbsoluteFill style={{ background: '#fbfaf7' }}>
@@ -75,13 +99,18 @@ export const Main: React.FC<{ bgm?: boolean }> = ({ bgm = true }) => {
       <Sequence from={S.outro.from} durationInFrames={S.outro.dur}><SceneOutro /></Sequence>
       {bgm ? (
         <Audio src={staticFile('audio/bgm-tech-house.mp3')} startFrom={Math.round(BGM_OFFSET_S * FPS)}
-          volume={(f) => interpolate(f, [0, 20, S.title1.from - 4, S.title1.from + 2, S.title1.from + 34, durationInFrames - 40, durationInFrames], [0, 0.3, 0.3, 0.17, 0.3, 0.3, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })} />
+          volume={(f) => interpolate(f, [0, 20, S.title1.from - 4, S.title1.from + 2, S.title1.from + 34, durationInFrames - 40, durationInFrames], [0, 0.3, 0.3, 0.17, 0.3, 0.3, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) * (voice ? duck(f, 0.4) : 1)} />
       ) : null}
       {SFX.map((s, i) => (
         <Sequence key={i} from={Math.max(0, s.from - AUDIO_LAG)} durationInFrames={s.dur ?? 150}>
-          <Audio src={staticFile(`audio/${s.src}.mp3`)} volume={s.volume} />
+          <Audio src={staticFile(`audio/${s.src}.mp3`)} volume={(f) => s.volume * (voice ? duck(s.from + f, 0.7) : 1)} />
         </Sequence>
       ))}
+      {voice ? VO.map((v, i) => (
+        <Sequence key={'vo' + i} from={v.from} durationInFrames={v.len + 4}>
+          <Audio src={staticFile(`vo/${v.src}.wav`)} volume={1} />
+        </Sequence>
+      )) : null}
     </AbsoluteFill>
   );
 };

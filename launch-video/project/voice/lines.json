@@ -1,0 +1,11 @@
+[
+ ["open",     "Agree what to build... before anyone builds it."],
+ ["problem",  "Today, one feature lives in four tools. And everyone leaves with a different scope."],
+ ["title1",   "So start with one conversation."],
+ ["chat1",    "Describe it in plain words."],
+ ["chat2",    "Scopeline splits it into claims, and flags what's evidence, and what's a guess."],
+ ["define",   "Agree a claim, and it joins one shared definition."],
+ ["forecast", "Ask for a chart, and you get one. But numbers stay blank until someone sources them."],
+ ["solution", "Product, design, growth and engineering sign off on the same thing."],
+ ["outro",    "Scopeline. Start free."]
+]
