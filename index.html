@@ -747,6 +747,58 @@ mark.bad { background: var(--bad-bg); color: var(--bad); border-radius: 4px; pad
 .psboard .verdict { background: rgba(255,255,255,.95); }
 @media (prefers-reduced-motion: reduce) { .bl { animation: none; } .pscam { transition: none; } .pslines path { animation: none; } }
 
+
+/* ---------- Vibrant refresh: welcoming hero, flat colour tiles, colour-coded roles ---------- */
+:root { --c-green: #3ccf91; --c-amber: #f5b748; --c-blue: #7d8cff; --c-coral: #ff7a66; --c-teal: #6fd0d4; --c-violet: #8b6cff; }
+.lp-hero h1.hx { max-width: 13.5em; line-height: 1.04; font-weight: 500; }
+.hx-l { display: inline; }
+.hx-avis, .hx-pill, .hx-half, .hx-spark { display: inline-flex; vertical-align: middle; position: relative; top: -0.06em; }
+.hx-avis { margin-inline: 0.05em; }
+.hx-avis .avi { width: 0.78em; height: 0.78em; border-radius: 50%; box-shadow: 0 0 0 0.06em #fff, 0 0.08em 0.2em rgba(21,19,15,.18); background: #fff; }
+.hx-avis .avi + .avi { margin-left: -0.2em; }
+.hx-pill { width: 1.5em; height: 0.72em; border-radius: 999px; background: linear-gradient(90deg, var(--c-green) 0 50%, var(--c-blue) 50%); align-items: center; justify-content: space-between; padding-inline: 0.12em; margin-inline: 0.06em; box-shadow: inset 0 0 0 0.04em rgba(255,255,255,.4); }
+.hx-pill i { width: 0.22em; height: 0.22em; border-radius: 50%; background: #15130f; }
+.hx-pill b { width: 0.5em; height: 0.5em; border-radius: 50%; background: #fff; color: #15130f; font: 600 0.32em/1 var(--sans); display: inline-flex; align-items: center; justify-content: center; width: 1.5em; height: 1.5em; }
+.hx-half { width: 0.6em; height: 0.6em; border-radius: 0.6em 0.6em 0 0; background: var(--c-amber); transform: rotate(-90deg); margin-right: 0.12em; }
+.hx-spark { color: var(--c-coral); font-size: 0.5em; font-style: normal; top: -0.5em; }
+@media (prefers-reduced-motion: no-preference) {
+  .hx-avis .avi { animation: bob 3.2s ease-in-out infinite; } .hx-avis .avi:nth-child(2) { animation-delay: .25s; } .hx-avis .avi:nth-child(3) { animation-delay: .5s; } .hx-avis .avi:nth-child(4) { animation-delay: .75s; }
+  .hx-pill b { animation: slideKnob 3.6s cubic-bezier(.65,0,.25,1) infinite; }
+  .hx-spark { animation: twinkle 2.4s ease-in-out infinite; display: inline-block; }
+}
+@keyframes bob { 50% { transform: translateY(-0.06em); } }
+@keyframes slideKnob { 0%, 20% { transform: translateX(-0.95em); } 50%, 80% { transform: translateX(0); } 100% { transform: translateX(-0.95em); } }
+@keyframes twinkle { 50% { transform: scale(1.3) rotate(20deg); opacity: .7; } }
+/* hero backdrop: crisp brand shapes instead of only blurred washes */
+.glow-top::before { background: radial-gradient(circle at 40% 50%, #d9cfff 0%, #ece6ff 45%, transparent 70%); opacity: .55; }
+.glow-top::after { opacity: .55; }
+.glow-top b { position: absolute; border-radius: 50%; opacity: .5; }
+.glow-top b:nth-of-type(1) { width: 420px; height: 420px; left: -150px; top: 160px; border: 56px solid #dff6ea; }
+.glow-top b:nth-of-type(2) { width: 260px; height: 130px; right: 6%; top: 90px; border-radius: 260px 260px 0 0; background: #ffe8bf; }
+.glow-top b:nth-of-type(3) { width: 180px; height: 180px; right: -40px; top: 420px; background: #e3e7ff; border-radius: 40px; transform: rotate(18deg); }
+@media (max-width: 760px) { .glow-top b { display: none; } }
+/* feature fields: flat, saturated colour tiles with crisp geometric shapes */
+.field::before { filter: none; animation: none; inset: 0; }
+.field::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(circle at 88% 12%, rgba(255,255,255,.28) 0 18%, transparent 18.3%), radial-gradient(circle at 6% 104%, rgba(21,19,15,.07) 0 26%, transparent 26.3%), radial-gradient(circle at 70% 120%, rgba(255,255,255,.18) 0 30%, transparent 30.3%); }
+.f-green::before { background: var(--c-green); }
+.f-amber::before { background: var(--c-amber); }
+.f-blue::before { background: var(--c-blue); }
+.f-rose::before { background: var(--c-coral); }
+.field:not(.f-green):not(.f-amber):not(.f-blue):not(.f-rose)::before { background: var(--c-teal); }
+.keep-field::before { background: var(--c-violet) !important; }
+.field .card { box-shadow: 0 30px 60px -30px rgba(21,19,15,.45), 0 0 0 1px rgba(21,19,15,.06); }
+/* roles: each card carries its colour */
+.who-card { border: 0; }
+.c-pm { background: #ecebe7; } .c-design { background: #ffe4ec; } .c-growth { background: #dff6ea; } .c-engineering { background: #e5e8ff; }
+.c-pm:hover, .c-design:hover, .c-growth:hover, .c-engineering:hover { border-color: transparent; }
+/* habits: coloured number chips cycling through the brand colours */
+.tips { counter-reset: tip; }
+.tip { position: relative; border-top: 4px solid var(--tc, var(--c-green)); }
+.tip:nth-child(6n+1) { --tc: var(--c-green); } .tip:nth-child(6n+2) { --tc: var(--c-blue); } .tip:nth-child(6n+3) { --tc: var(--c-amber); }
+.tip:nth-child(6n+4) { --tc: var(--c-coral); } .tip:nth-child(6n+5) { --tc: var(--c-violet); } .tip:nth-child(6n+6) { --tc: var(--c-teal); }
+/* primary buttons: a touch of brand colour on hover */
+.btn.big:not(.ghost):hover { box-shadow: 0 0 0 4px rgba(60,207,145,.28); }
+
 @media (max-width: 1100px) { .moments { grid-template-columns: 1fr 1fr; } .hand { display: none; } }
 @media (max-width: 900px) {
   .ws { grid-template-columns: minmax(0, 1fr); }
@@ -1252,10 +1304,10 @@ function homeView() {
   </div></div></header>
 
   <main style="position:relative">
-    <div class="glow-top" aria-hidden="true"><i></i></div>
+    <div class="glow-top" aria-hidden="true"><i></i><b></b><b></b><b></b></div>
     <section class="wrap lp-hero">
       <p class="kicker"><span class="dot-live" aria-hidden="true"></span>Free for product teams · no sign-up</p>
-      <h1 class="serif">Agree what to build <em>before anyone builds&nbsp;it</em></h1>
+      <h1 class="serif hx"><span class="hx-l">Agree <span class="hx-avis" aria-hidden="true">${avatar("pm", 64)}${avatar("design", 64)}${avatar("growth", 64)}${avatar("engineering", 64)}</span> what</span> <span class="hx-l">to build <span class="hx-pill" aria-hidden="true"><i></i><b>→</b></span></span> <em class="hx-l"><span class="hx-half" aria-hidden="true"></span>before anyone</em> <em class="hx-l">builds&nbsp;it <span class="hx-spark" aria-hidden="true">✦</span></em></h1>
       <p class="lede">An AI chat that turns a rough feature request into one definition your PM, designer, growth lead and engineer agree on. Every claim labelled. Every number sourced or left blank.</p>
       <div class="cta-row">
         <button class="btn big" data-act="new">Start free <span class="knob" aria-hidden="true">›</span></button>
@@ -1786,6 +1838,7 @@ function initLanding() {
   document.getElementById("v-play").addEventListener("click", () => { vPlaying = !vPlaying; setPlayIcon(); if (vPlaying) vScenePlay(Math.max(0, vScene)); else { demoTimers.forEach(clearTimeout); const i = document.querySelector(`.seg2[data-scene="${vScene}"] i`); if (i) { const w = getComputedStyle(i).width; i.style.transition = "none"; i.style.width = w; } } });
   document.querySelectorAll(".seg2").forEach((sg) => sg.addEventListener("click", () => { vPlaying = true; setPlayIcon(); vScenePlay(Number(sg.dataset.scene)); }));
   // Problem / Solution: a short film with camera moves and backlighting
+  let psPlayed = false; // set by autoplay or by any manual tab/replay click, so autoplay never overrides a choice
   const psTabs = document.querySelectorAll("[data-ps]");
   const PS = { problem: ["One feature, four interpretations", "The request lives in a doc, the doubts in Slack, the edge cases in Figma comments and the baseline nowhere. Everyone leaves the meeting with a different scope."],
     solution: ["One definition, every role signed off", "The same conversation holds the evidence, the open questions and each role's answers. What's agreed is recorded with who agreed and why."] };
@@ -1838,10 +1891,9 @@ function initLanding() {
     cards.forEach((c, i) => pAt(3000 + i * 1000, () => psCam(c, 1.3)));
     pAt(3000 + cards.length * 1000, () => psCam(null));
   };
-  psTabs.forEach((t) => t.addEventListener("click", () => (t.dataset.ps === "problem" ? playProblem(false) : playSolution())));
-  document.getElementById("ps-replay").addEventListener("click", () => playProblem(true));
+  psTabs.forEach((t) => t.addEventListener("click", () => { psPlayed = true; t.dataset.ps === "problem" ? playProblem(false) : playSolution(); }));
+  document.getElementById("ps-replay").addEventListener("click", () => { psPlayed = true; playProblem(true); });
   document.querySelectorAll(".bcard").forEach((c) => c.classList.add("in"));
-  let psPlayed = false;
   new IntersectionObserver((es, o) => es.forEach((e) => { if (e.isIntersecting && !psPlayed) { psPlayed = true; playProblem(true); o.disconnect(); } }), { threshold: 0.4 }).observe(board);
 
   // How it works: story that plays when scrolled into view
