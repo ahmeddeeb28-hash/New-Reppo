@@ -10,6 +10,7 @@ Choices made where the design doc was silent, as the doc asks. Newest first.
 | P2 | Keep the Scopeline name and visual direction (serif headlines, colour fields, four claim colours). | Chosen by the founder after comparing with the ProductLens style. | — |
 | P3 | Scopeline is free to use. Every call to action is "Start free"; no pilot or audit requests. | Founder decision. | Pricing is introduced. |
 | P4 | No invented social proof: no placeholder customer logos, testimonials or real-brand metrics on any page. | The ProductLens prototype had these; they create legal and trust risk. | Real customers agree to be named. |
+| P5 | Brighter, more welcoming look (Nov 2026): the role faces and brand-colour shapes sit inline in the hero headline; feature visuals use flat, saturated tiles (green, amber, periwinkle, coral, teal, violet from the logo mark); role and habit cards are colour-coded. Serif headlines and the cream background stay. | Founder asked for the warmth of SplitMetrics' design. Taken: colour blocks, faces and playful shapes. Not taken: their layout, real-customer photos, logos or stats, which P4 rules out until we have real customers. | Users find the colour distracting in the product UI (it is limited to the landing page for now). |
 
 ## Milestone 1 — data model and feature editing (Nov 2026)
 

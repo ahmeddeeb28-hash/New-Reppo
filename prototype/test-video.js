@@ -13,7 +13,7 @@ await p.click('.seg2[data-scene="3"]');await p.waitForTimeout(3000);
 ok(await p.locator('#v-fix.fixed').count()===1,'40% replaced');await p.screenshot({path:S+'/vid-s3.png'});
 await p.click('.seg2[data-scene="4"]');await p.waitForTimeout(1500);ok(await p.locator('#player.agreed').count()===1,'agree scene');
 await p.click('#v-play');ok((await p.textContent('#v-play'))==='▶','pause works');
-await p.click('[data-ps="solution"]');await p.waitForTimeout(1300);ok(await p.locator('.bcard.in').count()===4,'solution tree appears');
+await p.click('[data-ps="solution"]');await p.waitForTimeout(2800);ok(await p.locator('.bcard.in').count()===4,'solution tree appears');
 await p.locator('.ps').screenshot({path:S+'/vid-ps.png'});
 const m=await b.newPage({viewport:{width:390,height:844}});await m.goto(F);await m.waitForTimeout(500);
 ok(!(await m.evaluate(()=>document.documentElement.scrollWidth>innerWidth)),'fits a phone');
