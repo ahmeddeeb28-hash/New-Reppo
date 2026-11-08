@@ -1,7 +1,7 @@
 const {chromium}=require('playwright');const F='file://'+process.argv[2];const S=process.argv[3];
 const ok=(c,m)=>console.log((c?'PASS ':'FAIL ')+m);
 (async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1440,height:900}});const e=[];p.on('pageerror',x=>e.push(x.message));
-await p.goto(F);await p.evaluate(()=>localStorage.clear());await p.reload();
+await p.goto(F);await p.evaluate(()=>{localStorage.clear();localStorage.setItem('scopeline-chat-v1',JSON.stringify({features:[],view:'home',mode:'steps'}))});await p.reload();
 const start=async(ex)=>{await p.click('.lp-hero [data-act="new"], .side [data-act="new"]');await p.click(`form[data-form="start"] [data-fill="${ex}"]`);await p.click('form[data-form="start"] .send');await p.waitForSelector('.m-ai .pcard');};
 await start('reorder');
 ok(await p.locator('.side').isVisible(),'sidebar visible in the chat');
@@ -20,7 +20,7 @@ await p.reload();await p.waitForTimeout(300);ok(await p.locator('[data-open]').c
 // download falls back to copy text where downloads aren't available
 await p.click('[data-open] >> nth=0');await p.click('.side [data-act="download"]');await p.waitForTimeout(300);
 ok(await p.evaluate(()=>[...document.querySelectorAll('textarea')].some(t=>t.value.startsWith('# '))),'download falls back to showing the Markdown to copy');
-const m=await b.newPage({viewport:{width:390,height:844}});m.on('pageerror',x=>e.push(x.message));await m.goto(F);await m.evaluate(()=>localStorage.clear());await m.reload();
+const m=await b.newPage({viewport:{width:390,height:844}});m.on('pageerror',x=>e.push(x.message));await m.goto(F);await m.evaluate(()=>{localStorage.clear();localStorage.setItem('scopeline-chat-v1',JSON.stringify({features:[],view:'home',mode:'steps'}))});await m.reload();
 await m.click('.lp-hero [data-act="new"]');await m.click('form[data-form="start"] [data-fill="carts"]');await m.click('form[data-form="start"] .send');await m.waitForSelector('.pcard');
 ok(await m.locator('.side').evaluate(el=>el.getBoundingClientRect().right<=0),'phone: sidebar hidden by default');
 await m.click('.side-open');await m.waitForTimeout(350);ok(await m.locator('.side.open').count()===1,'phone: Chats button opens history');

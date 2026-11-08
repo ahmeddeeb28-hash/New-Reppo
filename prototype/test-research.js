@@ -2,7 +2,7 @@ const {chromium}=require('playwright');const F='file://'+process.argv[2];const S
 let ok=true;const t=(c,m)=>{if(!c)ok=false;console.log((c?'PASS ':'FAIL ')+m)};
 (async()=>{const b=await chromium.launch();const e=[];
 for(const [w,h,n] of [[1440,950,'d'],[390,844,'m']]){const p=await b.newPage({viewport:{width:w,height:h}});p.on('pageerror',x=>e.push(x.message));
-await p.goto(F);await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(300);await p.click('.lp-hero [data-act="new"]');
+await p.goto(F);await p.evaluate(()=>{localStorage.clear();localStorage.setItem('scopeline-chat-v1',JSON.stringify({features:[],view:'home',mode:'steps'}))});await p.reload();await p.waitForTimeout(300);await p.click('.lp-hero [data-act="new"]');
 await p.fill('#start-in','We want one-tap reorder so customers rebuild baskets less. We think people will reorder weekly if past items are on the home screen. We believe price changes will annoy them.');await p.press('#start-in','Enter');
 await p.waitForSelector('.m-ai .brief',{timeout:15000});
 t(await p.locator('.brief .pv').count()===3,n+': three similar-app previews on the first reply');
@@ -13,12 +13,12 @@ t((await p.locator('.brief .fit').first().textContent()).toLowerCase().includes(
 t(await p.locator('.where a').count()>=8,n+': lists where to get your own numbers');
 t((await p.locator('.brief .mkt').textContent()).includes('Grocery'),n+': names the industry');
 t(await p.locator('.brief .angle').count()===3,n+': three positioning angles');
-t(await p.locator('.brief .trick').count()===3,n+': three tactics for this space');
+t(await p.locator('.brief .trick:not(.lesson)').count()===3,n+': three tactics for this space');
 t(await p.locator('.brief .bchart svg').count()===2,n+': two charts to track, drawn');
 await p.locator('.brief .angle .yes').first().click();await p.waitForTimeout(200);
 t(await p.locator('.brief .angle.done').count()===1,n+': using an angle records it');
-await p.locator('.brief .trick .yes').first().click();await p.waitForTimeout(200);
-t(await p.locator('.brief .trick.done').count()===1,n+': adding a tactic puts it in scope');
+await p.locator('.brief .trick:not(.lesson) .yes').first().click();await p.waitForTimeout(200);
+t(await p.locator('.brief .trick:not(.lesson).done').count()===1,n+': adding a tactic puts it in scope');
 await p.locator('.brief .pv .yes').first().click();await p.waitForTimeout(200);
 t(await p.locator('.docpane .ditem a.chk, .doc-pane .ditem a.chk').count()+await p.locator('.ditem a.chk').count()>=1,n+': adding a precedent puts it in the definition with a check link');
 // numbers on a checkout idea

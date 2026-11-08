@@ -1,7 +1,7 @@
 const {chromium}=require('playwright');const F='file://'+process.argv[2];const S=process.argv[3];
 const ok=(c,m)=>console.log((c?'PASS ':'FAIL ')+m);
 (async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1440,height:900}});const e=[];p.on('pageerror',x=>e.push(x.message));
-await p.goto(F);await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(400);
+await p.goto(F);await p.evaluate(()=>{localStorage.clear();localStorage.setItem('scopeline-chat-v1',JSON.stringify({features:[],view:'home',mode:'steps'}))});await p.reload();await p.waitForTimeout(400);
 ok(await p.locator('.lp-hero textarea').count()===0,'hero has no chat box');
 ok(await p.locator('main .composer').count()===0,'no chat box anywhere on the landing page');
 await p.screenshot({path:S+'/v2-fold.png'});

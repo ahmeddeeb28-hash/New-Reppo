@@ -2,7 +2,7 @@ const {chromium}=require('playwright');const F='file://'+process.argv[2];const S
 const ok=(c,m)=>console.log((c?'PASS ':'FAIL ')+m);
 const say=async(p,t)=>{const n=await p.locator('.m-ai').count();await p.fill('#chat-in',t);await p.press('#chat-in','Enter');await p.waitForFunction(k=>document.querySelectorAll('.m-ai').length>k,n,{timeout:15000});};
 (async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1440,height:950}});const e=[];p.on('pageerror',x=>e.push(x.message));
-await p.goto(F);await p.evaluate(()=>localStorage.clear());await p.reload();await p.click('.lp-hero [data-act="new"]');
+await p.goto(F);await p.evaluate(()=>{localStorage.clear();localStorage.setItem('scopeline-chat-v1',JSON.stringify({features:[],view:'home',mode:'steps'}))});await p.reload();await p.click('.lp-hero [data-act="new"]');
 await p.fill('#start-in','We want one-tap reorder to increase repeat purchases by 40%. Support tickets show customers rebuild baskets by hand.');await p.press('#start-in','Enter');
 await p.waitForSelector('.m-ai .pcard');await p.click('[data-acceptall]');
 await say(p,'What are the biggest risks?');
@@ -30,7 +30,7 @@ await p.screenshot({path:S+'/dyn-chat2.png'});
 const q=await b.newPage({viewport:{width:1440,height:950}});q.on('pageerror',x=>e.push(x.message));
 await q.addInitScript(()=>{const out={reply:"Rough market estimates from training data. Verify before use.",questions:[],proposals:[{kind:"visual",text:"Grocery reorder market (estimate)",visual:{type:"bar",unit:"$bn",basis:"estimate",source:"Claude training knowledge, not verified",series:[{name:"Size",points:[{x:"TAM",y:50},{x:"SAM",y:8},{x:"SOM",y:null}]}]}},{kind:"visual",text:"broken",visual:{type:"line",series:[]}}]};
  window.claude={use:async n=>{if(n!=="sample")return null;const f=async()=>({text:""});f.json=async()=>out;return f;}};});
-await q.goto(F);await q.evaluate(()=>localStorage.clear());await q.reload();await q.waitForTimeout(300);await q.click('.lp-hero [data-act="new"]');
+await q.goto(F);await q.evaluate(()=>{localStorage.clear();localStorage.setItem('scopeline-chat-v1',JSON.stringify({features:[],view:'home',mode:'steps'}))});await q.reload();await q.waitForTimeout(300);await q.click('.lp-hero [data-act="new"]');
 await q.fill('#start-in','What is the market size for grocery reorder?');await q.press('#start-in','Enter');await q.waitForSelector('.vcard');
 ok(await q.getByText('Unverified estimate · check before use').count()===1,'Claude estimates are labelled unverified');
 ok(await q.locator('.vcard').count()===1,'malformed charts are dropped');

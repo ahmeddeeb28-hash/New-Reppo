@@ -3,7 +3,7 @@ const ok=(c,m)=>console.log((c?'PASS ':'FAIL ')+m);
 (async()=>{const b=await chromium.launch();
 // ---- Guided mode (no Claude in this view) ----
 let p=await b.newPage({viewport:{width:1440,height:900}});const e=[];p.on('pageerror',x=>e.push(x.message));
-await p.goto(F);await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(300);
+await p.goto(F);await p.evaluate(()=>{localStorage.clear();localStorage.setItem('scopeline-chat-v1',JSON.stringify({features:[],view:'home',mode:'steps'}))});await p.reload();await p.waitForTimeout(300);
 await p.click('.lp-hero [data-act="new"]');await p.waitForSelector('#start-in');
 await p.click('form[data-form="start"] [data-fill="reorder"]');
 ok((await p.inputValue('#start-in')).includes('one-tap'),'example chip fills the start box');
@@ -37,7 +37,7 @@ await p.click('[data-open] >> nth=0');ok(await p.locator('.m-user').count()>=2,'
 const q=await b.newPage({viewport:{width:1440,height:900}});q.on('pageerror',x=>e.push(x.message));
 await q.addInitScript(()=>{const out={reply:"Two claims so far. One number has no source.",questions:[{text:"Do we have a repeat-order baseline?",role:"growth",options:["Yes, in analytics","No, needs instrumentation"]}],proposals:[{kind:"assumption",text:"One-tap reorder increases repeat purchases.",source:"",why:""},{kind:"measure",text:"Repeat purchases up 40% in 90 days",source:"",why:""},{kind:"evidence",text:"Most customers reorder monthly.",source:"Made up",why:""}]};
   window.claude={use:async n=>{if(n!=="sample")return null;const f=async()=>({text:""});f.json=async()=>{await new Promise(r=>setTimeout(r,300));return out;};return f;}};});
-await q.goto(F);await q.evaluate(()=>localStorage.clear());await q.reload();await q.waitForTimeout(400);
+await q.goto(F);await q.evaluate(()=>{localStorage.clear();localStorage.setItem('scopeline-chat-v1',JSON.stringify({features:[],view:'home',mode:'steps'}))});await q.reload();await q.waitForTimeout(400);
 await q.click('main [data-try="pitch"]');await q.waitForSelector('.m-ai .pcard');
 ok(await q.getByText('Claude',{exact:true}).count()===1,'Claude mode shown');
 ok(await q.locator('.pcard .flag').count()===1,'invented 90 days flag'.replace('90 days','numbers')+' (40%/90 flagged)');
