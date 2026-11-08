@@ -974,6 +974,36 @@ a.chk { display: inline-block; margin-top: 6px; font-size: 0.78rem; font-weight:
 .nextq .chip.fin { background: var(--ink); color: #fff; border-color: var(--ink); }
 @media (max-width: 760px) { .opts3-row, .modesw { grid-template-columns: 1fr; } .unk-row { flex-wrap: wrap; } }
 
+
+/* ---------- Action plan ---------- */
+.plan { border: 1px solid var(--line); background: var(--surface); border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 14px; margin: 6px 0 10px; box-shadow: 0 20px 50px -36px rgba(21,19,15,.45); scroll-margin-top: 140px; }
+.plan, .who-g, .task, .tk, .tk span, .exp-grid > div, .plan-head { min-width: 0; overflow-wrap: anywhere; }
+.m-ai { min-width: 0; max-width: 100%; }
+.plan-head b { display: block; font-family: var(--serif); font-size: 1.5rem; font-weight: 500; letter-spacing: -0.02em; }
+.plan-head p { margin: 4px 0 0; font-size: 0.95rem; }
+.ph { background: #fdf0da; color: #a35a00; border-radius: 4px; padding: 0 4px; font-family: var(--mono); font-size: 0.82em; }
+.exp { border-radius: 14px; background: linear-gradient(135deg, #eef0ff, #e9f8f0); padding: 12px; }
+.exp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; font-size: 0.88rem; }
+.exp-grid .fl { display: block; font-family: var(--mono); font-size: 0.64rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.exp-sub { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+.exp-rule { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 0.84rem; }
+.exp-rule p { margin: 0; flex-basis: 100%; }
+.exp-rule span { border-radius: 999px; padding: 2px 10px; font-size: 0.74rem; font-weight: 700; }
+.r-s { background: #dff6ea; color: #11805a; } .r-i { background: #fff1d6; color: #8a5a00; } .r-x { background: #fde6e3; color: #c2382c; }
+.who-h { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.meter.sm { width: 120px; height: 6px; border-radius: 6px; background: var(--line); overflow: hidden; display: inline-block; } .meter.sm span { display: block; height: 100%; background: var(--ev); }
+.who-g { display: flex; flex-direction: column; gap: 6px; padding: 10px 0; border-top: 1px dashed var(--line); }
+.who-r { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+.task { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: start; border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; background: var(--bg); }
+.task.done { opacity: .6; } .task.done b { text-decoration: line-through; }
+.tk { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; min-width: 0; }
+.tk input { margin-top: 3px; width: 16px; height: 16px; accent-color: #11805a; flex-shrink: 0; }
+.tk b { display: block; font-size: 0.9rem; font-weight: 600; } .tk small { display: block; color: var(--muted); font-size: 0.8rem; margin-top: 2px; }
+.t-acts { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+.due { font: inherit; font-size: 0.78rem; border: 1px solid var(--line); border-radius: 8px; padding: 2px 6px; background: var(--surface); color: var(--ink); }
+.plan-acts { display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 640px) { .exp-grid { grid-template-columns: 1fr; } .task { grid-template-columns: minmax(0, 1fr); } .t-acts { flex-direction: row; align-items: center; justify-content: space-between; padding-left: 26px; } }
+
 @media (max-width: 1100px) { .moments { grid-template-columns: 1fr 1fr; } .hand { display: none; } }
 @media (max-width: 900px) {
   .ws { grid-template-columns: minmax(0, 1fr); }
@@ -2139,13 +2169,73 @@ const DOC_GROUPS = [
 ];
 const groupOf = (id) => DOC_GROUPS.find((g) => g.id === id) || DOC_GROUPS[0];
 const groupForKind = (k) => (DOC_GROUPS.find((g) => g.keys.includes(k)) || DOC_GROUPS[0]).id;
+// =================== Action plan: who does what, the experiment, and ready-to-send outputs ===================
+const ROLE_ORDER = ["growth", "engineering", "design", "pm"];
+function buildPlan(f, old) {
+  const T = (s) => trunc(s, 90);
+  const measure = first(f, "measure"), chosen = items(f, "decision").find((d) => /^v1 approach:/i.test(d.text));
+  const scope = chosen ? chosen.text.replace(/^v1 approach:\s*[^.]*\.\s*/i, "") : first(f, "scope_in");
+  const bets = items(f, "assumption").filter((a) => !/^(we want|i want|let's|build|add)\b/i.test(a.text));
+  const P = matchPatterns(`${f.request || ""} ${f.doc.map((x) => x.text).join(" ")}`)[0];
+  const out = [];
+  const add = (role, text, detail, why) => out.push({ role, text, detail, why });
+  add("growth", `Record today's baseline for “${measure ? T(measure) : "[success metric]"}”`, "Pull it from your product analytics (Amplitude, Mixpanel or GA4) before anything ships.", "Without a baseline nobody can say later whether it worked.");
+  add("growth", "Track each step of the funnel", `Events for each step${P && P.market ? ` (${P.market.charts.find((c) => c[0] === "funnel")?.[2].join(" → ") || "seen → tried → done"})` : " (seen → tried → done)"}, so the biggest drop is visible.`, "The funnel shows where people give up.");
+  add("growth", "Pick one guardrail to watch weekly", "For example support contacts, refunds or opt-outs, with a threshold that triggers a review: [threshold].", "Catches harm before the review date.");
+  add("engineering", `Build v1${scope ? `: ${T(scope)}` : " ([scope])"}`, "Behind a feature flag, so it can be switched off.", "Keeps the launch reversible.");
+  add("engineering", "Set up the holdout", "Hold back [share] of eligible users so the test has a comparison group.", "Before-and-after charts can't separate the feature from everything else.");
+  add("design", `Design the v1 flow${chosen ? ` (“${chosen.text.match(/^v1 approach:\s*([^.]*)/i)?.[1] || ""}”)` : ""}`, P ? `Start from the patterns in the brief: ${P.apps.map((a) => `${a[0]} ${a[1]}`).join(", ")}.` : "Cover the main action, empty states and errors.", "");
+  add("design", items(f, "criterion").length ? `Check the screens against ${items(f, "criterion").length} acceptance criteria` : "Write 2–3 acceptance criteria", items(f, "criterion").length ? "Before release, with Engineering." : "What must be true for v1 to count as done.", "");
+  bets.slice(0, 3).forEach((a) => add("pm", `Check the bet: “${T(a.text)}”`, /\b(says|said|reports?|according|tickets?|survey|interviews?|data)\b/i.test(a.text) ? "Get the source behind it (notes, tickets, data) so it can become evidence." : "Run the cheapest test that could prove it wrong, and name an owner.", "An assumption without an owner never gets tested."));
+  items(f, "question").filter((q) => !q.answer).slice(0, 3).forEach((q) => add(q.role || "pm", `Answer: ${T(q.text)}`, "Open question from the chat.", ""));
+  add("pm", "Book the learning review", "Same people, [date]: compare against the baseline and decide scale, iterate or stop.", "Turns the launch into a decision.");
+  const prev = new Map((old && old.tasks || []).map((t) => [t.text, t]));
+  const tasks = out.map((t) => ({ id: (prev.get(t.text) || {}).id || uid(), done: !!(prev.get(t.text) || {}).done, due: (prev.get(t.text) || {}).due || "", ...t }));
+  const bet = (bets.find((a) => /\b(think|believe|assume|expect|will|should)\b/i.test(a.text)) || bets[0] || {}).text;
+  return {
+    made: Date.now(), tasks,
+    exp: { hypothesis: bet || "[the bet in one sentence]", metric: measure || "[success metric]", baseline: (items(f, "measure")[0] || {}).baseline || "[baseline]", target: "[target]", guardrail: "[guardrail metric and threshold]", design: P && P.test ? P.test : "Feature on for most eligible users; [share] held back as a comparison for [n] weeks.",
+      rule: "Scale if the metric beats the baseline by the target and the guardrail holds. Iterate if it moves but misses. Stop if it doesn't move." },
+    oneLine: `${first(f, "problem") ? `Problem: ${T(first(f, "problem"))} ` : ""}${chosen ? `We'll go with “${chosen.text.replace(/^v1 approach:\s*/i, "").split(".")[0]}” (${T(scope).replace(/\.$/, "")}) ` : `We'll build ${f.title.toLowerCase()} `}to test whether ${bet ? `“${T(bet)}”` : "[the bet]"}, measured by ${measure ? `“${T(measure)}”` : "[success metric]"}.`,
+  };
+}
+function planMd(f) {
+  const pl = f.plan; if (!pl) return "";
+  const by = (r) => pl.tasks.filter((t) => t.role === r);
+  return `# Action plan: ${f.title}\n\n${pl.oneLine}\n\n## Experiment\n- Hypothesis: ${pl.exp.hypothesis}\n- Metric: ${pl.exp.metric} (baseline ${pl.exp.baseline}, target ${pl.exp.target})\n- Guardrail: ${pl.exp.guardrail}\n- Design: ${pl.exp.design}\n- Decision rule: ${pl.exp.rule}\n\n## Who does what\n` +
+    ROLE_ORDER.filter((r) => by(r).length).map((r) => `### ${ROLES[r] || "PM"}\n` + by(r).map((t) => `- [${t.done ? "x" : " "}] ${t.text}${t.due ? ` (due ${t.due})` : " (due [date])"}\n  ${t.detail}`).join("\n")).join("\n\n");
+}
+function ticketMd(f, t) {
+  return `Title: ${t.text}\nOwner: ${ROLES[t.role] || "PM"}${t.due ? `\nDue: ${t.due}` : ""}\nDescription: ${t.detail}${t.why ? ` ${t.why}` : ""}\nContext: ${f.plan.oneLine}\nDone when: ${t.text.replace(/^(Record|Track|Pick|Build|Set up|Design|Check|Write|Test the bet:|Answer:|Book)\s*/i, "")} is complete and shared in the Scopeline definition.`;
+}
+function slackMd(f) {
+  const pl = f.plan, open = pl.tasks.filter((t) => !t.done);
+  return `*${f.title}: plan agreed*\n${pl.oneLine}\n\n*Next up*\n${ROLE_ORDER.map((r) => { const t = open.find((x) => x.role === r); return t ? `• ${ROLES[r] || "PM"}: ${t.text}${t.due ? ` (by ${t.due})` : ""}` : ""; }).filter(Boolean).join("\n")}\n\n*Decision rule:* ${pl.exp.rule}`;
+}
+function planHtml(f) {
+  const pl = f.plan; if (!pl) return "";
+  const doneN = pl.tasks.filter((t) => t.done).length;
+  const ph = (s) => esc(s).replace(/\[([^\]]+)\]/g, '<span class="ph">[$1]</span>');
+  return `<div class="plan">
+    <div class="plan-head"><span class="eyebrow">Action plan</span><b>${esc(f.title)}</b><p>${ph(pl.oneLine)}</p></div>
+    <div class="exp"><span class="sec-k">The experiment</span>
+      <div class="exp-grid"><div><span class="fl">Bet</span>${ph(pl.exp.hypothesis)}</div><div><span class="fl">Metric</span>${ph(pl.exp.metric)}<span class="exp-sub">baseline ${ph(pl.exp.baseline)} → target ${ph(pl.exp.target)}</span></div><div><span class="fl">Guardrail</span>${ph(pl.exp.guardrail)}</div><div><span class="fl">Test design</span>${ph(pl.exp.design)}</div></div>
+      <div class="exp-rule"><span class="r-s">Scale</span><span class="r-i">Iterate</span><span class="r-x">Stop</span><p>${esc(pl.exp.rule)}</p></div></div>
+    <div class="plan-who"><div class="who-h"><span class="sec-k">Who does what · ${doneN} of ${pl.tasks.length} done</span><span class="meter sm"><span style="width:${Math.round(doneN / pl.tasks.length * 100)}%"></span></span></div>
+      ${ROLE_ORDER.filter((r) => pl.tasks.some((t) => t.role === r)).map((r) => `<div class="who-g"><span class="who-r">${avatar(r === "pm" ? "pm" : r, 28)}<b>${ROLES[r] || "PM"}</b></span>
+        ${pl.tasks.filter((t) => t.role === r).map((t) => `<div class="task ${t.done ? "done" : ""}"><label class="tk"><input type="checkbox" data-ptask="${t.id}" ${t.done ? "checked" : ""}><span><b>${ph(t.text)}</b><small>${ph(t.detail)}</small></span></label>
+          <span class="t-acts"><input type="date" class="due" data-pdue="${t.id}" value="${esc(t.due)}" aria-label="Due date for ${esc(t.text)}"><button class="link" data-ticket="${t.id}">Copy ticket</button></span></div>`).join("")}</div>`).join("")}</div>
+    <div class="plan-acts"><button class="btn sm" data-act="copytickets">Copy all as tickets</button><button class="btn ghost sm" data-act="copyslack">Copy Slack update</button><button class="btn ghost sm" data-act="downloadplan">Download plan (.md)</button></div>
+  </div>`;
+}
 function wrapMsg(f, m) {
   const filledN = SECTIONS.filter(([k]) => items(f, k).length).length, agreed = SECTIONS.filter(([k]) => f.agreed[k]).length;
   const toAgree = SECTIONS.filter(([k]) => items(f, k).length && !f.agreed[k]), blank = SECTIONS.filter(([k]) => !items(f, k).length && !["visual", "precedent", "benchmark", "decision", "criterion"].includes(k));
   const openQ = items(f, "question").filter((q) => !q.answer).length;
   return `<div class="m-ai"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span>
-    <div class="wrapcard"><div class="wrap-top">${segRing(f, 56, `${FLOW.filter((g) => groupStatus(f, g) === "agreed").length}/${FLOW.length}`)}<div><b>Saved. You can stop here.</b>
-      <p>${filledN} of ${SECTIONS.length} sections have content and ${agreed} are agreed. Nothing else is required.</p></div></div>
+    ${planHtml(f)}
+    <div class="wrapcard"><div class="wrap-top">${segRing(f, 56, `${FLOW.filter((g) => groupStatus(f, g) === "agreed").length}/${FLOW.length}`)}<div><b>Saved. Your plan is above.</b>
+      <p>${filledN} of ${SECTIONS.length} sections have content and ${agreed} are agreed. Nothing else is required. Ticking tasks and adding dates updates the plan.</p></div></div>
       ${toAgree.length ? `<div class="wrap-left"><span class="wl-h">Ready for your team to agree</span>${toAgree.map(([k, l]) => `<span class="wl-row"><span>${l} · ${items(f, k).length}</span><button class="agree" data-agree="${k}">Agree</button></span>`).join("")}
         ${toAgree.length > 1 ? `<button class="btn ghost sm" data-act="agreeall">Agree all ${toAgree.length}</button>` : ""}</div>` : ""}
       ${blank.length || openQ ? `<p class="wl-note">Left as unknowns: ${[...blank.map(([, l]) => l.toLowerCase()), openQ ? `${openQ} open question${openQ === 1 ? "" : "s"}` : ""].filter(Boolean).join(", ")}. That's fine for a first pass.</p>` : ""}
@@ -2515,7 +2605,9 @@ document.addEventListener("click", (e) => {
     if (!f.guideOff && aiState !== "ready") { const g = nextGuide(f); if (g) { const last = f.chat[f.chat.length - 1]; last.guideKey = g.key; last.questions = [{ id: uid(), text: g.q, role: g.role, options: g.options || [] }]; } }
     save(); render(); scrollThread(); return;
   }
-  if (el.dataset.act === "finish") { f.chat.push({ id: uid(), role: "assistant", wrap: true }); save(); render(); scrollThread(); return; }
+  if (el.dataset.act === "finish") { f.plan = buildPlan(f, f.plan); f.chat.push({ id: uid(), role: "assistant", wrap: true }); save(); render(); setTimeout(() => { const pls = document.querySelectorAll(".plan"); const last = pls[pls.length - 1]; if (last) last.scrollIntoView({ block: "start" }); }, 30); return; }
+  if (el.dataset.ticket) { const t = f.plan.tasks.find((x) => x.id === el.dataset.ticket); const md = ticketMd(f, t); try { navigator.clipboard.writeText(md).then(() => toast("Ticket copied"), () => fallbackCopy(md)); } catch (err) { fallbackCopy(md); } return; }
+  if (el.dataset.act === "copytickets" || el.dataset.act === "copyslack") { const md = el.dataset.act === "copyslack" ? slackMd(f) : f.plan.tasks.filter((t) => !t.done).map((t) => ticketMd(f, t)).join("\n\n---\n\n"); try { navigator.clipboard.writeText(md).then(() => toast(el.dataset.act === "copyslack" ? "Slack update copied" : "Tickets copied"), () => fallbackCopy(md)); } catch (err) { fallbackCopy(md); } return; }
   if (el.dataset.act === "keepgoing") { f.guideOff = false; const g = nextGuide(f); f.chat.push(g && aiState !== "ready" ? { id: uid(), role: "assistant", text: "Picking up again.", guideKey: g.key, questions: [{ id: uid(), text: g.q, role: g.role, options: g.options || [] }], proposals: [] } : { id: uid(), role: "assistant", text: "Ready when you are. Ask anything.", questions: [], proposals: [] }); save(); render(); scrollThread(); return; }
   if (el.dataset.doctab) { state.docTab = el.dataset.doctab; save(); render(); return; }
   if (el.dataset.agree) { const k = el.dataset.agree; f.agreed[k] = !f.agreed[k]; save(); render(); return toast(f.agreed[k] ? `${SEC_LABEL[k]} agreed` : `${SEC_LABEL[k]} reopened`); }
@@ -2536,10 +2628,10 @@ document.addEventListener("click", (e) => {
     if (state.current === id) { state.current = state.features[0]?.id || null; if (!state.current) state.view = "new"; }
     save(); render(); return toast("Chat deleted");
   }
-  if (el.dataset.act === "download" || el.dataset.act === "downloadall") {
-    const all = el.dataset.act === "downloadall";
-    const data = all ? JSON.stringify({ exported: new Date().toISOString(), chats: state.features }, null, 2) : summaryMd(f);
-    const filename = all ? "scopeline-chats.json" : `${(f.title || "definition").replace(/[^a-z0-9]+/gi, "-").toLowerCase()}.md`;
+  if (el.dataset.act === "download" || el.dataset.act === "downloadall" || el.dataset.act === "downloadplan") {
+    const all = el.dataset.act === "downloadall", planOnly = el.dataset.act === "downloadplan";
+    const data = all ? JSON.stringify({ exported: new Date().toISOString(), chats: state.features }, null, 2) : planOnly ? planMd(f) : summaryMd(f);
+    const filename = all ? "scopeline-chats.json" : `${(f.title || "definition").replace(/[^a-z0-9]+/gi, "-").toLowerCase()}${planOnly ? "-plan" : ""}.md`;
     (async () => {
       let dl = null; try { dl = window.claude ? await window.claude.use("downloads") : null; } catch (err) { dl = null; }
       if (dl) { try { await dl.save({ filename, data }); toast("Saved " + filename); return; } catch (err) { if (err && (err.code === "declined" || err.code === "cancelled")) return; } }
@@ -2554,7 +2646,7 @@ document.addEventListener("click", (e) => {
   }
 });
 function summaryMd(f) {
-  return `# ${f.title}\n\n> ${f.request}\n\n` + SECTIONS.map(([k, l]) => `## ${l}${f.agreed[k] ? " (agreed)" : ""}\n` + (items(f, k).map((x) => `- ${x.app ? `**${x.app}** ` : ""}${x.text}${x.source ? ` _(source: ${x.source})_` : ""}${x.url ? ` ${x.url}` : ""}${k === "measure" ? ` — baseline: ${x.baseline || "unknown"}` : ""}${k === "question" ? ` — ${ROLES[x.role] || "PM"}${x.answer ? `: ${x.answer}` : ", unanswered"}` : ""}`).join("\n") || "- _empty_")).join("\n\n");
+  return (f.plan ? planMd(f) + "\n\n---\n\n" : "") + `# ${f.title}\n\n> ${f.request}\n\n` + SECTIONS.map(([k, l]) => `## ${l}${f.agreed[k] ? " (agreed)" : ""}\n` + (items(f, k).map((x) => `- ${x.app ? `**${x.app}** ` : ""}${x.text}${x.source ? ` _(source: ${x.source})_` : ""}${x.url ? ` ${x.url}` : ""}${k === "measure" ? ` — baseline: ${x.baseline || "unknown"}` : ""}${k === "question" ? ` — ${ROLES[x.role] || "PM"}${x.answer ? `: ${x.answer}` : ", unanswered"}` : ""}`).join("\n") || "- _empty_")).join("\n\n");
 }
 function closeMenus(keepMobile) {
   document.querySelectorAll(".mbtn[aria-expanded=true]").forEach((b) => { b.setAttribute("aria-expanded", "false"); const m = document.getElementById(b.getAttribute("aria-controls")); if (m) m.hidden = true; });
@@ -2569,6 +2661,9 @@ function findVisual(f, key) {
   const m = f.chat.find((x) => x.id === a); return m && ((m.proposals || []).find((x) => x.id === b) || {}).visual;
 }
 document.addEventListener("change", (e) => {
+  const pt = e.target.closest("input[data-ptask], input[data-pdue]");
+  if (pt) { const f = cur(); if (!f || !f.plan) return; const t = f.plan.tasks.find((x) => x.id === (pt.dataset.ptask || pt.dataset.pdue)); if (!t) return;
+    if (pt.dataset.ptask) t.done = pt.checked; else t.due = pt.value; save(); render(); if (pt.dataset.ptask && t.done) toast("Done: " + trunc(t.text, 40)); return; }
   const inp = e.target.closest("input[data-vedit]"); if (!inp) return;
   const f = cur(); if (!f) return;
   const parts = inp.dataset.vedit.split("|"), key = parts[0] + "|" + parts[1], v = findVisual(f, key); if (!v) return;
