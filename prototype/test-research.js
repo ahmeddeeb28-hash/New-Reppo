@@ -1,0 +1,37 @@
+const {chromium}=require('playwright');const F='file://'+process.argv[2];const S=process.argv[3];
+let ok=true;const t=(c,m)=>{if(!c)ok=false;console.log((c?'PASS ':'FAIL ')+m)};
+(async()=>{const b=await chromium.launch();const e=[];
+for(const [w,h,n] of [[1440,950,'d'],[390,844,'m']]){const p=await b.newPage({viewport:{width:w,height:h}});p.on('pageerror',x=>e.push(x.message));
+await p.goto(F);await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(300);await p.click('.lp-hero [data-act="new"]');
+await p.fill('#start-in','We want one-tap reorder so customers rebuild baskets less. We think people will reorder weekly if past items are on the home screen. We believe price changes will annoy them.');await p.press('#start-in','Enter');
+await p.waitForSelector('.m-ai .brief',{timeout:15000});
+t(await p.locator('.brief .pv').count()===3,n+': three similar-app previews on the first reply');
+t(await p.locator('.brief .pv .mk').count()===3,n+': each preview has a schematic sketch');
+t((await p.locator('.brief').textContent()).includes('Instacart'),n+': names a real precedent');
+t(await p.locator('.brief .fit').count()>=2,n+': compares the user\'s own assumptions');
+t((await p.locator('.brief .fit').first().textContent()).toLowerCase().includes('weekly'),n+': first comparison quotes what they said');
+t(await p.locator('.where a').count()>=8,n+': lists where to get your own numbers');
+t((await p.locator('.brief .mkt').textContent()).includes('Grocery'),n+': names the industry');
+t(await p.locator('.brief .angle').count()===3,n+': three positioning angles');
+t(await p.locator('.brief .trick').count()===3,n+': three tactics for this space');
+t(await p.locator('.brief .bchart svg').count()===2,n+': two charts to track, drawn');
+await p.locator('.brief .angle .yes').first().click();await p.waitForTimeout(200);
+t(await p.locator('.brief .angle.done').count()===1,n+': using an angle records it');
+await p.locator('.brief .trick .yes').first().click();await p.waitForTimeout(200);
+t(await p.locator('.brief .trick.done').count()===1,n+': adding a tactic puts it in scope');
+await p.locator('.brief .pv .yes').first().click();await p.waitForTimeout(200);
+t(await p.locator('.docpane .ditem a.chk, .doc-pane .ditem a.chk').count()+await p.locator('.ditem a.chk').count()>=1,n+': adding a precedent puts it in the definition with a check link');
+// numbers on a checkout idea
+const say=async(x)=>{const k=await p.locator('.m-ai').count();await p.fill('#chat-in',x);await p.press('#chat-in','Enter');await p.waitForFunction(k=>document.querySelectorAll('.m-ai').length>k,k,{timeout:15000});await p.waitForTimeout(600);};
+await say('What numbers exist for faster checkout and where do we get our own?');
+const last=p.locator('.m-ai').last();
+t((await last.textContent()).includes('70.22%'),n+': shows the checked Baymard benchmark');
+t(await last.locator('.bm a.chk[href*="baymard.com"]').count()>=1,n+': benchmark links to its source');
+t(!(await last.textContent()).includes("isn't in anything you've shared"),n+': benchmarks are not flagged as unsourced');
+await say('Which similar apps do pet grooming bookings?');
+t((await p.locator('.m-ai').last().textContent()).includes("don't have this pattern"),n+': unknown pattern: says so instead of inventing apps');
+t(await p.evaluate(()=>document.documentElement.scrollWidth-innerWidth)<=0,n+': no sideways scroll');
+await p.screenshot({path:S+'/research-'+n+'.png'});
+await p.locator('.m-ai .brief').first().scrollIntoViewIfNeeded();await p.locator('.m-ai .brief').first().screenshot({path:S+'/brief-'+n+'.png'});
+await p.close();}
+t(e.length===0,'no errors '+e.join('; '));console.log(ok?'ALL PASS':'SOME FAIL');await b.close();})();

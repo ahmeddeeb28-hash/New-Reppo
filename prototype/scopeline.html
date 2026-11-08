@@ -798,6 +798,91 @@ mark.bad { background: var(--bad-bg); color: var(--bad); border-radius: 4px; pad
 /* primary buttons: a touch of brand colour on hover */
 .btn.big:not(.ghost):hover { box-shadow: 0 0 0 4px rgba(60,207,145,.28); }
 
+
+/* ---------- Research in chat: similar products, benchmarks, sources ---------- */
+.co-pr { background: #fff6e6; border-color: #f3d39b; } .co-pr .co-tag { color: #8a5a00; }
+.co-bm { background: #eef0ff; border-color: #c5ccff; } .co-bm .co-tag { color: #3a4fc6; }
+.t-pr { background: #fff1d6; color: #8a5a00; } .t-bm { background: #e5e8ff; color: #3a4fc6; }
+.bm-fig { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; letter-spacing: -0.02em; color: #3a4fc6; margin-right: 6px; vertical-align: -2px; }
+a.chk { display: inline-block; margin-top: 6px; font-size: 0.78rem; font-weight: 600; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.ditem a.chk { margin-top: 4px; display: block; }
+.where { border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; margin: 8px 0; }
+.where > b { font-size: 0.92rem; }
+.wrow { display: flex; flex-wrap: wrap; gap: 6px 12px; justify-content: space-between; align-items: baseline; font-size: 0.86rem; border-top: 1px dashed var(--line); padding-top: 8px; }
+.wtools { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.wtools a { font-size: 0.78rem; border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; color: var(--ink); text-decoration: none; background: var(--bg); }
+.wtools a:hover { border-color: var(--ink); }
+
+
+/* ---------- Research brief ---------- */
+.brief { border: 1px solid var(--line); background: var(--surface); border-radius: 18px; padding: 14px; display: flex; flex-direction: column; gap: 10px; margin: 8px 0; min-width: 0; }
+.brief-head { display: flex; flex-direction: column; gap: 2px; }
+.brief-head b { font-family: var(--serif); font-size: 1.35rem; font-weight: 500; letter-spacing: -0.02em; }
+.brief h4 { margin: 6px 0 0; font-size: 0.9rem; }
+.brief .small { font-size: 0.76rem; }
+.pv-row { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(210px, 1fr); gap: 10px; overflow-x: auto; padding-bottom: 4px; scroll-snap-type: x mandatory; }
+.pv { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; background: var(--bg); scroll-snap-align: start; min-width: 0; }
+.pv.done { opacity: .6; }
+.pv-body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.pv-app { font-family: var(--mono); font-size: 0.7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.pv-body b { font-size: 0.98rem; }
+.pv dl { display: grid; grid-template-columns: auto 1fr; gap: 2px 8px; margin: 4px 0 0; font-size: 0.8rem; }
+.pv dt { color: var(--muted); } .pv dd { margin: 0; }
+.pv-acts { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 6px; }
+.pv-acts .yes, .bm .yes { border: 0; background: var(--ink); color: #fff; border-radius: 999px; padding: 5px 14px; font: inherit; font-size: 0.8rem; cursor: pointer; }
+.mk { height: 132px; background: linear-gradient(160deg, #fff4dc, #e8ebff); display: flex; flex-direction: column; gap: 5px; padding: 14px 36px; position: relative; flex-shrink: 0; }
+.mk::before { content: ""; position: absolute; inset: 8px 28px -12px; border: 1.5px solid rgba(21,19,15,.2); border-radius: 16px; background: rgba(255,255,255,.85); z-index: 0; }
+.mk > * { position: relative; z-index: 1; }
+.mk i { display: block; background: #ddd8ce; border-radius: 4px; }
+.mk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; padding: 4px 6px; } .mk-grid i { height: 28px; position: relative; }
+.mk-grid i::after, .mk-row i.plus::after { content: "+"; position: absolute; right: 2px; bottom: 2px; width: 10px; height: 10px; border-radius: 50%; background: var(--c-green, #3ccf91); color: #fff; font: 700 8px/10px var(--sans); text-align: center; }
+.mk-row { display: flex; gap: 5px; padding: 0 6px; } .mk-row i { flex: 1; height: 24px; position: relative; }
+.mk-bar { height: 8px; margin: 4px 6px 2px; background: #e8e3d9; border-radius: 4px; }
+.mk-lines { display: flex; flex-direction: column; gap: 4px; padding: 2px 6px; } .mk-lines i { height: 5px; } .mk-lines i:nth-child(2) { width: 70%; } .mk-lines i:nth-child(3) { width: 50%; }
+.mk-list { display: flex; flex-direction: column; gap: 4px; padding: 4px 6px; } .mk-list i { height: 14px; position: relative; }
+.mk-list.dim i { opacity: .5; } .mk-list.check i::before { content: "✓"; position: absolute; left: 3px; top: 0; font: 700 9px/14px var(--sans); color: #11805a; }
+.mk-list.tog i::after { content: ""; position: absolute; right: 3px; top: 3px; width: 16px; height: 8px; border-radius: 8px; background: var(--c-green, #3ccf91); }
+.mk-sep { font: 600 8px var(--sans); color: var(--muted); padding: 0 6px; text-transform: uppercase; letter-spacing: .08em; }
+.mk-hero { height: 30px; margin: 2px 6px; background: #e8e3d9; border-radius: 6px; }
+.mk-btn { margin: 2px 6px; height: 14px; border-radius: 999px; background: #ddd8ce; font: 600 8px/14px var(--sans); text-align: center; color: #15130f; }
+.mk-btn.acc { background: #15130f; color: #fff; }
+.mk-sheet { margin-top: auto; background: #fff; border: 1px solid #ddd8ce; border-radius: 10px 10px 4px 4px; padding: 5px 6px; display: flex; flex-direction: column; gap: 4px; } .mk-sheet i { height: 4px; width: 30%; margin: 0 auto; }
+.mk-badge { align-self: flex-start; margin: 2px 6px; font: 600 8px var(--sans); background: var(--c-amber, #f5b748); border-radius: 999px; padding: 2px 6px; }
+.mk-field { margin: 2px 6px; height: 12px; border: 1px solid #ddd8ce; border-radius: 4px; background: #fff; }
+.mk-dots { display: flex; gap: 3px; padding: 2px 6px; } .mk-dots i { width: 14px; height: 4px; } .mk-dots i.on { background: var(--c-green, #3ccf91); }
+.mk-q { height: 10px; margin: 6px 6px 2px; width: 70%; background: #cfc9be; border-radius: 4px; }
+.mk-chips { display: flex; flex-wrap: wrap; gap: 4px; padding: 2px 6px; } .mk-chips i { height: 14px; width: 34px; border-radius: 999px; border: 1px solid #cfc9be; background: #fff; } .mk-chips i:first-child { background: var(--c-blue, #7d8cff); border-color: transparent; }
+.mk-streak { font: 700 18px var(--sans); padding: 6px 6px 2px; } .mk-streak b { color: #f08a24; }
+.mk-map { height: 32px; margin: 2px 6px; border-radius: 6px; background: repeating-linear-gradient(45deg, #dff0e6 0 6px, #edf6f0 6px 12px); }
+.mk-feed { flex: 1; margin: 2px 6px; border-radius: 8px; background: linear-gradient(160deg, #3a3631, #15130f); position: relative; } .mk-feed i { position: absolute; right: 6px; bottom: 8px; width: 6px; height: 30px; background: rgba(255,255,255,.4); }
+.mk-plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 6px; flex: 1; } .mk-plans i { border: 1px solid #cfc9be; background: #fff; } .mk-plans i:nth-child(2) { border: 1.5px solid #15130f; }
+.mk-stars { color: #f08a24; font-size: 12px; letter-spacing: 1px; padding: 6px 6px 0; }
+.fit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; border: 1px solid var(--line); border-radius: 12px; padding: 10px; font-size: 0.84rem; background: var(--bg); }
+.fit .fl { display: block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.fit > div:nth-child(1) { border-left: 3px solid #a35a00; padding-left: 8px; }
+.fit > div:nth-child(2) { border-left: 3px solid var(--c-blue, #7d8cff); padding-left: 8px; }
+.fit > div:nth-child(3) { border-left: 3px solid var(--c-green, #3ccf91); padding-left: 8px; }
+.bm { display: flex; gap: 10px; align-items: center; border: 1px solid #c5ccff; background: #eef0ff; border-radius: 12px; padding: 10px 12px; font-size: 0.86rem; }
+.bm.done { opacity: .6; } .bm > span:nth-child(2) { flex: 1; min-width: 0; }
+@media (max-width: 640px) { .fit { grid-template-columns: 1fr; } .pv-row { grid-auto-columns: 80%; } .bm { flex-wrap: wrap; } }
+
+
+.mkt { border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: var(--bg); display: flex; flex-direction: column; gap: 8px; }
+.mkt-ind { font-family: var(--mono); font-size: 0.7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.pos { margin: 0; font-family: var(--serif); font-size: 1.05rem; line-height: 1.4; }
+.pos .ph { background: #fdf0da; color: #a35a00; border-radius: 4px; padding: 0 4px; font-family: var(--mono); font-size: 0.8em; }
+.angles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.angle { border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 6px; font-size: 0.84rem; }
+.angle:nth-child(1) { background: #dff6ea; } .angle:nth-child(2) { background: #e5e8ff; } .angle:nth-child(3) { background: #fff1d6; }
+.angle b { font-size: 0.95rem; } .angle .yes, .trick .yes { align-self: flex-start; border: 0; background: var(--ink); color: #fff; border-radius: 999px; padding: 5px 12px; font: inherit; font-size: 0.78rem; cursor: pointer; margin-top: auto; }
+.angle.done, .trick.done, .bchart.done { opacity: .6; }
+.tricks { display: flex; flex-direction: column; gap: 6px; }
+.trick { display: flex; gap: 10px; align-items: center; justify-content: space-between; border: 1px solid var(--line); border-left: 4px solid var(--c-coral, #ff7a66); border-radius: 10px; padding: 8px 10px; font-size: 0.86rem; background: var(--bg); }
+.bcharts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.bchart { border: 1px solid var(--line); border-radius: 12px; padding: 10px; background: var(--bg); min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.bchart .pv-acts .yes { border: 0; background: var(--ink); color: #fff; border-radius: 999px; padding: 5px 14px; font: inherit; font-size: 0.8rem; cursor: pointer; }
+@media (max-width: 760px) { .angles, .bcharts { grid-template-columns: 1fr; } .trick { flex-wrap: wrap; } }
+
 @media (max-width: 1100px) { .moments { grid-template-columns: 1fr 1fr; } .hand { display: none; } }
 @media (max-width: 900px) {
   .ws { grid-template-columns: minmax(0, 1fr); }
@@ -828,6 +913,7 @@ const SECTIONS = [
   ["problem", "Problem"], ["audience", "Audience"], ["outcome", "Intended outcome"], ["evidence", "Evidence"],
   ["assumption", "Assumptions"], ["question", "Open questions"], ["scope_in", "In scope"], ["scope_out", "Out of scope"],
   ["criterion", "Acceptance criteria"], ["measure", "Measures"], ["decision", "Decisions"], ["visual", "Visuals"],
+  ["precedent", "Similar products"], ["benchmark", "Benchmarks"],
 ];
 const SEC_LABEL = Object.fromEntries(SECTIONS);
 const KIND = {
@@ -835,6 +921,7 @@ const KIND = {
   evidence: ["Evidence", "co-ev", "t-ev"], assumption: ["Assumption", "co-as", "t-as"], question: ["Open question", "co-qu", "t-qu"],
   scope_in: ["In scope", "co-dc", "t-dc"], scope_out: ["Out of scope", "co-dc", "t-dc"], criterion: ["Acceptance criterion", "co-dc", "t-dc"],
   measure: ["Measure", "co-dc", "t-dc"], decision: ["Decision", "co-dc", "t-dc"], visual: ["Visual", "co-vis", "t-dc"],
+  precedent: ["Similar product", "co-pr", "t-pr"], benchmark: ["Published benchmark", "co-bm", "t-bm"],
 };
 const STAGES = [["Context", ["problem", "evidence"]], ["Audience", ["audience", "outcome"]], ["Claims", ["assumption", "question"]], ["Scope", ["scope_in", "scope_out"]], ["Measures", ["measure"]], ["Review", ["decision"]]];
 const filled = (s) => (s || "").trim().length > 0;
@@ -842,7 +929,7 @@ const items = (f, k) => f.doc.filter((x) => x.kind === k);
 const secStatus = (f, k) => !items(f, k).length ? "empty" : (f.agreed[k] ? "agreed" : "proposed");
 function gaps(f) {
   const g = [];
-  for (const [k, label] of SECTIONS) if (!items(f, k).length && k !== "decision" && k !== "criterion" && k !== "visual") g.push({ text: `${label} is empty`, ask: k });
+  for (const [k, label] of SECTIONS) if (!items(f, k).length && k !== "decision" && k !== "criterion" && k !== "visual" && k !== "precedent" && k !== "benchmark") g.push({ text: `${label} is empty`, ask: k });
   items(f, "assumption").forEach((a) => { if (!a.owner) g.push({ text: `Assumption needs an owner and a test: “${a.text}”`, ask: "assumption" }); });
   items(f, "measure").forEach((m) => { if (!m.baseline) g.push({ text: `Baseline unknown for “${m.text}”`, ask: "measure" }); });
   items(f, "question").forEach((q) => { if (!q.answer) g.push({ text: `${ROLES[q.role] || "PM"} hasn't answered: “${q.text}”`, ask: "question" }); });
@@ -977,6 +1064,7 @@ function parseFigures(text) {
 }
 function intentOf(t) {
   t = t.toLowerCase();
+  if (/\b(similar (apps?|products?|features?)|other apps|who else|examples?|precedents?|inspiration|benchmarks?|industry (average|data|numbers)|numbers|stats|statistics|insights?|assumptions? (are|we have)|our assumptions|research|positioning|position (it|this)|tricks|tactics|industry|where (do|can) (i|we) get)\b/.test(t) && !/\b(chart|graph|plot|forecast|tam|sam|som|funnel|matrix)\b/.test(t)) return "research";
   if (/\b(market|forecast|projection|predict|tam|sam|som|market size|trend|growth rate|chart|graph|visual|visuali[sz]e|plot|competitor|share|funnel|matrix)\b/.test(t)) return "visual";
   if (/\b(what'?s next|next steps?|after (i|we) agree|then what|after agree|launch|ship it|go live|make (the )?results? (count|effective)|effective|measure success|after launch)\b/.test(t)) return "next";
   if (/\b(what'?s missing|missing|gaps?|review)\b/.test(t)) return "gaps";
@@ -985,6 +1073,108 @@ function intentOf(t) {
   if (/\b(summari[sz]e|summary|where are we|status)\b/.test(t)) return "summary";
   if (/\?\s*$/.test(t) || /^(how|what|why|which|should|can|could|do|does|is|are)\b/.test(t)) return "help";
   return null;
+}
+
+// =================== Research: similar products, published benchmarks, where to get numbers ===================
+// Similar products are well-known public features; each links to a search so people can check the current version.
+// Benchmarks are only figures checked against the publisher's own page, with year and link. Nothing else is shown as a number.
+const chk = (q) => "https://www.google.com/search?q=" + encodeURIComponent(q);
+const PATTERNS = [
+  { id: "reorder", market: {"industry": "Grocery and everyday ecommerce", "charts": [["funnel", "Reorder funnel", ["Saw past items", "Added to cart", "Checked out", "Reordered again"]], ["line", "Repeat-order rate by weekly cohort", ["With reorder", "Without reorder"]]], "tricks": ["Put past items where people start shopping, not only in order history.", "Pre-fill the cart from the last order, but let people edit it before paying.", "Flag price changes and out-of-stock swaps in the cart, before checkout."], "angles": [["Speed", "The fastest way to restock what you always buy."], ["Trust", "Reorder without surprises: price changes and swaps shown first."], ["Personal", "Remembers your usual basket and when you tend to need it."]]}, test: "Show the entry point to half of returning customers for [n] weeks and compare repeat orders.", re: /\b(re-?order|buy (it )?again|order again|repeat (purchase|order)s?|rebuild (a |the )?basket)\b/i, label: "repeat ordering",
+    apps: [["Amazon", "Buy Again", "A page of things you've bought before, each one tap from the cart.", "Its own page, reached from orders and the account menu", "A grid of past purchases with price and stock", "Add each item to the cart", "grid"], ["Instacart", "Buy It Again", "Past items shown while you shop, so you can add them to a new order.", "A row inside the store while you shop", "Past items in a horizontal row", "Tap + to add to the current cart", "row"], ["Uber Eats", "Reorder", "Repeat a past order from your order history.", "Order history", "Past orders with the restaurant and items", "Reorder the whole order at once", "list"]],
+    lessons: ["Showing past items where people already start an order will get more use than a separate history page.", "People will only trust a one-tap repeat if price changes and out-of-stock items are visible before they pay."] },
+  { id: "save", market: {"industry": "Fashion and marketplace ecommerce", "charts": [["funnel", "Saved-item funnel", ["Saved", "Came back", "Moved to cart", "Bought"]], ["line", "Return visits: savers vs non-savers", ["Saved something", "Saved nothing"]]], "tricks": ["Make saving one tap from every product card.", "Tell people when a saved item drops in price or runs low.", "Show saved items on the cart page as a reminder."], "angles": [["Inspiration", "Collect now, decide later."], ["Value", "Hear when what you saved gets cheaper."], ["Simplicity", "Everything you liked, in one place."]]}, test: "Compare return visits from people who saved something with those who did not, over [n] weeks.", re: /\b(save(d)? (cart|basket|for later|items?)|wish ?list|favou?rites?|bookmark)\b/i, label: "saving for later",
+    apps: [["Amazon", "Save for later", "Moves an item out of the cart into a list below it, ready to move back.", "Under the cart", "Saved items listed below what you're buying", "Move back to the cart", "cart"], ["ASOS", "Saved items", "A heart on each product adds it to a saved list.", "A heart on every product, plus a saved tab", "A grid of saved products", "Move to bag", "grid"], ["Etsy", "Favorites", "Heart items and shops to come back to them.", "A heart on listings and shops", "Saved items and saved shops", "Tap the heart to save", "grid"]],
+    lessons: ["Saved items only bring people back if something reminds them, such as a price change or low stock.", "Saving from the cart and saving from the product page are different intents and may need different placements."] },
+  { id: "checkout", market: {"industry": "Ecommerce checkout", "charts": [["funnel", "Checkout funnel", ["Cart", "Checkout started", "Payment entered", "Order placed"]], ["bar", "Drop-off by checkout step", ["Drop-off"]]], "tricks": ["Offer express payment above the form, not below it.", "Remember address and payment for returning buyers.", "Show the full cost, delivery included, before the last step."], "angles": [["Speed", "Pay in one step."], ["Trust", "No surprise costs at the end."], ["Ease", "Pay with what you already use."]]}, test: "Offer the express option to half of checkouts and compare completed orders and accidental-order contacts.", re: /\b(checkout|check-out|one[- ]?(click|tap) (buy|pay|checkout)|express (pay|checkout)|payment|pay faster)\b/i, label: "faster checkout",
+    apps: [["Amazon", "Buy Now", "Skips the cart and uses saved payment and address.", "Product page, next to Add to cart", "A second button that uses saved details", "One tap places the order", "buttons"], ["Shopify", "Shop Pay", "Saves details once for faster checkout across stores that use it.", "Top of checkout, above the form", "An express button before any fields", "Confirm with a one-time code", "sheet"], ["Apple", "Apple Pay", "Pay in apps and on the web with Face ID or Touch ID.", "Checkout or product page", "The system payment sheet", "Confirm with Face ID or Touch ID", "sheet"]],
+    lessons: ["Saved payment and address details will cut more drop-off than redesigning checkout steps.", "A skip-the-cart button needs an easy undo, or accidental orders become support tickets."], bench: ["cart", "checkout"] },
+  { id: "invite", market: {"industry": "Collaboration and network-effect products", "charts": [["funnel", "Invite funnel", ["Invite sent", "Opened", "Joined", "Active in week 1"]], ["bar", "Invites per active user, by entry point", ["Invites"]]], "tricks": ["Ask for invites at the moment someone needs a colleague.", "Reward both the sender and the person invited.", "Let people copy a link, not only type email addresses."], "angles": [["Together", "Better with your team."], ["Reward", "Both of you get more."], ["Fast start", "Bring your team in a minute."]]}, test: "Test the two-sided reward against sender-only on new invites for [n] weeks.", re: /\b(invite|referr(al|ed)|refer a friend|share with (a )?friends?|teammates?)\b/i, label: "invites and referrals",
+    apps: [["Dropbox", "Referrals", "Both people get extra storage when an invited friend joins.", "Account settings, near storage", "The reward for both sides, then an invite link", "Send an invite or copy the link", "invite"], ["Slack", "Invite teammates", "Invite people to a workspace by email or a shareable link.", "Sidebar, Add teammates", "Email fields and a shareable link", "Send invites", "invite"], ["Notion", "Share & invite", "Invite members or guests to a workspace or a single page.", "Share button, top right of a page", "Invite by email and link access settings", "Invite to this page", "invite"]],
+    lessons: ["A reward for both sides will get more invites than a reward for the sender only.", "Inviting from the moment someone needs a colleague converts better than a generic invite screen."] },
+  { id: "onboard", market: {"industry": "Consumer and SaaS activation", "charts": [["funnel", "Activation funnel", ["Visited", "Started the core action", "Finished it", "Signed up", "Back on day 7"]], ["line", "Day-7 retention by onboarding version", ["Current", "New"]]], "tricks": ["Let people do the core action before signing up.", "Ask one question to tailor the first screen.", "Show progress with a short checklist."], "angles": [["Instant value", "Useful in the first minute."], ["Personal", "Starts where you are."], ["Guided", "Learn by doing, not by reading."]]}, test: "Let half of new users try the core action before sign-up and compare activation.", re: /\b(onboard(ing)?|first[- ]run|sign[- ]?up flow|welcome (flow|screen)|getting started|activation)\b/i, label: "onboarding",
+    apps: [["Duolingo", "Try before sign-up", "Start a lesson before creating an account; a placement test sets your level.", "First launch", "Pick a language, then straight into a lesson", "Finish a lesson before signing up", "steps"], ["Notion", "Getting Started", "A starter page that teaches the product by using it.", "The first page in a new workspace", "A checklist of things to try", "Tick tasks by doing them", "checklist"], ["Canva", "Use-case question", "Asks what you'll design so the first templates fit.", "Right after sign-up", "One question with a few answers", "Pick a use case", "choice"]],
+    lessons: ["Letting people do the core action before sign-up will raise activation more than a product tour.", "One question about intent can tailor the first screen without slowing people down."] },
+  { id: "habit", market: {"industry": "Habit and engagement apps", "charts": [["line", "Active days per week, by cohort", ["With streaks", "Without"]], ["bar", "Return rate by reminder time", ["Return rate"]]], "tricks": ["Let people pick their own reminder time.", "Celebrate streak milestones, and offer a freeze before a streak breaks.", "Keep the daily action under two minutes."], "angles": [["Consistency", "Small daily wins."], ["Motivation", "Watch your progress grow."], ["Gentle", "Reminders on your schedule."]]}, test: "Run reminders at a user-picked time against an app-picked time and compare return days.", re: /\b(streaks?|habit|reminders?|push notifications?|notify|daily goal)\b/i, label: "habits and reminders",
+    apps: [["Duolingo", "Streaks", "Counts consecutive days of practice, with reminders to keep it going.", "Top bar of the home screen", "A day counter with a flame", "Finish a lesson to extend it", "streak"], ["Snapchat", "Snapstreaks", "Shows how many days in a row two friends have snapped each other.", "Next to a friend's name", "A day count beside the name", "Snap each other daily", "list"], ["Headspace", "Reminders", "Lets you pick a time for a daily meditation reminder.", "Settings and after a session", "A time picker", "Choose your reminder time", "choice"]],
+    lessons: ["A visible streak will motivate regulars but may push lapsed users away once it breaks.", "Reminders people schedule themselves will be dismissed less than ones the app chooses."] },
+  { id: "search", market: {"industry": "Marketplaces and catalogues", "charts": [["funnel", "Search funnel", ["Searched", "Clicked a result", "Added or booked"]], ["bar", "Top zero-result searches", ["Searches"]]], "tricks": ["Keep the two or three most-used filters visible.", "Log and review searches that return nothing.", "Show the result count as filters change."], "angles": [["Precision", "Find exactly what you need."], ["Discovery", "Browse by mood, not just keywords."], ["Speed", "Fewer taps to the right result."]]}, test: "Log zero-result searches for [n] weeks before changing filters.", re: /\b(search|filters?|sort(ing)?|browse|discover(y)?)\b/i, label: "search and filters",
+    apps: [["Airbnb", "Filters and map", "Filter by price, type of place and amenities, with results on a map.", "Search bar, then a Filters button", "A filter sheet and a map of results", "Apply filters", "filters"], ["Amazon", "Refinements", "Narrow results by brand, price, rating and delivery speed.", "Beside the results", "Checkbox refinements by attribute", "Tick to narrow", "filters"], ["Spotify", "Browse", "Search plus browse by genre and mood.", "Search tab", "Colourful genre and mood tiles", "Tap a tile", "grid"]],
+    lessons: ["The two or three most-used filters should be visible; the rest can sit behind a 'More filters' control.", "Zero-result searches are a cheap source of demand data if they're logged."] },
+  { id: "reco", market: {"industry": "Content and commerce personalisation", "charts": [["bar", "Clicks: recommended vs browsed", ["Clicks"]], ["line", "Sessions starting from a recommendation", ["Share of sessions"]]], "tricks": ["Say why something is recommended.", "Use popular picks for new users until there's history.", "Let people say 'not interested'."], "angles": [["Personal", "Picked for you, with reasons."], ["Discovery", "Find new favourites."], ["Time saving", "Less searching, more doing."]]}, test: "Add a 'because you\u2026' reason to half of the recommendations and compare clicks.", re: /\b(recommend(ation)?s?|personali[sz]ed?|for you|suggest(ions)?)\b/i, label: "recommendations",
+    apps: [["Netflix", "Because you watched", "Rows of titles based on something you've watched.", "Home screen", "Titled rows of posters", "Scroll a row, pick a title", "rows"], ["Spotify", "Discover Weekly", "A weekly playlist of new music based on your listening.", "Home, made for you", "One weekly playlist", "Press play", "list"], ["TikTok", "For You", "A feed ranked from what you watch and skip.", "The default home feed", "One full-screen video at a time", "Swipe to the next", "feed"]],
+    lessons: ["Saying why something is recommended will raise trust and clicks.", "New users need a fallback (popular or editor picks) until there's history."] },
+  { id: "subscribe", market: {"industry": "Subscriptions", "charts": [["line", "Cancellations vs pauses per month", ["Cancelled", "Paused"]], ["funnel", "Cancel flow", ["Started cancelling", "Saw pause", "Paused", "Came back"]]], "tricks": ["Offer pause or skip before a cancellation completes.", "Remind people before they're charged again.", "Offer a cheaper plan instead of cancelling."], "angles": [["Flexible", "Pause any time."], ["Fair", "No surprise renewals."], ["Value", "A plan for every household."]]}, test: "Offer pause at cancellation to half of cancellers and compare who stays after [n] weeks.", re: /\b(subscri(be|ption)s?|pause|skip a (week|delivery)|cancel(lation)?|renewal)\b/i, label: "subscriptions",
+    apps: [["HelloFresh", "Skip or pause", "Skip a week or pause deliveries instead of cancelling.", "Upcoming deliveries", "A list of weeks with a skip control each", "Skip a week", "toggles"], ["Spotify", "Plans", "Individual, Duo, Family and Student plans on one subscription.", "Premium page", "Plan cards side by side", "Pick a plan", "plans"]],
+    lessons: ["Offering pause at the point of cancelling will keep some people who would otherwise leave.", "Plans for households or students widen the audience without discounting the main plan."] },
+  { id: "reviews", market: {"industry": "Marketplace and ecommerce trust", "charts": [["bar", "Review rate by prompt timing", ["Review rate"]], ["line", "Conversion with and without the buyer label", ["With label", "Without"]]], "tricks": ["Ask for a review right after the moment of value.", "Reveal two-sided reviews together.", "Label reviews from real buyers."], "angles": [["Honest", "Real reviews from real buyers."], ["Fair", "Both sides heard."], ["Helpful", "Reviews that answer your question."]]}, test: "Show the buyer label on half of product pages and compare conversion.", re: /\b(reviews?|ratings?|stars?|feedback from (buyers|customers))\b/i, label: "reviews and ratings",
+    apps: [["Airbnb", "Two-way reviews", "Guests and hosts review each other; reviews appear once both have written one or the window closes.", "A prompt after the stay", "A review form; both reviews revealed together", "Write a review", "review"], ["Amazon", "Verified Purchase", "Reviews from confirmed buyers carry a label.", "Product page, below the details", "Stars, review text and a buyer label", "Read or filter reviews", "review"]],
+    lessons: ["Hiding each side's review until both are in will make reviews more honest.", "Labelling reviews from real buyers will raise trust in the rating."] },
+];
+const BENCH = {
+  cart: { fig: "70.22%", text: "Average documented online shopping cart abandonment rate, across 50 studies.", source: "Baymard Institute", year: "2025", url: "https://baymard.com/lists/cart-abandonment-rate" },
+  checkout: { fig: "18%", text: "US online shoppers who abandoned an order in the past quarter because checkout was too long or complicated.", source: "Baymard Institute", year: "2025", url: "https://baymard.com/blog/ecommerce-checkout-usability-report-and-benchmark" },
+};
+const WHERE = [
+  { need: "Your baseline and conversion (who does it today, how often)", tools: [["Amplitude", "https://amplitude.com"], ["Mixpanel", "https://mixpanel.com"], ["Google Analytics 4", "https://analytics.google.com"]] },
+  { need: "App installs, retention and ratings", tools: [["App Store Connect", "https://appstoreconnect.apple.com"], ["Google Play Console", "https://play.google.com/console"]] },
+  { need: "Demand and competitor traffic", tools: [["Google Trends", "https://trends.google.com"], ["Similarweb", "https://www.similarweb.com"]] },
+  { need: "Published market sizes and studies", tools: [["Baymard (ecommerce UX)", "https://baymard.com/research"], ["Think with Google", "https://www.thinkwithgoogle.com"], ["Statista", "https://www.statista.com"]] },
+];
+function matchPatterns(text) { return PATTERNS.filter((p) => p.re.test(text)); }
+function researchProposals(f, text) {
+  const GENERIC = new Set("similar apps app products product feature features numbers number benchmarks benchmark exist where get own learn which already does what them data stats statistics insights insight research examples example other who else idea ideas there any about market industry positioning position charts chart tricks tips".split(" "));
+  const topicWords = [...words(text)].filter((w) => !GENERIC.has(w));
+  let found = matchPatterns(text); if (!found.length && topicWords.length < 2) found = matchPatterns(f.request || "");
+  const pats = found.slice(0, 2), props = [], have = new Set(items(f, "precedent").map((x) => x.app + x.text));
+  pats.forEach((pt) => {
+    pt.apps.forEach(([app, feat, how, where, see, act, mock]) => { const t = `${feat}: ${how}`; if (!have.has(app + t)) props.push({ kind: "precedent", app, text: t, where, see, act, mock, source: "Public product example, check the current version", url: chk(`${app} ${feat}`) }); });
+    pt.lessons.forEach((l) => props.push({ kind: "assumption", text: l, why: `Pattern from apps with ${pt.label}. Test it with your users before relying on it.` }));
+    if (pt === pats[0] && pt.market) {
+      const mk = pt.market, yr = new Date().getFullYear();
+      mk.angles.forEach(([name, line]) => props.push({ kind: "decision", brief: "angle", angle: name, text: `Position v1 on ${name.toLowerCase()}: “${line}”` }));
+      mk.tricks.forEach((t) => props.push({ kind: "scope_in", brief: "trick", text: t, why: `Common in ${mk.industry.toLowerCase()}.` }));
+      mk.charts.forEach(([type, title, labels]) => props.push({ kind: "visual", brief: "chart", text: title, visual: type === "funnel"
+        ? { type: "funnel", basis: "placeholder", note: "Fill from your analytics once tracking is in.", steps: labels.map((l) => ({ label: l, value: null })) }
+        : type === "line" ? { type: "line", basis: "placeholder", note: "Placeholders until you have data.", series: labels.map((n) => ({ name: n, points: [1, 2, 3, 4, 5, 6].map((w) => ({ x: `W${w}`, y: null })) })) }
+        : { type: "bar", basis: "placeholder", note: "Placeholders until you have data.", series: [{ name: labels[0], points: ["A", "B", "C", "D"].map((x) => ({ x, y: null })) }] } }));
+    }
+    (pt.bench || []).forEach((k) => { const b = BENCH[k]; if (b && !items(f, "benchmark").some((x) => x.url === b.url)) props.push({ kind: "benchmark", fig: b.fig, text: `${b.fig}: ${b.text}`, source: `${b.source}, ${b.year}`, url: b.url }); });
+  });
+  return { pats, props };
+}
+const STOP = new Set("the a an and or to of in on for with will be is are it this that we our they their more less than by from as at have has can people users customers want".split(" "));
+const words = (t) => new Set(String(t).toLowerCase().match(/[a-z]{3,}/g)?.filter((w) => !STOP.has(w)) || []);
+/** Match each of the user's assumptions or insights to the closest lesson from similar apps, with a way to test it. */
+function fitRows(f, text, pats) {
+  const mine = [...items(f, "assumption").map((a) => a.text), ...sentences(text).filter((x) => classifySentence(x, false) === "assumption" && x.length > 20)];
+  const hedge = (x) => /\b(we think|we believe|we assume|we expect|probably|likely|should|will|might|could|insight)\b/i.test(x) ? 0 : 1;
+  const uniq = [...new Set(mine)].sort((a, b) => hedge(a) - hedge(b)).slice(0, 4);
+  const lessons = pats.flatMap((p) => p.lessons.map((l) => ({ l, p })));
+  return uniq.map((yours) => {
+    const w = words(yours); let best = lessons[0], score = -1;
+    lessons.forEach((x) => { const sc = [...words(x.l)].filter((k) => w.has(k)).length; if (sc > score) { score = sc; best = x; } });
+    return best ? { yours, suggests: best.l, test: best.p.test, close: score > 0 } : null;
+  }).filter(Boolean);
+}
+function researchReply(f, text) {
+  const low = text.toLowerCase(), { pats, props } = researchProposals(f, text);
+  const wantsNumbers = /\b(numbers?|data|stats?|statistics|benchmarks?|metrics?|figures?|baseline)\b/.test(low);
+  let reply;
+  if (pats.length) {
+    const names = [...new Set(pats.flatMap((p) => p.apps.map((a) => a[0])))];
+    reply = `This looks like ${pats.map((p) => p.label).join(" and ")}. ${names.slice(0, -1).join(", ")}${names.length > 1 ? " and " : ""}${names.slice(-1)} already ship it. Below: how each one works, what that suggests for you (as assumptions to test), ${props.some((p) => p.kind === "benchmark") ? "published benchmarks with their source, " : ""}and where to get your own numbers.`;
+  } else {
+    reply = "I don't have this pattern in my built-in library, and in guided mode I can't search the web, so I won't name apps or figures I can't back up. Name a competitor and I'll set up a comparison, or use the sources below for numbers.";
+    if (/competitor|similar|apps?|who else/.test(low)) props.push({ kind: "visual", text: "Competitor comparison", visual: { type: "bar", basis: "placeholder", series: [{ name: "Share", points: [{ x: "Us", y: null }, { x: "Competitor A", y: null }, { x: "Competitor B", y: null }] }] } });
+  }
+  if (wantsNumbers && !props.some((p) => p.kind === "benchmark")) reply += " There's no checked benchmark for this in my library yet, so none is shown.";
+  const pos = pats[0] && pats[0].market ? { industry: pats[0].market.industry, apps: pats[0].apps.map((a) => a[0]),
+    statement: `For ${first(f, "audience") ? first(f, "audience").toLowerCase().replace(/\.$/, "") : "[audience]"} who ${first(f, "problem") ? first(f, "problem").toLowerCase().replace(/\.$/, "") : "[problem]"}, our ${pats[0].label} is the one that [does what only you can]. Unlike ${pats[0].apps.map((a) => a[0]).join(", ").replace(/, ([^,]*)$/, " and $1")}, it [your difference].` } : null;
+  const brief = pats.length ? { idea: f.title || titleFrom(text), labels: pats.map((p) => p.label), fit: fitRows(f, text, pats), pos } : null;
+  const m = first(f, "measure");
+  props.push({ kind: "question", role: "growth", text: `What is today's baseline for ${m ? `“${trunc(m, 50)}”` : "the behaviour this feature should change"}? Pull it from your analytics before launch.` });
+  return { text: reply, proposals: props, where: true, brief };
 }
 const first = (f, k) => (items(f, k)[0] || {}).text;
 function visualReply(f, text) {
@@ -1029,6 +1219,7 @@ function nextStepsText(f) {
 function intentReply(f, intent, text) {
   if (intent === "next") return { text: nextStepsText(f) };
   if (intent === "visual") return visualReply(f, text);
+  if (intent === "research") return researchReply(f, text);
   if (intent === "gaps") { const g = gaps(f).slice(0, 5); return { text: g.length ? "Here's what's missing, most important first:\n" + g.map((x, i) => `${i + 1}. ${x.text}`).join("\n") : "Nothing is missing that I can count. Ask each role to agree their sections." }; }
   if (intent === "pitch") return { text: `A pitch from what's in the definition:\n1. Problem: ${first(f, "problem") || "[unknown]"}\n2. Evidence: ${first(f, "evidence") || "[unknown]"}\n3. The bet (untested): ${first(f, "assumption") || "[unknown]"}\n4. The ask: agree v1 = ${first(f, "scope_in") || "[unknown]"}, measured by ${first(f, "measure") || "[unknown]"} with baseline [unknown].\nLead with the problem, not the feature.` };
   if (intent === "risks") {
@@ -1040,7 +1231,7 @@ function intentReply(f, intent, text) {
     return { text: r.length ? "Risks from the definition:\n" + r.map((x, i) => `${i + 1}. ${x}`).join("\n") : "No obvious risks from what's recorded. Ask Engineering about dependencies." };
   }
   if (intent === "summary") { const filledN = SECTIONS.filter(([k]) => items(f, k).length).length; return { text: `${filledN} of ${SECTIONS.length} sections have content, ${SECTIONS.filter(([k]) => f.agreed[k]).length} agreed, ${gaps(f).length} gaps. Use Copy summary at the top to share it.` }; }
-  return { text: "In guided mode I can help with: what's missing, risks, a pitch, a summary, or charts (forecast, market size, competitors, assumption matrix, funnel). Ask for any of those, or answer the question below." };
+  return { text: "In guided mode I can help with: what's missing, risks, a pitch, a summary, or charts (forecast, market size, competitors, assumption matrix, funnel), similar apps, and numbers with their sources. Ask for any of those, or answer the question below." };
 }
 
 
@@ -1120,11 +1311,13 @@ function guidedReply(f, userText) {
     msg.text = `I split your request into ${props.length} claim${props.length === 1 ? "" : "s"}. ${ev ? `${ev} name${ev === 1 ? "s" : ""} a source, so I've marked ${ev === 1 ? "it" : "them"} as evidence. The rest stay assumptions until someone finds a source.` : "None of them names a source yet, so they stay assumptions until someone finds one."}`;
     props.forEach((x) => { if (x.kind === "evidence") x.source = "Named in your request"; });
     msg.proposals = props;
+    const pats = matchPatterns(userText);
+    if (pats.length) { const rr = researchReply(f, userText); msg.text += "\n\nI've also put together a research brief for your market: how similar apps designed this, positioning options, tactics that work in this space, how your assumptions compare, charts to track and the numbers to look for."; props.push(...rr.proposals.filter((x) => x.kind !== "question")); msg.brief = rr.brief; msg.where = true; }
     const it = intentOf(userText);
     if (it && it !== "help") { const r = intentReply(f, it, userText); msg.text = r.text + "\n\n" + msg.text; msg.proposals = [...(r.proposals || []), ...props]; }
   } else if (userText && intentOf(userText) && !(asked && asked.questions && asked.questions.some((q) => q.answer === userText))) {
     const r = intentReply(f, intentOf(userText), userText);
-    msg.text = r.text; msg.proposals = r.proposals || [];
+    msg.text = r.text; msg.proposals = r.proposals || []; if (r.where) msg.where = true; if (r.brief) msg.brief = r.brief;
     if (asked && !f.guideOff) { const pending = GUIDE.find((g) => g.key === asked.guideKey); if (pending && !items(f, pending.key).length) { msg.guideKey = pending.key; msg.questions = [{ id: uid(), text: `Back to this: ${pending.q}`, role: pending.role, options: pending.options || [] }]; } }
     msg.proposals = msg.proposals.map((p) => ({ id: uid(), status: "open", ...p, visual: p.visual ? { title: p.text, ...p.visual } : undefined }));
     return msg;
@@ -1139,10 +1332,10 @@ function guidedReply(f, userText) {
     if (!props.length) f.skipped = [...(f.skipped || []), asked.guideKey];
   }
   const g = f.guideOff ? null : nextGuide({ ...f, doc: [...f.doc, ...msg.proposals.map((p) => ({ kind: p.kind }))] });
-  if (f.guideOff) { msg.proposals = msg.proposals.map((p) => ({ id: uid(), status: "open", role: p.kind === "question" ? "pm" : undefined, ...p })); if (!msg.text) msg.text = "Noted."; return msg; }
+  if (f.guideOff) { msg.proposals = msg.proposals.map((p) => ({ id: uid(), status: "open", role: p.kind === "question" ? "pm" : undefined, ...p, visual: p.visual ? { title: p.text, ...p.visual } : undefined })); if (!msg.text) msg.text = "Noted."; return msg; }
   if (g) { msg.guideKey = g.key; msg.questions = [{ id: uid(), text: g.q, role: g.role, options: g.options || [] }]; }
   else { const gl = gaps(f); msg.text += `\n\nThat covers every step. ${gl.length ? `${gl.length} gaps are left in the definition panel. Mark sections agreed as your team signs off.` : "Nothing is missing. Mark sections agreed as your team signs off."}\n\n${nextStepsText(f)}`; }
-  msg.proposals = msg.proposals.map((p) => ({ id: uid(), status: "open", role: p.kind === "question" ? "pm" : undefined, ...p }));
+  msg.proposals = msg.proposals.map((p) => ({ id: uid(), status: "open", role: p.kind === "question" ? "pm" : undefined, ...p, visual: p.visual ? { title: p.text, ...p.visual } : undefined }));
   return msg;
 }
 
@@ -1154,11 +1347,13 @@ Rules:
 3. Use kind "evidence" ONLY to restate something from the user's own messages or pasted notes that names its source; put the source in "source". Anything else is an "assumption".
 4. Never repeat items already in the definition.
 5. Ask exactly one follow-up question for the next missing step, for one role, with 2 to 4 short answer options when sensible. If "questionsOff" is true in the definition JSON, ask no follow-up questions at all: only answer and propose. The user can skip anything; never insist or repeat a skipped question.
-6. At most 5 proposals. Kinds: problem, audience, outcome, evidence, assumption, question, scope_in, scope_out, criterion, measure, decision.
+6. At most 5 proposals. Kinds: problem, audience, outcome, evidence, assumption, question, scope_in, scope_out, criterion, measure, decision, precedent, benchmark.
+10. Similar products: when the user asks for similar apps, examples, numbers or insights, you may add up to 3 "precedent" proposals for real, well-known products that ship the same idea: "app" is the product name, "text" is "<feature name>: <how it works>", "source" is "From Claude's training knowledge, check the current version". Also give "where" (where it lives in the app), "see" (what the user sees), "act" (the one main action) and "mock", one of: grid, row, list, cart, buttons, sheet, invite, steps, checklist, choice, streak, filters, rows, feed, toggles, plans, review. Never invent products or features. Turn what they suggest into "assumption" proposals to test, not facts.
+11. Benchmarks: add a "benchmark" only for a widely published figure where you can name the publisher and year in "source"; put the figure in "fig" and say in "why" that it must be checked against the publisher. If you are not confident, add none and suggest where to find the number (product analytics for the baseline, app store consoles, Google Trends, published studies).
 7. Never state that the feature will cause an outcome; expected impact is an assumption.
 9. If the user asks what happens after agreeing, or how to make results effective, give owner-by-owner next steps from the definition: baseline and tracking before launch (Growth), build behind a flag with the agreed test (Engineering), check designs against acceptance criteria (Design), owners and a review date for assumptions (PM); then keep the agreed test, watch guardrails, decide scale/iterate/stop with a reason.
 8. Visuals: when the user asks for market research, a forecast, sizing, a comparison or a chart, or when a chart would make a decision clearer, add a proposal with kind "visual", a short title in "text", and a "visual" object: {"type": "line"|"bar"|"matrix"|"funnel", "unit": string, "series": [{"name": string, "points": [{"x": string, "y": number|null}]}], "items": [{"label": string, "impact": 1|2|3, "evidence": 1|2|3}], "steps": [{"label": string, "value": number|null}], "basis": "user"|"placeholder"|"estimate"|"definition", "source": string, "note": string}. Use "series" for line and bar, "items" for matrix (assumptions by impact and evidence), "steps" for funnel. Numbers the user gave: basis "user". No data: null values with basis "placeholder" (forecasts as Low/Base/High series). You cannot browse the web. Only if the user explicitly asks for market estimates may you give rough figures from your training knowledge, with basis "estimate", what they are based on in "source", and a reply that says they must be verified before use.
-Return ONLY JSON: {"reply": string, "questions": [{"text": string, "role": "pm"|"design"|"growth"|"engineering", "options": [string]}], "proposals": [{"kind": string, "text": string, "source": string, "role": string, "why": string, "visual": object}]}`;
+Return ONLY JSON: {"reply": string, "questions": [{"text": string, "role": "pm"|"design"|"growth"|"engineering", "options": [string]}], "proposals": [{"kind": string, "text": string, "source": string, "role": string, "why": string, "app": string, "fig": string, "where": string, "see": string, "act": string, "mock": string, "visual": object}]}`;
 function snapshot(f) {
   const by = (k) => items(f, k).map((x) => x.text);
   return JSON.stringify({ questionsOff: !!f.guideOff, skipped: f.skipped || [], request: f.request, problem: by("problem"), audience: by("audience"), outcome: by("outcome"), evidence: items(f, "evidence").map((x) => ({ text: x.text, source: x.source })), assumptions: items(f, "assumption").map((x) => ({ text: x.text, owner: x.owner || null })), openQuestions: items(f, "question").map((x) => ({ text: x.text, role: x.role, answer: x.answer || null })), inScope: by("scope_in"), outOfScope: by("scope_out"), criteria: by("criterion"), measures: items(f, "measure").map((x) => ({ text: x.text, baseline: x.baseline || null })), decisions: by("decision"), emptySections: SECTIONS.filter(([k]) => !items(f, k).length).map(([, l]) => l) });
@@ -1171,7 +1366,11 @@ async function aiReply(f) {
   const kinds = Object.keys(KIND);
   const msg = { id: uid(), role: "assistant", text: String(out.reply || ""),
     questions: (Array.isArray(out.questions) ? out.questions : []).slice(0, 2).filter((q) => q && q.text).map((q) => ({ id: uid(), text: String(q.text), role: ROLES[q.role] ? q.role : "pm", options: (Array.isArray(q.options) ? q.options : []).slice(0, 4).map(String) })),
-    proposals: (Array.isArray(out.proposals) ? out.proposals : []).slice(0, 6).filter((p) => p && kinds.includes(p.kind) && p.text).map((p) => ({ id: uid(), status: "open", kind: p.kind, text: String(p.text), source: String(p.source || ""), role: ROLES[p.role] ? p.role : "pm", why: String(p.why || ""), visual: p.kind === "visual" ? sanitizeVisual(p.visual, p.text) : undefined })).filter((p) => p.kind !== "visual" || p.visual) };
+    proposals: (Array.isArray(out.proposals) ? out.proposals : []).slice(0, 6).filter((p) => p && kinds.includes(p.kind) && p.text).map((p) => ({ id: uid(), status: "open", kind: p.kind, text: String(p.text), source: String(p.source || ""), role: ROLES[p.role] ? p.role : "pm", why: String(p.why || ""), app: String(p.app || ""), fig: String(p.fig || ""), where: String(p.where || ""), see: String(p.see || ""), act: String(p.act || ""), mock: String(p.mock || "list"), url: p.kind === "precedent" && p.app ? chk(`${p.app} ${String(p.text).split(":")[0]}`) : "", visual: p.kind === "visual" ? sanitizeVisual(p.visual, p.text) : undefined })).filter((p) => p.kind !== "visual" || p.visual) };
+  // Research turns also get the checked library (similar products, verified benchmarks) and the sources list.
+  const lastUser = (f.chat.filter((m) => m.role === "user").slice(-1)[0] || {}).text || "";
+  if (intentOf(lastUser) === "research" || (f.chat.filter((m) => m.role === "assistant").length === 0 && matchPatterns(lastUser).length)) { msg.where = true; const rb = researchReply(f, lastUser).brief; if (rb) msg.brief = rb; const lib = researchProposals(f, lastUser).props.filter((p) => p.kind !== "precedent" || !msg.proposals.some((q) => q.app === p.app)); msg.proposals.push(...lib.map((p) => ({ id: uid(), status: "open", role: "pm", why: "", ...p, visual: p.visual ? { title: p.text, ...p.visual } : undefined }))); }
+  msg.proposals.forEach((p) => { if (p.kind === "precedent" && !p.why) p.why = "From Claude's training knowledge. Check the current version."; if (p.kind === "benchmark" && !p.url) p.why = (p.why ? p.why + " " : "") + "Unverified: check the publisher before using it."; });
   // Evidence must quote something the user gave; otherwise it becomes an assumption.
   const userText = f.chat.filter((m) => m.role === "user").map((m) => m.text.toLowerCase()).join(" ");
   msg.proposals.forEach((p) => { if (p.kind === "evidence" && !(p.source && userText.includes(p.text.toLowerCase().slice(0, 24)))) { p.kind = "assumption"; p.source = ""; p.why = (p.why ? p.why + " " : "") + "Relabelled: not found in what you shared."; } });
@@ -1201,7 +1400,7 @@ async function respond(f, userText) {
   finally { busy = false; ctl = null; f.updated = Date.now(); save(); render(); scrollThread(); }
 }
 function accept(f, p) {
-  const item = { id: uid(), kind: p.kind, text: p.text.trim(), source: p.source || "", role: p.role || "pm", answer: "", owner: "", baseline: "", visual: p.visual ? JSON.parse(JSON.stringify({ ...p.visual, editing: false })) : undefined };
+  const item = { id: uid(), kind: p.kind, text: p.text.trim(), source: p.source || "", role: p.role || "pm", answer: "", owner: "", baseline: "", app: p.app || "", url: p.url || "", fig: p.fig || "", visual: p.visual ? JSON.parse(JSON.stringify({ ...p.visual, editing: false })) : undefined };
   f.doc.push(item);
   if (f.agreed[p.kind]) { f.agreed[p.kind] = false; toast(`${SEC_LABEL[p.kind]} reopened: content changed`); }
   state.docTab = groupForKind(p.kind);
@@ -1240,7 +1439,7 @@ function composer(id, placeholder, big) {
     <div class="composer-row">
       <div class="chips">${big
         ? `<button type="button" class="chip" data-fill="reorder">One-tap reorder</button><button type="button" class="chip" data-fill="carts">Saved carts</button><button type="button" class="chip" data-fill="invites">Team invites</button>`
-        : `<button type="button" class="chip" data-say="What's missing from the definition?">What's missing?</button><button type="button" class="chip" data-say="What are the biggest risks?">Risks</button><button type="button" class="chip" data-say="Show me a forecast chart for this feature.">Forecast</button><button type="button" class="chip" data-say="Show me the market size and competitors as a chart.">Market</button><button type="button" class="chip" data-say="How should I pitch this to my VP?">Pitch it</button><button type="button" class="chip" data-say="What's next after we agree, and how do we make the results effective?">Next steps</button>`}</div>
+        : `<button type="button" class="chip" data-say="What's missing from the definition?">What's missing?</button><button type="button" class="chip" data-say="Which similar apps already do this, and what can we learn from them?">Similar apps</button><button type="button" class="chip" data-say="What numbers and benchmarks exist for this, and where do we get our own?">Numbers</button><button type="button" class="chip" data-say="What are the biggest risks?">Risks</button><button type="button" class="chip" data-say="Show me a forecast chart for this feature.">Forecast</button><button type="button" class="chip" data-say="How should I pitch this to my VP?">Pitch it</button><button type="button" class="chip" data-say="What's next after we agree, and how do we make the results effective?">Next steps</button>`}</div>
       ${busy && !big ? `<button type="button" class="btn ghost sm" data-act="stop">Stop</button>` : `<button type="submit" class="send" aria-label="${big ? "Start" : "Send"}">↑</button>`}
     </div>
   </form>`;
@@ -1687,20 +1886,71 @@ function appView(f) {
   ${sideOpen ? `<div class="side-scrim" data-act="sidetoggle"></div>` : ""}`;
 }
 
+
+// Schematic previews of a design pattern (neutral wireframes, never screenshots or logos).
+function mockUI(kind) {
+  const b = (n, cls = "") => Array.from({ length: n }, () => `<i class="${cls}"></i>`).join("");
+  const M = {
+    grid: `<div class="mk-grid">${b(6, "tile")}</div>`,
+    row: `<div class="mk-bar"></div><div class="mk-row">${b(4, "tile plus")}</div><div class="mk-lines">${b(3)}</div>`,
+    list: `<div class="mk-list">${b(4, "li")}</div>`,
+    cart: `<div class="mk-list">${b(2, "li")}</div><div class="mk-sep">Saved</div><div class="mk-list dim">${b(2, "li")}</div>`,
+    buttons: `<div class="mk-hero"></div><div class="mk-lines">${b(2)}</div><div class="mk-btn">Add to cart</div><div class="mk-btn acc">Buy now</div>`,
+    sheet: `<div class="mk-lines">${b(3)}</div><div class="mk-sheet"><i></i><div class="mk-btn acc">Pay</div></div>`,
+    invite: `<div class="mk-badge">+ for both</div><div class="mk-field"></div><div class="mk-field"></div><div class="mk-btn acc">Send invite</div>`,
+    steps: `<div class="mk-dots"><i class="on"></i><i class="on"></i><i></i></div><div class="mk-hero"></div><div class="mk-btn acc">Start lesson</div>`,
+    checklist: `<div class="mk-list check">${b(4, "li")}</div>`,
+    choice: `<div class="mk-q"></div><div class="mk-chips">${b(4)}</div>`,
+    streak: `<div class="mk-streak">🔥 <b>12</b></div><div class="mk-lines">${b(3)}</div>`,
+    filters: `<div class="mk-chips">${b(3)}</div><div class="mk-map"></div><div class="mk-list">${b(2, "li")}</div>`,
+    rows: `<div class="mk-row">${b(4, "tile")}</div><div class="mk-row">${b(4, "tile")}</div><div class="mk-row">${b(4, "tile")}</div>`,
+    feed: `<div class="mk-feed"><i></i></div>`,
+    toggles: `<div class="mk-list tog">${b(4, "li")}</div>`,
+    plans: `<div class="mk-plans">${b(3)}</div>`,
+    review: `<div class="mk-stars">★★★★☆</div><div class="mk-lines">${b(3)}</div><div class="mk-badge">Verified</div>`,
+  };
+  return `<div class="mk" aria-hidden="true">${M[kind] || M.list}</div>`;
+}
+function briefHtml(f, m) {
+  const pre = (m.proposals || []).filter((p) => p.kind === "precedent"), bm = (m.proposals || []).filter((p) => p.kind === "benchmark");
+  const b = m.brief || {};
+  const ang = (m.proposals || []).filter((p) => p.brief === "angle"), tr = (m.proposals || []).filter((p) => p.brief === "trick"), ch = (m.proposals || []).filter((p) => p.brief === "chart");
+  const state = (p) => p.status === "open" ? `<button class="yes" data-p="${m.id}|${p.id}|yes">Add</button>` : `<span class="muted">${p.status === "accepted" ? "Added" : "Dismissed"}</span>`;
+  const card = (p) => `<div class="pv ${p.status !== "open" ? "done" : ""}">${mockUI(p.mock)}<div class="pv-body"><span class="pv-app">${esc(p.app)}</span><b>${esc(String(p.text).split(":")[0])}</b>
+      <dl><dt>Where</dt><dd>${esc(p.where || "—")}</dd><dt>You see</dt><dd>${esc(p.see || "—")}</dd><dt>Main action</dt><dd>${esc(p.act || "—")}</dd></dl>
+      <div class="pv-acts">${p.url ? `<a class="chk" href="${esc(p.url)}" target="_blank" rel="noopener">Check it ↗</a>` : "<span></span>"}${state(p)}</div></div></div>`;
+  const fit = (b.fit || []).map((r) => `<div class="fit"><div><span class="fl">You said</span>${esc(r.yours)}</div><div><span class="fl">${r.close ? "Similar apps suggest" : "Closest lesson"}</span>${esc(r.suggests)}</div><div><span class="fl">Test it</span>${esc(r.test || "")}</div></div>`).join("");
+  return `<div class="brief"><div class="brief-head"><span class="eyebrow">Research brief</span><b>${esc(b.idea || f.title)}</b><span class="muted">${esc((b.labels || []).join(" · "))}</span></div>
+    ${pre.length ? `<h4>How similar apps designed it</h4><div class="pv-row">${pre.map(card).join("")}</div><span class="muted small">Schematic sketches of each pattern, not screenshots. Check the current app before relying on details.</span>` : ""}
+    ${b.pos ? `<h4>Market and positioning</h4><div class="mkt"><span class="mkt-ind">Industry · ${esc(b.pos.industry)}</span><p class="pos">${esc(b.pos.statement).replace(/\[([^\]]+)\]/g, '<span class="ph">[$1]</span>')}</p>
+      <div class="angles">${ang.map((p) => `<div class="angle ${p.status !== "open" ? "done" : ""}"><b>${esc(p.angle)}</b><span>${esc(p.text.replace(/^[^“]*/, ""))}</span>${p.status === "open" ? `<button class="yes" data-p="${m.id}|${p.id}|yes">Use this angle</button>` : `<span class="muted">${p.status === "accepted" ? "In Decisions" : "Dismissed"}</span>`}</div>`).join("")}</div></div>` : ""}
+    ${tr.length ? `<h4>Tactics that work in this space</h4><div class="tricks">${tr.map((p) => `<div class="trick ${p.status !== "open" ? "done" : ""}"><span>${esc(p.text)}</span>${p.status === "open" ? `<button class="yes" data-p="${m.id}|${p.id}|yes">Add to scope</button>` : `<span class="muted">${p.status === "accepted" ? "In scope" : "Dismissed"}</span>`}</div>`).join("")}</div>` : ""}
+    <h4>Your assumptions vs what they suggest</h4>${fit || `<p class="muted small">Paste your assumptions or insights (for example “we think people will reorder weekly”) and I'll compare each one with these apps.</p>`}
+    ${ch.length ? `<h4>Charts to track</h4><div class="bcharts">${ch.map((p) => `<div class="bchart ${p.status !== "open" ? "done" : ""}">${visualBlock(p.visual, `${m.id}|${p.id}`)}<div class="pv-acts">${p.status === "open" ? `<span class="muted small">Placeholders: no numbers until you have them</span><button class="yes" data-p="${m.id}|${p.id}|yes">Add</button>` : `<span class="muted">${p.status === "accepted" ? "Added to Visuals" : "Dismissed"}</span>`}</div></div>`).join("")}</div>` : ""}
+    ${bm.length ? `<h4>Numbers</h4>${bm.map((p) => `<div class="bm ${p.status !== "open" ? "done" : ""}"><span class="bm-fig">${esc(p.fig)}</span><span>${esc(p.text.replace(/^[^:]*:\s*/, ""))}<span class="co-src">${esc(p.source)}${p.url ? ` · <a class="chk" href="${esc(p.url)}" target="_blank" rel="noopener">Open the source ↗</a>` : ""}</span></span>${state(p)}</div>`).join("")}` : ""}
+  </div>`;
+}
+const isBriefItem = (m, p) => !!m.brief && (p.kind === "precedent" || p.kind === "benchmark" || !!p.brief);
 const lastAssistant = (f) => f.chat.slice().reverse().find((x) => x.role === "assistant");
 function aiMsg(f, m) {
   if (m.wrap) return wrapMsg(f, m);
   const qs = (m.questions || []).map((q) => `<div class="qcard"><span><span class="tag t-qu">Question · ${ROLES[q.role] || "PM"}</span></span><b>${esc(q.text)}</b>
     ${q.options && q.options.length ? `<div class="opts">${q.options.map((o, i) => `<button class="opt ${q.answer === o ? "on" : ""}" data-ans="${m.id}|${q.id}|${i}" ${q.answer ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>` : q.answer ? "" : `<span class="muted" style="font-size:.82rem">${m === lastAssistant(f) ? "Answer in the message box, or:" : "Not answered"}</span>`}
     ${!q.answer && m === lastAssistant(f) ? `<div class="qexit"><button class="link" data-skip="${m.id}|${q.id}">Skip this question</button><button class="link" data-act="guideoff">Stop asking questions</button></div>` : q.answer === "(skipped)" ? `<span class="muted" style="font-size:.8rem">Skipped</span>` : ""}</div>`).join("");
-  const open = (m.proposals || []).filter((p) => p.status === "open");
-  const ps = (m.proposals || []).map((p) => {
+  const open = (m.proposals || []).filter((p) => p.status === "open" && !isBriefItem(m, p));
+  const inBrief = (p) => m.brief && (p.kind === "precedent" || p.kind === "benchmark" || p.brief);
+  const ps = (m.proposals || []).filter((p) => !inBrief(p)).map((p) => {
     const [label, co] = KIND[p.kind];
-    const bad = p.status === "open" ? unsourced(f, p.text) : [];
+    const bad = p.status === "open" && p.kind !== "benchmark" ? unsourced(f, p.text) : [];
     let body = esc(p.text); bad.forEach((n) => { body = body.replace(esc(n), `<mark class="bad">${esc(n)}</mark>`); });
     if (p.kind === "visual") {
       if (p.status !== "open") return `<div class="pcard vcard done"><div class="txt"><span class="co-tag">Visual · ${esc(p.text)}</span></div><span class="acts">${p.status === "accepted" ? "Added to Visuals" : "Dismissed"}</span></div>`;
       return `<div class="pcard vcard"><div class="txt">${visualBlock(p.visual, `${m.id}|${p.id}`)}</div><span class="acts"><button class="yes" data-p="${m.id}|${p.id}|yes">Add to definition</button><button data-p="${m.id}|${p.id}|no" aria-label="Dismiss">✕</button></span></div>`;
+    }
+    if ((p.kind === "precedent" || p.kind === "benchmark") && p.status === "open") {
+      const head = p.kind === "precedent" ? `<span class="co-tag">Similar product · ${esc(p.app)}</span>${esc(p.text)}` : `<span class="co-tag">Published benchmark · ${esc(p.source)}</span><span class="bm-fig">${esc(p.fig || "")}</span> ${esc(p.text.replace(/^[^:]*:\s*/, ""))}`;
+      return `<div class="pcard callout ${co}"><div class="txt">${head}${p.why ? `<span class="why">${esc(p.why)}</span>` : ""}${p.url ? `<a class="chk" href="${esc(p.url)}" target="_blank" rel="noopener">${p.kind === "precedent" ? "Check it" : "Open the source"} ↗</a>` : ""}</div>
+      <span class="acts"><button class="yes" data-p="${m.id}|${p.id}|yes">Add</button><button data-p="${m.id}|${p.id}|no" aria-label="Dismiss">✕</button></span></div>`;
     }
     if (p.status !== "open") return `<div class="pcard callout ${co} done"><div class="txt"><span class="co-tag">${label}</span>${esc(p.text)}</div><span class="acts">${p.status === "accepted" ? "Added" : "Dismissed"}</span></div>`;
     return `<div class="pcard callout ${co}"><div class="txt"><span class="co-tag">${label}${p.source ? ` · ${esc(p.source)}` : ""}${p.kind === "question" ? ` · ${ROLES[p.role] || "PM"}` : ""}</span>
@@ -1711,7 +1961,9 @@ function aiMsg(f, m) {
   const applied = (m.proposals || []).filter((p) => p.status === "accepted").length;
   return `<div class="m-ai"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span>
     ${m.text ? `<p class="reply">${esc(m.text)}</p>` : ""}
-    ${ps ? `<div class="props"><div class="props-head"><span>${applied} of ${m.proposals.length} added</span>${open.length > 1 ? `<button class="link" data-acceptall="${m.id}">Accept all ${open.length}</button>` : ""}</div>${ps}</div>` : ""}
+    ${m.brief ? briefHtml(f, m) : ""}
+    ${m.where ? `<div class="where"><b>Where to get your own numbers</b>${WHERE.map((w) => `<div class="wrow"><span>${esc(w.need)}</span><span class="wtools">${w.tools.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener">${esc(n)} ↗</a>`).join("")}</span></div>`).join("")}<span class="muted" style="font-size:.78rem">Scopeline never fills in a number for you. Paste figures with their source and they become evidence and charts.</span></div>` : ""}
+    ${ps ? `<div class="props"><div class="props-head"><span>${m.brief ? "Assumptions to test and claims · " : ""}${(m.proposals || []).filter((p) => !isBriefItem(m, p) && p.status === "accepted").length} of ${(m.proposals || []).filter((p) => !isBriefItem(m, p)).length} added</span>${open.length > 1 ? `<button class="link" data-acceptall="${m.id}">Accept all ${open.length}</button>` : ""}</div>${ps}</div>` : ""}
     ${qs}</div>`;
 }
 
@@ -1722,6 +1974,7 @@ const DOC_GROUPS = [
   { id: "claims", label: "Claims", keys: ["evidence", "assumption", "question"] },
   { id: "scope", label: "Scope", keys: ["scope_in", "scope_out", "criterion"] },
   { id: "measures", label: "Measures", keys: ["measure", "visual"] },
+  { id: "research", label: "Research", keys: ["precedent", "benchmark"] },
   { id: "decisions", label: "Decisions", keys: ["decision"] },
 ];
 const groupOf = (id) => DOC_GROUPS.find((g) => g.id === id) || DOC_GROUPS[0];
@@ -1755,7 +2008,7 @@ function docPane(f) {
       if (!items(f, k).length) return `<div class="dsec empty"><div class="dsec-h"><h3>${label} <span class="st empty">empty</span></h3><button class="link" data-say="Let's cover ${label.toLowerCase()} next. Ask me what you need.">Ask about it</button></div></div>`;
       const list = items(f, k), st = secStatus(f, k), co = KIND[k][1];
       return `<div class="dsec"><div class="dsec-h"><h3>${label} <span class="st ${st}">${st}</span></h3>${list.length ? `<button class="agree ${st === "agreed" ? "on" : ""}" data-agree="${k}">${st === "agreed" ? "✓ Agreed" : "Agree"}</button>` : ""}</div>
-        ${k === "visual" ? list.map((x) => `<div class="ditem vitem">${visualBlock(x.visual, `doc|${x.id}`)}<button class="x" data-del="${x.id}" aria-label="Remove">✕</button></div>`).join("") : list.length ? list.map((x) => { const nums = ["assumption", "measure", "outcome", "problem", "scope_in", "decision"].includes(k) ? unsourced(f, x.text) : []; let t = esc(x.text); nums.forEach((n) => { t = t.replace(esc(n), `<mark class="bad" title="No source">${esc(n)}</mark>`); }); return `<div class="ditem callout ${co}"><span>${t}${x.source ? `<span class="co-src">${esc(x.source)}</span>` : ""}${k === "question" ? `<span class="co-src">${ROLES[x.role] || "PM"}${x.answer ? ` · answered: ${esc(x.answer)}` : " · unanswered"}</span>` : ""}${k === "measure" ? `<span class="co-src">Baseline ${x.baseline ? esc(x.baseline) : '<span class="ph">unknown</span>'}</span>` : ""}${k === "assumption" ? `<span class="co-src">${x.owner ? "Owner: " + esc(x.owner) : "No owner or test yet"}</span>` : ""}</span>${nums.length ? `<span class="co-src" style="color:var(--bad)">${nums.map(esc).join(", ")} has no source</span>` : ""}</span><button class="x" data-del="${x.id}" aria-label="Remove">✕</button></div>`; }).join("") : `<p class="dempty">Empty</p>`}
+        ${k === "visual" ? list.map((x) => `<div class="ditem vitem">${visualBlock(x.visual, `doc|${x.id}`)}<button class="x" data-del="${x.id}" aria-label="Remove">✕</button></div>`).join("") : list.length ? list.map((x) => { const nums = ["assumption", "measure", "outcome", "problem", "scope_in", "decision"].includes(k) ? unsourced(f, x.text) : []; let t = esc(x.text); nums.forEach((n) => { t = t.replace(esc(n), `<mark class="bad" title="No source">${esc(n)}</mark>`); }); return `<div class="ditem callout ${co}"><span>${x.app ? `<b>${esc(x.app)}</b> · ` : ""}${t}${x.source ? `<span class="co-src">${esc(x.source)}</span>` : ""}${k === "question" ? `<span class="co-src">${ROLES[x.role] || "PM"}${x.answer ? ` · answered: ${esc(x.answer)}` : " · unanswered"}</span>` : ""}${k === "measure" ? `<span class="co-src">Baseline ${x.baseline ? esc(x.baseline) : '<span class="ph">unknown</span>'}</span>` : ""}${k === "assumption" ? `<span class="co-src">${x.owner ? "Owner: " + esc(x.owner) : "No owner or test yet"}</span>` : ""}${x.url ? `<a class="chk" href="${esc(x.url)}" target="_blank" rel="noopener">${k === "precedent" ? "Check it" : "Source"} ↗</a>` : ""}</span>${nums.length ? `<span class="co-src" style="color:var(--bad)">${nums.map(esc).join(", ")} has no source</span>` : ""}</span><button class="x" data-del="${x.id}" aria-label="Remove">✕</button></div>`; }).join("") : `<p class="dempty">Empty</p>`}
       </div>`;
     }).join("")}</div>
   </aside>`;
@@ -2017,7 +2270,7 @@ document.addEventListener("click", (e) => {
     f.doc.push({ id: uid(), kind: "question", text: q.text, role: q.role, answer: q.answer, source: "", owner: "", baseline: "" });
     save(); return respond(f, `${ROLES[q.role]} answer: ${q.answer}`);
   }
-  if (el.dataset.acceptall) { const m = f.chat.find((x) => x.id === el.dataset.acceptall); m.proposals.filter((p) => p.status === "open").forEach((p) => accept(f, p)); save(); render(); return toast("Added to the definition"); }
+  if (el.dataset.acceptall) { const m = f.chat.find((x) => x.id === el.dataset.acceptall); m.proposals.filter((p) => p.status === "open" && !isBriefItem(m, p)).forEach((p) => accept(f, p)); save(); render(); return toast("Added to the definition"); }
   if (el.dataset.p) {
     const [mid, pid, act] = el.dataset.p.split("|"); const m = f.chat.find((x) => x.id === mid); const p = m.proposals.find((x) => x.id === pid);
     if (act === "edit") { p.editing = true; render(); document.getElementById("ed-" + p.id)?.focus(); return; }
@@ -2074,7 +2327,7 @@ document.addEventListener("click", (e) => {
   }
 });
 function summaryMd(f) {
-  return `# ${f.title}\n\n> ${f.request}\n\n` + SECTIONS.map(([k, l]) => `## ${l}${f.agreed[k] ? " (agreed)" : ""}\n` + (items(f, k).map((x) => `- ${x.text}${x.source ? ` _(source: ${x.source})_` : ""}${k === "measure" ? ` — baseline: ${x.baseline || "unknown"}` : ""}${k === "question" ? ` — ${ROLES[x.role] || "PM"}${x.answer ? `: ${x.answer}` : ", unanswered"}` : ""}`).join("\n") || "- _empty_")).join("\n\n");
+  return `# ${f.title}\n\n> ${f.request}\n\n` + SECTIONS.map(([k, l]) => `## ${l}${f.agreed[k] ? " (agreed)" : ""}\n` + (items(f, k).map((x) => `- ${x.app ? `**${x.app}** ` : ""}${x.text}${x.source ? ` _(source: ${x.source})_` : ""}${x.url ? ` ${x.url}` : ""}${k === "measure" ? ` — baseline: ${x.baseline || "unknown"}` : ""}${k === "question" ? ` — ${ROLES[x.role] || "PM"}${x.answer ? `: ${x.answer}` : ", unanswered"}` : ""}`).join("\n") || "- _empty_")).join("\n\n");
 }
 function closeMenus(keepMobile) {
   document.querySelectorAll(".mbtn[aria-expanded=true]").forEach((b) => { b.setAttribute("aria-expanded", "false"); const m = document.getElementById(b.getAttribute("aria-controls")); if (m) m.hidden = true; });
