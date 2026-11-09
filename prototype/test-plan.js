@@ -5,22 +5,26 @@ for(const [w,h,n] of [[1440,950,'d'],[390,844,'m']]){const ctx=await b.newContex
 await p.goto(F);await p.evaluate(()=>localStorage.clear());await p.reload();await p.waitForTimeout(300);await p.click('.lp-hero [data-act="new"]');
 await p.fill('#start-in','We want team invites so admins can add colleagues. Sales says enterprise deals stall without it. We think simple email invites are enough for v1.');await p.press('#start-in','Enter');
 await p.waitForSelector('.opts3');await p.locator('.opt3 .yes').first().click();await p.waitForTimeout(200);
-await p.locator('.flowbar [data-act="finish"]').click();await p.waitForSelector('.plan');
-const txt=await p.locator('.plan').textContent();
+await p.locator('.flowbar [data-act="finish"]').click();await p.waitForSelector('.plan2');
+await p.locator('.p2-exp summary').click();const txt=await p.evaluate(()=>{const pl=JSON.parse(localStorage.getItem('scopeline-chat-v1')).features[0].plan;return document.querySelector('.plan2').textContent+' '+pl.tasks.map(t=>t.text+' '+t.detail).join(' ')+' '+pl.exp.design;});
 t(txt.includes('Action plan'),n+': Finish produces an action plan');
-t(await p.locator('.plan .who-g').count()===4,n+': tasks grouped for Growth, Engineering, Design and PM');
-t(await p.locator('.plan .task').count()>=8,n+': concrete tasks ('+await p.locator('.plan .task').count()+')');
+t(await p.locator('.p2-tabs button').count()===4,n+': tasks in tabs for Growth, Engineering, Design and PM');
+t(await p.locator('.p2-next .p2-n').count()===3,n+': three next actions up front');
+t(await p.locator('.p2-list li').count()<=4,n+': only one role\'s tasks shown at a time');
+t(await p.locator('.p2-more').count()===0,n+': task details hidden until opened');
+t(await p.locator('.wrapcard').count()===0,n+': no second card under the plan');
+const nt=await p.evaluate(()=>JSON.parse(localStorage.getItem('scopeline-chat-v1')).features[0].plan.tasks.length);t(nt>=8,n+': concrete tasks ('+nt+')');
 t(txt.includes('Start small')||txt.includes('Ask for invites'),n+': plan uses the chosen v1 approach');
 t(txt.includes('simple email invites'),n+': plan tests the user\'s own bet');
 t(txt.includes('Dropbox'),n+': design task points to the similar-app patterns');
-t(await p.locator('.plan .exp-rule').count()===1&&txt.includes('Scale if'),n+': experiment with a scale/iterate/stop rule');
-t(await p.locator('.plan .ph').count()>=3,n+': unknown numbers stay as placeholders');
-await p.locator('.plan input[data-ptask]').first().check();await p.waitForTimeout(200);
-t((await p.locator('.plan .who-h').textContent()).includes('1 of'),n+': ticking a task updates progress');
-await p.locator('.plan input[data-pdue]').first().fill('2026-12-01');await p.locator('.plan input[data-pdue]').first().dispatchEvent('change');await p.waitForTimeout(200);
+t(await p.locator('.p2-rule').count()===1&&txt.includes('Scale if'),n+': experiment with a scale/iterate/stop rule');
+t(await p.locator('.plan2 .ph2').count()>=3,n+': unknown numbers stay as placeholders');
+await p.locator('.p2-list input[data-ptask]').first().check();await p.waitForTimeout(200);
+t((await p.locator('.p2-th').textContent()).includes('1 of'),n+': ticking a task updates progress');
+await p.locator('.p2-t').first().click();await p.waitForTimeout(150);t(await p.locator('.p2-more').count()===1,n+': clicking a task opens its details');await p.locator('.p2-more input[data-pdue]').fill('2026-12-01');await p.locator('.p2-more input[data-pdue]').dispatchEvent('change');await p.waitForTimeout(200);
 const st=await p.evaluate(()=>JSON.parse(localStorage.getItem('scopeline-chat-v1')).features[0].plan.tasks[0]);t(st.done&&st.due==='2026-12-01',n+': done and due date are saved');
-if(n==='d'){await p.locator('.plan [data-ticket]').first().click();await p.waitForTimeout(200);const clip=await p.evaluate(()=>navigator.clipboard.readText());t(clip.startsWith('Title: ')&&clip.includes('Owner: Growth')&&clip.includes('Due: 2026-12-01'),'copy ticket gives a ready ticket');
+if(n==='d'){if(!(await p.locator('.p2-more').count())){await p.locator('.p2-t').first().click();await p.waitForTimeout(100);}await p.locator('.plan2 [data-ticket]').first().click();await p.waitForTimeout(200);const clip=await p.evaluate(()=>navigator.clipboard.readText());t(clip.startsWith('Title: ')&&clip.includes('Owner: Growth')&&clip.includes('Due: 2026-12-01'),'copy ticket gives a ready ticket');
 await p.click('[data-act="copyslack"]');await p.waitForTimeout(200);const sl=await p.evaluate(()=>navigator.clipboard.readText());t(sl.includes('*Next up*')&&sl.includes('Engineering:'),'Slack update lists next step per role');}
 t(await p.evaluate(()=>document.documentElement.scrollWidth-innerWidth)<=0,n+': no sideways scroll');
-await p.locator('.plan').screenshot({path:S+'/plan-'+n+'.png'});await ctx.close();}
+await p.locator('.plan2').screenshot({path:S+'/plan-'+n+'.png'});await ctx.close();}
 t(e.length===0,'no errors '+e.join('; '));console.log(ok?'ALL PASS':'SOME FAIL');await b.close();})();

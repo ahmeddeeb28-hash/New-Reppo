@@ -19,8 +19,8 @@ t(await p.locator('.side.rail .rchat.on .ring').count()===1,'sidebar rail shows 
 t(await p.locator('.flowbar .fb-seg').count()===5,'progress bar shows five steps');
 t((await p.locator('.fb-next').textContent()).includes('Next'),'progress bar says what to do next');
 await p.click('[data-act="howto"]');await p.waitForTimeout(150);t((await p.locator('.howto').textContent()).includes('funnel'),'How it works explains the funnel');
-await p.click('.flowbar [data-act="finish"]');await p.waitForTimeout(150);t(await p.locator('.wrapcard .wl-row').count()>=1,'Finish lists what is ready to agree');
-if(await p.locator('.wrapcard [data-act="agreeall"]').count())await p.locator('.wrapcard [data-act="agreeall"]').last().click();else await p.locator('.wrapcard .agree').first().click();await p.waitForTimeout(150);t((await p.locator('.fb-count').textContent()).match(/^[1-9]/)!==null,'agreeing from the finish card updates progress');
+await p.click('.flowbar [data-act="finish"]');await p.waitForTimeout(150);t(await p.locator('.plan2 [data-act="agreeall"]').count()===1,'Finish offers to mark sections agreed');
+await p.locator('.plan2 [data-act="agreeall"]').click();await p.waitForTimeout(150);t((await p.locator('.fb-count').textContent()).match(/^[1-9]/)!==null,'agreeing from the finish card updates progress');
 const ov=await p.evaluate(()=>{const r=[...document.querySelectorAll('.rail button, .rail .ring, .rail .segring')].map(e=>e.getBoundingClientRect());let n=0;for(let i=0;i<r.length;i++)for(let j=i+1;j<r.length;j++){const a=r[i],b=r[j];if(a.width&&b.width&&a.left<b.right-1&&b.left<a.right-1&&a.top<b.bottom-1&&b.top<a.bottom-1&&!(a.left>=b.left&&a.right<=b.right&&a.top>=b.top&&a.bottom<=b.bottom)&&!(b.left>=a.left&&b.right<=a.right&&b.top>=a.top&&b.bottom<=a.bottom))n++;}return n;});
 t(ov===0,'nothing overlaps in the rails ('+ov+')');
 const clip=await p.evaluate(()=>[...document.querySelectorAll('.rail *')].filter(e=>e.scrollWidth>e.clientWidth+1&&getComputedStyle(e).overflow!=='visible'&&e.clientWidth>0).length);t(clip===0,'no clipped text in the rails');

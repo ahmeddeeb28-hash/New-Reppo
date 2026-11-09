@@ -16,10 +16,10 @@ await p.fill('#chat-in','Customers reorder weekly groceries.');await p.press('#c
 ok(await p.locator('.m-ai').last().locator('.qcard').count()===0,'no new questions after stopping');ok((await p.locator('.m-ai').last().locator('.logged').textContent()).includes('1 assumption'),'statements are logged and labelled on their own merits after stopping');
 ok((await p.textContent('[data-act="guidetoggle"]')).includes('Explore'),'top bar shows Mode: Explore');
 await p.locator('.flowbar [data-act="finish"]').click();await p.waitForTimeout(200);
-ok(await p.locator('.wrapcard').count()===1,'Finish for now shows a wrap-up');
-ok((await p.textContent('.wrapcard')).includes('Nothing else is required'),'wrap-up says nothing else is required');
+ok(await p.locator('.plan2').count()===1,'Finish shows the action plan');
+ok((await p.textContent('.plan2')).includes('Start here'),'plan leads with what to do next');
 await p.screenshot({path:S+'/exit.png'});
-await p.locator('.wrapcard [data-act="home"]').click();ok(await p.locator('.lp-hero').count()===1,'Back to home exits');
+await p.locator('.plan2 [data-act="home"]').click();ok(await p.locator('.lp-hero').count()===1,'Back to home exits');
 // keep my number
 await p.click('.lp-hero [data-act="new"]');await p.click('form[data-form="start"] [data-fill="reorder"]');await p.click('form[data-form="start"] .send');await p.waitForSelector('.flagbtn');
 await p.locator('.flagbtn',{hasText:'Keep my number'}).click();await p.click('[data-doctab="claims"]');

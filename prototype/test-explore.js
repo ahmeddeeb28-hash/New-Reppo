@@ -23,7 +23,7 @@ await p.click('[data-undolog]');await p.waitForTimeout(200);t((await p.locator('
 await p.locator('.nextq .chip').first().click();await p.waitForFunction(()=>document.querySelectorAll('.m-ai').length>=2,null,{timeout:15000});await p.waitForTimeout(700);
 t((await p.locator('.m-ai').last().textContent()).toLowerCase().includes('risk'),n+': next chip gets an answer (risks)');
 t(await p.locator('.m-ai').last().locator('.qcard').count()===0,n+': still no form question');
-await p.locator('.nextq .chip.fin').click();await p.waitForTimeout(300);t(await p.locator('.wrapcard').count()===1,n+': "I\'m done" finishes in one click');
+await p.locator('.nextq .chip.fin').click();await p.waitForTimeout(300);t(await p.locator('.plan2').count()===1,n+': "I\'m done" finishes in one click');
 t(await p.evaluate(()=>document.documentElement.scrollWidth-innerWidth)<=0,n+': no sideways scroll');
 await p.screenshot({path:S+'/explore-'+n+'.png',fullPage:false});await p.close();}
 t(e.length===0,'no errors '+e.join('; '));console.log(ok?'ALL PASS':'SOME FAIL');await b.close();})();
