@@ -1005,6 +1005,48 @@ a.chk { display: inline-block; margin-top: 6px; font-size: 0.78rem; font-weight:
 .plan-acts { display: flex; flex-wrap: wrap; gap: 8px; }
 @media (max-width: 640px) { .exp-grid { grid-template-columns: 1fr; } .task { grid-template-columns: minmax(0, 1fr); } .t-acts { flex-direction: row; align-items: center; justify-content: space-between; padding-left: 26px; } }
 
+
+/* ---------- Action plan v2: calm, next actions first ---------- */
+.plan2 { border: 1px solid var(--line); background: var(--surface); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 18px; margin: 6px 0 10px; min-width: 0; scroll-margin-top: 140px; }
+.p2-head b { display: block; font-family: var(--serif); font-size: 1.6rem; font-weight: 500; letter-spacing: -0.02em; margin-top: 2px; }
+.p2-head p { margin: 6px 0 0; font-size: 1rem; line-height: 1.5; color: #3d3a35; overflow-wrap: anywhere; }
+.ph2 { border-bottom: 1.5px dashed #d89a3a; color: #8a5a00; font-style: italic; padding: 0 1px; }
+.p2-next { display: flex; flex-direction: column; gap: 8px; background: #f3fbf7; border-radius: 14px; padding: 14px; }
+.p2-n { display: grid; grid-template-columns: 18px 24px minmax(0, 1fr); gap: 10px; align-items: center; cursor: pointer; }
+.p2-n input { width: 18px; height: 18px; accent-color: #11805a; margin: 0; }
+.p2-n b { display: block; font-size: 0.95rem; font-weight: 600; overflow-wrap: anywhere; } .p2-n small { color: var(--muted); font-size: 0.76rem; }
+.p2-exp { border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+.p2-exp summary { display: flex; justify-content: space-between; align-items: center; cursor: pointer; list-style: none; }
+.p2-exp summary::-webkit-details-marker { display: none; }
+.p2-exp summary .sec-k { margin: 0; } .p2-exp summary .sec-k::after { content: " ›"; }
+.p2-exp[open] summary .sec-k::after { content: " ⌄"; }
+.p2-rule { display: inline-flex; gap: 4px; } .p2-rule i { font-style: normal; font-size: 0.7rem; font-weight: 700; border-radius: 999px; padding: 2px 8px; }
+.p2-exp dl { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 8px 12px; margin: 12px 0 0; font-size: 0.9rem; }
+.p2-exp dt { color: var(--muted); font-size: 0.8rem; } .p2-exp dd { margin: 0; overflow-wrap: anywhere; }
+.p2-th { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.p2-th .sec-k { margin: 0; }
+.p2-tabs { display: flex; gap: 6px; margin: 10px 0 6px; overflow-x: auto; scrollbar-width: none; }
+.p2-tabs button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: 4px 12px 4px 4px; font: inherit; font-size: 0.86rem; cursor: pointer; white-space: nowrap; color: var(--ink); }
+.p2-tabs button small { color: var(--muted); font-size: 0.74rem; }
+.p2-tabs button[aria-selected="true"] { background: var(--ink); color: #fff; border-color: var(--ink); } .p2-tabs button[aria-selected="true"] small { color: rgba(255,255,255,.7); }
+.p2-tabs .avi { border-radius: 50%; }
+.p2-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.p2-list li { border-bottom: 1px solid var(--line); }
+.p2-row { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 10px 2px; }
+.p2-row input { width: 18px; height: 18px; accent-color: #11805a; margin: 0; }
+.p2-t { border: 0; background: none; padding: 0; text-align: left; font: inherit; font-size: 0.92rem; color: var(--ink); cursor: pointer; overflow-wrap: anywhere; }
+.p2-due { font-size: 0.76rem; color: var(--muted); background: var(--tint); border-radius: 6px; padding: 2px 6px; }
+.p2-chev { color: var(--muted); transition: transform .15s; } li.open .p2-chev { transform: rotate(90deg); }
+li.done .p2-t { text-decoration: line-through; color: var(--muted); }
+.p2-more { padding: 0 2px 12px 28px; font-size: 0.86rem; color: #3d3a35; }
+.p2-more p { margin: 0 0 8px; overflow-wrap: anywhere; }
+.p2-ctl { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; font-size: 0.82rem; color: var(--muted); }
+.p2-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; border-top: 1px solid var(--line); padding-top: 14px; }
+.p2-share { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+.p2-more-links { font-size: 0.84rem; color: var(--muted); }
+.small-note { font-size: 0.8rem; margin: 0; }
+@media (max-width: 640px) { .plan2 { padding: 14px; } .p2-exp dl { grid-template-columns: 1fr; gap: 2px; } .p2-exp dt { margin-top: 6px; } .p2-foot { flex-direction: column; align-items: flex-start; } }
+
 @media (max-width: 1100px) { .moments { grid-template-columns: 1fr 1fr; } .hand { display: none; } }
 @media (max-width: 900px) {
   .ws { grid-template-columns: minmax(0, 1fr); }
@@ -2120,7 +2162,7 @@ function briefHtml(f, m) {
 const isBriefItem = (m, p) => !!m.brief && (p.kind === "precedent" || p.kind === "benchmark" || !!p.brief);
 const lastAssistant = (f) => f.chat.slice().reverse().find((x) => x.role === "assistant");
 function aiMsg(f, m) {
-  if (m.wrap) return wrapMsg(f, m);
+  if (m.wrap) { const lastWrap = f.chat.slice().reverse().find((x) => x.wrap); if (m !== lastWrap) return `<div class="m-ai"><p class="muted small-note">Earlier plan, replaced by the one below.</p></div>`; return wrapMsg(f, m); }
   const qs = (m.questions || []).map((q) => `<div class="qcard"><span><span class="tag t-qu">Question · ${ROLES[q.role] || "PM"}</span></span><b>${esc(q.text)}</b>
     ${q.options && q.options.length ? `<div class="opts">${q.options.map((o, i) => `<button class="opt ${q.answer === o ? "on" : ""}" data-ans="${m.id}|${q.id}|${i}" ${q.answer ? "disabled" : ""}>${esc(o)}</button>`).join("")}</div>` : q.answer ? "" : `<span class="muted" style="font-size:.82rem">${m === lastAssistant(f) ? "Answer in the message box, or:" : "Not answered"}</span>`}
     ${!q.answer && m === lastAssistant(f) ? `<div class="qexit"><button class="link" data-skip="${m.id}|${q.id}">Skip this question</button><button class="link" data-act="guideoff">Stop asking questions</button></div>` : q.answer === "(skipped)" ? `<span class="muted" style="font-size:.8rem">Skipped</span>` : ""}</div>`).join("");
@@ -2216,31 +2258,31 @@ function slackMd(f) {
 function planHtml(f) {
   const pl = f.plan; if (!pl) return "";
   const doneN = pl.tasks.filter((t) => t.done).length;
-  const ph = (s) => esc(s).replace(/\[([^\]]+)\]/g, '<span class="ph">[$1]</span>');
-  return `<div class="plan">
-    <div class="plan-head"><span class="eyebrow">Action plan</span><b>${esc(f.title)}</b><p>${ph(pl.oneLine)}</p></div>
-    <div class="exp"><span class="sec-k">The experiment</span>
-      <div class="exp-grid"><div><span class="fl">Bet</span>${ph(pl.exp.hypothesis)}</div><div><span class="fl">Metric</span>${ph(pl.exp.metric)}<span class="exp-sub">baseline ${ph(pl.exp.baseline)} → target ${ph(pl.exp.target)}</span></div><div><span class="fl">Guardrail</span>${ph(pl.exp.guardrail)}</div><div><span class="fl">Test design</span>${ph(pl.exp.design)}</div></div>
-      <div class="exp-rule"><span class="r-s">Scale</span><span class="r-i">Iterate</span><span class="r-x">Stop</span><p>${esc(pl.exp.rule)}</p></div></div>
-    <div class="plan-who"><div class="who-h"><span class="sec-k">Who does what · ${doneN} of ${pl.tasks.length} done</span><span class="meter sm"><span style="width:${Math.round(doneN / pl.tasks.length * 100)}%"></span></span></div>
-      ${ROLE_ORDER.filter((r) => pl.tasks.some((t) => t.role === r)).map((r) => `<div class="who-g"><span class="who-r">${avatar(r === "pm" ? "pm" : r, 28)}<b>${ROLES[r] || "PM"}</b></span>
-        ${pl.tasks.filter((t) => t.role === r).map((t) => `<div class="task ${t.done ? "done" : ""}"><label class="tk"><input type="checkbox" data-ptask="${t.id}" ${t.done ? "checked" : ""}><span><b>${ph(t.text)}</b><small>${ph(t.detail)}</small></span></label>
-          <span class="t-acts"><input type="date" class="due" data-pdue="${t.id}" value="${esc(t.due)}" aria-label="Due date for ${esc(t.text)}"><button class="link" data-ticket="${t.id}">Copy ticket</button></span></div>`).join("")}</div>`).join("")}</div>
-    <div class="plan-acts"><button class="btn sm" data-act="copytickets">Copy all as tickets</button><button class="btn ghost sm" data-act="copyslack">Copy Slack update</button><button class="btn ghost sm" data-act="downloadplan">Download plan (.md)</button></div>
+  const ph = (s) => esc(s).replace(/\[([^\]]+)\]/g, '<span class="ph2" title="Fill this in">$1</span>');
+  const roles = ROLE_ORDER.filter((r) => pl.tasks.some((t) => t.role === r));
+  const tab = roles.includes(state.planTab) ? state.planTab : roles[0];
+  const nextUp = roles.map((r) => pl.tasks.find((t) => t.role === r && !t.done)).filter(Boolean).slice(0, 3);
+  const toAgree = SECTIONS.filter(([k]) => items(f, k).length && !f.agreed[k]).length;
+  return `<div class="plan2">
+    <div class="p2-head"><span class="eyebrow">Action plan</span><b>${esc(f.title)}</b><p>${ph(pl.oneLine)}</p></div>
+    ${nextUp.length ? `<div class="p2-next"><span class="sec-k">Start here</span>${nextUp.map((t) => `<label class="p2-n"><input type="checkbox" data-ptask="${t.id}">${avatar(t.role, 24)}<span><b>${ph(t.text)}</b><small>${ROLES[t.role] || "PM"}</small></span></label>`).join("")}</div>` : `<div class="p2-next done"><b>Every task is done.</b> Time for the learning review.</div>`}
+    <details class="p2-exp"><summary><span class="sec-k">The experiment</span><span class="p2-rule"><i class="r-s">Scale</i><i class="r-i">Iterate</i><i class="r-x">Stop</i></span></summary>
+      <dl><dt>Bet</dt><dd>${ph(pl.exp.hypothesis)}</dd><dt>Metric</dt><dd>${ph(pl.exp.metric)} · baseline ${ph(pl.exp.baseline)} → target ${ph(pl.exp.target)}</dd><dt>Guardrail</dt><dd>${ph(pl.exp.guardrail)}</dd><dt>Test</dt><dd>${ph(pl.exp.design)}</dd><dt>Decide</dt><dd>${esc(pl.exp.rule)}</dd></dl></details>
+    <div class="p2-tasks"><div class="p2-th"><span class="sec-k">All tasks · ${doneN} of ${pl.tasks.length} done</span><span class="meter sm"><span style="width:${Math.round(doneN / pl.tasks.length * 100)}%"></span></span></div>
+      <div class="p2-tabs" role="tablist">${roles.map((r) => { const n = pl.tasks.filter((t) => t.role === r), d = n.filter((t) => t.done).length; return `<button role="tab" aria-selected="${r === tab}" data-plantab="${r}">${avatar(r, 20)}${ROLES[r] || "PM"}<small>${d}/${n.length}</small></button>`; }).join("")}</div>
+      <ul class="p2-list">${pl.tasks.filter((t) => t.role === tab).map((t) => `<li class="${t.done ? "done" : ""} ${state.openTask === t.id ? "open" : ""}">
+        <div class="p2-row"><input type="checkbox" data-ptask="${t.id}" ${t.done ? "checked" : ""} aria-label="Done: ${esc(t.text)}"><button class="p2-t" data-opentask="${t.id}" aria-expanded="${state.openTask === t.id}">${ph(t.text)}</button>${t.due ? `<span class="p2-due">${esc(t.due)}</span>` : ""}<span class="p2-chev" aria-hidden="true">›</span></div>
+        ${state.openTask === t.id ? `<div class="p2-more"><p>${ph(t.detail)}${t.why ? ` <span class="muted">${esc(t.why)}</span>` : ""}</p><span class="p2-ctl"><label>Due <input type="date" class="due" data-pdue="${t.id}" value="${esc(t.due)}"></label><button class="link" data-ticket="${t.id}">Copy as ticket</button></span></div>` : ""}</li>`).join("")}</ul></div>
+    <div class="p2-foot"><span class="p2-share"><button class="btn sm" data-act="copytickets">Copy tickets</button><button class="btn ghost sm" data-act="copyslack">Slack update</button><button class="btn ghost sm" data-act="downloadplan">Download</button></span>
+      <span class="p2-more-links">${toAgree ? `<button class="link" data-act="agreeall">Mark ${toAgree} section${toAgree === 1 ? "" : "s"} agreed</button> · ` : ""}<button class="link" data-act="keepgoing">Keep exploring</button> · <button class="link" data-act="home">Home</button></span></div>
   </div>`;
 }
 function wrapMsg(f, m) {
+  if (f.plan) return `<div class="m-ai"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span>${planHtml(f)}</div>`;
   const filledN = SECTIONS.filter(([k]) => items(f, k).length).length, agreed = SECTIONS.filter(([k]) => f.agreed[k]).length;
-  const toAgree = SECTIONS.filter(([k]) => items(f, k).length && !f.agreed[k]), blank = SECTIONS.filter(([k]) => !items(f, k).length && !["visual", "precedent", "benchmark", "decision", "criterion"].includes(k));
-  const openQ = items(f, "question").filter((q) => !q.answer).length;
   return `<div class="m-ai"><span class="who"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</span>
-    ${planHtml(f)}
-    <div class="wrapcard"><div class="wrap-top">${segRing(f, 56, `${FLOW.filter((g) => groupStatus(f, g) === "agreed").length}/${FLOW.length}`)}<div><b>Saved. Your plan is above.</b>
-      <p>${filledN} of ${SECTIONS.length} sections have content and ${agreed} are agreed. Nothing else is required. Ticking tasks and adding dates updates the plan.</p></div></div>
-      ${toAgree.length ? `<div class="wrap-left"><span class="wl-h">Ready for your team to agree</span>${toAgree.map(([k, l]) => `<span class="wl-row"><span>${l} · ${items(f, k).length}</span><button class="agree" data-agree="${k}">Agree</button></span>`).join("")}
-        ${toAgree.length > 1 ? `<button class="btn ghost sm" data-act="agreeall">Agree all ${toAgree.length}</button>` : ""}</div>` : ""}
-      ${blank.length || openQ ? `<p class="wl-note">Left as unknowns: ${[...blank.map(([, l]) => l.toLowerCase()), openQ ? `${openQ} open question${openQ === 1 ? "" : "s"}` : ""].filter(Boolean).join(", ")}. That's fine for a first pass.</p>` : ""}
-      <div class="wrapacts"><button class="btn sm" data-act="copy">Copy summary</button><button class="btn ghost sm" data-act="download">Download (.md)</button><button class="btn ghost sm" data-act="keepgoing">Keep going</button><button class="btn ghost sm" data-act="home">Back to home</button></div></div></div>`;
+    <div class="wrapcard"><b>Saved. You can stop here.</b><p>${filledN} of ${SECTIONS.length} sections have content and ${agreed} are agreed. Nothing else is required.</p>
+      <div class="wrapacts"><button class="btn sm" data-act="copy">Copy summary</button><button class="btn ghost sm" data-act="keepgoing">Keep going</button><button class="btn ghost sm" data-act="home">Back to home</button></div></div></div>`;
 }
 function docTabs(f) {
   const active = groupOf(state.docTab).id;
@@ -2606,7 +2648,7 @@ document.addEventListener("click", (e) => {
     if (!f.guideOff && aiState !== "ready") { const g = nextGuide(f); if (g) { const last = f.chat[f.chat.length - 1]; last.guideKey = g.key; last.questions = [{ id: uid(), text: g.q, role: g.role, options: g.options || [] }]; } }
     save(); render(); scrollThread(); return;
   }
-  if (el.dataset.act === "finish") { f.plan = buildPlan(f, f.plan); f.chat.push({ id: uid(), role: "assistant", wrap: true }); save(); render(); setTimeout(() => { const pls = document.querySelectorAll(".plan"); const last = pls[pls.length - 1]; if (last) last.scrollIntoView({ block: "start" }); }, 30); return; }
+  if (el.dataset.act === "finish") { f.plan = buildPlan(f, f.plan); f.chat.push({ id: uid(), role: "assistant", wrap: true }); save(); render(); setTimeout(() => { const pls = document.querySelectorAll(".plan2"); const last = pls[pls.length - 1]; if (last) last.scrollIntoView({ block: "start" }); }, 30); return; }
   if (el.dataset.ticket) { const t = f.plan.tasks.find((x) => x.id === el.dataset.ticket); const md = ticketMd(f, t); try { navigator.clipboard.writeText(md).then(() => toast("Ticket copied"), () => fallbackCopy(md)); } catch (err) { fallbackCopy(md); } return; }
   if (el.dataset.act === "copytickets" || el.dataset.act === "copyslack") { const md = el.dataset.act === "copyslack" ? slackMd(f) : f.plan.tasks.filter((t) => !t.done).map((t) => ticketMd(f, t)).join("\n\n---\n\n"); try { navigator.clipboard.writeText(md).then(() => toast(el.dataset.act === "copyslack" ? "Slack update copied" : "Tickets copied"), () => fallbackCopy(md)); } catch (err) { fallbackCopy(md); } return; }
   if (el.dataset.act === "keepgoing") { f.guideOff = false; const g = nextGuide(f); f.chat.push(g && aiState !== "ready" ? { id: uid(), role: "assistant", text: "Picking up again.", guideKey: g.key, questions: [{ id: uid(), text: g.q, role: g.role, options: g.options || [] }], proposals: [] } : { id: uid(), role: "assistant", text: "Ready when you are. Ask anything.", questions: [], proposals: [] }); save(); render(); scrollThread(); return; }
@@ -2618,6 +2660,8 @@ document.addEventListener("click", (e) => {
   if (el.dataset.undolog) { const m = f.chat.find((x) => x.id === el.dataset.undolog); const ids = new Set((m.logged || []).map((x) => x.docId)); f.doc = f.doc.filter((x) => !ids.has(x.id)); m.undone = true; save(); render(); return toast("Removed from the definition"); }
   if (el.dataset.opt) { const [mid, oid] = el.dataset.opt.split("|"); const m = f.chat.find((x) => x.id === mid); const o = (m.options || []).find((x) => x.id === oid); if (!o) return;
     m.chosen = o.id; accept(f, { kind: "decision", text: `v1 approach: ${o.name}. ${o.build}` }); accept(f, { kind: "scope_in", text: o.build }); state.docTab = "decisions"; save(); render(); return toast(`Chose “${o.name}”`); }
+  if (el.dataset.plantab) { state.planTab = el.dataset.plantab; state.openTask = null; save(); render(); return; }
+  if (el.dataset.opentask) { state.openTask = state.openTask === el.dataset.opentask ? null : el.dataset.opentask; save(); render(); return; }
   if (el.dataset.act === "howto") { state.showHow = !state.showHow; save(); render(); return; }
   if (el.dataset.act === "agreeall") { SECTIONS.forEach(([k]) => { if (items(f, k).length) f.agreed[k] = true; }); save(); render(); return toast("All filled sections agreed"); }
   if (el.dataset.act === "docmin") { state.docMin = !state.docMin; save(); render(); return; }
