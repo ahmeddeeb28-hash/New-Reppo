@@ -7,8 +7,8 @@ Glance is free, with no ads, no subscriptions and no in-app purchases.
 ## What's in this build
 
 - **Story sections.** Each script is a list of sections (Hook, Setup, Story, Value, Proof, Call to action, or your own). Each section has a headline and the words to say, with a word count and time estimate. Reel and Talk templates come pre-filled.
-- **Floating script card.** The camera fills the screen and the script floats on top as a glass card. Drag one bar to move it and the other to resize it. It snaps to the top (closest to the lens), bottom, left or right, and always stays clear of the notch, Dynamic Island and home bar. Pinch the camera to zoom. Works in portrait and landscape.
-- **Recording glow.** A soft violet glow breathes around the screen while you record.
+- **Record screen.** The script sits on black right under the camera, with your camera view below it. One bar on the camera view sets how much of each you see (it clicks into place at three sizes). Corner buttons: front light and settings top left, float and flip top right. A dial on the right edge sets text size or speed. Zoom (1×, 1.5×, 2×) and a control pill sit at the bottom. Switch to a floating script card you can drag anywhere; it always stays clear of the notch, Dynamic Island and home bar. Works in portrait and landscape.
+- **Glow while you talk.** A violet glow pulses at the camera cut-out, right above the script, and around the camera view while you record.
 - **Text styles.** Four fonts (Clean, Readable, Typewriter, Rounded), four colour themes, size, line spacing, alignment, section headlines on or off, reading line, and mirrored text.
 - **Haptics.** Countdown ticks, record start, take saved, pause and resume, divider snaps, speed steps, section reached, the last 5 seconds and errors. Strength can be set to Off, Subtle, Normal or Strong.
 - **Review.** Play back the take, then save it to Photos or share it. Nothing leaves the phone unless you share it.

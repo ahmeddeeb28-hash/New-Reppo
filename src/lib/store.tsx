@@ -23,6 +23,13 @@ export type PrompterSettings = {
   mirror: boolean;
   /** Scroll speed multiplier, 0.5–3. */
   speed: number;
+  /** 'top': script on black right under the camera, camera view below. 'float': camera fills the screen, script floats. */
+  scriptLayout: 'top' | 'float';
+  /** Share of the screen the script takes in 'top' layout. */
+  splitPortrait: number;
+  splitLandscape: number;
+  /** Front light: 0 off, 1 soft, 2 bright (screen brightness + warm ring around the camera view). */
+  light: 0 | 1 | 2;
   /** Floating script card, remembered separately for each orientation. */
   cardPortrait: CardFrame;
   cardLandscape: CardFrame;
@@ -37,8 +44,8 @@ export type PrompterSettings = {
 };
 
 export const defaultSettings: PrompterSettings = {
-  font: 'clean',
-  fontSize: 26,
+  font: 'typewriter',
+  fontSize: 22,
   spacing: 'normal',
   theme: 'night',
   align: 'center',
@@ -46,6 +53,10 @@ export const defaultSettings: PrompterSettings = {
   showHeadlines: true,
   mirror: false,
   speed: 1,
+  scriptLayout: 'top',
+  splitPortrait: 0.3,
+  splitLandscape: 0.42,
+  light: 0,
   cardPortrait: { dock: 'top', x: 0, y: 0, w: 1, h: 0.3 },
   cardLandscape: { dock: 'left', x: 0, y: 0, w: 0.42, h: 1 },
   cardOpacity: 0.72,

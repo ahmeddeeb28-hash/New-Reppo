@@ -117,7 +117,18 @@ export default function StyleSheetScreen() {
         ]}
       />
 
-      <SectionLabel>Script card</SectionLabel>
+      <SectionLabel>Script position</SectionLabel>
+      <Segmented<PrompterSettings['scriptLayout']>
+        label="Script position"
+        value={settings.scriptLayout}
+        onChange={(scriptLayout) => set({ scriptLayout })}
+        options={[
+          { value: 'top', label: 'Under the camera' },
+          { value: 'float', label: 'Floating card' },
+        ]}
+      />
+
+      <SectionLabel>Floating card</SectionLabel>
       <Segmented<number>
         label="Script card transparency"
         value={settings.cardOpacity}
@@ -166,8 +177,8 @@ export default function StyleSheetScreen() {
           onChange={(showHeadlines) => set({ showHeadlines })}
         />
         <ToggleRow
-          label="Recording glow"
-          hint="Soft violet glow around the screen while you record"
+          label="Glow while I talk"
+          hint="Violet glow at the camera and around the view while you record"
           value={settings.glow}
           onChange={(glow) => set({ glow })}
         />
