@@ -13,12 +13,17 @@ Glance is free, with no ads, no subscriptions and no in-app purchases.
 - **Haptics.** Countdown ticks, record start, take saved, pause and resume, divider snaps, speed steps, section reached, the last 5 seconds and errors. Strength can be set to Off, Subtle, Normal or Strong.
 - **Review.** Play back the take, then save it to Photos or share it. Nothing leaves the phone unless you share it.
 
-## Run it
+## Run it on your iPhone (free, with Expo Go)
 
 ```bash
 npm install
-npx expo start
+npx expo login
+npm run go
 ```
+
+Scan the QR code with the iPhone Camera app. Step-by-step setup, troubleshooting and a usability and accessibility checklist are in [TESTING.md](TESTING.md).
+
+Before pushing changes, run `npm run check` (typecheck, lint and Expo doctor).
 
 ## Test on your iPhone with TestFlight
 
