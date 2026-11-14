@@ -7,8 +7,8 @@ Glance is free, with no ads, no subscriptions and no in-app purchases.
 ## What's in this build
 
 - **Story sections.** Each script is a list of sections (Hook, Setup, Story, Value, Proof, Call to action, or your own). Each section has a headline and the words to say, with a word count and time estimate. Reel and Talk templates come pre-filled.
-- **Lens-hug reader.** The script scrolls at the top of the screen next to the camera, with an amber reading line. Tap the text to pause or resume, or drag it by hand.
-- **Resizable reader and camera.** Drag the divider to see more script or more of yourself. It snaps at 25%, 38% and 52% with a haptic tick. Resizing only changes the preview; the camera always records its full frame.
+- **Floating script card.** The camera fills the screen and the script floats on top as a glass card. Drag one bar to move it and the other to resize it. It snaps to the top (closest to the lens), bottom, left or right, and always stays clear of the notch, Dynamic Island and home bar. Pinch the camera to zoom. Works in portrait and landscape.
+- **Recording glow.** A soft violet glow breathes around the screen while you record.
 - **Text styles.** Four fonts (Clean, Readable, Typewriter, Rounded), four colour themes, size, line spacing, alignment, section headlines on or off, reading line, and mirrored text.
 - **Haptics.** Countdown ticks, record start, take saved, pause and resume, divider snaps, speed steps, section reached, the last 5 seconds and errors. Strength can be set to Off, Subtle, Normal or Strong.
 - **Review.** Play back the take, then save it to Photos or share it. Nothing leaves the phone unless you share it.

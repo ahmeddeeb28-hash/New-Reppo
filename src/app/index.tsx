@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   cardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
   cardTitle: { flex: 1, color: C.paper, fontSize: 17, fontWeight: '600' },
   badge: { fontSize: 12, fontWeight: '700', paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8, overflow: 'hidden' },
-  badgeReel: { backgroundColor: C.tally, color: C.ink },
+  badgeReel: { backgroundColor: C.accentPale, color: C.ink },
   badgeTalk: { borderWidth: 1, borderColor: C.line, color: C.paper },
   cardBody: { color: C.fog, fontSize: 15, lineHeight: 21 },
   meta: { color: C.fog, fontSize: 13 },

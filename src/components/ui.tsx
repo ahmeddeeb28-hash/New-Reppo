@@ -23,7 +23,7 @@ export function IconButton({
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
 }) {
-  const bg = tone === 'accent' ? C.tally : tone === 'solid' ? C.graphite : 'rgba(255,255,255,0.12)';
+  const bg = tone === 'accent' ? C.accentPale : tone === 'solid' ? C.graphite : 'rgba(255,255,255,0.14)';
   const fg = tone === 'accent' ? C.ink : C.paper;
   return (
     <Pressable
@@ -56,7 +56,7 @@ export function Button({
   icon?: IconName;
   style?: StyleProp<ViewStyle>;
 }) {
-  const bg = tone === 'accent' ? C.tally : tone === 'solid' ? C.graphite : 'transparent';
+  const bg = tone === 'accent' ? C.accentPale : tone === 'solid' ? C.graphite : 'transparent';
   const fg = tone === 'accent' ? C.ink : C.paper;
   return (
     <Pressable

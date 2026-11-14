@@ -1,12 +1,13 @@
 import { AtkinsonHyperlegible_700Bold } from '@expo-google-fonts/atkinson-hyperlegible';
-import { SpaceGrotesk_600SemiBold, SpaceGrotesk_700Bold } from '@expo-google-fonts/space-grotesk';
+import { Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 import { useFonts } from 'expo-font';
 import { DarkTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { AnimatedSplash } from '@/components/splash';
 import { StoreProvider, useStore } from '@/lib/store';
 import { C } from '@/lib/theme';
 
@@ -14,14 +15,16 @@ SplashScreen.preventAutoHideAsync().catch(() => {});
 
 const theme = {
   ...DarkTheme,
-  colors: { ...DarkTheme.colors, background: C.ink, card: C.ink, primary: C.tally, text: C.paper, border: C.graphite },
+  colors: { ...DarkTheme.colors, background: C.ink, card: C.ink, primary: C.accent, text: C.paper, border: C.graphite },
 };
 
 function Root() {
-  const { ready } = useStore();
+  const { ready, settings, updateSettings } = useStore();
+  const [splash, setSplash] = useState(true);
   const [fontsLoaded, fontError] = useFonts({
-    SpaceGrotesk_600SemiBold,
-    SpaceGrotesk_700Bold,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
     AtkinsonHyperlegible_700Bold,
   });
   const done = ready && (fontsLoaded || !!fontError);
@@ -33,6 +36,7 @@ function Root() {
   if (!done) return null;
 
   return (
+    <>
     <Stack
       screenOptions={{
         headerShown: false,
@@ -47,6 +51,16 @@ function Root() {
       />
       <Stack.Screen name="review" options={{ gestureEnabled: false }} />
     </Stack>
+    {splash ? (
+      <AnimatedSplash
+        firstRun={!settings.onboarded}
+        onDone={() => {
+          setSplash(false);
+          if (!settings.onboarded) updateSettings({ onboarded: true });
+        }}
+      />
+    ) : null}
+    </>
   );
 }
 

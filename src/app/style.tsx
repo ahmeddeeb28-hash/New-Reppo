@@ -117,6 +117,18 @@ export default function StyleSheetScreen() {
         ]}
       />
 
+      <SectionLabel>Script card</SectionLabel>
+      <Segmented<number>
+        label="Script card transparency"
+        value={settings.cardOpacity}
+        onChange={(cardOpacity) => set({ cardOpacity })}
+        options={[
+          { value: 0.45, label: 'Clear' },
+          { value: 0.72, label: 'Glass' },
+          { value: 0.92, label: 'Solid' },
+        ]}
+      />
+
       <SectionLabel>Countdown before recording</SectionLabel>
       <Segmented<PrompterSettings['countdown']>
         label="Countdown"
@@ -153,7 +165,13 @@ export default function StyleSheetScreen() {
           value={settings.showHeadlines}
           onChange={(showHeadlines) => set({ showHeadlines })}
         />
-        <ToggleRow label="Reading line" hint="Amber marker for the line to read" value={settings.guide} onChange={(guide) => set({ guide })} />
+        <ToggleRow
+          label="Recording glow"
+          hint="Soft violet glow around the screen while you record"
+          value={settings.glow}
+          onChange={(glow) => set({ glow })}
+        />
+        <ToggleRow label="Reading line" hint="Violet marker for the line to read" value={settings.guide} onChange={(guide) => set({ guide })} />
         <ToggleRow
           label="Mirror text"
           hint="For teleprompter glass that flips the text"
@@ -189,7 +207,7 @@ function ToggleRow({
         accessibilityLabel={label}
         value={value}
         onValueChange={onChange}
-        trackColor={{ true: C.tally, false: C.line }}
+        trackColor={{ true: C.accent, false: C.line }}
         thumbColor={C.paper}
       />
     </View>
@@ -217,7 +235,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 4,
   },
-  cardOn: { borderColor: C.tally },
+  cardOn: { borderColor: C.accent },
   cardLabel: { color: C.paper, fontSize: 12, fontWeight: '500' },
   swatch: {
     width: 44,

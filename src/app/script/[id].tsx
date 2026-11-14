@@ -44,7 +44,7 @@ export default function Editor() {
   const fit =
     draft.mode === 'reel'
       ? secs <= 60
-        ? { text: 'Fits a Reel', color: C.tally }
+        ? { text: 'Fits a Reel', color: C.accent }
         : secs <= 90
           ? { text: 'Long for a Reel', color: C.fog }
           : { text: 'Too long for a Reel — trim or switch to Talk', color: C.rec }
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
-  go: { minHeight: 44, paddingHorizontal: 18, borderRadius: 22, backgroundColor: C.tally, justifyContent: 'center' },
+  go: { minHeight: 44, paddingHorizontal: 18, borderRadius: 22, backgroundColor: C.accentPale, justifyContent: 'center' },
   goText: { color: C.ink, fontWeight: '700', fontSize: 16 },
   content: { paddingHorizontal: 20, paddingBottom: 80, gap: 14 },
   title: { color: C.paper, fontFamily: DisplayFont, fontSize: 28, paddingVertical: 6 },
@@ -222,13 +222,13 @@ const styles = StyleSheet.create({
   summaryText: { color: C.fog, fontSize: 14 },
   outline: { borderRadius: 16, backgroundColor: C.graphite, paddingVertical: 6 },
   outlineItem: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 14, minHeight: 34 },
-  outlineNum: { color: C.tally, fontWeight: '700', width: 18 },
+  outlineNum: { color: C.accent, fontWeight: '700', width: 18 },
   outlineText: { flex: 1, color: C.paper, fontSize: 15, fontWeight: '600' },
   outlineTime: { color: C.fog, fontSize: 13 },
   section: { borderRadius: 18, borderWidth: 1, borderColor: C.graphite, padding: 14, gap: 8 },
   sectionHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  kind: { minHeight: 36, justifyContent: 'center', paddingHorizontal: 10, borderRadius: 10, backgroundColor: C.tallySoft },
-  kindText: { color: C.tally, fontSize: 12, fontWeight: '800', letterSpacing: 1 },
+  kind: { minHeight: 36, justifyContent: 'center', paddingHorizontal: 10, borderRadius: 10, backgroundColor: C.accentSoft },
+  kindText: { color: C.accent, fontSize: 12, fontWeight: '800', letterSpacing: 1 },
   sectionActions: { flexDirection: 'row', gap: 6 },
   headline: { color: C.paper, fontSize: 18, fontWeight: '700', paddingVertical: 4 },
   body: { color: C.paper, fontSize: 17, lineHeight: 25, minHeight: 72, textAlignVertical: 'top' },

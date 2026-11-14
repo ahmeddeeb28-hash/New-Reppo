@@ -2,9 +2,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { exampleScript, type Script } from './story';
-import type { LineSpacingKey, ReaderThemeKey, ScriptFontKey } from './theme';
+import { ReaderThemes, type LineSpacingKey, type ReaderThemeKey, type ScriptFontKey } from './theme';
 
 export type HapticsLevel = 'off' | 'subtle' | 'normal' | 'strong';
+
+/** Where the floating script card sits. Docks keep it clear of the notch and home bar. */
+export type Dock = 'top' | 'bottom' | 'left' | 'right' | 'free';
+
+/** Card frame as fractions of the safe area, so it fits any phone. */
+export type CardFrame = { dock: Dock; x: number; y: number; w: number; h: number };
 
 export type PrompterSettings = {
   font: ScriptFontKey;
@@ -17,10 +23,17 @@ export type PrompterSettings = {
   mirror: boolean;
   /** Scroll speed multiplier, 0.5–3. */
   speed: number;
-  /** Share of the screen height used by the reader, 0.18–0.7. */
-  readerRatio: number;
+  /** Floating script card, remembered separately for each orientation. */
+  cardPortrait: CardFrame;
+  cardLandscape: CardFrame;
+  /** How see-through the script card is, 0.35–0.95. */
+  cardOpacity: number;
+  /** Glow around the screen while recording. */
+  glow: boolean;
   countdown: 0 | 3 | 5 | 10;
   haptics: HapticsLevel;
+  /** Set after the first-run "Get Started". */
+  onboarded: boolean;
 };
 
 export const defaultSettings: PrompterSettings = {
@@ -33,9 +46,13 @@ export const defaultSettings: PrompterSettings = {
   showHeadlines: true,
   mirror: false,
   speed: 1,
-  readerRatio: 0.38,
+  cardPortrait: { dock: 'top', x: 0, y: 0, w: 1, h: 0.3 },
+  cardLandscape: { dock: 'left', x: 0, y: 0, w: 0.42, h: 1 },
+  cardOpacity: 0.72,
+  glow: true,
   countdown: 3,
   haptics: 'normal',
+  onboarded: false,
 };
 
 type Store = {
@@ -66,7 +83,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           AsyncStorage.getItem(SETTINGS_KEY),
         ]);
         setScripts(s ? (JSON.parse(s) as Script[]) : [exampleScript]);
-        if (p) setSettings({ ...defaultSettings, ...(JSON.parse(p) as Partial<PrompterSettings>) });
+        if (p) {
+          const saved = { ...defaultSettings, ...(JSON.parse(p) as Partial<PrompterSettings>) };
+          // Themes were renamed in the purple redesign.
+          if (!(saved.theme in ReaderThemes)) saved.theme = 'night';
+          setSettings(saved);
+        }
       } catch {
         setScripts([exampleScript]);
       } finally {

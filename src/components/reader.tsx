@@ -13,7 +13,7 @@ import {
 
 import type { PrompterSettings } from '@/lib/store';
 import { SectionGuide, type Script } from '@/lib/story';
-import { LineSpacing, ReaderThemes, ScriptFonts } from '@/lib/theme';
+import { LineSpacing, ReaderThemes, ScriptFonts, withAlpha } from '@/lib/theme';
 
 type Props = {
   script: Script;
@@ -29,6 +29,8 @@ type Props = {
   onFinished?: () => void;
   /** Bumped by the parent to jump back to the start. */
   restartKey?: number;
+  /** Background opacity of the card (glass). */
+  opacity?: number;
 };
 
 /**
@@ -46,6 +48,7 @@ export function Reader({
   onEndingSoon,
   onFinished,
   restartKey = 0,
+  opacity = 1,
 }: Props) {
   const scrollRef = useRef<ScrollViewInstance>(null);
   const offset = useRef(0);
@@ -139,7 +142,7 @@ export function Reader({
   } as const;
 
   return (
-    <View style={[StyleSheet.absoluteFill, { backgroundColor: theme.bg }]}>
+    <View style={[StyleSheet.absoluteFill, { backgroundColor: withAlpha(theme.bg, opacity) }]}>
       <ScrollView
         ref={scrollRef}
         onScroll={onScroll}
@@ -157,7 +160,7 @@ export function Reader({
         contentContainerStyle={{
           paddingTop: markerY,
           paddingBottom: height,
-          paddingHorizontal: script.mode === 'reel' ? 28 : 18,
+          paddingHorizontal: 18,
           transform: settings.mirror ? [{ scaleX: -1 }] : undefined,
         }}>
         <Pressable
@@ -184,7 +187,7 @@ export function Reader({
       </ScrollView>
 
       {/* Fade the lines you have already read. */}
-      <View pointerEvents="none" style={[styles.fadeTop, { height: markerY - 4, backgroundColor: theme.bg }]} />
+      <View pointerEvents="none" style={[styles.fadeTop, { height: markerY - 4, backgroundColor: withAlpha(theme.bg, Math.min(1, opacity + 0.15)) }]} />
 
       {settings.guide ? (
         <View pointerEvents="none" style={[styles.guideWrap, { top: markerY + lineH / 2 - 9 }]}>
