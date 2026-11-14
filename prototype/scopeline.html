@@ -1046,6 +1046,69 @@ li.done .p2-t { text-decoration: line-through; color: var(--muted); }
 .small-note { font-size: 0.8rem; margin: 0; }
 @media (max-width: 640px) { .plan2 { padding: 14px; } .p2-exp dl { grid-template-columns: 1fr; gap: 2px; } .p2-exp dt { margin-top: 6px; } .p2-foot { flex-direction: column; align-items: flex-start; } }
 
+
+/* ---------- Check a doc ---------- */
+.ck-bar { gap: 14px; }
+.ck-nav { display: flex; gap: 4px; margin-left: auto; flex-wrap: wrap; }
+.ck-nav button { border: 1px solid transparent; background: none; border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 0.9rem; color: var(--muted); cursor: pointer; }
+.ck-nav button[aria-current="true"] { background: var(--ink); color: #fff; }
+.ck-nav button:hover:not([aria-current="true"]) { border-color: var(--line); color: var(--ink); }
+.ck-start { max-width: 760px; margin: 0 auto; padding: clamp(32px, 6vw, 72px) 0; display: flex; flex-direction: column; gap: 14px; }
+.ck-start h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 500; letter-spacing: -0.035em; line-height: 1.05; margin: 0; }
+.ck-start > p.muted { font-size: 1.08rem; max-width: 40em; margin: 0; }
+.ck-form { border: 1.5px solid var(--ink); border-radius: 20px; background: var(--surface); padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 30px 60px -40px rgba(21,19,15,.5); }
+.ck-form textarea { border: 0; resize: vertical; font: inherit; font-size: 1rem; line-height: 1.55; background: none; color: var(--ink); min-height: 180px; outline: none; }
+.ck-form-row { display: flex; justify-content: space-between; align-items: center; }
+.ck-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 0 6px; font-size: 0.9rem; }
+.ck-grid { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 28px; align-items: start; padding-bottom: 60px; }
+.ck-doc { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: clamp(18px, 3vw, 36px); font-size: 1.08rem; line-height: 2; min-width: 0; }
+.ck-title { font-family: var(--serif); font-weight: 500; font-size: 1.9rem; letter-spacing: -0.02em; line-height: 1.2; margin: 0 0 12px; }
+.ck-s { border-radius: 4px; padding: 1px 0; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.ck-s.ev { background: linear-gradient(transparent 62%, #c9efdb 62%); }
+.ck-s.as { background: linear-gradient(transparent 62%, #fde3b8 62%); }
+.ck-s.qu { background: linear-gradient(transparent 62%, #dde2ff 62%); }
+.ck-num { background: #fde6e3; color: #a3271c; border-radius: 4px; padding: 0 3px; font-weight: 700; outline: 1.5px solid #f3b3aa; }
+.ck-vague { text-decoration: underline wavy #7d8cff; text-underline-offset: 4px; }
+.ck-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 18px 0 0; padding-top: 12px; border-top: 1px solid var(--line); font-size: 0.78rem; line-height: 1.5; color: var(--muted); }
+.ck-legend .ev, .ck-legend .as { padding: 0 4px; border-radius: 4px; } .ck-legend .ev { background: #c9efdb; } .ck-legend .as { background: #fde3b8; }
+.ck-side { position: sticky; top: 12px; display: flex; flex-direction: column; gap: 14px; max-height: calc(100vh - 24px); overflow-y: auto; padding-right: 2px; }
+.ck-score { display: flex; gap: 14px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px; }
+.ck-score b { display: block; font-size: 1.02rem; } .ck-score span { font-size: 0.86rem; color: var(--muted); }
+.ck-basics { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; font-size: 0.84rem; color: var(--muted); }
+.ck-basics li.ok { color: #11805a; }
+.ck-group h3 { font-size: 0.9rem; display: flex; align-items: center; gap: 8px; margin: 0 0 8px; } .ck-group h3 b { margin-left: auto; font-size: 0.8rem; background: var(--tint); border-radius: 999px; padding: 1px 8px; }
+.dotk { width: 10px; height: 10px; border-radius: 3px; } .dotk.bad { background: #e2574c; } .dotk.as { background: #f5b748; } .dotk.qu { background: #7d8cff; } .dotk.dc { background: #b9b2a6; }
+.ck-group ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.ck-flag { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; border-left: 4px solid var(--fc, var(--line)); }
+.ck-flag.t-number { --fc: #e2574c; } .ck-flag.t-assumption { --fc: #f5b748; } .ck-flag.t-vague { --fc: #7d8cff; } .ck-flag.t-missing { --fc: #b9b2a6; }
+.ck-ft { font-size: 0.9rem; overflow-wrap: anywhere; } .ck-ft small { display: block; color: var(--muted); font-size: 0.8rem; margin-top: 2px; }
+.ck-more { margin-top: 6px; font-size: 0.84rem; }
+.ck-fa { display: flex; flex-wrap: wrap; gap: 6px; }
+.ck-src { display: flex; gap: 6px; width: 100%; } .ck-src input { flex: 1; min-width: 0; font: inherit; font-size: 0.86rem; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; }
+.ck-asks li { display: flex; gap: 8px; align-items: flex-start; font-size: 0.86rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; }
+.ck-asks .avi { border-radius: 50%; flex-shrink: 0; }
+.ck-clean { background: var(--ev-bg); border-radius: 12px; padding: 12px; color: #11805a; font-weight: 600; margin: 0; }
+.ck-cta { display: flex; gap: 8px; flex-wrap: wrap; position: sticky; bottom: 0; background: linear-gradient(transparent, var(--bg) 30%); padding-top: 14px; }
+/* ---------- Bets ledger ---------- */
+.lg { max-width: 920px; margin: 0 auto; padding: clamp(28px, 5vw, 56px) 0; display: flex; flex-direction: column; gap: 16px; }
+.lg h1 { font-size: clamp(2rem, 4.4vw, 3rem); font-weight: 500; letter-spacing: -0.03em; line-height: 1.08; margin: 0; }
+.lg > p.muted { margin: 0; font-size: 1.02rem; }
+.lg-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.lg-st { border-radius: 16px; padding: 14px; display: flex; flex-direction: column; } .lg-st b { font-size: 1.8rem; font-family: var(--serif); font-weight: 500; } .lg-st span { font-size: 0.84rem; color: var(--muted); }
+.lg-st.st-untested { background: #f1eee8; } .lg-st.st-testing { background: #e5e8ff; } .lg-st.st-held { background: #dff6ea; } .lg-st.st-failed { background: #fde6e3; }
+.lg-origins { border: 1px solid var(--line); background: var(--surface); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+.lg-o { display: grid; grid-template-columns: 110px 1fr auto; gap: 10px; align-items: center; font-size: 0.88rem; }
+.lg-bar { height: 8px; border-radius: 8px; background: #fde6e3; overflow: hidden; } .lg-bar i { display: block; height: 100%; background: #3ccf91; }
+.lg-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.lg-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+.lg-t b { display: block; font-size: 0.95rem; font-weight: 600; overflow-wrap: anywhere; } .lg-t small { color: var(--muted); font-size: 0.8rem; }
+.lg-seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 2px; gap: 2px; background: var(--bg); }
+.lg-seg button { border: 0; background: none; border-radius: 999px; padding: 4px 10px; font: inherit; font-size: 0.78rem; cursor: pointer; color: var(--muted); white-space: nowrap; }
+.lg-seg button[aria-pressed="true"].st-untested { background: #e6e1d8; color: var(--ink); } .lg-seg button[aria-pressed="true"].st-testing { background: #3a4fc6; color: #fff; }
+.lg-seg button[aria-pressed="true"].st-held { background: #11805a; color: #fff; } .lg-seg button[aria-pressed="true"].st-failed { background: #c2382c; color: #fff; }
+@media (max-width: 980px) { .ck-grid { grid-template-columns: 1fr; } .ck-side { position: static; max-height: none; } .ck-cta { position: static; background: none; } }
+@media (max-width: 640px) { .lg-stats { grid-template-columns: 1fr 1fr; } .lg-list li { grid-template-columns: 1fr; } .lg-seg { flex-wrap: wrap; border-radius: 14px; } .lg-o { grid-template-columns: 90px 1fr; } .lg-o b, .lg-o > .muted { grid-column: 2; } .ck-nav { margin-left: 0; } }
+
 @media (max-width: 1100px) { .moments { grid-template-columns: 1fr 1fr; } .hand { display: none; } }
 @media (max-width: 900px) {
   .ws { grid-template-columns: minmax(0, 1fr); }
@@ -1100,7 +1163,7 @@ function gaps(f) {
 }
 
 // =================== Claim rules (guided mode and the number guard) ===================
-const SOURCE_RE = /\b(according to|per the|source:|from the (survey|interviews?|tickets|data|analytics)|support tickets|interview notes|analytics shows?|data shows?)\b/i;
+const SOURCE_RE = /\b(according to|per the|sources?:|from the (survey|interviews?|tickets|data|analytics)|support tickets|interview notes|analytics shows?|data shows?)(?![A-Za-z])/i;
 const DECISION_RE = /\b(we decided|we agreed|decision:|we will not|we won't|agreed to)\b/i;
 const CAUSAL_RE = /\b(will|lift|boost|increase|reduce|cut|drive|improve|cause|lead to)\b/i;
 const NUM_RE = /\d+(?:[.,]\d+)?\s?%?/g;
@@ -1641,7 +1704,153 @@ const EXAMPLES = {
 };
 
 // =================== Render ===================
-function render() { root.innerHTML = state.view === "chat" && cur() ? appView(cur()) : state.view === "new" ? newChatView() : homeView(); afterRender(); }
+
+// =================== Check a doc: a spell-check for product claims ===================
+const SAMPLE_SPEC = `Smart reorder reminders
+Problem: customers forget to restock household items and switch to other stores.
+We will send a push reminder when a customer is likely to run out.
+This will increase repeat purchases by 25% next quarter.
+According to support tickets, customers ask for reminders about twice a week.
+Most users want reminders on Sunday mornings.
+The reminder should feel seamless and intuitive.
+We think a reminder 2 days before the predicted run-out date works best.
+Success: more engagement.`;
+const NUM_IN = /(?<![A-Za-z\d])\d+(?:[.,]\d+)?\s?%?(?![A-Za-z\d])/g;
+const VAGUE = [
+  [/\b(seamless(ly)?|intuitive|easy|simple|delightful|smooth)\b/i, "Say what the user can do, and how quickly."],
+  [/\b(most users|all users|everyone|many users|users)\b/i, "Which users, and how many? Name the segment."],
+  [/\b(more engagement|engagement|engaged)\b/i, "Name the one behaviour you'll count."],
+  [/\b(soon|later|asap|eventually)\b/i, "Give a date or a milestone."],
+  [/\b(significant(ly)?|a lot|massive(ly)?|huge)\b/i, "Give a number with a source, or a placeholder."],
+];
+const BASICS = [
+  { k: "problem", label: "Problem", re: /\b(problem|pain|struggl\w*|frustrat\w*|forget\w*|can't|cannot|hard to|complain\w*)\b/i, role: "pm", add: "Problem: [who struggles with what, and how often]." },
+  { k: "audience", label: "Who it's for", re: /\b(for (new|existing|returning|enterprise|first-time|power) |segment|persona|customers who|users who|admins?\b)/i, role: "pm", add: "Who it's for first: [segment, roughly how many]." },
+  { k: "metric", label: "Success metric", re: /\b(metric|kpi|conversion|retention|repeat (purchase|order)s?|rate\b|revenue|activation|churn)\b/i, role: "growth", add: "Success metric: [one behaviour we'll count]." },
+  { k: "baseline", label: "Baseline", re: /\b(baseline|currently|today|right now)\b/i, role: "growth", add: "Baseline: [today's value, from analytics]." },
+  { k: "scope", label: "Out of scope", re: /\b(out of scope|non-goals?|won't|will not|not in v1)\b/i, role: "pm", add: "Out of scope for v1: [what we won't build yet]." },
+  { k: "owner", label: "Owner", re: /\b(owner|owned by|dri|@\w+)\b/i, role: "pm", add: "Owner: [name]." },
+  { k: "test", label: "How you'll test it", re: /\b(a\/b|experiment|holdout|pilot|test group|control group)\b/i, role: "engineering", add: "Test: [who sees it, who doesn't, for how long]." },
+  { k: "guardrail", label: "Guardrail", re: /\b(guardrail|must not|without (hurting|increasing)|unsubscribe|opt[- ]outs?|complaints?)\b/i, role: "growth", add: "Guardrail: [what must not get worse, and the threshold]." },
+];
+function roleFor(s) { return /\b(sales|revenue|pricing|engagement|retention|conversion|repeat)\b/i.test(s) ? "growth" : /\b(design|ux|screen|flow|feel|intuitive|seamless)\b/i.test(s) ? "design" : /\b(api|build|sprint|engineer|backend|data model|performance)\b/i.test(s) ? "engineering" : "pm"; }
+function analyzeDoc(text, res) {
+  res = res || {};
+  const sents = text.split(/\n+/).flatMap((line) => line.split(/(?<=[.!?])\s+/)).map((s) => s.trim()).filter(Boolean);
+  const title = sents[0] && !/[.!?]$/.test(sents[0]) && sents[0].split(/\s+/).length <= 8 ? sents[0] : "";
+  const flags = [];
+  const rows = sents.map((s, i) => {
+    if (i === 0 && title) return { i, s, kind: "title" };
+    const kind = s.endsWith("?") ? "question" : DECISION_RE.test(s) ? "decision" : (SOURCE_RE.test(s) && !CAUSAL_RE.test(s)) ? "evidence" : /^(problem|success|owner|baseline|out of scope|test|guardrail|who it's for)\b[^:]*:/i.test(s) ? "note" : "assumption";
+    const nums = kind === "evidence" ? [] : [...new Set((s.match(NUM_IN) || []).map((n) => n.trim()))];
+    nums.forEach((n) => { const u = s.slice(s.indexOf(n) + n.length).match(/^\s?(days?|weeks?|months?|hours?|minutes?|x|times|sprints?|users?|customers?|people|orders?|stores?)\b/i); flags.push({ id: `n:${i}:${n}`, type: "number", i, n, label: n + (u ? u[0] : ""), s, role: roleFor(s) }); });
+    if (kind === "assumption" && (CAUSAL_RE.test(s) || /\b(think|believe|assume|expect|should|want|likely|probably)\b/i.test(s))) flags.push({ id: `a:${i}`, type: "assumption", i, s, role: roleFor(s) });
+    VAGUE.forEach(([re, tip]) => { const m = s.match(re); if (m) flags.push({ id: `v:${i}:${m[0].toLowerCase()}`, type: "vague", i, w: m[0], tip, s, role: roleFor(s) }); });
+    return { i, s, kind, nums };
+  });
+  const basics = BASICS.map((b) => ({ ...b, ok: b.re.test(text) }));
+  basics.filter((b) => !b.ok).forEach((b) => flags.push({ id: `b:${b.k}`, type: "missing", b, role: b.role }));
+  const open = flags.filter((x) => !res[x.id]);
+  return { title, rows, flags, open, basics, ok: basics.filter((b) => b.ok).length };
+}
+const FLAG_HEAD = { number: ["Numbers without a source", "bad"], assumption: ["Untested assumptions", "as"], vague: ["Vague words", "qu"], missing: ["Missing basics", "dc"] };
+function docSentence(r, flagsByI, res) {
+  if (r.kind === "title") return `<h2 class="ck-title">${esc(r.s)}</h2>`;
+  let h = esc(r.s);
+  (flagsByI[r.i] || []).forEach((fl) => {
+    if (fl.type === "number" && !res[fl.id]) h = h.replace(esc(fl.n), `<mark class="ck-num" data-flag="${esc(fl.id)}" title="No source for this number">${esc(fl.n)}</mark>`);
+    if (fl.type === "vague" && !res[fl.id]) h = h.replace(new RegExp(`\\b${esc(fl.w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i"), (m) => `<span class="ck-vague" data-flag="${esc(fl.id)}" title="${esc(fl.tip)}">${m}</span>`);
+  });
+  const cls = { evidence: "ev", assumption: (flagsByI[r.i] || []).some((x) => x.type === "assumption" && !res[x.id]) ? "as" : "plain", question: "qu", decision: "dc", note: "plain" }[r.kind];
+  return `<span class="ck-s ${cls}" data-i="${r.i}">${h}</span> `;
+}
+function checkView() {
+  const c = state.check || {};
+  const nav = `<div class="app-bar ck-bar"><button class="logo" data-act="home"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</button>
+    <nav class="ck-nav" aria-label="Scopeline"><button aria-current="${state.view === "check"}" data-act="check">Check a doc</button><button aria-current="${state.view === "ledger"}" data-act="ledger">Bets ledger</button><button data-act="new">Chat</button></nav></div>`;
+  if (state.view === "ledger") return `<div class="wrap">${nav}${ledgerHtml()}</div>`;
+  if (!c.text) return `<div class="wrap">${nav}<section class="ck-start">
+      <span class="eyebrow">Check a doc</span><h1 class="serif">Paste a spec. See every guess in it.</h1>
+      <p class="muted">A PRD, a ticket, a Slack thread or meeting notes. Scopeline flags numbers without a source, untested assumptions, vague words and missing basics, then turns them into an experiment and tickets.</p>
+      <form class="ck-form" data-checkform="1"><label class="sr" for="ck-in">Your spec</label><textarea id="ck-in" rows="9" placeholder="Paste your spec, PRD, ticket or notes…"></textarea>
+        <div class="ck-form-row"><button type="button" class="link" data-act="cksample">Try a sample spec</button><button type="submit" class="btn">Check it</button></div></form>
+      <p class="fineprint">Free · no sign-up · runs in your browser</p></section></div>`;
+  const a = analyzeDoc(c.text, c.res);
+  const byI = {}; a.flags.forEach((x) => { if (x.i !== undefined) (byI[x.i] = byI[x.i] || []).push(x); });
+  const groups = ["number", "assumption", "vague", "missing"].map((t) => [t, a.open.filter((x) => x.type === t)]).filter(([, l]) => l.length);
+  const flagCard = (fl) => {
+    const asking = c.srcFor === fl.id;
+    const body = fl.type === "number" ? `<b>${esc(fl.label || fl.n)}</b> has no source<small>“${esc(trunc(fl.s, 90))}”</small>`
+      : fl.type === "assumption" ? `${esc(trunc(fl.s, 120))}<small>Nothing here says how we know.</small>`
+      : fl.type === "vague" ? `<b>“${esc(fl.w)}”</b><small>${esc(fl.tip)}</small>`
+      : `<b>${esc(fl.b.label)}</b><small>Not in the doc yet.</small>`;
+    const acts = fl.type === "number" ? (asking ? `<form class="ck-src" data-srcform="${esc(fl.id)}"><input aria-label="Where does ${esc(fl.n)} come from?" placeholder="Source, e.g. Q3 analytics" autofocus><button class="btn sm">Add</button></form>` : `<button class="btn sm" data-fix="${esc(fl.id)}|placeholder">Use a placeholder</button><button class="btn ghost sm" data-fix="${esc(fl.id)}|source">Add source</button><button class="btn ghost sm" data-fix="${esc(fl.id)}|ask">Ask ${ROLES[fl.role] || "PM"}</button>`)
+      : fl.type === "assumption" ? `<button class="btn sm" data-fix="${esc(fl.id)}|test">Make it a test</button><button class="btn ghost sm" data-fix="${esc(fl.id)}|ask">Ask ${ROLES[fl.role] || "PM"}</button>`
+      : fl.type === "vague" ? `<button class="btn ghost sm" data-fix="${esc(fl.id)}|ask">Ask ${ROLES[fl.role] || "PM"} to be specific</button><button class="btn ghost sm" data-fix="${esc(fl.id)}|ok">It's fine</button>`
+      : `<button class="btn sm" data-fix="${esc(fl.id)}|add">Add a line for it</button><button class="btn ghost sm" data-fix="${esc(fl.id)}|ok">Not needed</button>`;
+    return `<li class="ck-flag t-${fl.type}" data-flagcard="${esc(fl.id)}"><span class="ck-ft">${body}</span><span class="ck-fa">${acts}</span></li>`;
+  };
+  const done = Object.keys(c.res || {}).length, asks = (c.asks || []);
+  return `<div class="wrap">${nav}
+    <div class="ck-head"><button class="link" data-act="cknew">← New check</button><span class="muted">${a.flags.length} flags found · ${done} handled</span></div>
+    <div class="ck-grid">
+      <article class="ck-doc" aria-label="Your spec with flags">${a.rows.map((r) => docSentence(r, byI, c.res || {})).join("")}
+        <p class="ck-legend"><span class="ev">Has a source</span><span class="as">Assumption</span><mark class="ck-num">25%</mark> number without a source <span class="ck-vague">vague</span> word</p></article>
+      <aside class="ck-side" aria-label="Flags">
+        <div class="ck-score">${ring(Math.round(a.ok / BASICS.length * 100), 64, `${a.ok}/${BASICS.length}`)}<div><b>${a.ok} of ${BASICS.length} basics covered</b><span>${a.open.length ? `${a.open.length} flag${a.open.length === 1 ? "" : "s"} to look at` : "Nothing left to look at"}</span></div></div>
+        <ul class="ck-basics">${a.basics.map((b) => `<li class="${b.ok ? "ok" : ""}">${b.ok ? "✓" : "○"} ${esc(b.label)}</li>`).join("")}</ul>
+        ${groups.length ? groups.map(([t, l]) => { const all = (c.showAll || {})[t]; return `<section class="ck-group"><h3><span class="dotk ${FLAG_HEAD[t][1]}"></span>${FLAG_HEAD[t][0]} <b>${l.length}</b></h3><ul>${(all ? l : l.slice(0, 2)).map(flagCard).join("")}</ul>${l.length > 2 ? `<button class="link ck-more" data-ckall="${t}">${all ? "Show fewer" : `Show all ${l.length}`}</button>` : ""}</section>`; }).join("") : `<p class="ck-clean">Every flag is handled. Turn it into a plan.</p>`}
+        ${asks.length ? `<section class="ck-group"><h3>Questions to send <b>${asks.length}</b></h3><ul class="ck-asks">${asks.map((q) => `<li>${avatar(q.role, 22)}<span><b>${ROLES[q.role] || "PM"}</b> ${esc(q.text)}</span></li>`).join("")}</ul></section>` : ""}
+        <div class="ck-cta"><button class="btn" data-act="ckplan">Turn into a plan</button><button class="btn ghost" data-act="ckchat">Explore in chat</button></div>
+      </aside></div></div>`;
+}
+function ckFix(id, how, val) {
+  const c = state.check; c.res = c.res || {}; c.asks = c.asks || [];
+  const a = analyzeDoc(c.text, c.res), fl = a.flags.find((x) => x.id === id); if (!fl) return;
+  const lines = () => c.text;
+  if (how === "placeholder") { const ph = /\b(increase|grow|lift|by|target|reach|boost)\b/i.test(fl.s) ? "[target]" : "[number]"; c.text = lines().replace(fl.s, fl.s.replace(fl.n, ph)); }
+  else if (how === "source") { c.srcFor = id; return; }
+  else if (how === "sourced") { c.text = lines().replace(fl.s, fl.s.replace(/[.!?]?$/, (m) => ` (source: ${val})${m || "."}`)); c.srcFor = null; }
+  else if (how === "ask") { const q = fl.type === "number" ? `Where does ${fl.n} come from? “${trunc(fl.s, 80)}”` : fl.type === "vague" ? `What exactly do we mean by “${fl.w}”? ${fl.tip}` : `How do we know this? “${trunc(fl.s, 90)}”`; c.asks.push({ role: fl.role, text: q }); c.res[id] = "asked"; }
+  else if (how === "add") { c.text = lines().replace(/\s*$/, "\n" + fl.b.add); }
+  else c.res[id] = how;
+  if (how === "test") { c.tests = [...(c.tests || []), fl.s]; }
+}
+function featureFromCheck() {
+  const c = state.check, a = analyzeDoc(c.text, c.res);
+  const t = a.title || titleFrom(c.text) || "Checked spec";
+  const f = { id: uid(), title: t, request: c.text, created: Date.now(), updated: Date.now(), chat: [], doc: [], agreed: {}, skipped: [], guideOff: true };
+  state.features.unshift(f); state.current = f.id;
+  const props = a.rows.filter((r) => r.kind !== "title").map((r) => {
+    const kind = r.kind === "note" ? (/^problem/i.test(r.s) ? "problem" : /^(success|baseline)/i.test(r.s) ? "measure" : /^out of scope/i.test(r.s) ? "scope_out" : /^who it's for/i.test(r.s) ? "audience" : "decision") : r.kind;
+    return { kind, text: r.s.replace(/^(problem|success( metric)?|out of scope( for v1)?|who it's for first)\s*:\s*/i, ""), source: kind === "evidence" ? "From your doc" : "" };
+  });
+  (c.asks || []).forEach((q) => props.push({ kind: "question", text: q.text, role: q.role }));
+  const logged = autoLog(f, props);
+  f.chat.push({ id: uid(), role: "user", text: `Checked doc: ${t}` });
+  f.chat.push({ id: uid(), role: "assistant", text: `I imported your checked doc: ${a.ok} of ${BASICS.length} basics covered, ${a.open.length} flag${a.open.length === 1 ? "" : "s"} still open. The plan below turns the assumptions into tests and the gaps into tasks.`, logged, proposals: [], questions: [], next: nextChips(f) });
+  f.plan = buildPlan(f); f.chat.push({ id: uid(), role: "assistant", wrap: true });
+  state.view = "chat"; mobileTab = "chat";
+}
+// =================== Bets ledger: every assumption across chats, and how they turned out ===================
+const BET_ST = [["untested", "Untested"], ["testing", "Testing"], ["held", "Held up"], ["failed", "Didn't hold"]];
+const betOrigin = (t) => /\bsales\b/i.test(t) ? "Sales" : /\b(support|tickets?|customers? (say|said|ask)|interviews?)\b/i.test(t) ? "Customers" : /\b(data|analytics|dashboard)\b/i.test(t) ? "Data" : "Team hunch";
+function ledgerHtml() {
+  const bets = state.features.flatMap((f) => items(f, "assumption").filter((a) => !/^(we want|i want|let's|build|add)\b/i.test(a.text)).map((a) => ({ a, f })));
+  const n = (st) => bets.filter((b) => (b.a.status || "untested") === st).length;
+  const origins = ["Sales", "Customers", "Data", "Team hunch"].map((o) => { const r = bets.filter((b) => betOrigin(b.a.text) === o && ["held", "failed"].includes(b.a.status)); return { o, held: r.filter((b) => b.a.status === "held").length, total: r.length }; });
+  return `<section class="lg">
+    <span class="eyebrow">Bets ledger</span><h1 class="serif">Every bet your team made, and how it turned out</h1>
+    <p class="muted">Assumptions from all your chats and checked docs. Mark them as they're tested; over time this becomes your team's track record.</p>
+    <div class="lg-stats">${BET_ST.map(([k, l]) => `<div class="lg-st st-${k}"><b>${n(k)}</b><span>${l}</span></div>`).join("")}</div>
+    <div class="lg-origins"><span class="sec-k">Track record by where the bet came from</span>${origins.map((x) => `<div class="lg-o"><span>${x.o}</span>${x.total ? `<span class="lg-bar"><i style="width:${Math.round(x.held / x.total * 100)}%"></i></span><b>${x.held} of ${x.total} held up</b>` : `<span class="muted">No results yet</span>`}</div>`).join("")}</div>
+    ${bets.length ? `<ul class="lg-list">${bets.map(({ a, f }) => `<li><div class="lg-t"><b>${esc(a.text)}</b><small>${esc(f.title)} · ${betOrigin(a.text)}</small></div>
+      <div class="lg-seg" role="group" aria-label="Status">${BET_ST.map(([k, l]) => `<button class="st-${k}" aria-pressed="${(a.status || "untested") === k}" data-bet="${f.id}|${a.id}|${k}">${l}</button>`).join("")}</div></li>`).join("")}</ul>`
+      : `<p class="ck-clean">No bets yet. Check a doc or start a chat, and its assumptions land here.</p>`}
+  </section>`;
+}
+
+function render() { root.innerHTML = state.view === "chat" && cur() ? appView(cur()) : state.view === "new" ? newChatView() : (state.view === "check" || state.view === "ledger") ? checkView() : homeView(); afterRender(); }
 
 function composer(id, placeholder, big) {
   return `<form class="composer" data-form="${id}">
@@ -1717,12 +1926,12 @@ function homeView() {
     <section class="wrap lp-hero">
       <p class="kicker"><span class="dot-live" aria-hidden="true"></span>Free for product teams · no sign-up</p>
       <h1 class="serif hx"><span class="hx-l">Agree <span class="hx-avis" aria-hidden="true">${avatar("pm", 64)}${avatar("design", 64)}${avatar("growth", 64)}${avatar("engineering", 64)}</span> what</span> <span class="hx-l">to build <span class="hx-pill" aria-hidden="true"><i></i><b>→</b></span></span> <em class="hx-l"><span class="hx-half" aria-hidden="true"></span>before anyone</em> <em class="hx-l">builds&nbsp;it <span class="hx-spark" aria-hidden="true">✦</span></em></h1>
-      <p class="lede">An AI chat that turns a rough feature request into one definition your PM, designer, growth lead and engineer agree on. Every claim labelled. Every number sourced or left blank.</p>
+      <p class="lede">Paste any spec, PRD or ticket. Scopeline flags every number without a source, every untested assumption and every missing basic, then turns them into an experiment and tickets your team can act on.</p>
       <div class="cta-row">
-        <button class="btn big" data-act="new">Start free <span class="knob" aria-hidden="true">›</span></button>
-        <a class="btn big ghost" href="#how-it-works">See how it works</a>
+        <button class="btn big" data-act="check">Check a doc free <span class="knob" aria-hidden="true">›</span></button>
+        <button class="btn big ghost" data-act="new">Start from an idea</button>
       </div>
-      <p class="fineprint">Free · Works in your browser · Your chats stay in this browser</p>
+      <p class="fineprint">Free · No sign-up · Runs in your browser</p>
     </section>
 
     <section class="wrap walk" id="product" aria-label="Product video">
@@ -2068,6 +2277,8 @@ function sidebar(f) {
     <div class="side-top"><button class="logo" data-act="home"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Scopeline</button><button class="side-x" data-act="sidetoggle" aria-label="Close chats">✕</button><button class="min-btn side-min-btn" data-act="sidemin" aria-label="Collapse your chats" title="Collapse">«</button></div>
     <button class="side-btn" data-act="home"><span aria-hidden="true">⌂</span>Home</button>
     <button class="side-btn primary" data-act="new"><span aria-hidden="true">＋</span>New chat</button>
+    <button class="side-btn" data-act="check"><span aria-hidden="true">✓</span>Check a doc</button>
+    <button class="side-btn" data-act="ledger"><span aria-hidden="true">◎</span>Bets ledger</button>
     <p class="side-label">Your chats · ${list.length}</p>
     <ul class="side-list">${list.map((x) => `<li class="${x.id === f.id ? "on" : ""}">
       ${confirmDel === x.id
@@ -2593,6 +2804,10 @@ function scrollThread() { const t = document.getElementById("thread"); if (t && 
 
 // =================== Events ===================
 document.addEventListener("submit", (e) => {
+  const ck = e.target.closest("form[data-checkform]");
+  if (ck) { e.preventDefault(); const t = ck.querySelector("textarea").value.trim(); if (!t) return; state.check = { text: t, res: {}, asks: [] }; save(); render(); window.scrollTo(0, 0); return; }
+  const sf = e.target.closest("form[data-srcform]");
+  if (sf) { e.preventDefault(); const v = sf.querySelector("input").value.trim(); if (!v) return; ckFix(sf.dataset.srcform, "sourced", v); save(); render(); return; }
   const form = e.target.closest("form[data-form]"); if (!form) return; e.preventDefault();
   const text = form.querySelector("textarea").value.trim(); if (!text) return;
   if (form.dataset.form.startsWith("start")) return startChat(text);
@@ -2602,6 +2817,14 @@ document.addEventListener("click", (e) => {
   const el = e.target.closest("button, a"); if (!el) return;
   const f = cur();
   if (el.dataset.act === "home") { state.view = "home"; save(); render(); window.scrollTo(0, 0); return; }
+  if (el.dataset.act === "check" || el.dataset.act === "ledger") { state.view = el.dataset.act; sideOpen = false; save(); render(); window.scrollTo(0, 0); return; }
+  if (el.dataset.act === "cksample") { const t = document.getElementById("ck-in"); if (t) t.value = SAMPLE_SPEC; return; }
+  if (el.dataset.ckall) { const c = state.check; c.showAll = { ...(c.showAll || {}), [el.dataset.ckall]: !(c.showAll || {})[el.dataset.ckall] }; save(); render(); return; }
+  if (el.dataset.act === "cknew") { state.check = {}; save(); render(); return; }
+  if (el.dataset.fix) { const [id, how] = el.dataset.fix.split("|"); ckFix(id, how); save(); render(); if (how === "source") document.querySelector("[data-srcform] input")?.focus(); return; }
+  if (el.dataset.act === "ckplan") { featureFromCheck(); save(); render(); setTimeout(() => document.querySelector(".plan2")?.scrollIntoView({ block: "start" }), 30); return; }
+  if (el.dataset.act === "ckchat") { const t = state.check.text; startChat(t); return; }
+  if (el.dataset.bet) { const [fid, aid, st] = el.dataset.bet.split("|"); const ff = state.features.find((x) => x.id === fid); const it = ff && ff.doc.find((x) => x.id === aid); if (it) { it.status = st; save(); render(); } return; }
   if (el.dataset.menu) { const open = el.getAttribute("aria-expanded") === "true"; closeMenus(true); if (!open) { el.setAttribute("aria-expanded", "true"); document.getElementById(el.getAttribute("aria-controls")).hidden = false; } return; }
   if (el.dataset.act === "mobmenu") { const bar = el.closest(".bar"); const o = bar.classList.toggle("open"); el.setAttribute("aria-expanded", String(o)); el.textContent = o ? "Close" : "Menu"; return; }
   if (el.dataset.act === "watch") { e.preventDefault(); closeMenus(); document.getElementById("product")?.scrollIntoView({ behavior: "smooth" }); vPlaying = true; setPlayIcon(); vScenePlay(0); return; }
