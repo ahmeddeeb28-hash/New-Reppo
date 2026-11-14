@@ -1,0 +1,120 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+
+import { exampleScript, type Script } from './story';
+import type { LineSpacingKey, ReaderThemeKey, ScriptFontKey } from './theme';
+
+export type HapticsLevel = 'off' | 'subtle' | 'normal' | 'strong';
+
+export type PrompterSettings = {
+  font: ScriptFontKey;
+  fontSize: number;
+  spacing: LineSpacingKey;
+  theme: ReaderThemeKey;
+  align: 'left' | 'center';
+  guide: boolean;
+  showHeadlines: boolean;
+  mirror: boolean;
+  /** Scroll speed multiplier, 0.5–3. */
+  speed: number;
+  /** Share of the screen height used by the reader, 0.18–0.7. */
+  readerRatio: number;
+  countdown: 0 | 3 | 5 | 10;
+  haptics: HapticsLevel;
+};
+
+export const defaultSettings: PrompterSettings = {
+  font: 'clean',
+  fontSize: 26,
+  spacing: 'normal',
+  theme: 'night',
+  align: 'center',
+  guide: true,
+  showHeadlines: true,
+  mirror: false,
+  speed: 1,
+  readerRatio: 0.38,
+  countdown: 3,
+  haptics: 'normal',
+};
+
+type Store = {
+  ready: boolean;
+  scripts: Script[];
+  settings: PrompterSettings;
+  getScript: (id: string) => Script | undefined;
+  saveScript: (s: Script) => void;
+  deleteScript: (id: string) => void;
+  updateSettings: (patch: Partial<PrompterSettings>) => void;
+};
+
+const Ctx = createContext<Store | null>(null);
+const SCRIPTS_KEY = 'glance.scripts.v1';
+const SETTINGS_KEY = 'glance.settings.v1';
+
+export function StoreProvider({ children }: { children: React.ReactNode }) {
+  const [ready, setReady] = useState(false);
+  const [scripts, setScripts] = useState<Script[]>([]);
+  const [settings, setSettings] = useState<PrompterSettings>(defaultSettings);
+  const loaded = useRef(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const [s, p] = await Promise.all([
+          AsyncStorage.getItem(SCRIPTS_KEY),
+          AsyncStorage.getItem(SETTINGS_KEY),
+        ]);
+        setScripts(s ? (JSON.parse(s) as Script[]) : [exampleScript]);
+        if (p) setSettings({ ...defaultSettings, ...(JSON.parse(p) as Partial<PrompterSettings>) });
+      } catch {
+        setScripts([exampleScript]);
+      } finally {
+        loaded.current = true;
+        setReady(true);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (loaded.current) AsyncStorage.setItem(SCRIPTS_KEY, JSON.stringify(scripts)).catch(() => {});
+  }, [scripts]);
+
+  useEffect(() => {
+    if (loaded.current) AsyncStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)).catch(() => {});
+  }, [settings]);
+
+  const getScript = useCallback((id: string) => scripts.find((s) => s.id === id), [scripts]);
+
+  const saveScript = useCallback((script: Script) => {
+    setScripts((list) => {
+      const next = { ...script, updatedAt: Date.now() };
+      const i = list.findIndex((s) => s.id === script.id);
+      if (i === -1) return [next, ...list];
+      const copy = list.slice();
+      copy[i] = next;
+      return copy;
+    });
+  }, []);
+
+  const deleteScript = useCallback((id: string) => {
+    setScripts((list) => list.filter((s) => s.id !== id));
+  }, []);
+
+  const updateSettings = useCallback((patch: Partial<PrompterSettings>) => {
+    setSettings((s) => ({ ...s, ...patch }));
+  }, []);
+
+  const value = useMemo(
+    () => ({ ready, scripts, settings, getScript, saveScript, deleteScript, updateSettings }),
+    [ready, scripts, settings, getScript, saveScript, deleteScript, updateSettings],
+  );
+
+  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+}
+
+export function useStore() {
+  const v = useContext(Ctx);
+  if (!v) throw new Error('useStore must be used inside StoreProvider');
+  return v;
+}

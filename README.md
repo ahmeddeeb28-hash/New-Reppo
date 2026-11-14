@@ -1,56 +1,70 @@
-# Welcome to your Expo app 👋
+# Glance
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A free teleprompter for recording videos on your phone. Your script sits right under the front camera, so your eyes stay on the lens. The script is never in the recording.
 
-## Get started
+Glance is free, with no ads, no subscriptions and no in-app purchases.
 
-1. Install dependencies
+## What's in this build
 
-   ```bash
-   npm install
-   ```
+- **Story sections.** Each script is a list of sections (Hook, Setup, Story, Value, Proof, Call to action, or your own). Each section has a headline and the words to say, with a word count and time estimate. Reel and Talk templates come pre-filled.
+- **Lens-hug reader.** The script scrolls at the top of the screen next to the camera, with an amber reading line. Tap the text to pause or resume, or drag it by hand.
+- **Resizable reader and camera.** Drag the divider to see more script or more of yourself. It snaps at 25%, 38% and 52% with a haptic tick. Resizing only changes the preview; the camera always records its full frame.
+- **Text styles.** Four fonts (Clean, Readable, Typewriter, Rounded), four colour themes, size, line spacing, alignment, section headlines on or off, reading line, and mirrored text.
+- **Haptics.** Countdown ticks, record start, take saved, pause and resume, divider snaps, speed steps, section reached, the last 5 seconds and errors. Strength can be set to Off, Subtle, Normal or Strong.
+- **Review.** Play back the take, then save it to Photos or share it. Nothing leaves the phone unless you share it.
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Run it
 
 ```bash
-npm run reset-project
+npm install
+npx expo start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+## Test on your iPhone with TestFlight
 
-### Other setup steps
+TestFlight needs an **Apple Developer Program** membership ($99/year, required by Apple even for free apps) and a free **Expo** account at expo.dev.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+Run these on your own computer, in this folder.
 
-## Learn more
+1. Install the packages and sign in to Expo:
+   ```bash
+   npm install
+   npx eas-cli@latest login
+   ```
+2. Link the project to your Expo account. This adds a `projectId` to `app.json`; commit that change.
+   ```bash
+   npx eas-cli@latest init
+   ```
+3. Build for iOS and send the build to TestFlight. EAS asks you to sign in with your Apple ID the first time, and it creates the certificates and the App Store Connect app for you.
+   ```bash
+   npx eas-cli@latest build --platform ios --profile staging --auto-submit
+   ```
+4. When the build finishes (about 15–25 minutes), open App Store Connect → your app → TestFlight. Add yourself as an internal tester, then install the **TestFlight** app on your iPhone and accept the invite.
 
-To learn more about developing your project with Expo, look at the following resources:
+Each new staging build increases the build number automatically.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Before the first build
 
-## Join the community
+- The bundle ID is `com.glanceprompter.app`. If Apple says it's taken, change `ios.bundleIdentifier` (and `android.package`) in `app.json`.
+- The app icon is a placeholder made from the Glance mark. Replace `assets/images/icon.png` (1024×1024, no transparency) when the final icon is ready.
 
-Join our community of developers creating universal apps.
+## Build profiles (`eas.json`)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+| Profile | Use |
+| --- | --- |
+| `development` | Dev client for day-to-day work |
+| `staging` | TestFlight builds for testing usability and accessibility |
+| `production` | App Store release |
+
+## Project layout
+
+```
+src/app/            Screens (Expo Router)
+  index.tsx         Script library
+  script/[id].tsx   Story-section editor
+  record/[id].tsx   Reader + camera + recording
+  style.tsx         Text and prompter settings
+  review.tsx        Play back, save, share
+src/components/     Reader and shared UI
+src/lib/            Story model, storage, haptics, theme tokens
+```

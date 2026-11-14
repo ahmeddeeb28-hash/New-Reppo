@@ -1,18 +1,25 @@
 {
   "expo": {
-    "name": "teleprompter",
-    "slug": "teleprompter",
+    "name": "Glance",
+    "slug": "glance",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "teleprompter",
-    "userInterfaceStyle": "automatic",
+    "scheme": "glance",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0B0B0C",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "bundleIdentifier": "com.glanceprompter.app",
+      "buildNumber": "1",
+      "supportsTablet": true,
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
+      "package": "com.glanceprompter.app",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#0B0B0C",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
@@ -20,7 +27,7 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "output": "server",
+      "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
@@ -28,12 +35,30 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#0B0B0C",
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 76
+          "imageWidth": 120
         }
       ],
-      "expo-sharing"
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Glance uses the camera so you can record yourself while reading your script.",
+          "microphonePermission": "Glance uses the microphone to record your voice with the video.",
+          "recordAudioAndroid": true
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Glance saves your recorded videos to Photos when you ask it to.",
+          "savePhotosPermission": "Glance saves your recorded videos to Photos when you ask it to.",
+          "isAccessMediaLocationEnabled": false
+        }
+      ],
+      "expo-sharing",
+      "expo-video",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,
